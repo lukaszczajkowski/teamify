@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+/* Reset styles */
+html, body, body *{
+    box-sizing: border-box;
+    font-family: 'PT Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+} 
+
+/*body {
+    background-image: url(backg.jpeg);
+    background-size: cover;
+    background-position: center center;
+}*/
+
+.container {
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 100px;
+}
+
+.login-register-wrapper{
+    height: 470px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2em;
+    border-radius: 5px;
+    box-shadow: 0px 2px;
+    overflow: hidden;
+    color: #ffffff;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(29,77,77,1) 1%, rgba(7,180,181,0.9402135854341737) 70%);
+}
+
+/*Nav-buttons*/
+.nav-buttons{
+    width: 100%;
+    height: 100px;
+    padding-top: 40px;
+    opacity: 1;
+    margin-bottom: 3em;
+}
+
+button {
+    font-size: 1.5em;
+    margin-right: 1em;
+    border: 0px;
+    cursor: pointer;
+}
+
+button:focus{
+    outline: 0px;
+}
+
+button.active{
+    padding-bottom: 2px;
+    border-bottom: solid 2px #0F545C;
+}
+
+/*footer: forgot section */
+.forgot-panel{
+    position: relative;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-top: 24px;
+    border-top: #0F545C;
+}
+
+/*form-styling*/
+.form-group input {
+    width: 100%;
+    height: 35px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background: #93abad;
+}
+
+.form-group label{
+    text-transform: uppercase;
+}
+
+button.submit{
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1em;
+    text-align: center;
+    color: white;
+    padding: 8px 0px;
+    width: 100%;
+    height: 35px;
+    border: none;
+    border-radius: 20px;
+    margin-top: 23px;
+    background-color: #0F545C;
+}
+
+/*Form positioning and animation */
+form#registerform{
+    left: 500px;
+    top: -230px;
+    position: relative;
+}
+
+.forgot-panel{
+    margin-top: -300px;
+    color:#0F545C;
+    padding-bottom: 2px;
+    border-bottom: solid 2px #0F545C;
+}
+
+form, .forgot-panel{
+    position: relative;
+    transition: all .1s ease;
+}
+
+#loginBtn, #registerBtn {
+    transition: all .1s ease;
+}

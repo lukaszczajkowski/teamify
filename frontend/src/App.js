@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 // Import custom styles for our application
-import './App.css';
+import './css/style.css';
 
 import Auth from './services/Auth';
 import Navbar from "./components/layout/Navbar";
