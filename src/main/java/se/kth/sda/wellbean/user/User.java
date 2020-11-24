@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="account")
@@ -31,7 +32,10 @@ public class User {
     private String name;
 
     @ManyToMany
-    private List<Project> projects;
+    private Set<Project> projects;
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Project> createdProjects;
 
     // Hibernate needs a default constructor to function
     public User() {}

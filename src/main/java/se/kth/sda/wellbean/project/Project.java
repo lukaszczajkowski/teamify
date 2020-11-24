@@ -4,20 +4,24 @@ import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table (name = "projects")
+@Table (name = "project")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
-    private Long creatorId;
+    @ManyToOne
+    private User creator;
 
     @ManyToMany
-    private List<User> members;
+    private Set<User> users;
 
     public Project() {
     }
@@ -42,24 +46,26 @@ public class Project {
         this.title = title;
     }
 
-    public List<User> getMembers() {
-        return members;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setMembers(List<User> members) {
-        this.members = members;
+    public void setUsers(Set<User> members) {
+        this.users = members;
     }
 
-    public List<User> addMember(User member) {
-        this.members.add(member);
-        return members;
+    public Set<User> addMember(User member) {
+        this.users.add(member);
+        return users;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
+
+
 }

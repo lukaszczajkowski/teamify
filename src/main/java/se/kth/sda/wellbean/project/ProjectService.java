@@ -8,7 +8,8 @@ import java.util.List;
 
 @Service
 public class ProjectService {
-    private final ProjectRepository projectRepository;
+
+    private ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
@@ -25,14 +26,18 @@ public class ProjectService {
     }
 
     public List<Project> getProjectsByUserId(Long userId) {
-        return projectRepository.findByUserId(userId);
+        return projectRepository.findAllByUsers_id(userId);
     }
 
     public List<Project> getProjectsByCreatorId(long creatorId) {
-        return projectRepository.findByCreatorId(creatorId);
+        return projectRepository.findAllByCreatorId(creatorId);
     }
 
     public Project create(Project project) {
         return projectRepository.save(project);
+    }
+
+    public Project update(Project updatedProject) {
+        return projectRepository.save(updatedProject);
     }
 }
