@@ -7,6 +7,7 @@ import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -91,6 +92,7 @@ public class ProjectController {
      */
     @PostMapping("")
     public Project create(@RequestBody Project project) {
+        project.setUsers(new HashSet<>());
         String creatorEmail = authService.getLoggedInUserEmail();
         User creator = userService.findUserByEmail(creatorEmail);
         project.setCreator(creator);
@@ -110,7 +112,7 @@ public class ProjectController {
     public Project update(@RequestBody Project updatedProject) {
         String currentUserEmail = authService.getLoggedInUserEmail();
         User currentUser = userService.findUserByEmail(currentUserEmail);
-        User creator = updatedProject.getCreator();
+        User creator = projectService.getById(updatedProject.getId()).getCreator();
 
         if(currentUser.getId() != creator.getId()) {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
@@ -122,7 +124,7 @@ public class ProjectController {
     //TODO: send a notification to the user
 
     /**
-     * Updates the list of users assigned to the project with the given id by a new member
+     * Updates the list of users assigned to the project with the given id with a new member
      * only to the user who created the project
      * Example of usage:
      * localhost:8080/1/userId?userId=1 - updates the project with the ID = 1
@@ -133,8 +135,58 @@ public class ProjectController {
     @PutMapping("/{projectId}/userId")
     public Project inviteUser(@PathVariable Long projectId, @RequestParam Long userId) {
         Project project = projectService.getById(projectId);
-        User newMember = userService.findById(userId);
-        project.addMember(newMember);
-        return projectService.update(project);
+        if(checkCredentials(project)){
+            User newMember = userService.findById(userId);
+            project.addMember(newMember);
+            return projectService.update(project);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
+
+    /**
+     * Updates the list of users assigned to the project with the given id with a new member
+     * only to the user who created the project
+     * Example of usage:
+     * localhost:8080/1/userEmail?userEmail=test@test.com - updates the project with the
+     * email test@test.com
+     * by adding the user with the ID = 1 to the list of members
+     * @param userEmail
+     * @return project
+     */
+    @PutMapping("/{projectId}/userEmail")
+    public Project inviteUserEmail(@PathVariable Long projectId, @RequestParam String userEmail) {
+        Project project = projectService.getById(projectId);
+        if(checkCredentials(project)){
+            User newMember = userService.findUserByEmail(userEmail);
+            project.addMember(newMember);
+            return projectService.update(project);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+
+    /**
+     * Deletes the project with the given id - allowed only for users
+     * who created the project
+     * @param id
+     */
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
+        Project project = projectService.getById(id);
+        if(checkCredentials(project)){
+            projectService.delete(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    private boolean checkCredentials(Project project) {
+        String projectCreatorEmail = project.getCreator().getEmail();
+        String editorEmail = authService.getLoggedInUserEmail();
+        return projectCreatorEmail.equals(editorEmail);
+    }
+
+
 }
