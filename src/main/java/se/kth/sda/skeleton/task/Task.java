@@ -22,8 +22,7 @@ public class Task {
 
 
     // Each task can have many users and each user can have many tasks
-    //@ManyToMany(mappedBy = "user")
-    @ManyToMany
+    @ManyToMany(mappedBy = "task")
     private List<User> members;
 
     // one task has many comments
