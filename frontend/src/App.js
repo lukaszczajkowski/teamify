@@ -9,8 +9,7 @@ import {
 // Import custom styles for our application
 import './css/style.css';
 
-import Auth from './services/Auth';
-import Navbar from "./components/layout/Navbar";
+//import Auth from './services/Auth';
 
 // Import pages
 import LoginPage from "./components/auth/LoginPage";
@@ -25,9 +24,9 @@ const loggedIn = true;
   
   const loggedInRouter = (
             <Router>
-                <Navbar onLogout={() => Auth.logout()} />
+                {/* <Navbar onLogout={() => Auth.logout()} /> */}
 
-                <div className="container mt-5">
+                <div className="">
                     <Switch>
                         <Route path="/projects">
                             <ProjectPage/>

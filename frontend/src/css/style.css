@@ -1,6 +1,11 @@
 @import url("./login.css");
 @import url("./App.css");
 @import url("./_reset.css");
+@import url("./_shared.css");
+@import url("./header.css");
+@import url("./_variables.css");
+
+
 
 /* Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');

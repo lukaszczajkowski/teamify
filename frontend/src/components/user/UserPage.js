@@ -1,9 +1,11 @@
 import React from "react";
+import Header from "../layout/Header";
 
 function UserPage() {
     return (
         <div>
-            <p>user page</p>
+            <Header />
+            <p>User page</p>
         </div>
     );
 }

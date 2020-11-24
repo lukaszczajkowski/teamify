@@ -34,7 +34,6 @@ import { Link } from "react-router-dom";
 
                 <li>
                 {/* <button className="button" onClick={onLogout}>Logout</button> */}
-                     <button className="button">Logout</button>
                 </li>
 
             </ul>
