@@ -1,10 +1,12 @@
 package se.kth.sda.skeleton.user;
 
 import org.hibernate.validator.constraints.Length;
+import se.kth.sda.skeleton.task.Task;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name="account")
@@ -27,6 +29,9 @@ public class User {
     @Length(min = 3, max=100, message = "Name must be between 3-100 characters")
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    private List<Task> tasks;
 
     // Hibernate needs a default constructor to function
     public User() {}
