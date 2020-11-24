@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
+// import { useState} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -18,8 +19,9 @@ import PostsPage from "./components/posts/PostsPage";
 import ChatPage from './components/chat/ChatPage';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
-  Auth.bindLoggedInStateSetter(setLoggedIn);
+//   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
+//   Auth.bindLoggedInStateSetter(setLoggedIn);
+const loggedIn = true;
   
   const loggedInRouter = (
             <Router>
