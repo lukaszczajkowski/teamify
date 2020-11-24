@@ -1,4 +1,4 @@
-package se.kth.sda.skeleton.task;
+package se.kth.sda.wellbean.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package se.kth.sda.skeleton.task;
+package se.kth.sda.wellbean.task;
 
-import se.kth.sda.skeleton.user.User;
-import se.kth.sda.skeleton.comment.Comment;
+import se.kth.sda.wellbean.user.User;
+import se.kth.sda.wellbean.comment.Comment;
 
 import javax.persistence.*;
 import java.util.List;

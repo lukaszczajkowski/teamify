@@ -1,12 +1,14 @@
-package se.kth.sda.skeleton.user;
+package se.kth.sda.wellbean.user;
 
 import org.hibernate.validator.constraints.Length;
-import se.kth.sda.skeleton.task.Task;
+import se.kth.sda.wellbean.task.Task;
+import se.kth.sda.wellbean.project.Project;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="account")
@@ -32,6 +34,12 @@ public class User {
 
     @ManyToMany
     private List<Task> tasks;
+
+    @ManyToMany
+    private Set<Project> projects;
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Project> createdProjects;
 
     // Hibernate needs a default constructor to function
     public User() {}

@@ -1,4 +1,4 @@
-package se.kth.sda.skeleton.task;
+package se.kth.sda.wellbean.task;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
