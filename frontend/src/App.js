@@ -15,8 +15,8 @@ import Navbar from "./components/layout/Navbar";
 // Import pages
 import LoginPage from "./components/auth/LoginPage";
 import HomePage from './components/home/HomePage';
-import PostsPage from "./components/posts/PostsPage";
-import ChatPage from './components/chat/ChatPage';
+import ProjectPage from "./components/projects/ProjectPage";
+import UserPage from "./components/user/UserPage";
 
 function App() {
 //   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
@@ -29,12 +29,12 @@ const loggedIn = true;
 
                 <div className="container mt-5">
                     <Switch>
-                        <Route path="/posts">
-                            <PostsPage/>
+                        <Route path="/projects">
+                            <ProjectPage/>
                         </Route>
 
-                        <Route path="/chat">
-                            <ChatPage/>
+                        <Route path="/users">
+                            <UserPage/>
                         </Route>
 
                         <Route path="/">

@@ -1,37 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Navbar({ onLogout }) {
+//Replaced the following with testing method 
+// function Navbar({ onLogout }) {
+    function Navbar() {
+
+    const [click, setClick] = useState(false);
+
+    const handleClick = () => setClick(!click);
+
+    const closeMenu = () => setClick(false);
+
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" href="/">SDA starter</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarColor01">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to="/" className="nav-link">
-                            Home
-                            </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/posts" className="nav-link">
-                            Posts
-                            </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link to="/chat" className="nav-link">
-                            Chat
-                            </Link>
-                    </li>
-                </ul>
-
-                <button className="btn btn-outline-info my-2 my-sm-0" onClick={onLogout}>Logout</button>
+        <nav className="navbar">
+            
+            <div className=" link menu-icon" onClick={handleClick}>
+                {/* FontAwesome Icon */}
+                <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
+
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+                <li className="nav-item">
+                    <Link className="link nav-link" to="/" onClick={closeMenu}>Home</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="link nav-link" to="/users/:id" onClick={closeMenu}>Your page</Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link className="link nav-link" to="/about" onClick={closeMenu}>About</Link>
+                </li>
+
+                <li>
+                {/* <button className="button" onClick={onLogout}>Logout</button> */}
+                     <button className="button">Logout</button>
+                </li>
+
+            </ul>
         </nav>
     );
 }
