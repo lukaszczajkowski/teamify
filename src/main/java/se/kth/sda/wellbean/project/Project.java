@@ -3,7 +3,7 @@ package se.kth.sda.wellbean.project;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -26,8 +26,17 @@ public class Project {
     public Project() {
     }
 
-    public Project(String title) {
+
+    public Project(Long id, String title) {
+        this.id = id;
         this.title = title;
+    }
+
+    public Project(Long id, String title, User creator, Set<User> users) {
+        this.id = id;
+        this.title = title;
+        this.creator = creator;
+        this.users = users;
     }
 
     public Long getId() {
@@ -67,5 +76,16 @@ public class Project {
         this.creator = creator;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id.equals(project.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
