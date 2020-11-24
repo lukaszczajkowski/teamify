@@ -1,10 +1,12 @@
-package se.kth.sda.skeleton.user;
+package se.kth.sda.wellbean.user;
 
 import org.hibernate.validator.constraints.Length;
+import se.kth.sda.wellbean.project.Project;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name="account")
@@ -27,6 +29,9 @@ public class User {
     @Length(min = 3, max=100, message = "Name must be between 3-100 characters")
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    private List<Project> projects;
 
     // Hibernate needs a default constructor to function
     public User() {}
