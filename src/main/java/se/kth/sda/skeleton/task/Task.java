@@ -26,8 +26,8 @@ public class Task {
     @ManyToMany
     private List<User> members;
 
-    // many comments to a singe task
-    @ManyToMany
+    // one task has many comments
+    @OneToMany
     private List<Comment> comments;
 
     public Task() {
