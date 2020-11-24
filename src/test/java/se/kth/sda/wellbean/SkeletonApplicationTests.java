@@ -1,4 +1,4 @@
-package se.kth.sda.skeleton;
+package se.kth.sda.wellbean;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
