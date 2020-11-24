@@ -1,4 +1,4 @@
-package se.kth.sda.skeleton;
+package se.kth.sda.wellbean;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class SkeletonApplication {
+public class WellBeanApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SkeletonApplication.class, args);
+		SpringApplication.run(WellBeanApplication.class, args);
 	}
 
 	@Bean

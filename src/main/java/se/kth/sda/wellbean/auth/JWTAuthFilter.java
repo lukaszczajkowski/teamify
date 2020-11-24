@@ -1,4 +1,4 @@
-package se.kth.sda.skeleton.auth;
+package se.kth.sda.wellbean.auth;
 
 import com.auth0.jwt.interfaces.Claim;
 import org.springframework.beans.factory.annotation.Autowired;
