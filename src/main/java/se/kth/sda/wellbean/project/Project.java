@@ -1,8 +1,11 @@
 package se.kth.sda.wellbean.project;
 
+import se.kth.sda.wellbean.category.Category;
+import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,7 +26,14 @@ public class Project {
     @ManyToMany
     private Set<User> users;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<Category> categories;
+
     public Project() {
+        this.tasks = new HashSet<>();
     }
 
 
@@ -68,12 +78,25 @@ public class Project {
         return users;
     }
 
+    public Set<User> removeUser(User member) {
+        this.users.remove(member);
+        return users;
+    }
+
     public User getCreator() {
         return creator;
     }
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public Set<Task> addTask(Task task) {
+        if(this.tasks == null) {
+            this.tasks = new HashSet<>();
+        }
+        tasks.add(task);
+        return this.tasks;
     }
 
     @Override
