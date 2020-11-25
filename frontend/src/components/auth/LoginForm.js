@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 
-function LoginForm({onSubmit}) {
+function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const onSubmit = () => {
+        console.log("submitted!");
+    }
+
     return (
         <React.Fragment>
-            <label for='username'>Email: </label>
+            <label form='username'>Email: </label>
                 <input 
                 type="email"
                 className="form-control"
@@ -14,7 +18,7 @@ function LoginForm({onSubmit}) {
                 value={email}
                 onChange={e => setEmail(e.target.value)} />
                    
-            <label for='password'>Password:</label>
+            <label form='password'>Password:</label>
                 <input 
                 type="password" 
                 placeholder="Password" 
@@ -26,7 +30,7 @@ function LoginForm({onSubmit}) {
                     
             <button 
                 className="submit" 
-                onClick={() => onSubmit({email, password})}>
+                onClick={() => onSubmit()}>
                     Login
             </button>
         </React.Fragment>
