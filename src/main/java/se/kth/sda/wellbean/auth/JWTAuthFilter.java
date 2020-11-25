@@ -20,6 +20,7 @@ import java.util.Map;
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
 
+
     @Autowired
     private JWTEncoderDecoder jwtEncoderDecoder;
 
