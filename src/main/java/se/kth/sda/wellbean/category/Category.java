@@ -19,8 +19,8 @@ public class Category {
     @ManyToOne
     private Project project;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-    private Set<Task> tasks;
+    @ManyToOne
+    private Task task;
 
     public Category() {}
     public Category(long id, String title)
@@ -48,5 +48,13 @@ public class Category {
     }
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 }

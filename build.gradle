@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.3.5.RELEASE'
 	// https://mvnrepository.com/artifact/org.webjars.bower/jquery
 	compile group: 'org.webjars.bower', name: 'jquery', version: '3.5.1'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jetty
