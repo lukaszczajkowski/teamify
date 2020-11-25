@@ -4,6 +4,7 @@ import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.task.Task;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class Category {
@@ -18,8 +19,8 @@ public class Category {
     @ManyToOne
     private Project project;
 
-    @OneToMany
-    private Task task;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
 
     public Category() {}
     public Category(long id, String title)
