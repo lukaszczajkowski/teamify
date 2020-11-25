@@ -16,6 +16,7 @@ import LoginPage from "./components/auth/LoginPage";
 import HomePage from './components/home/HomePage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
+import ProjectBoard from './components/projects/ProjectBoard';
 
 function App() {
 //   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
@@ -36,9 +37,13 @@ const loggedIn = true;
                             <UserPage/>
                         </Route>
 
+                        <Route path="/ProjectBoard">
+                            <ProjectBoard/>
+                        </Route>
+
                         <Route path="/">
                           <HomePage/>
-                        </Route>
+                        </Route>                       
                     </Switch>
                 </div>
             </Router>
