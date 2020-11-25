@@ -15,8 +15,8 @@ body {
 .board-container {
     background-color: var(--bg-light-grey);
     border-radius: 5px;
-    margin: 2vh 3vw;
-    padding: 2vh 2vw;
+    margin: 5vh 5vw;
+    padding: 3vh 3vw;
 }
 
 .button {
