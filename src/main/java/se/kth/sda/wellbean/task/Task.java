@@ -25,17 +25,21 @@ public class Task {
 
 
     // Each task can have many users and each user can have many tasks
-    //@ManyToMany(mappedBy = "task")
     @ManyToMany
     private List<User> members;
 
+    @ManyToOne
+    private User creator;
+
     // one task has many comments
-    @OneToMany
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    // many tasks in one project
     @ManyToOne
     private Project project;
 
+    // one task has many categories
     @OneToMany(mappedBy = "task")
     private Set<Category> categories;
 
