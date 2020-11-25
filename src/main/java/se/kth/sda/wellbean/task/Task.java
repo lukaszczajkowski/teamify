@@ -36,8 +36,8 @@ public class Task {
     @ManyToOne
     private Project project;
 
-    @ManyToOne
-    private Category category;
+    @OneToMany(mappedBy = "task")
+    private Set<Category> categories;
 
     public Task() {
     }
@@ -89,4 +89,5 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
 }
