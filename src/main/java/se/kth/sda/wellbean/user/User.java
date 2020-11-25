@@ -1,6 +1,7 @@
 package se.kth.sda.wellbean.user;
 
 import org.hibernate.validator.constraints.Length;
+import se.kth.sda.wellbean.calendar.Event;
 import se.kth.sda.wellbean.project.Project;
 
 import javax.persistence.*;
@@ -36,6 +37,12 @@ public class User {
 
     @OneToMany(mappedBy = "creator")
     private Set<Project> createdProjects;
+
+    @ManyToMany
+    private Set<Event> events;
+
+    @OneToMany(mappedBy = "creator")
+    private Set<Event> createdEvents;
 
     // Hibernate needs a default constructor to function
     public User() {}
