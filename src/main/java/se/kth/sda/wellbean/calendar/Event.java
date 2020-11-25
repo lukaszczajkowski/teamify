@@ -99,7 +99,14 @@ public class Event {
     }
 
     public Set<User> addMember(User user) {
+        if(this.users == null) {
+            this.users = new HashSet<>();
+        }
         this.users.add(user);
         return users;
+    }
+
+    public void removeMember(User user) {
+        this.users.remove(user);
     }
 }
