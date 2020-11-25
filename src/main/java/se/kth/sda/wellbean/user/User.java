@@ -2,6 +2,7 @@ package se.kth.sda.wellbean.user;
 
 import org.hibernate.validator.constraints.Length;
 import se.kth.sda.wellbean.calendar.Event;
+import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.project.Project;
 
 import javax.persistence.*;
@@ -31,6 +32,9 @@ public class User {
     @Length(min = 3, max=100, message = "Name must be between 3-100 characters")
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    private List<Task> tasks;
 
     @ManyToMany
     private Set<Project> projects;
