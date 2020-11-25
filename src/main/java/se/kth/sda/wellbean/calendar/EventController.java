@@ -37,6 +37,7 @@ public class EventController {
     }
 
     /**
+     * Returns the events of the given user identified by userId within a given range of time
      * /events/1/range?start=2020-12-02&end=2020-12-03
      * @param userId
      * @param start
@@ -84,6 +85,12 @@ public class EventController {
         return userEventsInTimeScope;
     }
 
+    /**
+     * Createas a new event, sets its creator to the current user, adds that
+     * user to the set of members of that event and saves the event in the database
+     * @param event
+     * @return
+     */
     @PostMapping("")
     public Event create(@RequestBody Event event) {
         String creatorEmail = authService.getLoggedInUserEmail();
@@ -125,9 +132,26 @@ public class EventController {
         }
     }
 
+    @PutMapping("/{eventId}/delete/userEmail")
+    public Event removeUser(@PathVariable Long eventId, @RequestParam String userEmail) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if(checkCredentials(event)){
+            event.removeMember(getUserByEmail(userEmail));
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
     private boolean checkCredentials(Event event) {
         String creatorEmail = event.getCreator().getEmail();
         String currentUserEmail = authService.getLoggedInUserEmail();
         return creatorEmail.equals(currentUserEmail);
+    }
+
+    private User getUserByEmail(String email) {
+        return userService.findUserByEmail(email);
     }
 }

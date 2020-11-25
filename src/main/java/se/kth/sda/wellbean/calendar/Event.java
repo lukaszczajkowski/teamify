@@ -105,4 +105,8 @@ public class Event {
         this.users.add(user);
         return users;
     }
+
+    public void removeMember(User user) {
+        this.users.remove(user);
+    }
 }
