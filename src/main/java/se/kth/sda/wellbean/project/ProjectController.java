@@ -41,9 +41,10 @@ public class ProjectController {
      * if the user is on inside the set of members, otherwise it throws a Method
      * not Allowed exception.
      * Example of usage:
-     * localhost:8080/1 - returns the project with the ID = 1
+     * localhost:8080/projects/1 - returns the project with the ID = 1
      * @param projectId
      * @return
+     * @throws ResponseStatusException
      */
     @GetMapping("/{projectId}")
     public Project getProjectById(@PathVariable Long projectId) {
@@ -62,7 +63,7 @@ public class ProjectController {
     /**
      * Accepts an user id and returns a list of projects that matches the user id
      * Example of usage:
-     * localhost:8080/1 - returns the list of projects with the member ID = 1
+     * localhost:8080/projects/userId?userId=1 - returns the list of projects with the member ID = 1
      * @param userId
      * @return List of projects
      */
@@ -74,7 +75,7 @@ public class ProjectController {
     /**
      * Accepts a creator id and returns a list of projects that matched the creator id
      * Example of usage:
-     * localhost:8080/creatorId=1 - returns the list of projects with a creator ID = 1
+     * localhost:8080/projects/creatorId?creatorId=1 - returns the list of projects with a creator ID = 1
      * @param creatorId
      * @return List of projects
      */
@@ -87,6 +88,8 @@ public class ProjectController {
      * Accepts a project object as a parameter and returns it after saving.
      * It sets the user creator as the currently logged in user and adds the creator
      * to the list of the project's members.
+     * Example of usage:
+     * localhost:8080/projects + project in the request body
      * @param project
      * @return created Project
      */
@@ -104,9 +107,11 @@ public class ProjectController {
      * Accepts an updated project, checks if the user is the creator of the project.
      * If the user is not the creator, a Method not Allowed exception is thrown.
      * If the user is the creator, it updates and returns the updated project
-     *
+     * Example of usage:
+     * localhost:8080/projects + updated project in the request body
      * @param updatedProject
      * @return Project
+     * @throws ResponseStatusException
      */
     @PutMapping("")
     public Project update(@RequestBody Project updatedProject) {
@@ -131,6 +136,7 @@ public class ProjectController {
      * by adding the user with the ID = 1 to the list of members
      * @param userId
      * @return project
+     * @throws ResponseStatusException
      */
     @PutMapping("/{projectId}/userId")
     public Project inviteUser(@PathVariable Long projectId, @RequestParam Long userId) {
@@ -153,6 +159,7 @@ public class ProjectController {
      * by adding the user with the ID = 1 to the list of members
      * @param userEmail
      * @return project
+     * @throws ResponseStatusException
      */
     @PutMapping("/{projectId}/userEmail")
     public Project inviteUserEmail(@PathVariable Long projectId, @RequestParam String userEmail) {
@@ -166,11 +173,13 @@ public class ProjectController {
         }
     }
 
-
     /**
      * Deletes the project with the given id - allowed only for users
      * who created the project
+     * Example of usage:
+     * localhost:8080/1 - deletes the project with the ID = 1
      * @param id
+     * @throws ResponseStatusException
      */
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
@@ -182,11 +191,38 @@ public class ProjectController {
         }
     }
 
+    /**
+     * accepts a projectId as a path variable and memberId as a RequestParam
+     * and removes the user identified by memberId from the list of members -
+     * the operation is only allowed if the user is a creator of the project
+     * @param projectId
+     * @param memberId
+     * @return Project updated project
+     * @throws ResponseStatusException
+     */
+    @PutMapping("{projectId}/remove/memberId")
+    public Project removeMember(@PathVariable Long projectId, @RequestParam Long memberId) {
+        Project project = projectService.getById(projectId);
+        User userToRemove = userService.findById(memberId);
+        if(checkCredentials(project) && !userAlreadyAMember(project, userToRemove)){
+            project.removeUser(userToRemove);
+            return projectService.update(project);
+        } else if (userAlreadyAMember(project, userToRemove)){
+            return project;
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
     private boolean checkCredentials(Project project) {
         String projectCreatorEmail = project.getCreator().getEmail();
         String editorEmail = authService.getLoggedInUserEmail();
         return projectCreatorEmail.equals(editorEmail);
     }
 
+    private boolean userAlreadyAMember(Project project, User user) {
+        Set<User> members = project.getUsers();
+        return members.contains(user);
+    }
 
 }

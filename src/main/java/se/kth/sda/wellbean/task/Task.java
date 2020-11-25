@@ -1,10 +1,13 @@
 package se.kth.sda.wellbean.task;
 
+import se.kth.sda.wellbean.category.Category;
+import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.comment.Comment;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "task")
@@ -29,6 +32,12 @@ public class Task {
     // one task has many comments
     @OneToMany
     private List<Comment> comments;
+
+    @ManyToOne
+    private Project project;
+
+    @ManyToOne
+    private Category category;
 
     public Task() {
     }
@@ -71,5 +80,13 @@ public class Task {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
