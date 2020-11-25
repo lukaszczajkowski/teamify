@@ -4,8 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.comment.Comment;
+import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.user.User;
+import se.kth.sda.wellbean.user.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/tasks")
@@ -13,6 +19,12 @@ public class TaskController {
 
     @Autowired
     private TaskService service;
+
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * Returns all tasks
@@ -58,7 +70,7 @@ public class TaskController {
     @GetMapping("/category")
     public List<Task> getAllTaskByCategoryId(@PathVariable Long categoryId
     ) {
-        //TODO: check the user
+        //TODO: check the user ??
         if (categoryId != null)
         {
             return service.getAllTaskByCategoriesId(categoryId);
@@ -83,7 +95,7 @@ public class TaskController {
     @GetMapping("/project")
     public List<Task> getAllTaskByProjectId(@PathVariable  Long projectId)
     {
-        //TODO: check the user
+        //TODO: check the user ??? 
         if (projectId != null)
         {
             return service.gelAllTaskByProjectId(projectId);
@@ -132,27 +144,70 @@ public class TaskController {
     }
 
 
-    //TODO find all tasks related to specific project AND specific category
+    //TODO: find all tasks related to the specific project AND specific category
 
 
-
+    /**
+     Accepts a task object as a parameter and returns it after saving.
+     * It sets the user creator as the currently logged in user and adds the creator
+     * to the list of task's members.
+     * Example of usage:
+     * localhost:8080/tasks + task in the request body
+     * @param newTask
+     * @return created Task
+     */
     @PostMapping("")
     public Task create(@RequestBody Task newTask){
-        //TODO: assign project and add user
+        //TODO: assign to project and category
+        newTask.setCreator(getCurrentUser());
+        newTask.addMember(getCurrentUser());
         service.create(newTask);
         return newTask;
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
-    }
+    /**
+     * accepts a task to be updated and return updated task
+     * and added current user which updated the task to the member list
+     * @param updatedTask
+     * @return updated task
+     *
+     */
 
     @PutMapping("")
     public Task update(@RequestBody Task updatedTask)
     {
+        //TODO: should we check the access of the user?
+        updatedTask.addMember(getCurrentUser());
         service.update(updatedTask);
         return updatedTask;
     }
 
+    /**
+     * Deletes the task with the given id - allowed only for users
+     * who created the task
+     * Example of usage:
+     * localhost:8080/1 - deletes the task with the ID = 1
+     * @param id
+     * @throws ResponseStatusException
+     */
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        Task task = service.getById(id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (isCreator(task)) {
+            service.delete(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    private User getCurrentUser() {
+        return userService.findUserByEmail(authService.getLoggedInUserEmail());
+    }
+
+    private boolean isCreator(Task task) {
+        return getCurrentUser() == task.getCreator();
+    }
+
 }
+

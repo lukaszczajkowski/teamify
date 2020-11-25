@@ -14,7 +14,7 @@ import java.util.Set;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "title")
@@ -93,5 +93,26 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addMember(User user) {
+        members.add(user);
+    }
+
 
 }
