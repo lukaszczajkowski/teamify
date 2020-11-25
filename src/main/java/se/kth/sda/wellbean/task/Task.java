@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.task;
 
+import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.comment.Comment;
@@ -34,6 +35,9 @@ public class Task {
 
     @ManyToOne
     private Project project;
+
+    @ManyToOne
+    private Category category;
 
     public Task() {
     }
