@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "../layout/Header";
 
-function UserPage() {
+function ProjectPage() {
     return (
         <div>
             <Header />
-            <p>User page</p>
+            <p>Project page</p>
         </div>
     );
 }
 
-export default UserPage;
+export default ProjectPage;
