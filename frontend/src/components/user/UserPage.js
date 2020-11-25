@@ -5,11 +5,14 @@ import ProjectList from "../projects/ProjectList";
 
 function UserPage() {
     return (
-        <div>
+        <div className="user-page">
             <Header />
-            <p>Hello, UserName.</p>
+            <div className="main-content">
+                <p className="user-prompt">Hello, UserName.</p>
             <BeanBoard/>
             <ProjectList />
+            </div>
+            
 
         </div>
     );
