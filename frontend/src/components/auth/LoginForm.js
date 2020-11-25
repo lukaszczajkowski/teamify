@@ -10,7 +10,7 @@ function LoginForm() {
 
     return (
         <React.Fragment>
-            <label form='username'>Email: </label>
+            <label htmlFor='username'>Email: </label>
                 <input 
                 type="email"
                 className="form-control"
@@ -18,7 +18,7 @@ function LoginForm() {
                 value={email}
                 onChange={e => setEmail(e.target.value)} />
                    
-            <label form='password'>Password:</label>
+            <label htmlFor='password'>Password:</label>
                 <input 
                 type="password" 
                 placeholder="Password" 
@@ -28,10 +28,11 @@ function LoginForm() {
                     
 
                     
-            <button 
-                className="submit" 
-                onClick={() => onSubmit()}>
-                    Login
+
+            <button> 
+                {/*className="submit" 
+                onClick={() => onSubmit({email, password})}>
+    Login*/}
             </button>
         </React.Fragment>
             
