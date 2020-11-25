@@ -29,6 +29,10 @@ import { Link } from "react-router-dom";
                 </li>
 
                 <li className="nav-item">
+                    <Link className="link nav-link" to="/users/:id" onClick={closeMenu}>ProjectBoard</Link>
+                </li>
+
+                <li className="nav-item">
                     <Link className="link nav-link" to="/about" onClick={closeMenu}>About</Link>
                 </li>
 
