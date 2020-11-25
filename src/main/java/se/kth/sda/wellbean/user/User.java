@@ -2,6 +2,7 @@ package se.kth.sda.wellbean.user;
 
 import org.hibernate.validator.constraints.Length;
 import se.kth.sda.wellbean.calendar.Event;
+import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.project.Project;
 
@@ -47,6 +48,9 @@ public class User {
 
     @OneToMany(mappedBy = "creator")
     private Set<Event> createdEvents;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> createdComments;
 
     // Hibernate needs a default constructor to function
     public User() {}

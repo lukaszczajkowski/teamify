@@ -11,3 +11,15 @@ body {
 .main-content {
     padding: 4vh;
 }
+
+.board-container {
+    background-color: var(--bg-light-grey);
+    border-radius: 5px;
+    margin: 5vh 5vw;
+    padding: 3vh 3vw;
+}
+
+.button {
+    margin: 1vh;
+}
+
