@@ -6,6 +6,11 @@ function RegisterForm({onSubmit}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    function handleClick(event) {
+        event.preventDefault();
+        onSubmit({email, password});
+    }
+
     return (
         <React.Fragment>
             <label form="fullName">Name:</label>
@@ -30,7 +35,7 @@ function RegisterForm({onSubmit}) {
                         onChange={e => setPassword(e.target.value)} />
                     
             <button className="submit"
-                    onClick={ () => onSubmit({name, email, password})}>
+                    onClick={(event) => handleClick(event)}>
                         Create account
             </button>
         </React.Fragment>

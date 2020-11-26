@@ -7,6 +7,10 @@ function LoginForm({onSubmit}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    function handleClick(event) {
+        event.preventDefault();
+        onSubmit({email, password});
+    }
     return (
         <React.Fragment>
             <label htmlFor='username'>Email: </label>
@@ -28,7 +32,7 @@ function LoginForm({onSubmit}) {
                                     
             <button 
                 className="submit" 
-                onClick={() => onSubmit({email, password})}>
+                onClick={(event) => handleClick(event)}>
                     Login
             </button>
         </React.Fragment>

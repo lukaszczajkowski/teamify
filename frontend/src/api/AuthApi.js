@@ -2,6 +2,7 @@ import Api from "./Api";
 
 class AuthApi {
     authenticate({email, password}) {
+        console.log("inside AuthApi authenticate");
         return Api.post('/authenticate', {email, password});
     }
 

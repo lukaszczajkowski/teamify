@@ -41,15 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Disable cors, csrf for Stateless service handling
         http
-            .cors().disable()
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .cors().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Whitelist
         http
-            .authorizeRequests().antMatchers("/authenticate", "/register", "/", "/login", "/signup").permitAll()
-            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .anyRequest().authenticated();
+                .authorizeRequests().antMatchers("/authenticate", "/register").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated();
 
         // Register filters
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -5,7 +5,6 @@ import RegisterForm from "./RegisterForm";
 import {useSpring, animated} from 'react-spring';
 
 function LoginPage() {
-    console.log("inside the login page");
     const[registrationFormStatus, setRegistrationFormStatus] = useState(false);
     const loginProps = useSpring({
         left: registrationFormStatus ? -500 : 0,
@@ -22,6 +21,7 @@ function LoginPage() {
     function loginClicked(){ setRegistrationFormStatus(false)}
    
     const login = async (loginData) => {
+        console.log(loginData.email);
         const loginSuccess = await Auth.login(loginData);
         if (!loginSuccess) {
             alert("Invalid credentials");

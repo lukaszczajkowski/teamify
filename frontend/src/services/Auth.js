@@ -12,6 +12,7 @@ class Auth {
     }
 
     async login(loginData) {
+        console.log("we are in Auth.login");
         return await this._loginOrRegister(AuthApi.authenticate, loginData);
     }
 
@@ -34,11 +35,14 @@ class Auth {
 
     async _loginOrRegister(action, data) {
         try {
+            console.log("inside loginOrRegister");
             const response = await action(data);
+            console.log("back inside loginOrRegister, response", response.data.token);
             this._setToken(response.data.token);
             this.setLoggedIn(true);
             return true;
         } catch (e) {
+            console.log("Error in loginorRegister");
             console.error(e);
             
             this.setLoggedIn(false);
