@@ -1,25 +1,25 @@
 import Api from "./Api";
 
-class PostsApi {
-    getAllPosts() {
+class ProjectApi {
+    getAllProjects() {
         return Api.get('/posts');
     }
 
-    getPostById(id) {
+    getProjectById(id) {
         return Api.get('/posts/'+id);
     }
 
-    createPost(post) {
+    createProject(project) {
         return Api.post('/posts', post);
     }
 
-    updatePost(post) {
+    updateProject(project) {
         return Api.put('/posts', post);
     }
 
-    deletePost(id) {
+    deleteProject(id) {
         return Api.delete('/posts/'+id);
     } 
 }
 
-export default new PostsApi();
+export default new ProjectApi();
