@@ -8,15 +8,17 @@ import {
 // Import custom styles for our application
 import './css/style.css';
 
-//import Auth from './services/Auth';
-
 // Import pages
 import LoginPage from "./components/auth/LoginPage";
 import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
-import ProjectBoard from './components/projects/ProjectBoard';
 import Auth from './services/Auth';
+
+
+// testing login
+import LoginPageTest from "./components/auth_test/LoginPageTest";
+import RegisterPageTest from "./components/auth_test/RegisterPageTest";
 
 function App() {
 
@@ -29,23 +31,15 @@ function App() {
     const loggedInRouter = (
         <Router>
             {/* <Navbar onLogout={() => Auth.logout()} /> */}
-
-            <div className="">
                 <Switch>
-                    <Route path="/projects">
+                    <Route exact path="/projects">
                         <ProjectPage />
                     </Route>
 
-                    <Route path="/users">
+                    <Route exact path="/users">
                         <UserPage />
                     </Route>
-
-                    <Route path="/Projects">
-                        <ProjectPage />
-                    </Route>
-
                 </Switch>
-            </div>
         </Router>
     );
 
@@ -55,21 +49,25 @@ function App() {
                 <Route exact path="/">
                     <LandingPage />
                 </Route>
-                <Route path="/login">
+                <Route exact path="/login">
                     <LoginPage />
                 </Route>
 
-                <Route path="/projects">
+                <Route exact path="/login/test">
+                    <LoginPageTest />
+                </Route>
+                <Route exact path="/register/test">
+                    <RegisterPageTest />
+                </Route>
+
+                <Route exact path="/projects">
                     <ProjectPage />
                 </Route>
 
-                <Route path="/users">
+                <Route exact path="/users">
                     <UserPage />
                 </Route>
 
-                <Route path="/projects">
-                    <ProjectBoard />
-                </Route>
             </Switch>
         </Router>
     )

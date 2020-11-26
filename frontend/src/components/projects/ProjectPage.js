@@ -1,11 +1,13 @@
 import React from "react";
 import Header from "../layout/Header";
+import ProjectBoard from "./ProjectBoard";
 
 function ProjectPage() {
     return (
-        <div>
+        <div className="project-page">
             <Header />
-            <p>Project page</p>
+            <ProjectBoard />
+            
         </div>
     );
 }
