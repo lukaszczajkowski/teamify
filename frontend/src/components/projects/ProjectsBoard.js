@@ -3,16 +3,16 @@ import CreateProjectCard from "./CreateProjectCard";
 
 export default function ProjectsBoard() {
 
-    const createProject = (projectdata) => {
-        console.log("create project" + projectdata);
+    // const createProject = (projectdata) => {
+    //     console.log("create project" + projectdata);
 
-    }
+    // }
     return (
         <div className="projects-board">
             <div className="board-container">
                 <p className="prompt">Keep working on projects:</p>
-                <CreateProjectCard />
-                <div className="project-card" id="create-project">
+                <CreateProjectCard className="project-card" id="create-project"/>
+                <div >
                    
                     
                 
