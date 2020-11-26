@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.notification.Notification;
+import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
@@ -22,21 +24,25 @@ public class EventController {
     private final EventRepository eventRepository;
     private final UserService userService;
     private final AuthService authService;
+    private final NotificationService notificationService;
 
     public EventController(EventRepository eventRepository,
                            UserService userService,
-                           AuthService authService) {
+                           AuthService authService,
+                           NotificationService notificationService) {
         this.eventRepository = eventRepository;
         this.userService = userService;
         this.authService = authService;
+        this.notificationService = notificationService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Event> events(){
         return eventRepository.findAll();
     }
 
     /**
+     * Returns the events of the given user identified by userId within a given range of time
      * /events/1/range?start=2020-12-02&end=2020-12-03
      * @param userId
      * @param start
@@ -50,7 +56,7 @@ public class EventController {
                                         @RequestParam(value = "end", required = true) String end) throws BadDateFormatException {
         Date startDate = null;
         Date endDate = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
 
         try {
             startDate = inputDateFormat.parse(start);
@@ -84,6 +90,12 @@ public class EventController {
         return userEventsInTimeScope;
     }
 
+    /**
+     * Createas a new event, sets its creator to the current user, adds that
+     * user to the set of members of that event and saves the event in the database
+     * @param event
+     * @return
+     */
     @PostMapping("")
     public Event create(@RequestBody Event event) {
         String creatorEmail = authService.getLoggedInUserEmail();
@@ -110,6 +122,7 @@ public class EventController {
         if(checkCredentials(event)){
             User user = userService.findUserByEmail(userEmail);
             event.addMember(user);
+            notificationService.sendNotification(user, event);
             return eventRepository.save(event);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
@@ -125,9 +138,26 @@ public class EventController {
         }
     }
 
+    @PutMapping("/{eventId}/delete/userEmail")
+    public Event removeUser(@PathVariable Long eventId, @RequestParam String userEmail) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if(checkCredentials(event)){
+            event.removeMember(getUserByEmail(userEmail));
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
     private boolean checkCredentials(Event event) {
         String creatorEmail = event.getCreator().getEmail();
         String currentUserEmail = authService.getLoggedInUserEmail();
         return creatorEmail.equals(currentUserEmail);
+    }
+
+    private User getUserByEmail(String email) {
+        return userService.findUserByEmail(email);
     }
 }

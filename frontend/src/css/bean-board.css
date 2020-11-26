@@ -1,0 +1,51 @@
+.bean-board .board-container {
+    max-width: 1024px;
+    margin: auto;
+    padding: 10vh;
+}
+
+.bean-board .board-name {
+    font-size: 28px;
+    color: var(--theme-green);
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+}
+
+.bean-board .bean-icon {
+    margin-top: 1vh;
+    height: 5vh;
+}
+
+.bean-board .prompt {
+    font-size: 20px;
+    color: var(--theme-dark-green);
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+}
+
+.bean-board .sub-prompt {
+    margin-top: 1vh;
+    margin-left: 1vw;
+    font-size: 18px;
+    color: var(--text-dark-grey);
+    font-weight: 500;
+    font-family: 'Rubik', sans-serif;
+}
+
+.bean-board .board-item {
+    margin-bottom: 6vh;
+}
+
+.bean-board .button {
+    margin: 1vh;
+    padding: 5px;
+    padding-left: 18px;
+    padding-right: 18px;
+    border-radius: 20px;
+    color: white;
+    background-color: #07B4B5;
+}
+
+.bean-board .flip-arrow {
+    font-size: 38px;
+}

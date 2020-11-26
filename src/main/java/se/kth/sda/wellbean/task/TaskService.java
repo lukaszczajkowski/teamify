@@ -42,8 +42,19 @@ public class TaskService {
         repo.save(updatedTask);
     }
 
-    public List<Task> gelAllTaskByUserId(Long userId) {
-        //return repo.findAllByMemberId(userId);
-        return null;
+    public List<Task> gelAllTaskByMemberId(Long memberId) {
+        return repo.findAllByMembers_id(memberId);
+    }
+
+    public List<Task> getAllTaskByCategoriesId(Long categoryId) {
+        return repo.findAllByCategories_id(categoryId);
+    }
+
+    public List<Task> gelAllTaskByProjectId(Long projectId) {
+        return repo.findAllByProjectId(projectId);
+    }
+
+    public List<Task> gelAllTaskByCreatorId(Long creatorId) {
+        return repo.findAllByCreatorId(creatorId);
     }
 }

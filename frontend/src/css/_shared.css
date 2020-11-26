@@ -1,6 +1,5 @@
 body {
     font-family: 'Rubik', sans-serif; 
-    font-weight: 400;
     font-size: 13px;
 }
 
@@ -11,3 +10,29 @@ body {
 .main-content {
     padding: 4vh;
 }
+
+.board-container {
+    background-color: var(--bg-light-grey);
+    border-radius: 5px;
+    margin: 5vh 8vw;
+    padding: 5vh 5vw;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+

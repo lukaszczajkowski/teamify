@@ -1,11 +1,19 @@
 import React from "react";
 import Header from "../layout/Header";
+import BeanBoard from "../beans/BeanBoard";
+import ProjectList from "../projects/ProjectsBoard";
 
 function UserPage() {
     return (
-        <div>
+        <div className="user-page">
             <Header />
-            <p>User page</p>
+            <div className="main-content">
+                <p className="user-prompt">Hello, UserName.</p>
+            <BeanBoard/>
+            <ProjectList />
+            </div>
+            
+
         </div>
     );
 }

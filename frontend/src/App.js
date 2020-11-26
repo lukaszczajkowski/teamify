@@ -13,9 +13,11 @@ import './css/style.css';
 
 // Import pages
 import LoginPage from "./components/auth/LoginPage";
-import HomePage from './components/home/HomePage';
+import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
+import ProjectBoard from './components/projects/ProjectBoard';
+import CreateTaskCard from './components/tasks/CreateTaskCard';
 
 function App() {
 //   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
@@ -36,9 +38,18 @@ const loggedIn = true;
                             <UserPage/>
                         </Route>
 
-                        <Route path="/">
-                          <HomePage/>
+                        <Route path="/ProjectBoard">
+                            <ProjectBoard/>
                         </Route>
+
+                        <Route path="/">
+                          <LandingPage/>
+                        </Route> 
+
+                        <Route path="/">
+                          <CreateTaskCard/>
+                        </Route> 
+
                     </Switch>
                 </div>
             </Router>
