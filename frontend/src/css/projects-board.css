@@ -1,0 +1,23 @@
+.projects-board .board-container {
+    max-width: 1024px;
+    margin: auto;
+    padding: 10vh;
+    margin-top: 6vh;
+}
+
+.projects-board .prompt {
+    font-size: 20px;
+    color: var(--theme-dark-green);
+    font-weight: 600;
+    font-family: 'Rubik', sans-serif;
+    margin-bottom: 5vh;
+}
+
+.projects-board .project-card {
+    height: 150px;
+    width: 150px;
+    text-align: center;
+    background-color: aquamarine;
+    padding: 7vh 1vw;
+
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../layout/Header";
 import BeanBoard from "../beans/BeanBoard";
-import ProjectList from "../projects/ProjectList";
+import ProjectList from "../projects/ProjectsBoard";
 
 function UserPage() {
     return (
