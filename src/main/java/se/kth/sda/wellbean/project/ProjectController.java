@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
 
@@ -18,13 +19,16 @@ public class ProjectController {
     private final ProjectService projectService;
     private final AuthService authService;
     private final UserService userService;
+    private final NotificationService notificationService;
 
     public ProjectController(ProjectService projectService,
                              AuthService authService,
-                             UserService userService) {
+                             UserService userService,
+                             NotificationService notificationService) {
         this.projectService = projectService;
         this.authService = authService;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -144,6 +148,7 @@ public class ProjectController {
         if(checkCredentials(project)){
             User newMember = userService.findById(userId);
             project.addMember(newMember);
+            notificationService.sendNotificationFromProject(project, newMember);
             return projectService.update(project);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
@@ -154,7 +159,7 @@ public class ProjectController {
      * Updates the list of users assigned to the project with the given id with a new member
      * only to the user who created the project
      * Example of usage:
-     * localhost:8080/1/userEmail?userEmail=test@test.com - updates the project with the
+     * localhost:8080/projects/1/userEmail?userEmail=test@test.com - updates the project with the
      * email test@test.com
      * by adding the user with the ID = 1 to the list of members
      * @param userEmail
@@ -167,6 +172,7 @@ public class ProjectController {
         if(checkCredentials(project)){
             User newMember = userService.findUserByEmail(userEmail);
             project.addMember(newMember);
+            notificationService.sendNotificationFromProject(project, newMember);
             return projectService.update(project);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);

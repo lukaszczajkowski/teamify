@@ -26,7 +26,7 @@ public class Task {
 
     // Each task can have many users and each user can have many tasks
     @ManyToMany
-    private List<User> members;
+    private Set<User> members;
 
     //@ManyToOne
     //private User creator;
@@ -39,7 +39,7 @@ public class Task {
     @ManyToOne
     private Project project;
 
-    // one task has many categories
+    // many tasks belongs to one category
     @ManyToOne
     private Category category;
 
@@ -70,13 +70,7 @@ public class Task {
         this.description = description;
     }
 
-    public List<User> getMembers() {
-        return members;
-    }
 
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
 
     public List<Comment> getComments() {
         return comments;
@@ -95,12 +89,11 @@ public class Task {
     }
 
 
-
-    public Category getCategories() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategories(Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -108,7 +101,16 @@ public class Task {
         members.add(user);
     }
 
+
     public void removeMember(User newMember) {
         members.remove(newMember);
+    }
+
+    public Set<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<User> members) {
+        this.members = members;
     }
 }
