@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CreateProjectCard from "./CreateProjectCard";
 
 export default function ProjectsBoard() {
@@ -14,7 +15,10 @@ export default function ProjectsBoard() {
                
                 <div className="project-cards flex-start">
                 <CreateProjectCard id="create-project-card"/>
+                <Link to="/projects">
                 <button className="project-card">Testing card</button>
+                </Link>
+                
                 </div>
             </div>
 
