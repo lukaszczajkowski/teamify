@@ -5,7 +5,7 @@ export default function ProjectBoard() {
     return (
         <div className="ProjectBoard">
             <Header />
-            
+            <CategoryCard />
         </div>
     )
 }
