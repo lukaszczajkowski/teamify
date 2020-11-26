@@ -28,8 +28,8 @@ public class Task {
     @ManyToMany
     private List<User> members;
 
-    @ManyToOne
-    private User creator;
+    //@ManyToOne
+    //private User creator;
 
     // one task has many comments
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
@@ -40,8 +40,8 @@ public class Task {
     private Project project;
 
     // one task has many categories
-    @OneToMany(mappedBy = "task")
-    private Set<Category> categories;
+    @ManyToOne
+    private Category category;
 
     public Task() {
     }
@@ -94,25 +94,21 @@ public class Task {
         this.project = project;
     }
 
-    public User getCreator() {
-        return creator;
+
+
+    public Category getCategories() {
+        return category;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategories(Category category) {
+        this.category = category;
     }
 
     public void addMember(User user) {
         members.add(user);
     }
 
-
+    public void removeMember(User newMember) {
+        members.remove(newMember);
+    }
 }

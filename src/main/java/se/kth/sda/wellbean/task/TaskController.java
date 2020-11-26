@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
@@ -33,6 +34,7 @@ public class TaskController {
     @GetMapping("")
     public List<Task> getAllTask(
             @RequestParam(required = false) String sort) {
+        //TODO if current user has access to tasks
         if (sort == null) {
             sort = "title";
         }
@@ -70,10 +72,10 @@ public class TaskController {
     @GetMapping("/category")
     public List<Task> getAllTaskByCategoryId(@PathVariable Long categoryId
     ) {
-        //TODO: check the user ??
+        //don't need to check the access of the user, since it was already done in scope of the project
         if (categoryId != null)
         {
-            return service.getAllTaskByCategoriesId(categoryId);
+            return service.getAllTaskByCategoryId(categoryId);
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -93,9 +95,9 @@ public class TaskController {
      */
 
     @GetMapping("/project")
-    public List<Task> getAllTaskByProjectId(@PathVariable  Long projectId)
+    public List<Task> getAllTaskByProjectId(@PathVariable Long projectId)
     {
-        //TODO: check the user ??? 
+        //don't need to check the access of the user, since it was already done in scope of the project
         if (projectId != null)
         {
             return service.gelAllTaskByProjectId(projectId);
@@ -124,43 +126,22 @@ public class TaskController {
         }
     }
 
-    /**
-     * Returns all tasks created by specific user id. If user doesn't exist
-     * method throw not found exception
-     * Example of usage:
-     * localhost:8080/tasks/creatorId?creatorId=1 - returns the project with the ID = 1
-     * @param creatorId
-     * @return List of tasks with specific member id
-     */
-    @GetMapping("/creatorId")
-    public List<Task> getAllTaskByCreatorId(@PathVariable Long creatorId) {
-        if (creatorId != null)
-        {
-            return service.gelAllTaskByCreatorId(creatorId);
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
-
-    //TODO: find all tasks related to the specific project AND specific category
-
 
     /**
      Accepts a task object as a parameter and returns it after saving.
      * It sets the user creator as the currently logged in user and adds the creator
      * to the list of task's members.
      * Example of usage:
-     * localhost:8080/tasks + task in the request body
+     * localhost:8080/tasks
      * @param newTask
      * @return created Task
      */
+
     @PostMapping("")
-    public Task create(@RequestBody Task newTask){
+    public Task create(@PathVariable Long categoryId, @RequestBody Task newTask){
         //TODO: assign to project and category
-        newTask.setCreator(getCurrentUser());
-        newTask.addMember(getCurrentUser());
+        //Category category = new Category(); //-> find it via the category service
+        //newTask.setCategories(category);
         service.create(newTask);
         return newTask;
     }
@@ -176,15 +157,51 @@ public class TaskController {
     @PutMapping("")
     public Task update(@RequestBody Task updatedTask)
     {
-        //TODO: should we check the access of the user?
-        updatedTask.addMember(getCurrentUser());
+        //TODO: check project
+        //updatedTask.addMember(getCurrentUser());
+       // currentuser has access to task
         service.update(updatedTask);
         return updatedTask;
     }
 
     /**
-     * Deletes the task with the given id - allowed only for users
-     * who created the task
+     * accepts a task to be updated and return updated task
+     * and added current user which updated the task to the member list
+     *  localhost:8080/tasks/1/userId?userId=1
+     * @param taskID, userId
+     * @return updated task
+     *
+     */
+
+    @PutMapping("/{taskID}/userId")
+    public Task update(@PathVariable Long taskID, @PathVariable Long userId)
+    {
+        Task updatedTask = service.getById(taskID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User newMember = userService.findById(userId);
+        updatedTask.addMember(newMember);
+        service.update(updatedTask);
+        return updatedTask;
+    }
+
+    /**
+     * Delete member from  the task with the given id - allowed only for users
+     * and return updated task
+     * localhost:8080/tasks/1/userId?userId=1
+     * @param taskId, userId
+     * @throws ResponseStatusException
+     */
+    @PutMapping("{taskId}/remove/userId")
+    @DeleteMapping("/{taskID}/userId")
+    public Task delete(@PathVariable Long taskId, @PathVariable Long userId){
+        Task updatedTask = service.getById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User newMember = userService.findById(userId);
+        updatedTask.removeMember(newMember);
+        service.update(updatedTask);
+        return updatedTask;
+    }
+
+    /**
+     * Deletes the task with the given id
      * Example of usage:
      * localhost:8080/1 - deletes the task with the ID = 1
      * @param id
@@ -194,20 +211,14 @@ public class TaskController {
     public void delete(@PathVariable Long id){
         Task task = service.getById(id).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (isCreator(task)) {
-            service.delete(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
-        }
+        service.delete(id);
     }
 
     private User getCurrentUser() {
         return userService.findUserByEmail(authService.getLoggedInUserEmail());
     }
 
-    private boolean isCreator(Task task) {
-        return getCurrentUser() == task.getCreator();
-    }
+
 
 }
 
