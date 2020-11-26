@@ -56,7 +56,7 @@ public class EventController {
                                         @RequestParam(value = "end", required = true) String end) throws BadDateFormatException {
         Date startDate = null;
         Date endDate = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
 
         try {
             startDate = inputDateFormat.parse(start);
