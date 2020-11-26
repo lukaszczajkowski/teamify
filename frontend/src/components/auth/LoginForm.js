@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 
 function LoginForm() {
-<<<<<<< HEAD
-//function LoginForm({onSubmit}) {
-=======
->>>>>>> master
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,10 +11,6 @@ function LoginForm() {
     return (
         <React.Fragment>
             <label htmlFor='username'>Email: </label>
-<<<<<<< HEAD
-            
-=======
->>>>>>> master
                 <input 
                 type="email"
                 className="form-control"
@@ -36,20 +28,12 @@ function LoginForm() {
                     
 
                     
-<<<<<<< HEAD
-            {/* <button 
-                className="submit" 
-                onClick={() => onSubmit({email, password})}>
-                    Login
-            </button> */}
-=======
 
             <button> 
                 {/*className="submit" 
                 onClick={() => onSubmit({email, password})}>
     Login*/}
             </button>
->>>>>>> master
         </React.Fragment>
             
     );
