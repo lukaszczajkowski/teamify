@@ -44,7 +44,7 @@ public class TaskController {
      * @param projectId (optional)
      *
      * Example of usage:
-     * localhost:8080/tasks?membersId=1 - returns the project with the ID = 1
+     * localhost:8080/tasks?memberId=1 - returns the project with the ID = 1
      * @param memberId
      *
      * @return List of  tasks based on filter
@@ -65,7 +65,7 @@ public class TaskController {
              return service.gelAllTaskByProjectId(projectId);
         }
         else if (memberId != null) {
-            service.gelAllTaskByMemberId(memberId);
+            return service.gelAllTaskByMemberId(memberId);
         }
         return service.getAllListTask();
     }
