@@ -18,6 +18,7 @@ import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import ProjectBoard from './components/projects/ProjectBoard';
 import CreateTaskCard from './components/tasks/CreateTaskCard';
+import RegisterForm from './components/auth/RegisterForm';
 
 function App() {
 //   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
@@ -46,7 +47,15 @@ const loggedIn = true;
                           <LandingPage/>
                         </Route> 
 
-                        <Route path="/">
+                        <Route path = "/authenticate">
+                            <LoginPage/>
+                        </Route>
+
+                        <Route path = "/register">
+                            <RegisterForm/>
+                        </Route>
+
+                        <Route path="/tasks">
                           <CreateTaskCard/>
                         </Route> 
 
