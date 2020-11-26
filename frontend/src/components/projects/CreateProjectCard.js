@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
-import Header from "../layout/Header";
 
 
 
@@ -13,7 +12,6 @@ export default function CreateProjectCard( ) {
     return (
         <div className="create-bean-card">
             <div className="popup-container">
-            <Header/>
                 <Popup
                     trigger={<button className="button"> + Add New Project</button>}
                     modal
