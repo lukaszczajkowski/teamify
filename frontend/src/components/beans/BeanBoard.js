@@ -1,8 +1,16 @@
 import React from "react";
 
 import BeanIcon from "../../assets/beanicon.png";
+import CreateBeanCard from "./CreateBeanCard";
 
 export default function BeanBoard() {
+
+    // const [beans, setBeans] = useState([]);
+    // const createBean = (beanData) => (
+        
+    // );
+
+
     return (
         <div className="bean-board">
             <div className="board-container">
@@ -24,6 +32,8 @@ export default function BeanBoard() {
                         <button className="button">Exericise</button>
                         <button className="button">Meditate</button>
                         <button className="button">+ create a new bean</button>
+                        {/* <CreateBeanCard onSubmit= {createBean}/> */}
+                        <CreateBeanCard />
                     </div>
                  <div className="flex-end">
                      <button className="flip-arrow"><i className="fas fa-arrow-right"></i></button>
