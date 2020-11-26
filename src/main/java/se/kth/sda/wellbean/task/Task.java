@@ -89,4 +89,12 @@ public class Task {
     public void setProject(Project project) {
         this.project = project;
     }
+    
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
+    }
 }
