@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 
 
+// eslint-disable-next-line react/prop-types
 function LoginForm({onSubmit}) {
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-  
     return (
         <React.Fragment>
             <label htmlFor='username'>Email: </label>
