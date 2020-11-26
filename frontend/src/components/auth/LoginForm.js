@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 // eslint-disable-next-line react/prop-types
 function LoginForm({onSubmit}) {
 
-function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
