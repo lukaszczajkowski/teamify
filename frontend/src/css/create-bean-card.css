@@ -2,8 +2,10 @@
 .modal {
     width: 50vw;
     font-size: 20px;
-    background-color: var(--bg-dark-grey);
-    border-radius: 15px;
+    background-color: var(--opac-light-grey);
+    border-radius: 10px;
+    border: 10px solid var(--opac-light-grey);
+    box-shadow: 10px 10px 32px -2px rgba(0,0,0,0.3);
   }
 
   .modal > .content {
@@ -28,22 +30,35 @@
 
   .modal .popup-item {
       margin: 4vh;
+      background: transparent;
   }
 
   .modal .input-box {
-      background-color: darkcyan;
+      background-color: var(--opac-dark-grey);
       border-radius: 10px;
       padding: 5px;
   }
 
+  .modal .prompt,
+  .modal .sub-prompt {
+    font-family: 'Rubik', sans-serif;
+  }
   .modal .prompt {
       margin-right: 2vw;
-      font-family: 'Rubik', sans-serif;
     font-weight: 600;
+    color: var(--theme-purple);
   }
 
   .modal .sub-prompt {
-    font-family: 'Rubik', sans-serif;
     font-weight: 400;
-    font-size: 
+  }
+
+  .modal .button {
+    border-radius: 10px;
+      padding: 10px 30px;
+      border-radius: 30px;
+      background-color: var(--theme-purple);
+      margin-right: 20px;
+      margin-bottom: 20px;
+    
   }

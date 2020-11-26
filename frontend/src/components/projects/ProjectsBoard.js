@@ -11,7 +11,7 @@ export default function ProjectsBoard() {
         <div className="projects-board">
             <div className="board-container">
                 <p className="prompt">Keep working on projects:</p>
-                <CreateProjectCard className="project-card" id="create-project"/>
+                <CreateProjectCard id="create-project-card"/>
                 <div >
                    
                     

@@ -31,7 +31,7 @@ export default function BeanBoard() {
                         <button className="button">Drink water</button>
                         <button className="button">Exericise</button>
                         <button className="button">Meditate</button>
-                        <button className="button">+ create a new bean</button>
+
                         {/* <CreateBeanCard onSubmit= {createBean}/> */}
                         <CreateBeanCard />
                     </div>
