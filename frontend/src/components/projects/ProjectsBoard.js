@@ -11,14 +11,10 @@ export default function ProjectsBoard() {
         <div className="projects-board">
             <div className="board-container">
                 <p className="prompt">Keep working on projects:</p>
+               
+                <div className="project-cards flex-start">
                 <CreateProjectCard id="create-project-card"/>
-                <div >
-                   
-                    
-                
-                </div>
-                <div className="project-cards">
-                    Display all project cards here.
+                <button className="project-card">Testing card</button>
                 </div>
             </div>
 

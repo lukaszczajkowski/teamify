@@ -13,7 +13,7 @@ export default function CreateProjectCard() {
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup
-                    trigger={<button className="button create-project"> + Add New Project</button>}
+                    trigger={<button id="create-new-project"> + Create New Project</button>}
                     modal
                     nested>
                     {
@@ -24,7 +24,7 @@ export default function CreateProjectCard() {
                                 </button>
                                 <div className="content">
                                     <div className="popup-item flex-start">
-                                        <h2 className="prompt">Enter Your Project Name</h2>
+                                        <h2 className="prompt">Project Name</h2>
                                         <input
                                             type="text"
                                             className="input-box"
@@ -36,7 +36,7 @@ export default function CreateProjectCard() {
                                     </div>
 
                                     <div className="popup-item flex-start">
-                                        <h2 className="prompt">Enter your project Description</h2>
+                                        <h2 className="prompt">Project Description</h2>
                                         <textarea
                                             className="input-box"
                                             placeholder="project description"
@@ -46,11 +46,14 @@ export default function CreateProjectCard() {
                                         </textarea>
                                     </div>
                                 </div>
-                                <button
+                                <div className="flex-end">
+                                     <button
                                     className="button"
                                     onClick={() => { close(); }}>
-                                    Add
+                                    Create
                             </button>
+                                </div>
+                               
                             </div>
 
                         )}

@@ -26,6 +26,7 @@ h6 {
   padding: 0;
 }
 
+p,
 h1,
 h2,
 h3,
@@ -34,6 +35,7 @@ h5,
 h6 {
   font-size: 100%;
   font-weight: normal;
+  background: transparent;
 }
 
 ul {
