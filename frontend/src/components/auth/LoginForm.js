@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 
+// eslint-disable-next-line react/prop-types
+function LoginForm({onSubmit}) {
+
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const onSubmit = () => {
-        console.log("submitted!");
-    }
-
     return (
         <React.Fragment>
             <label htmlFor='username'>Email: </label>
+
                 <input 
                 type="email"
                 className="form-control"
@@ -25,14 +25,12 @@ function LoginForm() {
                 className="form-control" 
                 value={password}
                 onChange={e => setPassword(e.target.value)} />
-                    
-
-                    
-
-            <button> 
-                {/*className="submit" 
+                                    
+            <button 
+                className="submit" 
                 onClick={() => onSubmit({email, password})}>
-    Login*/}
+                    Login
+
             </button>
         </React.Fragment>
             

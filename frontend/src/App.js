@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import { useState} from 'react';
 import {
     BrowserRouter as Router,
@@ -18,11 +18,17 @@ import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import ProjectBoard from './components/projects/ProjectBoard';
 import CreateTaskCard from './components/tasks/CreateTaskCard';
+import Auth from './services/Auth';
+//import RegisterForm from './components/auth/RegisterForm';
+//import LoginForm from './components/auth/LoginForm';
 
 function App() {
-//   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
-//   Auth.bindLoggedInStateSetter(setLoggedIn);
-const loggedIn = true;
+
+    const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
+    Auth.bindLoggedInStateSetter(setLoggedIn);
+
+    // eslint-disable-next-line no-unused-vars
+    const [query, setQuery] = useState("");
   
   const loggedInRouter = (
             <Router>
@@ -42,11 +48,7 @@ const loggedIn = true;
                             <ProjectBoard/>
                         </Route>
 
-                        <Route path="/">
-                          <LandingPage/>
-                        </Route> 
-
-                        <Route path="/">
+                        <Route path="/tasks">
                           <CreateTaskCard/>
                         </Route> 
 
@@ -55,7 +57,20 @@ const loggedIn = true;
             </Router>
   );
 
-  return (loggedIn ? loggedInRouter : <LoginPage/>);
+  const notLoggedIn = (
+      <Router>
+          <Switch>
+              <Route exact path = "/">
+                <LandingPage/>
+              </Route>
+              <Route path = "/login">
+                  <LoginPage/>
+              </Route>
+          </Switch>
+      </Router>
+  )
+
+  return (loggedIn ? loggedInRouter : notLoggedIn);
 }
 
 export default App;
