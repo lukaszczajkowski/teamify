@@ -39,9 +39,9 @@ public class Task {
     @ManyToOne
     private Project project;
 
-    // one task has many categories
-    @OneToMany(mappedBy = "task")
-    private Set<Category> categories;
+    // many tasks belogs to one category
+    @ManyToOne
+    private Category categories;
 
     public Task() {
     }
@@ -94,6 +94,7 @@ public class Task {
         this.project = project;
     }
 
+
     public User getCreator() {
         return creator;
     }
@@ -113,6 +114,7 @@ public class Task {
     public void addMember(User user) {
         members.add(user);
     }
+
 
 
 }
