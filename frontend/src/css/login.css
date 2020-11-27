@@ -6,7 +6,9 @@ html, body, body *{
     font-family: 'PT Sans', sans-serif;
     margin: 0;
     padding: 0;
-    color: inherit;
+    color: #0F545C;
+    font-weight: bold;
+    
     background-color: inherit;
 } 
 
@@ -16,7 +18,7 @@ html, body, body *{
     background-position: center center;
 }*/
 
-.container {
+.loginpage {
     width: 100%;
     padding-top: 60px;
     padding-bottom: 100px;
@@ -32,7 +34,7 @@ html, body, body *{
     box-shadow: 0px 2px;
     overflow: hidden;
     color: #ffffff;
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(29,77,77,1) 1%, rgba(7,180,181,0.9402135854341737) 70%);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(66,148,148,1) 0%, rgba(123,219,219,0.9402135854341737) 53%);
 }
 
 /*Nav-buttons*/
@@ -49,6 +51,7 @@ button {
     margin-right: 1em;
     border: 0px;
     cursor: pointer;
+    
 }
 
 button:focus{
@@ -58,6 +61,7 @@ button:focus{
 button.active{
     padding-bottom: 2px;
     border-bottom: solid 2px #0F545C;
+    margin-right: 15px;
 }
 
 /*footer: forgot section */
@@ -76,10 +80,11 @@ button.active{
     width: 100%;
     height: 35px;
     padding-left: 15px;
-    border: none;
+    border: 1px solid #93abad;
     border-radius: 5px;
     margin-bottom: 20px;
     background: #93abad;
+    
 }
 
 .form-group label{
@@ -109,11 +114,10 @@ form#registerform{
 }
 
 .forgot-panel{
-    margin-top: -300px;
+    margin-top: -250px;
     color:#0F545C;
-    padding-bottom: 2px;
-    border-bottom: solid 2px #0F545C;
-}
+    font-weight: bold;
+    }
 
 form, .forgot-panel{
     position: relative;
@@ -123,3 +127,8 @@ form, .forgot-panel{
 #loginBtn, #registerBtn {
     transition: all .1s ease;
 }
+
+.forgot{
+    margin-top: 20px;
+}
+
