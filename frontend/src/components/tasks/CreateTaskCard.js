@@ -21,7 +21,8 @@ export default function CreateTaskCard() {
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup
-                    trigger={<button className="button"> + Create New Task </button>}
+                    trigger={<button className="button"> + Create Task </button>}
+
                     modal
                     nested>
                     {close => (
@@ -48,10 +49,11 @@ export default function CreateTaskCard() {
                                         placeholder=""
                                     >
                                     </textarea>
-                                </div>
+                                </div>     
 
                                 <div className="popup-item flex-start">
-                                        <h2 className="prompt">Points</h2>
+                                        <h2 className="prompt">Members</h2>
+
 
                                     <input
                                         type="range"
@@ -73,6 +75,7 @@ export default function CreateTaskCard() {
                                 </div>
 
                             </div>
+
                             <div className="flex-end">
                                 <button
                                 className="button"
@@ -82,8 +85,10 @@ export default function CreateTaskCard() {
                                 }}>
                                 Add
                             </button>
+
                             </div>
                             
+
                         </div>
 
                     )}
