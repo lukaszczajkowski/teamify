@@ -26,7 +26,7 @@ function ProjectPage() {
         <div className="project-page">
             <Header />
 
-            <div className="project-board flex-start">
+            <div className="projects-board flex-start">
                     <div className="category-card card-container">category test</div>
                     <div className="category-card card-container">category test</div>
 

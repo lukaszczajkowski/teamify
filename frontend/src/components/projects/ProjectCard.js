@@ -10,7 +10,7 @@ export default function ProjectCard({ project }) {
             {/*eslint-disable-next-line react/prop-types*/}
             <Link to={`/projects/${project.id}`}>
                 {/*eslint-disable-next-line react/prop-types*/}
-                <button className="project-card">{project.name}</button>
+                <button className="project-card">{project.title}</button>
             </Link>
 
         </div>
