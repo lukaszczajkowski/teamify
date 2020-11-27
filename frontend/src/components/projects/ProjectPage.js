@@ -6,7 +6,7 @@ import CategoryCard from "../categories/CategoryCard";
 
 function ProjectPage() {
     const [categories, setCategories] = useState([]);
-   
+
 
     const getAll = () => {
         CategoryApi.getAllCategories()
@@ -26,13 +26,16 @@ function ProjectPage() {
         <div className="project-page">
             <Header />
 
-            <div className="project-board">
-            {categories.map(category => (
-                   <CategoryCard key={category.id} category={category}/>
+            <div className="projects-board flex-start">
+                    <div className="category-card card-container">category test</div>
+                    <div className="category-card card-container">category test</div>
+
+                {categories.map(category => (
+                    <CategoryCard key={category.id} category={category} />
                 ))}
 
                 <div className="board-container">
-                        <CreateCategoryCard onSubmit={createCategory}/> 
+                    <CreateCategoryCard onSubmit={createCategory} />
                 </div>
 
             </div>

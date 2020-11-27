@@ -7,7 +7,7 @@ export default function LoginFormTest({onSubmit}) {
     const [password, setPassword] = useState("");
 
     return (
-        <div className="card">
+        <div className="login-form">
             <div className="card-body">
                 <h4 className="card-title" >Login</h4>
                 <div>

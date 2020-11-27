@@ -7,10 +7,10 @@ import Popup from "reactjs-popup";
 export default function CreateProjectCard({onSubmit}) {
 
     const [projectName, setProjectName] = useState("");
-    const [projectDescription, setProjectDescription] = useState("");
+
 
     function onCreateProject() {
-        const projectData = {projectName, projectDescription};
+        const projectData = {title: projectName};
         onSubmit(projectData);
         console.log(projectData);
     }
@@ -28,9 +28,10 @@ export default function CreateProjectCard({onSubmit}) {
                                 <button className="close" onClick={close}>
                                     <i className="fas fa-times"></i>
                                 </button>
+                                <div className="header">New Project</div>
                                 <div className="content">
                                     <div className="popup-item flex-start">
-                                        <h2 className="prompt">Project Name</h2>
+                                        <h2 className="prompt">Name</h2>
                                         <input
                                             type="text"
                                             className="input-box"
@@ -41,16 +42,7 @@ export default function CreateProjectCard({onSubmit}) {
                                         </input>
                                     </div>
 
-                                    <div className="popup-item flex-start">
-                                        <h2 className="prompt">Project Description</h2>
-                                        <textarea
-                                            className="input-box"
-                                            placeholder="project description"
-                                            value={projectDescription}
-                                            onChange={e => setProjectDescription(e.target.value)}
-                                        >
-                                        </textarea>
-                                    </div>
+                        
                                 </div>
                                 <div className="flex-end">
                                      <button

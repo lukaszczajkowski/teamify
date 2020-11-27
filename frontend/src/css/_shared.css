@@ -18,6 +18,13 @@ body {
     padding: 5vh 5vw;
 }
 
+.card-container {
+    background-color: var(--theme-green);
+    width: 100px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 .flex-between {
     display: flex;
     align-items: center;
@@ -34,5 +41,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.flex-columm {
+    display: flex;
+    flex-direction: column;
 }
 

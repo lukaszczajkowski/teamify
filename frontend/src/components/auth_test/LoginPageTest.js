@@ -12,10 +12,10 @@ export default function LoginPageTest() {
     }
 
     return (
-        <div className="login-page test">
+        <div className="login-page-test">
             <div className="board-container">
 
-                <div className="col-12  strong-shadow">
+                <div className="login-form">
                     <LoginFormTest onSubmit={login} />
                 </div>
             </div>
