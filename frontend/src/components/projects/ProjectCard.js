@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 export default function ProjectCard({ project }) {
     return (
         <div>
+            {/*eslint-disable-next-line react/prop-types*/}
             <Link to={`/projects/${project.id}`}>
+                {/*eslint-disable-next-line react/prop-types*/}
                 <button className="project-card">{project.name}</button>
             </Link>
 
