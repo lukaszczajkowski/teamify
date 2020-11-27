@@ -66,8 +66,8 @@ export default function CreateBeanCard() {
                                 </div>
 
                             </div>
-
-                            <button
+                            <div className="flex-end">
+                                <button
                                 className="button"
                                 onClick={() => {
 
@@ -75,6 +75,8 @@ export default function CreateBeanCard() {
                                 }}>
                                 Add
                             </button>
+                            </div>
+                            
                         </div>
 
                     )}

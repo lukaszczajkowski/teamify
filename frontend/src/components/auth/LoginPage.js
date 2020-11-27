@@ -5,6 +5,7 @@ import RegisterForm from "./RegisterForm";
 import {useSpring, animated} from 'react-spring';
 
 function LoginPage() {
+    console.log("inside the login page");
     const[registrationFormStatus, setRegistrationFormStatus] = useState(false);
     const loginProps = useSpring({
         left: registrationFormStatus ? -500 : 0,
@@ -35,10 +36,10 @@ function LoginPage() {
     }
 
     return (
-        <div className="container">
+        <div className="loginpage">
             <div className="login-register-wrapper">
                 <div className="nav-buttons">
-                    <animated.button onClick={loginClicked} id="loginBtn" class="active" style= {loginBtnProps}>Login</animated.button>
+                    <animated.button onClick={loginClicked} id="loginBtn" className="active" style= {loginBtnProps}>Login</animated.button>
                     <animated.button onClick={registerClicked} id="registerBtn" style={registerBtnProps}>Register</animated.button>
                 </div>
                 <div className="form-group">
@@ -47,7 +48,7 @@ function LoginPage() {
                 </div>
                     
                 <animated.div className="forgot-panel" style={loginProps}>
-                    <a herf='#'>Forgot your password?</a>
+                    <a className="forgot" herf='#'>Forgot your password?</a>
                 </animated.div>
             </div>
         </div>

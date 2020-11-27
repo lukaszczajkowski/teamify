@@ -15,13 +15,14 @@ import Popup from "reactjs-popup";
 // value={points}
 // onChange={e => setPoints(e.target.value)}
 
-export default function CreateBeanCard() {
+export default function CreateTaskCard() {
 
     return (
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup
                     trigger={<button className="button"> + Create Task </button>}
+
                     modal
                     nested>
                     {close => (
@@ -48,12 +49,11 @@ export default function CreateBeanCard() {
                                         placeholder=""
                                     >
                                     </textarea>
-                                </div>
-
-                                
+                                </div>     
 
                                 <div className="popup-item flex-start">
                                         <h2 className="prompt">Members</h2>
+
 
                                     <input
                                         type="range"
@@ -63,6 +63,7 @@ export default function CreateBeanCard() {
                                     >
                                     </input>
                                 </div>
+
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Comment</h2>
                                     <textarea
@@ -75,7 +76,8 @@ export default function CreateBeanCard() {
 
                             </div>
 
-                            <button
+                            <div className="flex-end">
+                                <button
                                 className="button"
                                 onClick={() => {
 
@@ -83,6 +85,10 @@ export default function CreateBeanCard() {
                                 }}>
                                 Add
                             </button>
+
+                            </div>
+                            
+
                         </div>
 
                     )}

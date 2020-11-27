@@ -8,7 +8,14 @@
 @import url("./user-page.css");
 @import url("./create-bean-card.css");
 @import url("./projects-board.css");
+@import url("./landingpage.css");
+@import url("./popup.css");
+@import url("./project-page.css");
 
+
+/* test */
+@import url("./login-test.css");
+@import url("CreateTaskCard.css");
 
 
 /* Google fonts */

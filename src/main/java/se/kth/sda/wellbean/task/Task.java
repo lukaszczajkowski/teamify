@@ -26,10 +26,10 @@ public class Task {
 
     // Each task can have many users and each user can have many tasks
     @ManyToMany
-    private List<User> members;
+    private Set<User> members;
 
-    @ManyToOne
-    private User creator;
+    //@ManyToOne
+    //private User creator;
 
     // one task has many comments
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
@@ -39,9 +39,9 @@ public class Task {
     @ManyToOne
     private Project project;
 
-    // one task has many categories
-    @OneToMany(mappedBy = "task")
-    private Set<Category> categories;
+    // many tasks belongs to one category
+    @ManyToOne
+    private Category category;
 
     public Task() {
     }
@@ -70,13 +70,7 @@ public class Task {
         this.description = description;
     }
 
-    public List<User> getMembers() {
-        return members;
-    }
 
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
 
     public List<Comment> getComments() {
         return comments;
@@ -94,25 +88,31 @@ public class Task {
         this.project = project;
     }
 
-    public User getCreator() {
-        return creator;
+
+    public Category getCategory() {
+        return this.category;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
 
-    public Set<Category> getCategories() {
-        return categories;
-    }
+    public void setCategory(Category category) {
+        this.category = category;
+    } 
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
 
     public void addMember(User user) {
         members.add(user);
     }
 
 
+    public void removeMember(User newMember) {
+        members.remove(newMember);
+    }
+
+    public Set<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<User> members) {
+        this.members = members;
+    }
 }

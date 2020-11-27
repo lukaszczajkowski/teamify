@@ -1,5 +1,4 @@
-import React from 'react';
-// import { useState} from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,47 +8,71 @@ import {
 // Import custom styles for our application
 import './css/style.css';
 
-//import Auth from './services/Auth';
-
 // Import pages
 import LoginPage from "./components/auth/LoginPage";
-import HomePage from './components/home/HomePage';
+import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
-import ProjectBoard from './components/projects/ProjectBoard';
+import Auth from './services/Auth';
+
+
+// testing login
+import LoginPageTest from "./components/auth_test/LoginPageTest";
+import RegisterPageTest from "./components/auth_test/RegisterPageTest";
 
 function App() {
-//   const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
-//   Auth.bindLoggedInStateSetter(setLoggedIn);
-const loggedIn = true;
-  
-  const loggedInRouter = (
-            <Router>
-                {/* <Navbar onLogout={() => Auth.logout()} /> */}
 
-                <div className="">
-                    <Switch>
-                        <Route path="/projects">
-                            <ProjectPage/>
-                        </Route>
+    const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
+    Auth.bindLoggedInStateSetter(setLoggedIn);
 
-                        <Route path="/users">
-                            <UserPage/>
-                        </Route>
+    // eslint-disable-next-line no-unused-vars
+    const [query, setQuery] = useState("");
 
-                        <Route path="/ProjectBoard">
-                            <ProjectBoard/>
-                        </Route>
+    const loggedInRouter = (
+        <Router>
+            {/* <Navbar onLogout={() => Auth.logout()} /> */}
+                <Switch>
+                    <Route exact path="/projects">
+                        <ProjectPage />
+                    </Route>
 
-                        <Route path="/">
-                          <HomePage/>
-                        </Route>                       
-                    </Switch>
-                </div>
-            </Router>
-  );
+                    <Route exact path="/users">
+                        <UserPage />
+                    </Route>
+                </Switch>
+        </Router>
+    );
 
-  return (loggedIn ? loggedInRouter : <LoginPage/>);
+    const notLoggedIn = (
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <LandingPage />
+                </Route>
+                <Route exact path="/login">
+                    <LoginPage />
+                </Route>
+
+                <Route exact path="/login/test">
+                    <LoginPageTest />
+                </Route>
+                <Route exact path="/register/test">
+                    <RegisterPageTest />
+                </Route>
+
+                <Route exact path="/projects">
+                    <ProjectPage />
+                </Route>
+
+                <Route exact path="/users">
+                    <UserPage />
+                </Route>
+
+            </Switch>
+        </Router>
+    )
+
+    return (loggedIn ? loggedInRouter : notLoggedIn);
 }
 
 export default App;

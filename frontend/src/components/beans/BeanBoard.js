@@ -17,7 +17,7 @@ export default function BeanBoard() {
                 <div className="flip-front">
                     <div className="flex-start board-item board-title">
                         <img className="bean-icon" src={BeanIcon}></img>
-                        <p className="board-name">Your personal bean board</p>
+                        <h1 className="board-name">Your personal bean board</h1>
                     </div>
                     <div className="flex-between board-item">
                         <p className="prompt">How are you feeling today? </p>
@@ -31,7 +31,7 @@ export default function BeanBoard() {
                         <button className="button">Drink water</button>
                         <button className="button">Exericise</button>
                         <button className="button">Meditate</button>
-                        <button className="button">+ create a new bean</button>
+
                         {/* <CreateBeanCard onSubmit= {createBean}/> */}
                         <CreateBeanCard />
                     </div>

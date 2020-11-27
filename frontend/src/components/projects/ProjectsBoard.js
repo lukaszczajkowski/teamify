@@ -1,19 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import CreateProjectCard from "./CreateProjectCard";
+import ProjectCard from "./ProjectCard";
 
-export default function ProjectsBoard() {
+
+// eslint-disable-next-line react/prop-types
+export default function ProjectsBoard({projects, createProject}) {
+
     return (
         <div className="projects-board">
             <div className="board-container">
                 <p className="prompt">Keep working on projects:</p>
-
-                <div className="project-card" id="create-project">
-                    <button>
-                        +
-                        Create new project
-                    </button>
-                </div>
-                <div className="project-cards">
-                    Display all project cards here.
+               
+                <div className="project-cards flex-start">
+                <CreateProjectCard onSubmit={createProject} />
+                <Link to="/projects">
+                <button className="project-card">Testing card</button>
+                </Link>
+              
+                 {/*eslint-disable-next-line react/prop-types*/}
+                {projects.map(project => (
+                   <ProjectCard key={project.id} project={project}/>
+                ))}
                 </div>
             </div>
 
