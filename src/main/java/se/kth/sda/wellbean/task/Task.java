@@ -90,11 +90,20 @@ public class Task {
 
 
     public Category getCategory() {
-        return category;
+        return this.category;
     }
+
 
     public void setCategory(Category category) {
         this.category = category;
+    } 
+
+
+
+
+    public void setCategory(Category categories) {
+        this.categories = categories;
+
     }
 
     public void addMember(User user) {
