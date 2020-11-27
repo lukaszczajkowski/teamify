@@ -47,14 +47,14 @@ public class TaskService {
     }
 
     public List<Task> getAllTaskByCategoriesId(Long categoryId) {
-        return repo.findAllByCategories_id(categoryId);
+        return repo.findAllByCategoryId(categoryId);
     }
 
     public List<Task> gelAllTaskByProjectId(Long projectId) {
         return repo.findAllByProjectId(projectId);
     }
 
-    public List<Task> gelAllTaskByCreatorId(Long creatorId) {
-        return repo.findAllByCreatorId(creatorId);
+    public List<Task> getAllTaskByCategoryId(Long creatorId) {
+        return repo.findAllByCategoryId(creatorId);
     }
 }

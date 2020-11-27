@@ -136,7 +136,7 @@ public class ProjectController {
      * Updates the list of users assigned to the project with the given id with a new member
      * only to the user who created the project
      * Example of usage:
-     * localhost:8080/1/userId?userId=1 - updates the project with the ID = 1
+     * localhost:8080/projects/1/userId?userId=1 - updates the project with the ID = 1
      * by adding the user with the ID = 1 to the list of members
      * @param userId
      * @return project

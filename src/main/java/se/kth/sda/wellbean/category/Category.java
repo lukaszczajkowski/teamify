@@ -19,6 +19,9 @@ public class Category {
     @ManyToOne
     private Project project;
 
+
+    @OneToMany(mappedBy = "category")
+    private Set<Task> task;
     @OneToMany
     private Set<Task> tasks;
 
@@ -50,4 +53,15 @@ public class Category {
         this.project = project;
     }
 
+
+    //TODO: to avoid infinite cycle for representation inside category task
+    // and then inside task category and etc
+    // I think it should be special annotation
+    /*public Set<Task> getTask() {
+        return task;
+    }*/
+
+    public void setTask(Set<Task> task) {
+        this.task = task;
+    }
 }
