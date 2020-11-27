@@ -19,8 +19,8 @@ public class Category {
     @ManyToOne
     private Project project;
 
-    @ManyToOne
-    private Task task;
+    @OneToMany
+    private Set<Task> tasks;
 
     public Category() {}
     public Category(long id, String title)
@@ -50,11 +50,4 @@ public class Category {
         this.project = project;
     }
 
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
 }
