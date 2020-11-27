@@ -1,6 +1,6 @@
 import Api from "./Api";
 
-class ProjectApi {
+class CategoryApi {
     getAllCategories(project_id) {
         return Api.get('/categories/' + project_id);
     }
@@ -18,4 +18,4 @@ class ProjectApi {
     } 
 }
 
-export default new ProjectApi();
+export default new CategoryApi();

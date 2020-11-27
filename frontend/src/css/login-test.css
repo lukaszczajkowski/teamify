@@ -1,0 +1,5 @@
+.login-page-test .board-container {
+    background-color: var(--theme-dark-green);
+    max-width: 400px;
+    
+}
