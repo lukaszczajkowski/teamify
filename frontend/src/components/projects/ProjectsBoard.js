@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CreateProjectCard from "./CreateProjectCard";
 import ProjectCard from "./ProjectCard";
-import ProjectApi from "../../api/ProjectApi";
 
 
 // eslint-disable-next-line react/prop-types
