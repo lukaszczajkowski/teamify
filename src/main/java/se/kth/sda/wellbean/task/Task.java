@@ -103,11 +103,11 @@ public class Task {
         this.creator = creator;
     }
 
-    public Set<Category> getCategories() {
+    public Category getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Category categories) {
         this.categories = categories;
     }
 
