@@ -101,11 +101,6 @@ public class Task {
 
 
 
-    public void setCategory(Category categories) {
-        this.categories = categories;
-
-    }
-
     public void addMember(User user) {
         members.add(user);
     }
