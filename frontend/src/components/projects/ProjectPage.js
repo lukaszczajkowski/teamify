@@ -1,13 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../layout/Header";
-import ProjectBoard from "./ProjectBoard";
+import CategoryApi from "../../api/CategoryApi";
+import CreateCategoryCard from "../categories/CreateCategoryCard";
+import CategoryCard from "../categories/CategoryCard";
 
 function ProjectPage() {
+    const [categories, setCategories] = useState([]);
+   
+
+    const getAll = () => {
+        CategoryApi.getAllCategories()
+            .then(response => setCategories(response.data));
+    }
+
+    const createCategory = (categoryData) => {
+        CategoryApi.createCategory(categoryData)
+            .then(response => setCategories([response.data, ...categories]));
+    }
+
+    useEffect(() => {
+        getAll()
+    }, []);
+
     return (
         <div className="project-page">
             <Header />
-            <ProjectBoard />
-            
+
+            <div className="project-board">
+            {categories.map(category => (
+                   <CategoryCard key={category.id} category={category}/>
+                ))}
+
+                <div className="board-container">
+                        <CreateCategoryCard onSubmit={createCategory}/> 
+                </div>
+
+            </div>
+
         </div>
     );
 }

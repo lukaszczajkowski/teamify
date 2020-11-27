@@ -3,14 +3,20 @@ import Popup from "reactjs-popup";
 
 
 
-export default function CreateProjectCard() {
+// eslint-disable-next-line react/prop-types
+export default function CreateProjectCard({onSubmit}) {
 
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
 
-    console.log("inside project card");
+    function onCreateProject() {
+        const projectData = {projectName, projectDescription};
+        onSubmit(projectData);
+        console.log(projectData);
+    }
+
     return (
-        <div className="create-bean-card">
+        <div className="create-project-card">
             <div className="popup-container">
                 <Popup
                     trigger={<button id="create-new-project"> + Create New Project</button>}
@@ -49,7 +55,9 @@ export default function CreateProjectCard() {
                                 <div className="flex-end">
                                      <button
                                     className="button"
-                                    onClick={() => { close(); }}>
+                                    onClick={() => { 
+                                        onCreateProject();
+                                        close(); }}>
                                     Create
                             </button>
                                 </div>
