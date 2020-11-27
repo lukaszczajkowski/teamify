@@ -36,7 +36,7 @@ function LoginPage() {
     }
 
     return (
-        <div className="container">
+        <div className="loginpage">
             <div className="login-register-wrapper">
                 <div className="nav-buttons">
                     <animated.button onClick={loginClicked} id="loginBtn" className="active" style= {loginBtnProps}>Login</animated.button>
@@ -48,7 +48,7 @@ function LoginPage() {
                 </div>
                     
                 <animated.div className="forgot-panel" style={loginProps}>
-                    <a herf='#'>Forgot your password?</a>
+                    <a className="forgot" herf='#'>Forgot your password?</a>
                 </animated.div>
             </div>
         </div>
