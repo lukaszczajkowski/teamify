@@ -36,6 +36,9 @@ public class Event {
 
     private boolean allDay;
 
+    //enables to edit an event's date by dragging
+    private boolean editable;
+
     public Event() {
         this.users = new HashSet<>();
     }
@@ -130,5 +133,13 @@ public class Event {
 
     public void setAllDay(boolean allDay) {
         this.allDay = allDay;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 }
