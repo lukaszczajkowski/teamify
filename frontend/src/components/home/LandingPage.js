@@ -20,7 +20,7 @@ function LandingPage() {
                 <Header />
                 <img className="image" src= {allinone} alt = "allinone"  />
                 <p className="quote">A all-in-one workspace that cares about your well-being!</p>
-                <Link to = "/login" onClick = {refresh} className="button"><span>Get Started </span></Link>
+                <Link to = "/login" onClick = {refresh} className="button-start"><span>Get Started </span></Link>
 
             </div>
         </div>
