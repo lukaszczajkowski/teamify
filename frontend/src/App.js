@@ -19,6 +19,7 @@ import Auth from './services/Auth';
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
 import RegisterPageTest from "./components/auth_test/RegisterPageTest";
+import Calendar from './components/calendar/Calendar';
 
 function App() {
 
@@ -66,6 +67,11 @@ function App() {
 
                 <Route exact path="/users">
                     <UserPage />
+                </Route>
+
+
+                <Route exact path="/calendar">
+                    <Calendar />
                 </Route>
 
             </Switch>
