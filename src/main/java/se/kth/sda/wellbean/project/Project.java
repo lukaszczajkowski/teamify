@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.project;
 
+import se.kth.sda.wellbean.calendar.Event;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.user.User;
@@ -31,6 +32,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Category> categories;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<Event> events;
 
     public Project() {
         this.tasks = new HashSet<>();

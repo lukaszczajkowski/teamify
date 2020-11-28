@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.calendar;
 
+import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
@@ -29,6 +30,11 @@ public class Event {
 
     @ManyToOne
     private User creator;
+
+    @ManyToOne
+    private Project project;
+
+    private boolean allDay;
 
     public Event() {
         this.users = new HashSet<>();
@@ -108,5 +114,21 @@ public class Event {
 
     public void removeMember(User user) {
         this.users.remove(user);
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public boolean isAllDay() {
+        return allDay;
+    }
+
+    public void setAllDay(boolean allDay) {
+        this.allDay = allDay;
     }
 }
