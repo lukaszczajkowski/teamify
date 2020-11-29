@@ -31,15 +31,28 @@ function App() {
     const loggedInRouter = (
         <Router>
             {/* <Navbar onLogout={() => Auth.logout()} /> */}
-                <Switch>
-                    <Route exact path="/projects">
-                        <ProjectPage />
-                    </Route>
+            <Switch>
+                <Route exact path="/users">
+                    <UserPage />
+                </Route>
 
-                    <Route exact path="/users">
-                        <UserPage />
-                    </Route>
-                </Switch>
+                <Route exact path="/projects/:projectId">
+                    <ProjectPage />
+                </Route>
+
+                <Route exact path="/">
+                    <LandingPage />
+                </Route>
+
+                <Route exact path="/login/test">
+                    <LoginPageTest />
+                </Route>
+
+                <Route exact path="/register/test">
+                    <RegisterPageTest />
+                </Route>
+
+            </Switch>
         </Router>
     );
 
@@ -52,7 +65,6 @@ function App() {
                 <Route exact path="/login">
                     <LoginPage />
                 </Route>
-
                 <Route exact path="/login/test">
                     <LoginPageTest />
                 </Route>
@@ -60,13 +72,7 @@ function App() {
                     <RegisterPageTest />
                 </Route>
 
-                <Route exact path="/projects">
-                    <ProjectPage />
-                </Route>
 
-                <Route exact path="/users">
-                    <UserPage />
-                </Route>
 
             </Switch>
         </Router>
