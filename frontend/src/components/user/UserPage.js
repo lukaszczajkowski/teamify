@@ -7,7 +7,7 @@ import ProjectApi from "../../api/ProjectApi";
 function UserPage() {
     const [projects, setProjects] = useState([]);
 
-    const getAll = () => {
+    const getAllProjects = () => {
         ProjectApi.getCurrentUsersProjects()
         .then(response => setProjects(response.data));
     }
@@ -18,7 +18,7 @@ function UserPage() {
     }
 
     useEffect(()=>{
-        getAll()
+        getAllProjects()
     },[]);
 
 

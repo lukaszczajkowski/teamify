@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import CreateProjectCard from "./CreateProjectCard";
 import ProjectCard from "./ProjectCard";
 
@@ -14,12 +13,10 @@ export default function ProjectsBoard({ projects, createProject }) {
 
                 <div className="project-cards flex-center flex-wrap">
                     <CreateProjectCard onSubmit={createProject} />
-                    <Link to="/projects">
-                        <button className="project-card">Testing card</button>
-                    </Link>
+                
                         {/*eslint-disable-next-line react/prop-types*/}
                         {projects.sort((a, b) => b.id - a.id).map(project => (
-                            <ProjectCard key={project.id} project={project} />
+                            <ProjectCard key={project.id} project={project}/>
                         ))}
                 </div>
             </div>

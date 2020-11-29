@@ -12,22 +12,28 @@ function ProjectPage() {
     const { projectId } = useParams();
     const [categories, setCategories] = useState([]);
 
-    const DeleteCurrentProject = () => {
+    const handleClick = () => {
+        deleteCurrentProject();
+        history.push("/users");
+        window.location.reload();
+    }
+
+    function deleteCurrentProject() {
         return ProjectApi.deleteProject(projectId)
-            .then(history.push("/users"))
-            .catch(err => alert(`error on delete project ${err}`));
+        .then(console.log(`project ${projectId} is deleted`))
+            .catch(err => console.log(`error on delete project ${err}`));
     }
 
     const getAllCategories = () => {
         return CategoryApi.getAllCategories()
             .then(response => setCategories(response.data))
-            .catch(err => alert(`error on get all categories ${err}`));
+            .catch(err => console.log(`error on get all categories ${err}`));
     }
 
     const createCategory = (categoryData) => {
         CategoryApi.createCategory(categoryData)
             .then(response => setCategories([response.data, ...categories]))
-            .catch(err => alert(`error on create new category ${err}`));
+            .catch(err => console.log(`error on create new category ${err}`));
     }
 
     useEffect(() => {
@@ -38,7 +44,7 @@ function ProjectPage() {
         <div className="project-page">
             <Header />
             <button className="button"
-                onClick={DeleteCurrentProject}>
+                onClick={handleClick}>
                 Delete project
                 </button >
             <div className="projects-board flex-start">
@@ -54,7 +60,7 @@ function ProjectPage() {
                             ))}
                         </div>
                 }
-                
+
                 <div className="board-container">
                     <CreateCategoryCard onSubmit={createCategory} />
                 </div>
