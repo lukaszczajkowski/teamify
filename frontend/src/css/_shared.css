@@ -64,3 +64,8 @@ body {
     justify-content: center;
 
 }
+
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
