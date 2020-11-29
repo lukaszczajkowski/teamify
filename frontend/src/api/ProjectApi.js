@@ -1,10 +1,10 @@
 import Api from "./Api";
 
 class ProjectApi {
-    getCurrentUsersProjects() {
+    getCurrentUsersProjects(currentUser_id) {
         return Api.get('/projects', {
             params: {
-                userId: 999
+                userId: currentUser_id
             }
         });
     }
