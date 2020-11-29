@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+
 import EventApi from '../../api/EventApi'
 
 /**
@@ -30,6 +31,7 @@ export default function Calendar() {
         title: 'Event now',
         start: new Date()
     }]);
+
 
     useEffect( () =>{
         email === null ? setCalendarType("project") : setCalendarType("user");

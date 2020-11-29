@@ -14,12 +14,13 @@ import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
-
+import Calendar from './components/calendar/Calendar';
 
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
 import RegisterPageTest from "./components/auth_test/RegisterPageTest";
 import Calendar from './components/calendar/Calendar';
+
 
 function App() {
 
@@ -71,7 +72,6 @@ function App() {
                 <Route exact path="/users">
                     <UserPage />
                 </Route>
-
 
                 <Route exact path="/calendar">
                     <Calendar />
