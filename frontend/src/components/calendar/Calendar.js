@@ -38,6 +38,7 @@ export default function Calendar() {
         }, [email]);
 
     useEffect( async () => {
+        // eslint-disable-next-line no-undef
         EventApi.getUserEventsInRange(id, "2020-11-20", "2025-11-30")
     },[calendarEvents]);
     
