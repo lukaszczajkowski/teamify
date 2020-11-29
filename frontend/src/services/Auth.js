@@ -40,7 +40,7 @@ class Auth {
             return true;
         } catch (e) {
             console.error(e);
-            
+        
             this.setLoggedIn(false);
             return false;
         }

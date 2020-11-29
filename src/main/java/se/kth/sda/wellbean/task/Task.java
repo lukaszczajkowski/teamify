@@ -103,7 +103,6 @@ public class Task {
         members.add(user);
     }
 
-
     public void removeMember(User newMember) {
         members.remove(newMember);
     }

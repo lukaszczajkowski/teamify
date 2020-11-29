@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullcalendar/core": "^5.4.0",
+    "@fullcalendar/daygrid": "^5.4.0",
+    "@fullcalendar/interaction": "^5.4.0",
+    "@fullcalendar/list": "^5.4.0",
+    "@fullcalendar/react": "^5.4.0",
+    "@fullcalendar/timegrid": "^5.4.0",
+    "@fullcalendar/timeline": "^5.4.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
@@ -42,6 +49,9 @@
   },
   "devDependencies": {
     "eslint": "^7.14.0",
-    "eslint-plugin-react": "^7.21.5"
+    "eslint-plugin-react": "^7.21.5",
+    "sass": "^1.29.0",
+    "sass-loader": "^8.0.2",
+    "webpack": "^4.44.2"
   }
 }
