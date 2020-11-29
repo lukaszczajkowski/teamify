@@ -19,6 +19,7 @@ import Calendar from './components/calendar/Calendar';
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
 import RegisterPageTest from "./components/auth_test/RegisterPageTest";
+import Calendar from './components/calendar/Calendar';
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
                         <UserPage />
                     </Route>
                     <Route exact path="/calendar">
-                    <Calendar/>
+                        <Calendar />
                     </Route>
                 </Switch>
         </Router>
@@ -73,7 +74,7 @@ function App() {
                 </Route>
 
                 <Route exact path="/calendar">
-                    <Calendar/>
+                    <Calendar />
                 </Route>
 
             </Switch>

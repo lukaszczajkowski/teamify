@@ -1,3 +1,4 @@
+
 import Api from "./Api";
 
 class EventApi {
@@ -103,5 +104,6 @@ class EventApi {
         });
     }
 }
+
 
 export default new EventApi;
