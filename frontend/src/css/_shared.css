@@ -1,5 +1,5 @@
 body {
-    font-family: 'Rubik', sans-serif; 
+    font-family: 'Rubik', sans-serif;
     font-size: 13px;
 }
 
@@ -9,6 +9,15 @@ body {
 
 .main-content {
     padding: 4vh;
+}
+
+.button {
+    border-radius: 20px;
+    padding: 5px 18px 5px 18px;
+    transition: all 0.5s;
+    margin-top: 25px;
+    margin: 1vh;
+    background-color: yellow;
 }
 
 .board-container {
@@ -43,8 +52,21 @@ body {
     justify-content: flex-end;
 }
 
-.flex-columm {
+.flex-column {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
