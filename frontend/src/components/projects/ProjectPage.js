@@ -5,14 +5,23 @@ import CreateCategoryCard from "../categories/CreateCategoryCard";
 import CategoryCard from "../categories/CategoryCard";
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
+import AddMemberPopup from "./AddMemberPopup";
 
 function ProjectPage() {
     const history = useHistory();
 
     const { projectId } = useParams();
+    const [currentProject, setCurrentProject] = useState([]);
     const [categories, setCategories] = useState([]);
 
-    const handleClick = () => {
+    const getCurrentProject = () => {
+        ProjectApi.getProjectById(projectId)
+            .then(response => setCurrentProject(response.data))
+            .then(console.log(`current project id: ${projectId}`))
+            .catch(err => console.log(`error on delete project ${err}`));
+    }
+
+    const onDeleteProject = () => {
         deleteCurrentProject();
         history.push("/users");
         window.location.reload();
@@ -20,12 +29,18 @@ function ProjectPage() {
 
     function deleteCurrentProject() {
         return ProjectApi.deleteProject(projectId)
-        .then(console.log(`project ${projectId} is deleted`))
+            .then(console.log(`project ${projectId} is deleted`))
             .catch(err => console.log(`error on delete project ${err}`));
     }
 
-    const getAllCategories = () => {
-        return CategoryApi.getAllCategories()
+    const addMemberByEmail = (userEmail) => {
+        ProjectApi.addMemberByEmail(projectId, userEmail)
+            .then(console.log(`add user: ${userEmail} to project`))
+            .catch(err => console.log(`error on add member ${err}`));
+    }
+
+    const getAllCategories = (projectId) => {
+        return CategoryApi.getAllCategories(projectId)
             .then(response => setCategories(response.data))
             .catch(err => console.log(`error on get all categories ${err}`));
     }
@@ -37,16 +52,20 @@ function ProjectPage() {
     }
 
     useEffect(() => {
-        getAllCategories()
+        getCurrentProject();
+        getAllCategories();
     }, []);
 
     return (
         <div className="project-page">
             <Header />
+            <div>project name: {currentProject.title}</div>
             <button className="button"
-                onClick={handleClick}>
+                    id="delete-project"
+                    onClick={onDeleteProject}>
                 Delete project
-                </button >
+                </button>
+            <AddMemberPopup onSubmit={addMemberByEmail}/>
             <div className="projects-board flex-start">
                 <div className="category-card card-container">category test</div>
                 <div className="category-card card-container">category test</div>
