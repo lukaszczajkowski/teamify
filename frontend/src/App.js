@@ -40,6 +40,9 @@ function App() {
                     <Route exact path="/users">
                         <UserPage />
                     </Route>
+                    <Route exact path="/calendar">
+                        <Calendar />
+                    </Route>
                 </Switch>
         </Router>
     );
