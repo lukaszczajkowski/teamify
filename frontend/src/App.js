@@ -15,6 +15,7 @@ import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
 import ChatClient from './components/chat/ChatClient'
+import Calendar from './components/calendar/Calendar'
 
 
 // testing login

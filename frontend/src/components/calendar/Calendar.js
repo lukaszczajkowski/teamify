@@ -15,17 +15,12 @@ export default function Calendar() {
    
     const [calendarEvents, setCalendarEvents] = useState([]);
 
-    const loadEvents = async () => {
-        EventApi.getAllUserEvents()
-                .then(response => {
-                    const events = response.data;
-                    setCalendarEvents(events);
-                })
-                .then(console.log("data ready to use"))
-                .catch(err => console.log(err));
-    }
+    
     useEffect( async () => {
-        loadEvents().then(console.log("data reloaded!"))         
+        EventApi.getAllUserEvents().then(response => {
+            const listOfEvents = response.data;
+            setCalendarEvents(listOfEvents);
+        })        
     }, []);
 
     const handleDateClick = (e) => {
@@ -38,7 +33,10 @@ export default function Calendar() {
                 allDay: false,
                 editable: true,
             }
-            EventApi.create(newEvent);
+            EventApi.create(newEvent).then(response => {
+                const events = response.data;
+                setCalendarEvents([...calendarEvents, events]);
+            });
         }
     };
 
@@ -63,6 +61,7 @@ export default function Calendar() {
             description: info.event.description,
             start: start,
             end: end,
+            users: info.event.extendedProps.users,
             creator: info.event.extendedProps.creator,
             allDay: info.event.allDay,
             editable: true
