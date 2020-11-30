@@ -1,39 +1,49 @@
 import React, {useState} from "react";
 
-// eslint-disable-next-line react/prop-types
 function RegisterForm({onSubmit}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     return (
+       
         <React.Fragment>
-            <label form="fullName">Name:</label>
-                <input type="text"
-                       className="form-control"
-                       value={name}
-                       onChange={ e => setName(e.target.value) }
-                       placeholder="Name"/>
                     
-            <label form="email">Email:</label>
-                <input type="email"
-                       value={email}
-                       onChange={ e => setEmail(e.target.value) }
-                       className="form-control"
-                       placeholder="Email"/>
+                        <label htmlfor="fullname">Name:</label>
+                        <input 
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={ e => setName(e.target.value) }
+                            placeholder="Name"/>
+                  
+
+                        <label htmlfor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={ e => setEmail(e.target.value) }
+                            placeholder="Email"/>
                     
-            <label form="password">Password:</label>
-                <input type="password" 
-                        placeholder="Password" 
-                        className="form-control" 
-                        value={password}
-                        onChange={e => setPassword(e.target.value)} />
+
+                        <label htmlfor="password">Password:</label>
+                        <input 
+                            type="password" 
+                            placeholder="Password" 
+                            id="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)} />
                     
-            <button className="submit"
-                    onClick={ () => onSubmit({name, email, password})}>
-                        Create account
-            </button>
-        </React.Fragment>
+
+                    
+                    <input type='submit' value='submit' 
+                            className='submit' 
+                            onClick={() => onSubmit({name, email, password})} />
+                            
+                    
+                        </React.Fragment>
+               
     );
 }
 
