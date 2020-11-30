@@ -25,11 +25,17 @@ export default function Calendar() {
 
     const handleDateClick = (e) => {
         if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
-            var date = new Date(e.dateStr);
+            var startDate = new Date(e.dateStr);
+            var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
+             startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
+            var startInMililis = startDate.getMilliseconds();
+            var endDate = startInMililis + 60000*30;
+            var endDateOutput = new Date(endDate.toDateString)
             const newEvent = {
                 title: 'test event',
                 description : 'test description',
-                start: date,
+                start: startDateOutput,
+                end: endDateOutput,
                 allDay: false,
                 editable: true,
             }
@@ -53,20 +59,31 @@ export default function Calendar() {
         console.log("Title:", info.event.title);
         console.log("Start:", info.event.start);
         console.log("End:", info.event.end);
-        const start = new Date(info.event.start);
+        const startDate = new Date(info.event.start);
+        var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
+             startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
         const end = new Date(info.event.end);
+        var endDateOutput = new Date(end.getFullYear(), end.getMonth(),
+        end.getDate(), end.getHours(), end.getMinutes() + 60)
         const updatedEvent = {
             id: info.event.id,
             title: info.event.title,
             description: info.event.description,
-            start: start,
-            end: end,
+            start: startDateOutput,
+            end: endDateOutput,
             users: info.event.extendedProps.users,
             creator: info.event.extendedProps.creator,
             allDay: info.event.allDay,
             editable: true
         }
-        EventApi.update(updatedEvent);
+        EventApi.update(updatedEvent).then(response => {
+            const eventAfterUpdate = response.data;
+            calendarEvents.filter((e) => {
+                if(e.id == eventAfterUpdate.id){
+                    e = eventAfterUpdate
+                }
+            })
+        });
         
     }
 
