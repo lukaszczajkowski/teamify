@@ -1,11 +1,12 @@
 .projects-board .board-container {
     max-width: 1024px;
     margin: auto;
-    padding: 10vh;
     margin-top: 6vh;
 }
 
 .projects-board .prompt {
+    padding-top: 10vh;
+    padding-left: 10vh;
     font-size: 20px;
     color: var(--theme-dark-green);
     font-weight: 600;
@@ -19,7 +20,8 @@
     text-align: center;
     padding: 7vh 1vw;
     border-radius: 10px;
-    margin-right: 30px;
+    margin-right: 4vh;
+    margin-bottom: 4vh;
     
 }
 

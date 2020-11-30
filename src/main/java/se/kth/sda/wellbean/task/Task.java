@@ -99,12 +99,9 @@ public class Task {
     } 
 
 
-
-
     public void addMember(User user) {
         members.add(user);
     }
-
 
     public void removeMember(User newMember) {
         members.remove(newMember);

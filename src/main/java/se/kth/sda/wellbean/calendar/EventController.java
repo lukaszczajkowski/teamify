@@ -6,6 +6,8 @@ import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.notification.Notification;
 import se.kth.sda.wellbean.notification.NotificationService;
+import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
@@ -25,15 +27,18 @@ public class EventController {
     private final UserService userService;
     private final AuthService authService;
     private final NotificationService notificationService;
+    private final ProjectService projectService;
 
     public EventController(EventRepository eventRepository,
                            UserService userService,
                            AuthService authService,
-                           NotificationService notificationService) {
+                           NotificationService notificationService,
+                           ProjectService projectService) {
         this.eventRepository = eventRepository;
         this.userService = userService;
         this.authService = authService;
         this.notificationService = notificationService;
+        this.projectService = projectService;
     }
 
     @GetMapping("")
@@ -50,13 +55,13 @@ public class EventController {
      * @return
      * @throws BadDateFormatException
      */
-    @GetMapping("{userId}/range")
+    @GetMapping("{userId}/user/range")
     public List<Event> getEventsInRange(@PathVariable Long userId,
                                         @RequestParam(value = "start", required = true) String start,
                                         @RequestParam(value = "end", required = true) String end) throws BadDateFormatException {
         Date startDate = null;
         Date endDate = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             startDate = inputDateFormat.parse(start);
@@ -90,6 +95,45 @@ public class EventController {
         return userEventsInTimeScope;
     }
 
+    @GetMapping("{projectId}/project/range")
+    public List<Event> getEventsByProjectInRange(@PathVariable Long projectId,
+                                        @RequestParam(value = "start", required = true) String start,
+                                        @RequestParam(value = "end", required = true) String end) throws BadDateFormatException {
+        Date startDate = null;
+        Date endDate = null;
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
+
+        try {
+            startDate = inputDateFormat.parse(start);
+        } catch (ParseException e) {
+            throw new BadDateFormatException("bad start date: " + start);
+        }
+
+        try {
+            endDate = inputDateFormat.parse(end);
+        } catch (ParseException e) {
+            throw new BadDateFormatException("bad end date: " + end);
+        }
+
+        LocalDateTime startDateTime = LocalDateTime.ofInstant(startDate.toInstant(),
+                ZoneId.systemDefault());
+
+        LocalDateTime endDateTime = LocalDateTime.ofInstant(endDate.toInstant(),
+                ZoneId.systemDefault());
+
+        Project project = projectService.getById(projectId);
+
+        List<Event> eventsInTimeScope = eventRepository.findByDateBetween(startDateTime, endDateTime);
+
+        List<Event> userEventsInTimeScope = new ArrayList<>();
+        for(Event event : eventsInTimeScope) {
+            if(event.getUsers().contains(project)){
+                userEventsInTimeScope.add(event);
+            }
+        }
+
+        return userEventsInTimeScope;
+    }
     /**
      * Createas a new event, sets its creator to the current user, adds that
      * user to the set of members of that event and saves the event in the database
@@ -123,6 +167,34 @@ public class EventController {
             User user = userService.findUserByEmail(userEmail);
             event.addMember(user);
             notificationService.sendNotification(user, event);
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    @PutMapping("/{eventId}/change-start/start")
+    public Event changeStartingDate(@PathVariable Long eventId,
+                                    @RequestParam LocalDateTime start) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if(event.getFinish().compareTo(start) >= 0){
+            event.setStart(start);
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    @PutMapping("/{eventId}/change-finish/finish")
+    public Event changeFinishDate(@PathVariable Long eventId,
+                                  @RequestParam LocalDateTime finish) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if(event.getStart().compareTo(finish) <= 0){
+            event.setStart(finish);
             return eventRepository.save(event);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);

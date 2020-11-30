@@ -1,5 +1,7 @@
 package se.kth.sda.wellbean.calendar;
 
+import org.hibernate.annotations.Type;
+import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
@@ -29,6 +31,15 @@ public class Event {
 
     @ManyToOne
     private User creator;
+
+    @ManyToOne
+    private Project project;
+
+    //@Column(name = "allDay", columnDefinition = "boolean default false", nullable = false)
+    private Boolean allDay;
+
+    //enables to edit an event's date by dragging
+    private Boolean editable;
 
     public Event() {
         this.users = new HashSet<>();
@@ -108,5 +119,29 @@ public class Event {
 
     public void removeMember(User user) {
         this.users.remove(user);
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Boolean isAllDay() {
+        return allDay;
+    }
+
+    public void setAllDay(boolean allDay) {
+        this.allDay = allDay;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 }
