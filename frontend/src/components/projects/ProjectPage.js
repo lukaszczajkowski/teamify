@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "../layout/Header";
 import CategoryApi from "../../api/CategoryApi";
-import CreateCategoryCard from "../categories/CreateCategoryCard";
-import CategoryCard from "../categories/CategoryCard";
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
+import ProjectBoard from "./ProjectBoard";
 
 function ProjectPage() {
     const history = useHistory();
@@ -45,9 +44,9 @@ function ProjectPage() {
             .catch(err => console.log(`error on get all categories ${err}`));
     }
 
-    const createCategory = (categoryData) => {
-        CategoryApi.createCategory(categoryData)
-            .then(response => setCategories([response.data, ...categories]))
+    const createCategory = (projectId, categoryData) => {
+        CategoryApi.createCategory(projectId, categoryData)
+            .then(response => setCategories([...categories, response.data]))
             .catch(err => console.log(`error on create new category ${err}`));
     }
 
@@ -61,28 +60,18 @@ function ProjectPage() {
             <Header />
             <div>project name: {currentProject.title}</div>
             <button className="button"
-                    id="delete-project"
-                    onClick={onDeleteProject}>
+                id="delete-project"
+                onClick={onDeleteProject}>
                 Delete project
-                </button>
-            <AddMemberPopup onSubmit={addMemberByEmail}/>
+            </button>
+
+            <AddMemberPopup onSubmit={addMemberByEmail} />
+
             <div className="projects-board flex-start">
-                <div className="category-card card-container">category test</div>
+                
                 <div className="category-card card-container">category test</div>
 
-                {
-                    categories.length === 0 ?
-                        null :
-                        <div>
-                            {categories.map(category => (
-                                <CategoryCard key={category.id} category={category} />
-                            ))}
-                        </div>
-                }
-
-                <div className="board-container">
-                    <CreateCategoryCard onSubmit={createCategory} />
-                </div>
+                <ProjectBoard categories={categories} createCategory={createCategory}/>
 
             </div>
 

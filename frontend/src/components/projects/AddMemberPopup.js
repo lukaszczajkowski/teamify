@@ -4,7 +4,7 @@ import Popup from "reactjs-popup";
 
 // eslint-disable-next-line react/prop-types
 export default function AddMemberPopup({ onSubmit }) {
-    const [memberEmail, setMemberEmail] = useState("");
+    const [userEmail, setUserEmail] = useState("");
 
     return (
         <div className="create-bean-card">
@@ -25,8 +25,8 @@ export default function AddMemberPopup({ onSubmit }) {
                                         type="text"
                                         className="input-box"
                                         placeholder="Enter the Email of new member" 
-                                        value={memberEmail}
-                                        onChange={e => setMemberEmail(e.target.value)}
+                                        value={userEmail}
+                                        onChange={e => setUserEmail(e.target.value)}
                                     >
                                     </input>
                                 </div>
@@ -36,7 +36,7 @@ export default function AddMemberPopup({ onSubmit }) {
                                 <button
                                     className="button"
                                     onClick={() => {
-                                        onSubmit({memberEmail});
+                                        onSubmit({userEmail});
                                         close();
                                     }}>
                                     Add
