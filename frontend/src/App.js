@@ -19,7 +19,7 @@ import Calendar from './components/calendar/Calendar';
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
 import RegisterPageTest from "./components/auth_test/RegisterPageTest";
-import Calendar from './components/calendar/Calendar';
+
 
 
 function App() {
@@ -32,15 +32,7 @@ function App() {
 
     const loggedInRouter = (
         <Router>
-            {/* <Navbar onLogout={() => Auth.logout()} /> */
-                <Switch>
-
-                <Route exact path="/login">
-                    <LoginPage />
-                </Route>
-                    
-                    
-                    
+            {/* <Navbar onLogout={() => Auth.logout()} /> */}
             <Switch>
                 <Route exact path="/users">
                     <UserPage />
@@ -75,11 +67,6 @@ function App() {
                 <Route exact path="/">
                     <LandingPage />
                 </Route>
-
-                
-
-
-
                 <Route exact path="/login">
                     <LoginPage />
                 </Route>
@@ -100,7 +87,7 @@ function App() {
         </Router>
     )
 
-    return loggedIn ? loggedInRouter : notLoggedIn;
+    return (loggedIn ? loggedInRouter : notLoggedIn);
 }
 
 export default App;

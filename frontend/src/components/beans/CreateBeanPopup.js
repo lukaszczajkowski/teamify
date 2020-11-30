@@ -15,7 +15,7 @@ import Popup from "reactjs-popup";
 // value={points}
 // onChange={e => setPoints(e.target.value)}
 
-export default function CreateBeanCard() {
+export default function CreateBeanPopup() {
 
     return (
         <div className="create-bean-card">

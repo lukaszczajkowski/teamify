@@ -1,10 +1,10 @@
 import Api from "./Api";
 
 class ProjectApi {
-    getCurrentUsersProjects() {
+    getCurrentUsersProjects(currentUser_id) {
         return Api.get('/projects', {
             params: {
-                userId: 999
+                userId: currentUser_id
             }
         });
     }
@@ -21,27 +21,15 @@ class ProjectApi {
         return Api.put('/projects', project);
     }
 
-    addMemberById(project_id, user_id) {
-        return Api.put('projects/' + project_id, {
-            params: {
-                userId: user_id
-            }
-        });
-    }
-
     addMemberByEmail(project_id, user_email) {
         return Api.put('projects/' + project_id, {
-            params: {
-                userEmail: user_email
-            }
+            params: user_email
         });
     }
 
     removeMemberById(project_id, member_id) {
         return Api.put('projects/' + project_id + '/remove/memberId', {
-            params: {
-                memberId: member_id
-            }
+            params: member_id
         });
     }
 

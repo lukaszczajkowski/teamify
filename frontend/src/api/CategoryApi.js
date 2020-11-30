@@ -1,16 +1,18 @@
 import Api from "./Api";
 
 class CategoryApi {
-    getAllCategories(project_id) {
-        return Api.get('/categories/' + project_id);
+    getAllCategories(projectId) {
+        return Api.get('/categories/' + projectId);
     }
 
-    createCategory(project_id, category) {
-        return Api.post('/categories' + project_id, {newCategory: category});
+    createCategory(projectId, category) {
+        return Api.post('/categories/' + projectId, category);
     }
 
     updateCategory(project_id, category) {
-        return Api.put('/categories' + project_id, {updatedCategory: category});
+        return Api.put('/categories/' + project_id, {
+                "updatedCategory": category
+        });
     }
 
     deleteCategory(category_id) {

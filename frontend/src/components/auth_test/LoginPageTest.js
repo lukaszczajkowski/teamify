@@ -1,18 +1,18 @@
 import React from "react";
 import Auth from "../../services/Auth";
 import LoginFormTest from "./LoginFormTest";
-import { useHistory } from "react-router-dom";
 
 
 export default function LoginPageTest() {
-    const history = useHistory();
+    
 
     const login = async (loginData) => {
         const loginSuccess = await Auth.login(loginData);
         if (!loginSuccess) {
             alert("Invalid credentials");
         } else {
-            history.push("/users");
+            alert("login successful");
+            
         }
     }
 

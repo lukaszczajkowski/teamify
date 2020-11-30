@@ -1,7 +1,7 @@
 import React from "react";
 
 import BeanIcon from "../../assets/beanicon.png";
-import CreateBeanCard from "./CreateBeanCard";
+import CreateBeanPopup from "./CreateBeanPopup";
 
 export default function BeanBoard() {
 
@@ -33,7 +33,7 @@ export default function BeanBoard() {
                         <button className="button">Meditate</button>
 
                         {/* <CreateBeanCard onSubmit= {createBean}/> */}
-                        <CreateBeanCard />
+                        <CreateBeanPopup />
                     </div>
                  <div className="flex-end">
                      <button className="flip-arrow"><i className="fas fa-arrow-right"></i></button>
