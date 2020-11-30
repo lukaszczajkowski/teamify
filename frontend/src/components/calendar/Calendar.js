@@ -3,8 +3,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-
-import EventApi from '../../api/EventApi'
+import EventApi from '../../api/EventApi';
+//import Api from '../../api/Api';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -12,51 +12,33 @@ import EventApi from '../../api/EventApi'
  * the calendarEvents state. 
  */
 export default function Calendar() {
-    // const {
-    //     id,
-    //     email,
-    //     name,
-    //     title
-    // } = data;
+   
+    const [calendarEvents, setCalendarEvents] = useState([]);
 
-    /*
-    This serves as an indicator whether the calendar is in the
-    user panel or project panel
-    */
-    const [calendarType, setCalendarType] = useState("");
-
-    const [email] = useState('not null');
-
-    const [calendarEvents, setCalendarEvents] = useState([{
-        title: 'Event now',
-        start: new Date()
-    }]);
-
-
-    useEffect( () =>{
-        email === null ? setCalendarType("project") : setCalendarType("user");
-        }, [email]);
-
-    // useEffect( async () => {
-    //     EventApi.getUserEventsInRange(id, "2020-11-20", "2025-11-30")
-    // },[calendarEvents]);
-    
-
-    //test
-    console.log("Calendar type:", calendarType);
+    const loadEvents = async () => {
+        EventApi.getAllUserEvents()
+                .then(response => {
+                    const events = response.data;
+                    setCalendarEvents(events);
+                })
+                .then(console.log("data ready to use"))
+                .catch(err => console.log(err));
+    }
+    useEffect( async () => {
+        loadEvents().then(console.log("data reloaded!"))         
+    }, []);
 
     const handleDateClick = (e) => {
         if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
+            var date = new Date(e.dateStr);
             const newEvent = {
                 title: 'test event',
                 description : 'test description',
-                start: e.dateStr,
+                start: date,
                 allDay: false,
-                editable: true
+                editable: true,
             }
-            setCalendarEvents(calendarEvents.concat(
-                newEvent
-            ));
+            EventApi.create(newEvent);
         }
     };
 
@@ -64,6 +46,8 @@ export default function Calendar() {
         console.log("Title", info.event.title);
         console.log("Start:", info.event.start);
         console.log("End:", info.event.end);
+        console.log("Creator", info.event.extendedProps.creator)
+        console.log(info.event);
     }
 
     const handleEventChange = (info) => {
@@ -71,6 +55,20 @@ export default function Calendar() {
         console.log("Title:", info.event.title);
         console.log("Start:", info.event.start);
         console.log("End:", info.event.end);
+        const start = new Date(info.event.start);
+        const end = new Date(info.event.end);
+        const updatedEvent = {
+            id: info.event.id,
+            title: info.event.title,
+            description: info.event.description,
+            start: start,
+            end: end,
+            creator: info.event.extendedProps.creator,
+            allDay: info.event.allDay,
+            editable: true
+        }
+        EventApi.update(updatedEvent);
+        
     }
 
     return(

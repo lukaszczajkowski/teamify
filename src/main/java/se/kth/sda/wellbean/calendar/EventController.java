@@ -4,12 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
-import se.kth.sda.wellbean.notification.Notification;
 import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
-import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
 
 import java.text.ParseException;
@@ -46,6 +44,20 @@ public class EventController {
         return eventRepository.findAll();
     }
 
+    @GetMapping("{eventId}")
+    public Event eventById(@PathVariable Long eventId){
+        return eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+    }
+
+    @GetMapping("/user")
+    public List<Event> getAllUserEvents() {
+        User user = getUser();
+        return eventRepository.findAllByUsers_id(user.getId());
+    }
+
+    /*
     /**
      * Returns the events of the given user identified by userId within a given range of time
      * /events/1/range?start=2020-12-02&end=2020-12-03
@@ -54,7 +66,6 @@ public class EventController {
      * @param end
      * @return
      * @throws BadDateFormatException
-     */
     @GetMapping("{userId}/user/range")
     public List<Event> getEventsInRange(@PathVariable Long userId,
                                         @RequestParam(value = "start", required = true) String start,
@@ -134,8 +145,9 @@ public class EventController {
 
         return userEventsInTimeScope;
     }
+    */
     /**
-     * Createas a new event, sets its creator to the current user, adds that
+     * Creates a new event, sets its creator to the current user, adds that
      * user to the set of members of that event and saves the event in the database
      * @param event
      * @return
@@ -151,9 +163,14 @@ public class EventController {
 
     @PutMapping("")
     public Event update(@RequestBody Event event) {
+        System.out.println("Updating: " + event.getId() + ", " + event.getTitle());
+        System.out.println("Created by: " + event.getCreator());
         if(checkCredentials(event)){
+            System.out.println("Credentials ok!");
+            event.addMember(event.getCreator());
             return eventRepository.save(event);
         } else {
+            System.out.println("Credentials not ok.");
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
@@ -173,6 +190,7 @@ public class EventController {
         }
     }
 
+    /*
     @PutMapping("/{eventId}/change-start/start")
     public Event changeStartingDate(@PathVariable Long eventId,
                                     @RequestParam LocalDateTime start) {
@@ -187,6 +205,9 @@ public class EventController {
         }
     }
 
+     */
+
+    /*
     @PutMapping("/{eventId}/change-finish/finish")
     public Event changeFinishDate(@PathVariable Long eventId,
                                   @RequestParam LocalDateTime finish) {
@@ -200,6 +221,7 @@ public class EventController {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
+     */
 
     @DeleteMapping("")
     public void delete(Event event) {
@@ -231,5 +253,25 @@ public class EventController {
 
     private User getUserByEmail(String email) {
         return userService.findUserByEmail(email);
+    }
+
+    private User getUser() {
+        return userService.findUserByEmail(authService.getLoggedInUserEmail());
+    }
+
+    private LocalDateTime parseDate(String dateString) {
+        Date date = null;
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
+
+        try {
+            date = inputDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new BadDateFormatException("bad date: " + date);
+        }
+
+        LocalDateTime localDate = LocalDateTime.ofInstant(date.toInstant(),
+                ZoneId.systemDefault());
+
+        return localDate;
     }
 }
