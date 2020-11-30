@@ -37,10 +37,9 @@ export default function Calendar() {
         email === null ? setCalendarType("project") : setCalendarType("user");
         }, [email]);
 
-    useEffect( async () => {
-        // eslint-disable-next-line no-undef
-        EventApi.getUserEventsInRange(id, "2020-11-20", "2025-11-30")
-    },[calendarEvents]);
+    // useEffect( async () => {
+    //     EventApi.getUserEventsInRange(id, "2020-11-20", "2025-11-30")
+    // },[calendarEvents]);
     
 
     //test
