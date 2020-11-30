@@ -35,8 +35,8 @@ public class Event {
     @ManyToOne
     private Project project;
 
-    @Column(name = "allDay", columnDefinition = "boolean default false", nullable = false)
-    private boolean allDay;
+    //@Column(name = "allDay", columnDefinition = "boolean default false", nullable = false)
+    private Boolean allDay;
 
     //enables to edit an event's date by dragging
     private Boolean editable;

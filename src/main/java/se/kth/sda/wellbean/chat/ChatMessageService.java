@@ -43,4 +43,10 @@ public class ChatMessageService {
             chatMessageRepository.save(message);
         }
     }
+
+    public ChatMessage findById(String id) {
+        return chatMessageRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("can't find message (" + id + ")")
+        );
+    }
 }
