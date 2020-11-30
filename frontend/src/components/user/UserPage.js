@@ -3,8 +3,10 @@ import Header from "../layout/Header";
 import BeanBoard from "../beans/BeanBoard";
 import ProjectsBoard from "../projects/ProjectsBoard";
 import ProjectApi from "../../api/ProjectApi";
+import Auth from '../../services/Auth';
 
 function UserPage() {
+    const user = Auth.getUser();
     const [projects, setProjects] = useState([]);
 
     const getAll = () => {
@@ -25,8 +27,9 @@ function UserPage() {
     return (
         <div className="user-page">
             <Header />
+            
             <div className="main-content">
-                <p className="user-prompt">Hello, UserName.</p>
+            {user &&  <p className="welcome"> Hello {user.name} </p> }
             <BeanBoard/>
             <ProjectsBoard projects={projects} createProject={createProject}/>
             </div>
