@@ -1,7 +1,6 @@
 import AuthApi from "../api/AuthApi";
 
 const tokenKey = "_token";
-const userKey = "_user";
 
 // Disclaimer: This simple auth implementation is for development purposes only.
 
@@ -23,7 +22,6 @@ class Auth {
     logout() {
         this.setLoggedIn(false);
         this._clearToken();
-        this._clearUser();
     }
 
     bindLoggedInStateSetter(loggedInStateSetter) {
@@ -39,7 +37,6 @@ class Auth {
         try {
             const response = await action(data);
             this._setToken(response.data.token);
-            this._setUser(response.data.user);
             this.setLoggedIn(true);
             return true;
         } catch (e) {
@@ -62,18 +59,7 @@ class Auth {
         window.sessionStorage.removeItem(tokenKey);
     }
 
-    _setUser(user) {
-        const userJson = JSON.stringify(user);
-        window.sessionStorage.setItem(userKey, userJson);
-    }
-
-    _clearUser() {
-        window.sessionStorage.removeItem(userKey);
-    }
-
-    getUser() {
-        return JSON.parse(window.sessionStorage.getItem(userKey));
-    }
+    
 }
 
 
