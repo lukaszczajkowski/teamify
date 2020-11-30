@@ -1,6 +1,11 @@
 package se.kth.sda.wellbean.chat;
 
-public class ResourceNotFoundException extends X {
-    public ResourceNotFoundException(String s) {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
     }
 }
