@@ -7,15 +7,15 @@ class ChatApi {
     }
 
     countNewMessages(senderId, recipientId) {
-        return Api.get("/messages/" + senderId + "/" + recipientId + "/count")
+        return Api.get("/messages/" + senderId + "/" + recipientId + "/count");
     }
     
     findChatMessages(senderId, recipientId) {
-        return Api.get("/messages/" + senderId + "/" + recipientId)
+        return Api.get("/messages/" + senderId + "/" + recipientId);
     }
       
     findChatMessage(id) {
-        return Api.get("/messages/" + id)
+        return Api.get("/messages/" + id);
     }
 
 }

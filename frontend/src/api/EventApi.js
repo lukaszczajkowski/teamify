@@ -2,6 +2,10 @@
 import Api from "./Api";
 
 class EventApi {
+
+    getAllUserEvents() {
+        return Api.get('/events/user');
+    }
     
     /**
      * Returns all the user's events within the range
