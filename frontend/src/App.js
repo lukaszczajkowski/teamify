@@ -32,9 +32,13 @@ function App() {
         <Router>
             {/* <Navbar onLogout={() => Auth.logout()} /> */}
                 <Switch>
-                    <Route exact path="/projects">
-                        <ProjectPage />
-                    </Route>
+
+                <Route exact path="/login">
+                    <LoginPage />
+                </Route>
+                    
+                    
+                    
 
                     <Route exact path="/users">
                         <UserPage />
@@ -49,9 +53,8 @@ function App() {
                 <Route exact path="/">
                     <LandingPage />
                 </Route>
-                <Route exact path="/login">
-                    <LoginPage />
-                </Route>
+                
+
 
                 <Route exact path="/login/test">
                     <LoginPageTest />
@@ -72,7 +75,7 @@ function App() {
         </Router>
     )
 
-    return (loggedIn ? loggedInRouter : notLoggedIn);
+    return loggedIn ? loggedInRouter : notLoggedIn;
 }
 
 export default App;

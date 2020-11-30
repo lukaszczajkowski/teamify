@@ -80,10 +80,10 @@ button.active{
     width: 100%;
     height: 35px;
     padding-left: 15px;
-    border: 1px solid #93abad;
+    border: none;
     border-radius: 5px;
     margin-bottom: 20px;
-    background: white;
+    background:rgba(255,255,255,.5);
     
 }
 
@@ -91,7 +91,7 @@ button.active{
     text-transform: uppercase;
 }
 
-button.submit{
+input.submit{
     font-weight: 500;
     text-transform: uppercase;
     font-size: 1em;
@@ -105,11 +105,6 @@ button.submit{
     margin-top: 23px;
     background-color: #0F545C;
 }
-
-.form-group input:focus {
-    border: 1px solid #555;
-    
-  }
 
 /*Form positioning and animation */
 form#registerform{
