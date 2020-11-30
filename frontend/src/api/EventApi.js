@@ -1,7 +1,8 @@
-import Api from './Api';
+
+import Api from "./Api";
 
 class EventApi {
-
+    
     /**
      * Returns all the user's events within the range
      * from start to end
@@ -104,4 +105,5 @@ class EventApi {
     }
 }
 
-export default new EventApi; 
+
+export default new EventApi;

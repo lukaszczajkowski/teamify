@@ -14,12 +14,13 @@ import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
-
+import Calendar from './components/calendar/Calendar';
 
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
 import RegisterPageTest from "./components/auth_test/RegisterPageTest";
 import Calendar from './components/calendar/Calendar';
+
 
 function App() {
 
@@ -32,18 +33,31 @@ function App() {
     const loggedInRouter = (
         <Router>
             {/* <Navbar onLogout={() => Auth.logout()} /> */}
-                <Switch>
-                    <Route exact path="/projects">
-                        <ProjectPage />
-                    </Route>
+            <Switch>
+                <Route exact path="/users">
+                    <UserPage />
+                </Route>
 
-                    <Route exact path="/users">
-                        <UserPage />
-                    </Route>
-                    <Route exact path="/calendar">
+                <Route exact path="/projects/:projectId">
+                    <ProjectPage />
+                </Route>
+
+                <Route exact path="/">
+                    <LandingPage />
+                </Route>
+
+                <Route exact path="/login/test">
+                    <LoginPageTest />
+                </Route>
+
+                <Route exact path="/register/test">
+                    <RegisterPageTest />
+                </Route>
+                <Route exact path="/calendar">
                         <Calendar />
                     </Route>
-                </Switch>
+
+            </Switch>
         </Router>
     );
 
@@ -56,7 +70,6 @@ function App() {
                 <Route exact path="/login">
                     <LoginPage />
                 </Route>
-
                 <Route exact path="/login/test">
                     <LoginPageTest />
                 </Route>
@@ -64,13 +77,6 @@ function App() {
                     <RegisterPageTest />
                 </Route>
 
-                <Route exact path="/projects">
-                    <ProjectPage />
-                </Route>
-
-                <Route exact path="/users">
-                    <UserPage />
-                </Route>
 
 
                 <Route exact path="/calendar">
