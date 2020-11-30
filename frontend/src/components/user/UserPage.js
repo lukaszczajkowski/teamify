@@ -9,7 +9,7 @@ function UserPage() {
     const user = Auth.getUser();
     const [projects, setProjects] = useState([]);
 
-    const getAll = () => {
+    const getAllProjects = () => {
         ProjectApi.getCurrentUsersProjects()
         .then(response => setProjects(response.data));
     }
@@ -20,7 +20,7 @@ function UserPage() {
     }
 
     useEffect(()=>{
-        getAll()
+        getAllProjects()
     },[]);
 
 

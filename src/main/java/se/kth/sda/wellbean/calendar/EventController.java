@@ -61,7 +61,7 @@ public class EventController {
                                         @RequestParam(value = "end", required = true) String end) throws BadDateFormatException {
         Date startDate = null;
         Date endDate = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
+        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
         try {
             startDate = inputDateFormat.parse(start);
@@ -179,8 +179,12 @@ public class EventController {
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        event.setStart(start);
-        return eventRepository.save(event);
+        if(event.getFinish().compareTo(start) >= 0){
+            event.setStart(start);
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     @PutMapping("/{eventId}/change-finish/finish")
@@ -189,8 +193,12 @@ public class EventController {
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        event.setStart(finish);
-        return eventRepository.save(event);
+        if(event.getStart().compareTo(finish) <= 0){
+            event.setStart(finish);
+            return eventRepository.save(event);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     @DeleteMapping("")

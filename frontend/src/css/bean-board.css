@@ -38,10 +38,6 @@
 
 .bean-board .button {
     margin: 1vh;
-    padding: 5px;
-    padding-left: 18px;
-    padding-right: 18px;
-    border-radius: 20px;
     color: white;
     background-color: #07B4B5;
 }

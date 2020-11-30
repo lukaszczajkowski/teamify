@@ -2,7 +2,9 @@ package se.kth.sda.wellbean.category;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.project.ProjectService;
@@ -37,7 +39,7 @@ public class CategoryController {
      * @return List of Categories for the project
      */
     @GetMapping("/categories")
-    public List<Category> getAllComments() {
+    public List<Category> getAllCategory() {
             return categoryService.getAllCategories();
     }
 
@@ -45,9 +47,11 @@ public class CategoryController {
      * This method takes project id as parameter and returns list of categories
      * @param projectId
      * @return list of categories
+     * Example of usage:
+     * localhost:8080/categories/1 - returns the project with the ID = 1
      */
     @GetMapping("/categories/{projectId}")
-    public List<Category> getAllCommentsByProjectId(@PathVariable Long projectId) {
+    public List<Category> getAllCategoryByProjectId(@PathVariable Long projectId) {
             return categoryService.getAllCategoriesByProjectId(projectId);
     }
 
@@ -56,6 +60,12 @@ public class CategoryController {
      * @param newCategory
      * @param projectId
      * @return category
+     * Example of usage:
+     *localhost:8080/categories/1 + category in the request body
+     * request body  {
+     *                  "title": "title of category"
+     *                  }
+     * -Create category based on request body details
      */
     @PostMapping("/categories/{projectId}")
     public Category createNewCategory(@RequestBody Category newCategory, @PathVariable Long projectId) {
@@ -68,6 +78,13 @@ public class CategoryController {
      * @param updatedCategory
      * @param projectId
      * @return
+     * Example of usage:
+     *localhost:8080/categories/1 + category in the request body
+     * request body  {
+     *                 "id":2,
+     *                 "title":"title of category"
+     *               }
+     * -updates category based on request body details
      */
     @PutMapping("/categories/{projectId}")
     public Category updateCategory(@RequestBody Category updatedCategory, @PathVariable Long projectId) {
@@ -78,6 +95,10 @@ public class CategoryController {
     /**
      * This method deletes the category details
      * @param id
+     * @throws ResponseStatusException
+     * Example of usage:
+     * localhost:8080/categories/2
+     * -deletes category with id 2
      */
     @DeleteMapping("/categories/{id}")
     public void deleteCategory(@PathVariable Long id) {
@@ -86,7 +107,9 @@ public class CategoryController {
         {
             categoryService.deleteCategory(id);
         }
-
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

@@ -1,0 +1,57 @@
+.landing-page {
+height: 100vh;
+}
+
+.landing-page .quote {
+  text-align: center;
+  font-size: 30px;
+  color: var(--theme-dark-green);
+}
+
+.landing-page .button {
+
+}
+
+.landing-page .buttons {
+  margin-right: 25px;
+}
+
+.landing-page #login {
+  background-color: var(--theme-green);
+  color: var(--theme-dark-green);
+}
+
+.landing-page #signup {
+  background-color: var(--theme-purple);
+  color: #ffffff;
+}
+
+.landing-page #get-started {
+  background-color: var(--theme-dark-green);
+  color: #ffffff;
+  margin-top: 25px;
+}
+
+/* #get-started:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+#get-started:hover {
+  padding-right: 25px;
+}
+
+
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+} */
+
+.landing-page #hero {
+  height: 65vh;
+}

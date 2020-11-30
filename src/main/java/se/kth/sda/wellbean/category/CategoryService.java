@@ -20,6 +20,7 @@ public class CategoryService {
     public Optional<Category> getById(Long id) {
         return cRepository.findById(id);
     }
+
     public List<Category> getAllCategoriesByProjectId(Long projectId) {
         return cRepository.getAllCommentsByProjectId(projectId);
     }
