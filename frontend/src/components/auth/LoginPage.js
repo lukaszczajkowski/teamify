@@ -32,7 +32,6 @@ function LoginPage() {
     const register = async (registrationData) => {
         const registerSuccess = await Auth.register(registrationData);
         console.log("This is register page");
-        debugger;
         if (!registerSuccess) {
             alert("Couldn't register check credentials and try again");
             
