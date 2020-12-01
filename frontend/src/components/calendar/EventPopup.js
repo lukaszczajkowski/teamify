@@ -3,9 +3,7 @@ import Popup from "reactjs-popup";
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEvent}) {
-    console.log("from eventpopup, isOpen", isOpen);
-    console.log("from eventpopup, currentEvent", currentEvent);
+export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEvent, onClose}) {
     return (
         <div className="create-bean-card">
             <div className="popup-container">
@@ -15,7 +13,11 @@ export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEve
                     nested>
                     {close => (
                         <div className="modal">
-                            <button className="close" onClick={close}>
+                            <button className="close" onClick={()=> {
+                                close();
+                                onClose(false);
+                                }    
+                            }>
                                 <i className="fas fa-times"></i>
                             </button>
                             <div className="content">
@@ -45,6 +47,7 @@ export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEve
                                 onClick={() => {
                                     {updateEvent(currentEvent)}
                                     close();
+                                    {onClose(false)}
                                 }}>
                                 Update
                                 </button>
@@ -53,6 +56,7 @@ export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEve
                                 onClick={() => {
                                     {deleteEvent(currentEvent)}
                                     close();
+                                    {onClose(false)}
                                 }}>
                                 Delete
                                 </button>
