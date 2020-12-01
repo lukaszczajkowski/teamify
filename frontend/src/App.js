@@ -49,6 +49,9 @@ function App() {
                 <Route exact path="/chat">
                     <ChatClient />
                 </Route>
+                <Route exact path="/">
+                    <LandingPage />
+                </Route>
                 </Switch>
         </Router>
     );
