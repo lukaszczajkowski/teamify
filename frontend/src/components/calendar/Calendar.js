@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
-//import Api from '../../api/Api';
+import EventPopup from './EventPopup';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -14,14 +14,21 @@ import EventApi from '../../api/EventApi';
 export default function Calendar() {
    
     const [calendarEvents, setCalendarEvents] = useState([]);
+    const [popupOpen, setPopupOpen] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [currentEvent, setCurrentEvent] = useState({});
 
     
     useEffect( async () => {
+        loadData();
+    }, []);
+
+    const loadData = () => {
         EventApi.getAllUserEvents().then(response => {
             const listOfEvents = response.data;
             setCalendarEvents(listOfEvents);
-        })        
-    }, []);
+        })   
+    }
 
     const handleDateClick = (e) => {
         if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
@@ -47,18 +54,11 @@ export default function Calendar() {
     };
 
     const handleEventClick = (info) => {
-        console.log("Title", info.event.title);
-        console.log("Start:", info.event.start);
-        console.log("End:", info.event.end);
-        console.log("Creator", info.event.extendedProps.creator)
-        console.log(info.event);
+        setPopupOpen(true);
+        setCurrentEvent(info.event);    
     }
 
     const handleEventChange = (info) => {
-        //EventApi update method here
-        console.log("Title:", info.event.title);
-        console.log("Start:", info.event.start);
-        console.log("End:", info.event.end);
         const startDate = new Date(info.event.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -77,6 +77,7 @@ export default function Calendar() {
             editable: true
         }
         EventApi.update(updatedEvent).then(response => {
+            loadData();
             const eventAfterUpdate = response.data;
             calendarEvents.filter((e) => {
                 if(e.id == eventAfterUpdate.id){
@@ -85,6 +86,17 @@ export default function Calendar() {
             })
         });
         
+    }
+
+    const deleteEvent = (toBeRemoved) => {
+        const idToRemove = toBeRemoved.id;
+        // eslint-disable-next-line no-unused-vars
+        EventApi.delete(idToRemove).then(() => { 
+            loadData();
+            var removeIndex = calendarEvents.findIndex(item => item.id == idToRemove);
+            calendarEvents.splice(removeIndex, 1);
+            }
+        )
     }
 
     return(
@@ -102,6 +114,17 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
+
+            <div className="create-bean-card">
+                <div className="popup-container">
+                <EventPopup isOpen = {popupOpen} 
+                currentEvent = {currentEvent} 
+                deleteEvent = {deleteEvent}
+                updateEvent = {handleEventChange}
+                onClose = {setPopupOpen}
+                />
+                </div>
+            </div>
         </div>
-    )
+    );
 }

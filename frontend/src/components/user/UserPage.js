@@ -5,8 +5,11 @@ import ProjectsBoard from "../projects/ProjectsBoard";
 import ProjectApi from "../../api/ProjectApi";
 
 
-function UserPage() {
+
+// eslint-disable-next-line react/prop-types
+function UserPage({loggedInUser}) {
     const [projects, setProjects] = useState([]);
+    console.log(loggedInUser);
 
     const getAllProjects = () => {
         ProjectApi.getCurrentUsersProjects()
@@ -28,7 +31,8 @@ function UserPage() {
             <Header />
             
             <div className="main-content">
-            <p className="welcome"> Hello, userName </p>
+            {/*eslint-disable-next-line react/prop-types*/}
+            <p className="welcome"> Hello, {loggedInUser.name}</p>
             <BeanBoard/>
             <ProjectsBoard projects={projects} createProject={createProject}/>
             </div>
