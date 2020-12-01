@@ -21,20 +21,22 @@ function ProjectPage() {
     }
 
     const onDeleteProject = () => {
-        deleteCurrentProject();
+        if (window.confirm("Do you want to delete this project?")) {
+            deleteCurrentProject();
         history.push("/users");
         window.location.reload();
+        }
     }
 
     function deleteCurrentProject() {
         return ProjectApi.deleteProject(projectId)
-            .then(console.log(`project ${projectId} is deleted`))
+            .then(console.log(`Deleting project ${projectId}`))
             .catch(err => console.log(`error on delete project ${err}`));
     }
 
-    const addMemberByEmail = (userEmail) => {
+    const addMemberByEmail = (projectId, userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(console.log(`add user: ${userEmail} to project`))
+            .then(alert(`add user: ${userEmail} to project`))
             .catch(err => console.log(`error on add member ${err}`));
     }
 
@@ -47,6 +49,7 @@ function ProjectPage() {
     const createCategory = (projectId, categoryData) => {
         CategoryApi.createCategory(projectId, categoryData)
             .then(response => setCategories([...categories, response.data]))
+            .then(console.log(`new category: ${categoryData.title} is added`))
             .catch(err => console.log(`error on create new category ${err}`));
     }
 

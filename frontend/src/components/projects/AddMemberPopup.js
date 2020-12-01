@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 
 
 // eslint-disable-next-line react/prop-types
-export default function AddMemberPopup({ onSubmit }) {
+export default function AddMemberPopup({ projectId, onSubmit }) {
     const [userEmail, setUserEmail] = useState("");
 
     return (
@@ -36,7 +36,7 @@ export default function AddMemberPopup({ onSubmit }) {
                                 <button
                                     className="button"
                                     onClick={() => {
-                                        onSubmit({userEmail});
+                                        onSubmit(projectId, userEmail);
                                         close();
                                     }}>
                                     Add
