@@ -33,29 +33,35 @@ public class TaskController {
 
     /**
      *
-     * Returns all tasks which match the specific filter
-     *
-     *
-     * Example of usage:
-     * localhost:8080/tasks?projectId=1 - returns all the tasks related to project with ID = 1
-     * @param projectId (optional)
-     *
-     *
-     * @return List of tasks based on filter
+     * Returns all tasks
+     * @return List of all tasks
      *
      *
      */
     @GetMapping("")
-    public List<Task> getAllTask(
-            @RequestParam(required = false) @PathVariable Long projectId
-    ) {
+    public List<Task> getAllTask() {
         //TODO if current user has access to tasks
-
-        if (projectId != null) {
-             return service.gelAllTaskByProjectId(projectId);
-        }
-
         return service.getAllListTask();
+    }
+
+    /**
+     * Returns all tasks related to specific projectId. If project doesn't exist
+     * method throw not found exception
+     * Example of usage:
+     * localhost:8080/tasks/projectId?projectId=1 - returns all the task
+     * with projectId = 1
+     * @param projectId
+     * @return List of tasks with specific projectId
+     */
+    @GetMapping("/projectId")
+    public List<Task> gelAllTaskByProjectId(@PathVariable Long projectId) {
+        //TODO if current user has access to tasks
+        if (projectId != null) {
+            return service.gelAllTaskByProjectId(projectId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
