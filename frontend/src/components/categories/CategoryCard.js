@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function CategoryCard(category) {
+// eslint-disable-next-line react/prop-types
+export default function CategoryCard({category}) {
     return(
         <div className="category-card">
-            this is a category card {category.title}
+            {/*eslint-disable-next-line react/prop-types*/}
+            {category.title}
 
         </div>
     );
