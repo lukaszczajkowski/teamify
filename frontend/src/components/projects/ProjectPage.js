@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Header from "../layout/Header";
 import CategoryApi from "../../api/CategoryApi";
-// eslint-disable-next-line no-unused-vars
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 
 // eslint-disable-next-line react/prop-types
-function ProjectPage({ match }) {
+function ProjectPage() {
     const history = useHistory();
+    const { projectId } = useParams();
 
-    console.log("Match:", match);
-
-    // eslint-disable-next-line react/prop-types
-    //const projectId = Number(match.params.id);
-    //console.log("Project id from the project page", projectId);
-    //const { projectId } = useParams();
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
-
-    // eslint-disable-next-line react/prop-types
-    const projectId = Number(match.params.id);
 
     const getCurrentProject = () => {
         ProjectApi.getProjectById(projectId)
@@ -78,10 +69,10 @@ function ProjectPage({ match }) {
             <AddMemberPopup onSubmit={addMemberByEmail} />
 
             <div className="projects-board flex-start">
-                
+
                 <div className="category-card card-container">category test</div>
 
-                <ProjectBoard projectId = {projectId} categories={categories} createCategory={createCategory}/>
+                <ProjectBoard projectId={projectId} categories={categories} createCategory={createCategory} />
 
             </div>
 

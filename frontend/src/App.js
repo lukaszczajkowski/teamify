@@ -35,7 +35,9 @@ function App() {
         <Router>
             {/* <Navbar onLogout={() => Auth.logout()} /> */}
                 <Switch>
-                    <Route path='/projects/:id' component = {ProjectPage}/>
+                    <Route path='/projects/:projectId'>
+                        <ProjectPage/>
+                        </Route> 
 
                     <Route exact path="/users">
                         <UserPage />
@@ -68,7 +70,7 @@ function App() {
                     <RegisterPageTest />
                 </Route>
 
-                <Route exact path="/projects">
+                <Route exact path="/projects/:projectId">
                     <ProjectPage />
                 </Route>
 
