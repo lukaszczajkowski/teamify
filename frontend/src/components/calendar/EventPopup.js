@@ -1,23 +1,9 @@
 import React from "react";
 import Popup from "reactjs-popup";
 
-// export default function CreateBeanCard({ onSubmit }) {
-//     const [name, setName] = useState("");
-//     const [description, setDescription] = useState("");
-//     const [points, setPoints] = useState();
-
-//     function onCreateBean() {
-//         const beanData = {name, description, points};
-//         onSubmit(beanData);
-//     }
-
-// Added value and onChange property to the input fields
-// value={points}
-// onChange={e => setPoints(e.target.value)}
-
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({isOpen, currentEvent}) {
+export default function EventPopup({isOpen, currentEvent, deleteEvent, updateEvent}) {
     console.log("from eventpopup, isOpen", isOpen);
     console.log("from eventpopup, currentEvent", currentEvent);
     return (
@@ -52,32 +38,24 @@ export default function EventPopup({isOpen, currentEvent}) {
                                     >
                                     </textarea>
                                 </div>
-
-                                <div className="popup-item">
-                                    <div className="flex-start">
-                                        <h2 className="prompt">Points</h2>
-                                        <h6 className="sub-prompt">How many times do you want to do this bean task today?</h6>
-                                    </div>
-
-                                    <input
-                                        type="range"
-                                        className="input-slide"
-                                        min="0"
-                                        max="10"
-                                    >
-                                    </input>
-                                </div>
-
                             </div>
                             <div className="flex-end">
                                 <button
                                 className="button"
                                 onClick={() => {
-
+                                    {updateEvent(currentEvent)}
                                     close();
                                 }}>
-                                Add
-                            </button>
+                                Update
+                                </button>
+                                <button
+                                className="button"
+                                onClick={() => {
+                                    {deleteEvent(currentEvent)}
+                                    close();
+                                }}>
+                                Delete
+                                </button>
                             </div>
                             
                         </div>

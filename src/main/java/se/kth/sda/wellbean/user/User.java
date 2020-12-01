@@ -93,4 +93,20 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", tasks=" + tasks +
+                ", projects=" + projects +
+                ", createdProjects=" + createdProjects +
+                ", events=" + events +
+                ", createdEvents=" + createdEvents +
+                ", createdComments=" + createdComments +
+                '}';
+    }
 }

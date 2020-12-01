@@ -56,6 +56,7 @@ export default function Calendar() {
         console.log("open?", popupOpen);
         setPopupOpen(!popupOpen);
         console.log("open?", popupOpen);
+        console.log("Info = ", info);
         console.log("Title", info.event.title);
         console.log("Start:", info.event.start);
         console.log("End:", info.event.end);
@@ -96,6 +97,17 @@ export default function Calendar() {
         
     }
 
+    const deleteEvent = (toBeRemoved) => {
+        const idToRemove = toBeRemoved.id;
+        EventApi.delete(idToRemove).then(
+            calendarEvents.filter((e) => {
+                if(e.id == idToRemove){
+                    e = null
+                }
+            })
+        )
+    }
+
     return(
         <div>
         <FullCalendar
@@ -113,7 +125,11 @@ export default function Calendar() {
         />
             <div className="create-bean-card">
                 <div className="popup-container">
-                <EventPopup isOpen = {popupOpen} currentEvent= {currentEvent}/>
+                <EventPopup isOpen = {popupOpen} 
+                currentEvent = {currentEvent} 
+                deleteEvent = {deleteEvent}
+                updateEvent = {handleEventChange}
+                />
                 </div>
             </div>
         </div>
