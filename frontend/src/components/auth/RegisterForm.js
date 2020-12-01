@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 
+// eslint-disable-next-line react/prop-types
 function RegisterForm({onSubmit}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ function RegisterForm({onSubmit}) {
        
         <React.Fragment>
                     
-                        <label htmlfor="fullname">Name:</label>
+                        <label htmlFor="fullname">Name:</label>
                         <input 
                             type="text"
                             id="name"
@@ -18,7 +19,7 @@ function RegisterForm({onSubmit}) {
                             placeholder="Name"/>
                   
 
-                        <label htmlfor="email">Email:</label>
+                        <label htmlFor="email">Email:</label>
                         <input
                             type="email"
                             id="email"
@@ -27,7 +28,7 @@ function RegisterForm({onSubmit}) {
                             placeholder="Email"/>
                     
 
-                        <label htmlfor="password">Password:</label>
+                        <label htmlFor="password">Password:</label>
                         <input 
                             type="password" 
                             placeholder="Password" 
