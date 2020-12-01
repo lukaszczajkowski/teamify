@@ -4,7 +4,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
-import Popup from "reactjs-popup";
+//import Popup from "reactjs-popup";
+import EventPopup from './EventPopup'
 //import Api from '../../api/Api';
 
 /**
@@ -110,71 +111,11 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
-        <div className="create-bean-card">
-            <div className="popup-container">
-                <Popup
-                    open = {popupOpen}
-                    modal
-                    nested>
-                    {console.log("trying to open this")}
-                    {close => (
-                        <div className="modal">
-                            <button className="close" onClick={close}>
-                                <i className="fas fa-times"></i>
-                            </button>
-                            <div className="content">
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Name</h2>
-                                    <input
-                                        type="text"
-                                        className="input-box"
-                                        placeholder=""
-                                    >
-                                    </input>
-                                </div>
-
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Description</h2>
-                                    <textarea
-                                        
-                                        className="input-box"
-                                        placeholder=""
-                                    >
-                                    </textarea>
-                                </div>
-
-                                <div className="popup-item">
-                                    <div className="flex-start">
-                                        <h2 className="prompt">Points</h2>
-                                        <h6 className="sub-prompt">How many times do you want to do this bean task today?</h6>
-                                    </div>
-
-                                    <input
-                                        type="range"
-                                        className="input-slide"
-                                        min="0"
-                                        max="10"
-                                    >
-                                    </input>
-                                </div>
-
-                            </div>
-                            <div className="flex-end">
-                                <button
-                                className="button"
-                                onClick={() => {
-                                    close();
-                                }}>
-                                Add
-                            </button>
-                            </div>
-                            
-                        </div>
-
-                    )}
-                </Popup>
+            <div className="create-bean-card">
+                <div className="popup-container">
+                <EventPopup isOpen = {popupOpen} currentEvent= {currentEvent}/>
+                </div>
             </div>
-        </div>
         </div>
     );
 }
