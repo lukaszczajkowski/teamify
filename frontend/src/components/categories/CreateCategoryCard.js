@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function CreateCategoryCard({ projectId, onSubmit }) {
+export default function CreateCategoryCard({ onSubmit }) {
     const [title, setTitle] = useState("");
     const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
@@ -11,7 +11,7 @@ export default function CreateCategoryCard({ projectId, onSubmit }) {
     }
 
     const onCreateCategory = () => {
-        onSubmit(projectId, { title: title });
+        onSubmit({ title: title });
         setIsCreatingCategory(false);
 
     }

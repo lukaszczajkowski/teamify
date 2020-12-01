@@ -52,7 +52,7 @@ function ProjectPage() {
 
     useEffect(() => {
         getCurrentProject();
-        getAllCategories(projectId);
+        getAllCategories();
     }, []);
 
     return (
