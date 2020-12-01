@@ -56,8 +56,9 @@ export default function Calendar() {
     };
 
     const handleEventClick = (info) => {
+        setCurrentEvent(info.event);
+        loadData();
         setPopupOpen(true);
-        setCurrentEvent(info.event);    
     }
 
     const handleEventChange = (info) => {
@@ -101,6 +102,41 @@ export default function Calendar() {
         )
     }
 
+    const updateFromPopup = (data) => {
+        console.log("data from updateFromPopup", data);
+        const startDate = new Date(currentEvent.start);
+        var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
+             startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
+        const end = new Date(currentEvent.end);
+        var endDateOutput = new Date(end.getFullYear(), end.getMonth(),
+        end.getDate(), end.getHours(), end.getMinutes() + 60)
+        const updatedEvent = {
+            id: currentEvent.id,
+            title: data.eventTitle,
+            description : data.eventDescription,
+            start: startDateOutput,
+            end: endDateOutput,
+            users: currentEvent.extendedProps.users,
+            creator: currentEvent.extendedProps.creator,
+            allDay: currentEvent.allDay,
+            editable: true,
+            }
+        EventApi.update(updatedEvent).then((response) => {
+            loadData();
+            const eventAfterUpdate = response.data;
+            calendarEvents.filter((e) => {
+                if(e.id == eventAfterUpdate.id){
+                    e = eventAfterUpdate
+                }
+            })
+        })
+    }
+
+    const popupClosed = (value) => {
+        setPopupOpen(value);
+        setCurrentEvent({});
+    };
+
     return(
         <div>
         <FullCalendar
@@ -116,16 +152,20 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
+        {currentEvent === null ? 
+            null
+            :
             <div className="create-bean-card">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
                 currentEvent = {currentEvent} 
                 deleteEvent = {deleteEvent}
-                updateEvent = {handleEventChange}
-                onClose = {setPopupOpen}
+                updateEvent = {updateFromPopup}
+                onClose = {popupClosed}
                 />
                 </div>
             </div>
-        </div>
+        }
+    </div>
     );
 }
