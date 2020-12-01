@@ -17,10 +17,10 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
     }
 
     return (
-        <div>
+        <div className="category-card">
             {
                 isCreatingCategory ?
-                    <div>
+                    <div className="category-input">
                         <input
                             type="text"
                             className="input-box"
@@ -32,9 +32,7 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
                             Add list
                         </button>
                     </div> :
-                    <div>
                         <button onClick={handleClick}>+ Add a list</button>
-                    </div>
             }
         </div>
 

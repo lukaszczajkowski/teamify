@@ -17,6 +17,7 @@ import Auth from './services/Auth';
 import ChatClient from './components/chat/ChatClient'
 import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
+import Navbar from "./components/layout/Navbar";
 
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
@@ -29,9 +30,6 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
     Auth.bindLoggedInStateSetter(setLoggedIn);
 
-    // eslint-disable-next-line no-unused-vars
-    const [query, setQuery] = useState("");
-
     const [loggedInUser, setLoggedInUser] = useState({});
 
     useEffect(() => {
@@ -43,7 +41,7 @@ function App() {
 
     const loggedInRouter = (
         <Router>
-            {/* <Navbar onLogout={() => Auth.logout()} /> */}
+            <Navbar onLogout={() => Auth.logout()} />
             <Switch>
                 <Route exact path= "/users/me">
                     <UserPage loggedInUser={loggedInUser} />

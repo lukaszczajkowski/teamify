@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-//Replaced the following with testing method 
-// function Navbar({ onLogout }) {
-    function Navbar() {
+    // eslint-disable-next-line react/prop-types
+    function Navbar({onLogout}) {
 
     const [click, setClick] = useState(false);
 
@@ -25,11 +24,11 @@ import { Link } from "react-router-dom";
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/users/:id" onClick={closeMenu}>Your page</Link>
+                    <Link className="link nav-link" to="/users/me" onClick={closeMenu}>Your page</Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/users/:id" onClick={closeMenu}>ProjectBoard</Link>
+                    <Link className="link nav-link" to="/users/me" onClick={closeMenu}>ProjectBoard</Link>
                 </li>
 
                 <li className="nav-item">
@@ -37,7 +36,7 @@ import { Link } from "react-router-dom";
                 </li>
 
                 <li>
-                {/* <button className="button" onClick={onLogout}>Logout</button> */}
+                <button className="button" onClick={onLogout}>Logout</button>
                 </li>
 
             </ul>
