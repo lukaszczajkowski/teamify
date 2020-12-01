@@ -82,6 +82,7 @@ export default function ChatClient() {
     };
 
     const loadContacts = () => {
+        // eslint-disable-next-line no-undef
         const promise = getUsers().then((users) =>
           users.map((contact) =>
           ChatApi.countNewMessages(contact.id, currentUser.id).then((count) => {
@@ -105,27 +106,27 @@ export default function ChatClient() {
         <div id="frame">
           <div id="sidepanel">
             <div id="profile">
-              <div class="wrap">
+              <div className="wrap">
                 <img
                   id="profile-img"
                   src={currentUser.profilePicture}
-                  class="online"
+                  className="online"
                   alt=""
                 />
                 <p>{currentUser.name}</p>
                 <div id="status-options">
                   <ul>
-                    <li id="status-online" class="active">
-                      <span class="status-circle"></span> <p>Online</p>
+                    <li id="status-online" className="active">
+                      <span className="status-circle"></span> <p>Online</p>
                     </li>
                     <li id="status-away">
-                      <span class="status-circle"></span> <p>Away</p>
+                      <span className="status-circle"></span> <p>Away</p>
                     </li>
                     <li id="status-busy">
-                      <span class="status-circle"></span> <p>Busy</p>
+                      <span className="status-circle"></span> <p>Busy</p>
                     </li>
                     <li id="status-offline">
-                      <span class="status-circle"></span> <p>Offline</p>
+                      <span className="status-circle"></span> <p>Offline</p>
                     </li>
                   </ul>
                 </div>
@@ -135,22 +136,23 @@ export default function ChatClient() {
             <div id="contacts">
               <ul>
                 {contacts.map((contact) => (
+                  // eslint-disable-next-line react/jsx-key
                   <li
                     onClick={() => setActiveContact(contact)}
-                    class={
+                    className={
                       activeContact && contact.id === activeContact.id
                         ? "contact active"
                         : "contact"
                     }
                   >
-                    <div class="wrap">
-                      <span class="contact-status online"></span>
+                    <div className="wrap">
+                      <span className="contact-status online"></span>
                       <img id={contact.id} src={contact.profilePicture} alt="" />
-                      <div class="meta">
-                        <p class="name">{contact.name}</p>
+                      <div className="meta">
+                        <p className="name">{contact.name}</p>
                         {contact.newMessages !== undefined &&
                           contact.newMessages > 0 && (
-                            <p class="preview">
+                            <p className="preview">
                               {contact.newMessages} new messages
                             </p>
                           )}
@@ -162,24 +164,25 @@ export default function ChatClient() {
             </div>
             <div id="bottom-bar">
               <button id="addcontact">
-                <i class="fa fa-user fa-fw" aria-hidden="true"></i>{" "}
+                <i className="fa fa-user fa-fw" aria-hidden="true"></i>{" "}
                 <span>Profile</span>
               </button>
               <button id="settings">
-                <i class="fa fa-cog fa-fw" aria-hidden="true"></i>{" "}
+                <i className="fa fa-cog fa-fw" aria-hidden="true"></i>{" "}
                 <span>Settings</span>
               </button>
             </div>
           </div>
-          <div class="content">
-            <div class="contact-profile">
+          <div className="content">
+            <div className="contact-profile">
               <img src={activeContact && activeContact.profilePicture} alt="" />
               <p>{activeContact && activeContact.name}</p>
             </div>
             <ScrollToBottom className="messages">
               <ul>
                 {messages.map((msg) => (
-                  <li class={msg.senderId === currentUser.id ? "sent" : "replies"}>
+                  // eslint-disable-next-line react/jsx-key
+                  <li className={msg.senderId === currentUser.id ? "sent" : "replies"}>
                     {msg.senderId !== currentUser.id && (
                       <img src={activeContact.profilePicture} alt="" />
                     )}
@@ -188,8 +191,8 @@ export default function ChatClient() {
                 ))}
               </ul>
             </ScrollToBottom>
-            <div class="message-input">
-              <div class="wrap">
+            <div className="message-input">
+              <div className="wrap">
                 <input
                   name="user_input"
                   size="large"
@@ -205,7 +208,7 @@ export default function ChatClient() {
                 />
     
                 <Button
-                  icon={<i class="fa fa-paper-plane" aria-hidden="true"></i>}
+                  icon={<i className="fa fa-paper-plane" aria-hidden="true"></i>}
                   onClick={() => {
                     sendMessage(text);
                     setText("");
