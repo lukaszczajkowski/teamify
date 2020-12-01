@@ -56,23 +56,11 @@ export default function Calendar() {
     };
 
     const handleEventClick = (info) => {
-        setCurrentEvent(info.event);
-        console.log("open?", popupOpen);
-        setPopupOpen(!popupOpen);
-        console.log("open?", popupOpen);
-        console.log("Info = ", info);
-        console.log("Title", info.event.title);
-        console.log("Start:", info.event.start);
-        console.log("End:", info.event.end);
-        console.log("Creator", info.event.extendedProps.creator)
-        console.log(info.event);
+        setPopupOpen(true);
+        setCurrentEvent(info.event);    
     }
 
     const handleEventChange = (info) => {
-        //EventApi update method here
-        console.log("Title:", info.event.title);
-        console.log("Start:", info.event.start);
-        console.log("End:", info.event.end);
         const startDate = new Date(info.event.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -134,6 +122,7 @@ export default function Calendar() {
                 currentEvent = {currentEvent} 
                 deleteEvent = {deleteEvent}
                 updateEvent = {handleEventChange}
+                onClose = {setPopupOpen}
                 />
                 </div>
             </div>
