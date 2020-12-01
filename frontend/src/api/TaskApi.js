@@ -9,6 +9,22 @@ class TaskApi {
         return Api.get('/tasks/' + taskId)
     }
 
+    getTasksByMemberId(memberId) {
+        return Api.get('/tasks/memberId', {params: memberId });
+    }
+
+    getTasksByCategoryId(categoryId) {
+        return Api.get('/tasks/categoryId', {params: categoryId });
+    }
+
+    getTasksByProjectId(projectId) {
+        return Api.get('/tasks/projectId', {params: projectId });
+    }
+
+    getTasksByCategoryIdAndMemberId(categoryId, memberId ) {
+        return Api.get('/tasks/categoryMember', {params: categoryId, memberId});
+    }
+
     createTask(categoryId, task) {
         return Api.post('/tasks/' + categoryId, task);
     }
@@ -33,9 +49,6 @@ class TaskApi {
         })
     }
 
-    deleteTask(taskId) {
-        return Api.delete('/tasks/' + taskId)
-    }
 }
 
 export default new TaskApi();
