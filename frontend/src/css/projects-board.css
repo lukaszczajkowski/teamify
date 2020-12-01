@@ -22,6 +22,7 @@
     border-radius: 10px;
     margin-right: 4vh;
     margin-bottom: 4vh;
+    box-shadow: 6px 8px 28px -3px rgba(0,0,0,0.65);
     
 }
 
@@ -31,8 +32,10 @@
 }
 
 .projects-board .project-card {
-    background-color: var(--theme-dark-green);
+    /* background-color: var(--theme-dark-green); */
+    background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
     color: white;
+
 }
 
 .project-cards {
