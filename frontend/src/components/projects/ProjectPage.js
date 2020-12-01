@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Header from "../layout/Header";
 import CategoryApi from "../../api/CategoryApi";
-// eslint-disable-next-line no-unused-vars
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 
-// eslint-disable-next-line react/prop-types
-function ProjectPage({ match }) {
+function ProjectPage() {
     const history = useHistory();
+    const { projectId } = useParams();
 
-    console.log("Match:", match);
-
-    // eslint-disable-next-line react/prop-types
-    //const projectId = Number(match.params.id);
-    //console.log("Project id from the project page", projectId);
-    //const { projectId } = useParams();
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
-
-    // eslint-disable-next-line react/prop-types
-    const projectId = Number(match.params.id);
 
     const getCurrentProject = () => {
         ProjectApi.getProjectById(projectId)
@@ -31,20 +21,22 @@ function ProjectPage({ match }) {
     }
 
     const onDeleteProject = () => {
-        deleteCurrentProject();
+        if (window.confirm("Do you want to delete this project?")) {
+            deleteCurrentProject();
         history.push("/users");
         window.location.reload();
+        }
     }
 
     function deleteCurrentProject() {
         return ProjectApi.deleteProject(projectId)
-            .then(console.log(`project ${projectId} is deleted`))
+            .then(console.log(`Deleting project ${projectId}`))
             .catch(err => console.log(`error on delete project ${err}`));
     }
 
-    const addMemberByEmail = (userEmail) => {
+    const addMemberByEmail = (projectId, userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(console.log(`add user: ${userEmail} to project`))
+            .then(alert(`add user: ${userEmail} to project`))
             .catch(err => console.log(`error on add member ${err}`));
     }
 
@@ -57,6 +49,7 @@ function ProjectPage({ match }) {
     const createCategory = (projectId, categoryData) => {
         CategoryApi.createCategory(projectId, categoryData)
             .then(response => setCategories([...categories, response.data]))
+            .then(console.log(`new category: ${categoryData.title} is added`))
             .catch(err => console.log(`error on create new category ${err}`));
     }
 
@@ -78,10 +71,13 @@ function ProjectPage({ match }) {
             <AddMemberPopup onSubmit={addMemberByEmail} />
 
             <div className="projects-board flex-start">
-                
+
                 <div className="category-card card-container">category test</div>
 
-                <ProjectBoard projectId = {projectId} categories={categories} createCategory={createCategory}/>
+                <ProjectBoard
+                    projectId={projectId}
+                    categories={categories}
+                    createCategory={createCategory} />
 
             </div>
 

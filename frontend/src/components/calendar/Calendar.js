@@ -4,9 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
-//import Popup from "reactjs-popup";
-import EventPopup from './EventPopup'
-//import Api from '../../api/Api';
+import EventPopup from './EventPopup';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -140,7 +138,7 @@ export default function Calendar() {
     return(
         <div>
         <FullCalendar
-            initialView = "dayGridWeek"
+            initialView = "dayGridMonth"
             headerToolbar={{
                 left: 'prev, next, today',
                 center: 'title',
@@ -152,6 +150,7 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
+
         {currentEvent === null ? 
             null
             :
