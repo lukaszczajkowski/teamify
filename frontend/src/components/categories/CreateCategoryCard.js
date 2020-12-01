@@ -11,7 +11,8 @@ export default function CreateCategoryCard({ projectId, onSubmit }) {
     }
 
     const onCreateCategory = () => {
-        onSubmit(projectId, { title: title });
+        onSubmit(projectId, 
+                { title: title });
         setIsCreatingCategory(false);
     }
 

@@ -71,7 +71,10 @@ function ProjectPage() {
 
                 <div className="category-card card-container">category test</div>
 
-                <ProjectBoard projectId={projectId} categories={categories} createCategory={createCategory} />
+                <ProjectBoard
+                    projectId={projectId}
+                    categories={categories}
+                    createCategory={createCategory} />
 
             </div>
 
