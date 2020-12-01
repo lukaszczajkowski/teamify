@@ -3,7 +3,7 @@ import CreateCategoryCard from "../categories/CreateCategoryCard";
 import CategoryCard from "../categories/CategoryCard";
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectBoard( {projectId, categories, createCategory}) {
+export default function ProjectBoard( {categories, createCategory}) {
     return (
         <div className="project-board">
             {
@@ -18,7 +18,7 @@ export default function ProjectBoard( {projectId, categories, createCategory}) {
             }
 
             <div className="board-container">
-                <CreateCategoryCard projectId = {projectId} onSubmit={createCategory} />
+                <CreateCategoryCard onSubmit={createCategory} />
             </div>
 
         </div>

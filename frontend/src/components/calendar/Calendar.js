@@ -4,9 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
-//import Popup from "reactjs-popup";
 import EventPopup from './EventPopup'
-//import Api from '../../api/Api';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -16,9 +14,6 @@ import EventPopup from './EventPopup'
 export default function Calendar() {
    
     const [calendarEvents, setCalendarEvents] = useState([]);
-    const [popupOpen, setPopupOpen] = useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const [currentEvent, setCurrentEvent] = useState({});
 
     
     useEffect( async () => {
@@ -116,7 +111,7 @@ export default function Calendar() {
     return(
         <div>
         <FullCalendar
-            initialView = "dayGridWeek"
+            initialView = "dayGridMonth"
             headerToolbar={{
                 left: 'prev, next, today',
                 center: 'title',
@@ -128,6 +123,7 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
+
             <div className="create-bean-card">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
