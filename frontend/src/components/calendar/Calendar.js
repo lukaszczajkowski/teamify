@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
-import EventPopup from './EventPopup'
+import EventPopup from './EventPopup';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -14,6 +14,9 @@ import EventPopup from './EventPopup'
 export default function Calendar() {
    
     const [calendarEvents, setCalendarEvents] = useState([]);
+    const [popupOpen, setPopupOpen] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [currentEvent, setCurrentEvent] = useState({});
 
     
     useEffect( async () => {
