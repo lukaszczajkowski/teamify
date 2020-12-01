@@ -141,4 +141,20 @@ public class Event {
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", users=" + users +
+                ", creator=" + creator +
+                ", project=" + project +
+                ", allDay=" + allDay +
+                ", editable=" + editable +
+                '}';
+    }
 }
