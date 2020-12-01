@@ -54,7 +54,7 @@ public class TaskController {
      * @return List of tasks with specific projectId
      */
     @GetMapping("/projectId")
-    public List<Task> gelAllTaskByProjectId(@PathVariable Long projectId) {
+    public List<Task> gelAllTaskByProjectId(@RequestParam Long projectId) {
         //TODO if current user has access to tasks
         if (projectId != null) {
             return service.gelAllTaskByProjectId(projectId);
@@ -74,7 +74,7 @@ public class TaskController {
      * @return List of tasks with specific category id
      */
     @GetMapping("/categoryId")
-    public List<Task> getAllTaskByCategoryId(@PathVariable Long categoryId) {
+    public List<Task> getAllTaskByCategoryId(@RequestParam Long categoryId) {
         //TODO if current user has access to tasks
         if (categoryId != null) {
             return service.getAllTaskByCategoryId(categoryId);
@@ -94,7 +94,7 @@ public class TaskController {
      * @return List of tasks with specific member id
      */
     @GetMapping("/memberId")
-    public List<Task> getAllTaskByMemberId(@PathVariable Long memberId) {
+    public List<Task> getAllTaskByMemberId(@RequestParam Long memberId) {
         //TODO if current user has access to tasks
         if (memberId != null)
         {
@@ -105,8 +105,30 @@ public class TaskController {
         }
     }
 
+    /**
+     * Returns all task with specific category AND specific user id. If user or category
+     * tegory doesn't exist
+     * method throw not found exception
+     * Example of usage:
+     * localhost:8080/tasks/memberCategory?categoryId=1&memberId=1 - returns the all tasks related
+     * to the user with the ID = 1
+     * @param memberId, categoryId
+     * @return List of tasks with specific member id
+     */
+    @GetMapping("/categoryMember")
+    public List<Task> getAllTask ( @RequestParam Long categoryId, @RequestParam Long memberId) {
+        //TODO if current user has access to tasks
+        if (memberId != null && categoryId != null)
+        {
+            return service.findAllByCategoryIdAndMembers_Id(categoryId, memberId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    //TODO: find all tasks related to the specific project AND specific category
+
+    //TODO: find all tasks related to the specific project AND userID
 
 
     /**

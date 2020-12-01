@@ -21,6 +21,10 @@ class TaskApi {
         return Api.get('/tasks/projectId', {params: projectId });
     }
 
+    getTasksByCategoryIdAndMemberId(categoryId, memberId ) {
+        return Api.get('/tasks/categoryMember', {params: categoryId, memberId});
+    }
+
     createTask(categoryId, task) {
         return Api.post('/tasks/' + categoryId, task);
     }
