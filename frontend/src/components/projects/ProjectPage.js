@@ -6,20 +6,11 @@ import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 
-<<<<<<< HEAD
-// eslint-disable-next-line react/prop-types
-=======
->>>>>>> master
 function ProjectPage() {
     const history = useHistory();
     const { projectId } = useParams();
 
-<<<<<<< HEAD
     const [currentProject, setCurrentProject] = useState({});
-=======
-    const { projectId } = useParams();
-    const [currentProject, setCurrentProject] = useState([]);
->>>>>>> master
     const [categories, setCategories] = useState([]);
 
     const getCurrentProject = () => {
