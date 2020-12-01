@@ -34,41 +34,74 @@ public class TaskController {
     /**
      *
      * Returns all tasks which match the specific filter
-     * Example of usage:
-     * localhost:8080/tasks?categoryId=1 - returns all the tasks related to category
-     * with ID = 1
-     * @param categoryId (optional)
+     *
      *
      * Example of usage:
      * localhost:8080/tasks?projectId=1 - returns all the tasks related to project with ID = 1
      * @param projectId (optional)
      *
-     * Example of usage:
-     * localhost:8080/tasks?memberId=1 - returns the project with the ID = 1
-     * @param memberId
      *
-     * @return List of  tasks based on filter
+     * @return List of tasks based on filter
      *
      *
      */
     @GetMapping("")
     public List<Task> getAllTask(
-            @RequestParam(required = false) @PathVariable Long categoryId,
-            @RequestParam(required = false) @PathVariable Long projectId,
-            @RequestParam(required = false) @PathVariable Long memberId
+            @RequestParam(required = false) @PathVariable Long projectId
     ) {
+        //TODO if current user has access to tasks
+
+        if (projectId != null) {
+             return service.gelAllTaskByProjectId(projectId);
+        }
+
+        return service.getAllListTask();
+    }
+
+    /**
+     * Returns all tasks related to specific category. If category doesn't exist
+     * method throw not found exception
+     * Example of usage:
+     * localhost:8080/tasks/categoryId?categoryId=1 - returns all the task
+     * with category  ID = 1
+     * @param categoryId
+     * @return List of tasks with specific category id
+     */
+    @GetMapping("/categoryId")
+    public List<Task> getAllTaskByCategoryId(@PathVariable Long categoryId) {
         //TODO if current user has access to tasks
         if (categoryId != null) {
             return service.getAllTaskByCategoryId(categoryId);
         }
-        else if (projectId != null) {
-             return service.gelAllTaskByProjectId(projectId);
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        else if (memberId != null) {
+    }
+
+    /**
+     * Returns all tasks created by specific user id. If user doesn't exist
+     * method throw not found exception
+     * Example of usage:
+     * localhost:8080/tasks/memberId?memberId=1 - returns the all tasks related
+     * to the user with the ID = 1
+     * @param memberId
+     * @return List of tasks with specific member id
+     */
+    @GetMapping("/memberId")
+    public List<Task> getAllTaskByMemberId(@PathVariable Long memberId) {
+        //TODO if current user has access to tasks
+        if (memberId != null)
+        {
             return service.gelAllTaskByMemberId(memberId);
         }
-        return service.getAllListTask();
+        else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
+
+
+    //TODO: find all tasks related to the specific project AND specific category
+
 
     /**
      * Accepts task id and returns a task that matches the id only
