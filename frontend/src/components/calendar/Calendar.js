@@ -22,11 +22,15 @@ export default function Calendar() {
 
     
     useEffect( async () => {
+        loadData();
+    }, []);
+
+    const loadData = () => {
         EventApi.getAllUserEvents().then(response => {
             const listOfEvents = response.data;
             setCalendarEvents(listOfEvents);
-        })        
-    }, []);
+        })   
+    }
 
     const handleDateClick = (e) => {
         if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
@@ -87,6 +91,7 @@ export default function Calendar() {
             editable: true
         }
         EventApi.update(updatedEvent).then(response => {
+            loadData();
             const eventAfterUpdate = response.data;
             calendarEvents.filter((e) => {
                 if(e.id == eventAfterUpdate.id){
@@ -99,12 +104,12 @@ export default function Calendar() {
 
     const deleteEvent = (toBeRemoved) => {
         const idToRemove = toBeRemoved.id;
-        EventApi.delete(idToRemove).then(
-            calendarEvents.filter((e) => {
-                if(e.id == idToRemove){
-                    e = null
-                }
-            })
+        // eslint-disable-next-line no-unused-vars
+        EventApi.delete(idToRemove).then(() => { 
+            loadData();
+            var removeIndex = calendarEvents.findIndex(item => item.id == idToRemove);
+            calendarEvents.splice(removeIndex, 1);
+            }
         )
     }
 
