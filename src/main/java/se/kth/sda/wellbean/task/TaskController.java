@@ -179,7 +179,7 @@ public class TaskController {
     /**
      * Deletes the task with the given id
      * Example of usage:
-     * localhost:8080/1 - deletes the task with the ID = 1
+     * localhost:8080/tasks/1 - deletes the task with the ID = 1
      * @param id
      * @throws ResponseStatusException
      */
