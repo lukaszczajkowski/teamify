@@ -1,10 +1,11 @@
 import React from "react";
+import AddMemberCard from "./AddMemberCard";
 import CreateProjectCard from "./CreateProjectCard";
 import ProjectCard from "./ProjectCard";
 
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectsBoard({ projects, createProject }) {
+export default function ProjectsBoard({ projects, createProject, sendInvite }) {
 
     return (
         <div className="projects-board">
@@ -18,6 +19,7 @@ export default function ProjectsBoard({ projects, createProject }) {
                         {projects.sort((a, b) => b.id - a.id).map(project => (
                             <ProjectCard key={project.id} project={project}/>
                         ))}
+                        <AddMemberCard projects={projects} onSubmit={sendInvite} />
                 </div>
             </div>
 

@@ -41,8 +41,6 @@ export default function CreateProjectCard({onSubmit}) {
                                         >
                                         </input>
                                     </div>
-
-                        
                                 </div>
                                 <div className="flex-end">
                                      <button
