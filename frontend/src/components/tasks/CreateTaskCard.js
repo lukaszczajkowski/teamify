@@ -10,21 +10,27 @@ export default function CreateTaskCard({onSubmit}) {
     const [description, setDescription] = useState("");
    
     const [comment, setComment] = useState();
+    
+    
+    
 
-    function onCreateTask(){
-        const taskData = {name: name, description: description, comment: comment};
+    function onCreateTask()  {
+        const taskData = {name: name, description: description, comment: comment}
         onSubmit(taskData);
-        console.log(taskData);
-    }
+           }
+    
 
     return (
         <div className="create-task-card">
+            
             <div className="popup-container">
+            
                 <Popup
                     trigger={<button className="button"> + Create Task </button>}
 
                     modal
                     nested>
+                        
                     {close => (
                         <div className="modal">
                             <button className="close" onClick={close}>
@@ -85,24 +91,27 @@ export default function CreateTaskCard({onSubmit}) {
                             </div>
 
                             <div className="flex-end">
-                                <button
-                                className="button"
-                                onClick={() => {
-                                    onCreateTask();
-                                    close();
-                                }}>
-                                Add
+                            <button
+                                    className="button"
+                                    onClick={() => { 
+                                        onCreateTask();
+                                        close(); }}>
+                                    Create Task
                             </button>
-
-                            </div>
+                    </div>
+                       
+                    </div>      
                             
 
-                        </div>
+                        
 
                     )}
                 </Popup>
 
+
             </div>
+
+
         </div>
     );
 }

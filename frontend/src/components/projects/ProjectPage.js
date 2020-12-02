@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
-import CreateTaskCard from "../tasks/CreateTaskCard";
+
 
 function ProjectPage() {
     const history = useHistory();
@@ -73,7 +73,7 @@ function ProjectPage() {
                 <div className="category-card card-container">category test</div>
 
                 <ProjectBoard categories={categories} createCategory={createCategory}/>
-                < CreateTaskCard />
+               
 
             </div>
 
