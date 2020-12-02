@@ -70,16 +70,6 @@ public class Task {
         this.description = description;
     }
 
-
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
     public Project getProject() {
         return project;
     }
