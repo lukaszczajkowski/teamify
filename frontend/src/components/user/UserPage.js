@@ -21,13 +21,6 @@ function UserPage({loggedInUser}) {
             .then(response => setProjects([response.data, ...projects]));
     }
 
-    const sendInvite = (inviteData, callback) => {
-        alert(`${inviteData.projectId} ${inviteData.userEmail}`)
-        ProjectApi
-            .addMemberByEmail(inviteData.projectId, inviteData.userEmail)
-            .then(callback);
-    }
-
     useEffect(() => {
         getAllProjects()
     }, []);
