@@ -1,11 +1,21 @@
 import React, {useState} from 'react';
+import Auth from "../../services/Auth";
 
 // eslint-disable-next-line react/prop-types
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
-
+    const login = async (loginData) => {
+        event.preventDefault();
+        const loginSuccess = await Auth.login(loginData);
+        if (!loginSuccess) {
+            alert("Invalid credentials");
+        } else {
+            alert("login successful");
+            
+        }
+    }
     return (
         
                     <React.Fragment>
@@ -28,9 +38,9 @@ function LoginForm() {
                             onChange={e => setPassword(e.target.value)} />
                    
 
-                        {/*<input type='submit' value='submit' 
+                        <input type='submit' value='submit' 
                             className='submit' 
-    onClick={() => onSubmit({email, password})} />*/}
+                            onClick={(event) => login({email,password}, event)} />
                          
                         
                    
