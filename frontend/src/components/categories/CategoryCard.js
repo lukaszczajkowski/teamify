@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Editable from "./Editable";
 
@@ -5,7 +6,6 @@ import Editable from "./Editable";
 export default function CategoryCard({ category }) {
     // eslint-disable-next-line react/prop-types
     const [title, setTitle] = useState(category.title);
-
 
     // const onDeleteCategory = ({category.id}) => {
     //     deleteCategory
