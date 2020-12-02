@@ -7,7 +7,7 @@ export default function AddMemberPopup({ projectId, onSubmit }) {
     const [userEmail, setUserEmail] = useState("");
 
     return (
-        <div className="create-bean-card">
+        <div className="add-member-popup">
             <div className="popup-container">
                 <Popup
                     trigger={<button className="button" id="add-member"> + invite members </button>}
