@@ -6,6 +6,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import UserApi from '../../api/UserApi';
+//import EventApi from '../../api/EventApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,9 +62,22 @@ export default function Tags({ event }) {
     
   }
 
-  const updateInvitedUsers = (e) => {
-    setInvitedUsers(e.target.value);
-    loadInvitedUsers();
+  const updateInvitedUsers = ({target}, fieldName) => {
+    const { value } = target;
+    switch(fieldName) {
+      case "tags":
+        console.log("Value:", value);
+        break;
+      case "select-option":
+        console.log("Value:", value);
+        UserApi.getUserByEmail(value).then(response => setInvitedUsers([...invitedUsers, response.data]))
+        break;
+    }
+
+    // EventApi.inviteUserByEmail(id, email)
+    //           .then(response => setInvitedUsers(response.data))
+    //           .then(loadInvitedUsers())
+    //           .catch(err => console.log(err));
   }
 
   console.log("invited users:", invitedUsers);
@@ -75,10 +89,13 @@ export default function Tags({ event }) {
     <div className={classes.root}>
       <Autocomplete
         multiple
+        autoComplete ="true"
         id="tags-filled"
+        name="tags"
         options={userBase.map((user) => user.email)}
         value={invitedUsers.map((user) => user.email)}
-        onClose = {e => updateInvitedUsers(e)}
+        onSelect = {(e) => updateInvitedUsers(e, "tags")}
+        onClose = {(e) => updateInvitedUsers(e, "select-option")}
         freeSolo
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (

@@ -25,6 +25,14 @@ class UserApi {
         return Api.get('/users/get-members/' + eventId);
     }
 
+    getUserByEmail(email) {
+        return Api.get('/users/get-by-email', {
+            params : {
+                email: email
+            }
+        })
+    }
+
 }
 
 export default new UserApi();

@@ -2,10 +2,7 @@ package se.kth.sda.wellbean.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.calendar.Event;
@@ -51,6 +48,11 @@ public class UserController {
         String email = authService.getLoggedInUserEmail();
         User currentUser = userService.findUserByEmail(email);
         return userService.getAllExceptLoggedIn(currentUser, projectId);
+    }
+
+    @GetMapping("/get-by-email")
+    public User getUserByEmail(@RequestParam String email){
+        return userService.findUserByEmail(email);
     }
 
     @GetMapping("/current")
