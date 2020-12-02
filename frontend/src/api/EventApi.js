@@ -2,6 +2,10 @@
 import Api from "./Api";
 
 class EventApi {
+
+    getAllUserEvents() {
+        return Api.get('/events/user');
+    }
     
     /**
      * Returns all the user's events within the range
@@ -76,8 +80,8 @@ class EventApi {
      * Accepts an event in a request body and deletes that event
      * @param {*} event 
      */
-    delete(event) {
-        return Api.delete('/events', event);
+    delete(eventId) {
+        return Api.delete('/events/' + eventId);
     }
 
     /**

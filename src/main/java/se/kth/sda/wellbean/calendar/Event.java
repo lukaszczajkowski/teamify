@@ -1,12 +1,10 @@
 package se.kth.sda.wellbean.calendar;
 
-import org.hibernate.annotations.Type;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +22,7 @@ public class Event {
     private LocalDateTime start;
 
     @Column(name = "finish")
-    private LocalDateTime finish;
+    private LocalDateTime end;
 
     @ManyToMany
     private Set<User> users;
@@ -35,22 +33,21 @@ public class Event {
     @ManyToOne
     private Project project;
 
-    //@Column(name = "allDay", columnDefinition = "boolean default false", nullable = false)
-    private Boolean allDay;
+    private boolean allDay;
 
     //enables to edit an event's date by dragging
-    private Boolean editable;
+    private boolean editable;
 
     public Event() {
         this.users = new HashSet<>();
     }
 
-    public Event(Long id, String title, String description, LocalDateTime start, LocalDateTime finish) {
+    public Event(Long id, String title, String description, LocalDateTime start, LocalDateTime end) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.start = start;
-        this.finish = finish;
+        this.end = end;
     }
 
     public Long getId() {
@@ -85,12 +82,12 @@ public class Event {
         this.start = start;
     }
 
-    public LocalDateTime getFinish() {
-        return finish;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-    public void setFinish(LocalDateTime finish) {
-        this.finish = finish;
+    public void setEnd(LocalDateTime finish) {
+        this.end = finish;
     }
 
     public Set<User> getUsers() {
@@ -129,7 +126,7 @@ public class Event {
         this.project = project;
     }
 
-    public Boolean isAllDay() {
+    public boolean isAllDay() {
         return allDay;
     }
 
@@ -143,5 +140,21 @@ public class Event {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", users=" + users +
+                ", creator=" + creator +
+                ", project=" + project +
+                ", allDay=" + allDay +
+                ", editable=" + editable +
+                '}';
     }
 }

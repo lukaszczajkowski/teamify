@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,7 +14,10 @@ import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
-import Calendar from './components/calendar/Calendar';
+import ChatClient from './components/chat/ChatClient'
+import Calendar from './components/calendar/Calendar'
+import UserApi from './api/UserApi';
+import Navbar from "./components/layout/Navbar";
 
 // testing login
 import LoginPageTest from "./components/auth_test/LoginPageTest";
@@ -27,36 +30,37 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
     Auth.bindLoggedInStateSetter(setLoggedIn);
 
-    // eslint-disable-next-line no-unused-vars
-    const [query, setQuery] = useState("");
+    const [loggedInUser, setLoggedInUser] = useState({});
+
+    useEffect(() => {
+        if (loggedIn) {
+            UserApi.getCurrentUser().then(response => setLoggedInUser(response.data));
+        }
+    }, []);
+
 
     const loggedInRouter = (
         <Router>
-            {/* <Navbar onLogout={() => Auth.logout()} /> */}
+            <Navbar onLogout={() => Auth.logout()} />
             <Switch>
-                <Route exact path="/users">
-                    <UserPage />
+                <Route exact path= "/users/me">
+                    <UserPage loggedInUser={loggedInUser} />
+                </Route>
+                
+                <Route path='/projects/:projectId'>
+                    <ProjectPage loggedInUser={loggedInUser}/>
                 </Route>
 
-                <Route exact path="/projects/:projectId">
-                    <ProjectPage />
+                <Route exact path="/calendar">
+                    <Calendar />
                 </Route>
 
+                <Route exact path="/chat">
+                    <ChatClient />
+                </Route>
                 <Route exact path="/">
                     <LandingPage />
                 </Route>
-
-                <Route exact path="/login/test">
-                    <LoginPageTest />
-                </Route>
-
-                <Route exact path="/register/test">
-                    <RegisterPageTest />
-                </Route>
-                <Route exact path="/calendar">
-                        <Calendar />
-                    </Route>
-
             </Switch>
         </Router>
     );
@@ -70,6 +74,7 @@ function App() {
                 <Route exact path="/login">
                     <LoginPage />
                 </Route>
+
                 <Route exact path="/login/test">
                     <LoginPageTest />
                 </Route>
@@ -77,10 +82,21 @@ function App() {
                     <RegisterPageTest />
                 </Route>
 
+                <Route exact path="/projects/:projectId">
+                    <ProjectPage />
+                </Route>
+
+                <Route exact path="/users">
+                    <UserPage />
+                </Route>
 
 
                 <Route exact path="/calendar">
                     <Calendar />
+                </Route>
+
+                <Route exact path="/chat">
+                    <ChatClient />
                 </Route>
 
             </Switch>

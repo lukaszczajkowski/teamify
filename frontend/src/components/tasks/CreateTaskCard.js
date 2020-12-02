@@ -1,30 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import Popup from "reactjs-popup";
 
-// export default function CreateBeanCard({ onSubmit }) {
-//     const [name, setName] = useState("");
-//     const [description, setDescription] = useState("");
-//     const [points, setPoints] = useState();
+    
+//     
 
-//     function onCreateBean() {
-//         const beanData = {name, description, points};
-//         onSubmit(beanData);
-//     }
+// eslint-disable-next-line react/prop-types
+export default function CreateTaskCard({onSubmit}) {
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+   
+    const [comment, setComment] = useState();
+    
+    
+    
 
-// Added value and onChange property to the input fields
-// value={points}
-// onChange={e => setPoints(e.target.value)}
-
-export default function CreateTaskCard() {
+    function onCreateTask()  {
+        const taskData = {name: name, description: description, comment: comment}
+        onSubmit(taskData);
+           }
+    
 
     return (
-        <div className="create-bean-card">
+        <div className="create-task-card">
+            
             <div className="popup-container">
+            
                 <Popup
                     trigger={<button className="button"> + Create Task </button>}
 
                     modal
                     nested>
+                        
                     {close => (
                         <div className="modal">
                             <button className="close" onClick={close}>
@@ -36,7 +42,9 @@ export default function CreateTaskCard() {
                                     <input
                                         type="text"
                                         className="input-box"
-                                        placeholder=""
+                                        value= {name}
+                                        onChange= {e => setName(e.target.value)}
+                                        placeholder="Name"
                                     >
                                     </input>
                                 </div>
@@ -44,24 +52,28 @@ export default function CreateTaskCard() {
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Description</h2>
                                     <textarea
-                                        
                                         className="input-box"
-                                        placeholder=""
+                                        value= {description}
+                                        onChange= {e => setDescription(e.target.value)}
+                                        placeholder="Description"
                                     >
                                     </textarea>
                                 </div>     
 
                                 <div className="popup-item flex-start">
                                         <h2 className="prompt">Members</h2>
+                                        <p className="letter" href="/user"
+                                        style={{
+                                            borderWidth:1,
+                                            borderColor:'rgba(0,0,0,0.2)',
+                                            alignItems:'center',
+                                            justifyContent:'center',
+                                            width:45,
+                                            height:45,
+                                            backgroundColor:'lightblue',
+                                            borderRadius:50,}}>
+                                                +</p>
 
-
-                                    <input
-                                        type="range"
-                                        className="input-slide"
-                                        min="0"
-                                        max="10"
-                                    >
-                                    </input>
                                 </div>
 
                                 <div className="popup-item flex-start">
@@ -69,7 +81,9 @@ export default function CreateTaskCard() {
                                     <textarea
                                         
                                         className="input-box"
-                                        placeholder=""
+                                        value= {comment}
+                                        onChange= {e => setComment(e.target.value)}
+                                        placeholder="Comment"
                                     >
                                     </textarea>
                                 </div>
@@ -77,24 +91,27 @@ export default function CreateTaskCard() {
                             </div>
 
                             <div className="flex-end">
-                                <button
-                                className="button"
-                                onClick={() => {
-
-                                    close();
-                                }}>
-                                Add
+                            <button
+                                    className="button"
+                                    onClick={() => { 
+                                        onCreateTask();
+                                        close(); }}>
+                                    Create Task
                             </button>
-
-                            </div>
+                    </div>
+                       
+                    </div>      
                             
 
-                        </div>
+                        
 
                     )}
                 </Popup>
 
+
             </div>
+
+
         </div>
     );
 }

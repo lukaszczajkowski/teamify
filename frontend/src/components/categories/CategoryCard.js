@@ -1,10 +1,40 @@
-import React from "react";
 
-export default function CategoryCard(category) {
-    return(
+import React, { useState } from "react";
+import Editable from "./Editable";
+import CreateTaskCard from "../tasks/CreateTaskCard";
+
+// eslint-disable-next-line react/prop-types
+export default function CategoryCard({ category }) {
+    // eslint-disable-next-line react/prop-types
+    const [title, setTitle] = useState(category.title);
+
+    // const onDeleteCategory = ({category.id}) => {
+    //     deleteCategory
+        
+    //     }
+
+    return (
         <div className="category-card">
-            this is a category card {category.title}
+            <div className="flex-between">
+            <Editable
+                text={title}
+                placeholder="title"
+                type="input"
+            >
+                <input
+                    type="text"
+                    name="category title"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                />
+            </Editable>
+            <CreateTaskCard />
 
+            <button>delete</button>
         </div>
+        </div>
+        
+
+
     );
 }

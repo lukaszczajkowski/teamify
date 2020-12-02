@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function CreateCategoryCard({ onSubmit }) {
+export default function CreateCategoryCard({ onSubmit, projectId }) {
     const [title, setTitle] = useState("");
     const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
@@ -11,16 +11,16 @@ export default function CreateCategoryCard({ onSubmit }) {
     }
 
     const onCreateCategory = () => {
-        onSubmit({ title: title });
+        onSubmit(projectId, 
+                { title: title });
         setIsCreatingCategory(false);
-
     }
 
     return (
-        <div>
+        <div className="category-card">
             {
                 isCreatingCategory ?
-                    <div>
+                    <div className="category-input">
                         <input
                             type="text"
                             className="input-box"
@@ -32,9 +32,7 @@ export default function CreateCategoryCard({ onSubmit }) {
                             Add list
                         </button>
                     </div> :
-                    <div>
                         <button onClick={handleClick}>+ Add a list</button>
-                    </div>
             }
         </div>
 
