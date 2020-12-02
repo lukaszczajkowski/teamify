@@ -1,17 +1,31 @@
-@import url("./login.css");
-@import url("./App.css");
+/* base */
 @import url("./_reset.css");
 @import url("./_shared.css");
-@import url("./header.css");
 @import url("./_variables.css");
-@import url("./bean-board.css");
-@import url("./user-page.css");
-@import url("./create-bean-card.css");
-@import url("./projects-board.css");
-@import url("./landing-page.css");
+
+/* shared components */
 @import url("./popup.css");
+
+/* pages */
+@import url("./landing-page.css");
+@import url("./user-page.css");
 @import url("./project-page.css");
-@import url("./createTaskCard.css");
+
+/*  */
+@import url("./login.css");
+
+/* Header */
+@import url("./header.css");
+
+/* board */
+@import url("./bean-board.css");
+@import url("./projects-board.css");
+
+/* Popup */
+@import url("./create-bean-popup.css");
+@import url("./create-task-popup.css");
+
+/* Card */
 @import url("./category-card.css");
 
 
