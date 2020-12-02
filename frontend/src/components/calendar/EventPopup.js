@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
+import Tags from './Tags';
 
 
 // eslint-disable-next-line react/prop-types
@@ -35,17 +36,14 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
 
     const [eventTitle, setEventTitle] = useState("");
     const desc = initialDescription(extendedProps);
-    console.log("desc: ", desc);
     const [eventDescription, setEventDescription] = useState(desc);
+    const [emailAddress, setEmailAddress] = useState("");
 
     useEffect(() => {
         setEventTitle(title);
         setEventDescription(desc);
     }, [currentEvent])
     // eslint-disable-next-line react/prop-types
-    //console.log("event from event popup:", id, allDay, end, start, title, extendedProps.description);
-    console.log("title", title);
-    console.log("description", eventDescription);
     return (
         extendedProps === undefined ?
         null
@@ -79,7 +77,6 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                                     >
                                     </input>
                                 </div>
-
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Description</h2>
                                     <textarea
@@ -91,6 +88,10 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                                         }}
                                     >
                                     </textarea>
+                                </div>
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Invite user by email</h2>
+                                    <Tags event = {currentEvent}/>
                                 </div>
                             </div>
                             <div className="flex-end">
@@ -113,12 +114,9 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                                 Delete
                                 </button>
                             </div>
-                            
                         </div>
-
                     )}
                 </Popup>
-
             </div>
         </div>
     );
