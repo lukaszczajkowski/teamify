@@ -21,7 +21,7 @@ export default function CreateTaskCard({onSubmit}) {
     
 
     return (
-        <div className="create-task-card">
+        <div id="create-task">
             
             <div className="popup-container">
             
