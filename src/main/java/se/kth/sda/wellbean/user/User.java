@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import se.kth.sda.wellbean.calendar.Event;
 import se.kth.sda.wellbean.comment.Comment;
@@ -29,6 +30,7 @@ public class User {
 
     @Length(min = 5, max=100, message = "Password length most be between 5-100 characters")
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Length(min = 3, max=100, message = "Name must be between 3-100 characters")
