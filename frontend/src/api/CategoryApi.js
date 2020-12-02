@@ -9,14 +9,14 @@ class CategoryApi {
         return Api.post('/categories/' + projectId, category);
     }
 
-    updateCategory(project_id, category) {
-        return Api.put('/categories/' + project_id, {
+    updateCategory(projectId, category) {
+        return Api.put('/categories/' + projectId, {
                 "updatedCategory": category
         });
     }
 
-    deleteCategory(category_id) {
-        return Api.delete('/categories/'+ category_id);
+    deleteCategory(categoryId) {
+        return Api.delete('/categories/'+ categoryId);
     } 
 }
 

@@ -21,20 +21,20 @@ class ProjectApi {
         return Api.put('/projects', project);
     }
 
-    addMemberByEmail(project_id, user_email) {
-        return Api.put('projects/' + project_id, {
-            params: user_email
+    addMemberByEmail(projectId, userEmail) {
+        return Api.put('/projects/' + projectId + '/userEmail', {
+            params: userEmail
         });
     }
 
-    removeMemberById(project_id, member_id) {
-        return Api.put('projects/' + project_id + '/remove/memberId', {
-            params: member_id
+    removeMemberById(projectId, memberId) {
+        return Api.put('/projects/' + projectId + '/remove/memberId', {
+            params: memberId
         });
     }
 
-    deleteProject(id) {
-        return Api.delete('/projects/'+id);
+    deleteProject(projectId) {
+        return Api.delete('/projects/'+projectId);
     } 
 }
 
