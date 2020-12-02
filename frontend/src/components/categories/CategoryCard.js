@@ -1,11 +1,12 @@
+
 import React, { useState } from "react";
 import Editable from "./Editable";
+import CreateTaskCard from "../tasks/CreateTaskCard";
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category }) {
     // eslint-disable-next-line react/prop-types
     const [title, setTitle] = useState(category.title);
-
 
     // const onDeleteCategory = ({category.id}) => {
     //     deleteCategory
@@ -27,6 +28,8 @@ export default function CategoryCard({ category }) {
                     onChange={e => setTitle(e.target.value)}
                 />
             </Editable>
+            <CreateTaskCard />
+
             <button>delete</button>
         </div>
         </div>

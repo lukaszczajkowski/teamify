@@ -13,31 +13,29 @@ function UserPage({loggedInUser}) {
 
     const getAllProjects = () => {
         ProjectApi.getCurrentUsersProjects()
-        .then(response => setProjects(response.data));
+            .then(response => setProjects(response.data));
     }
 
     const createProject = (projectData) => {
         ProjectApi.createProject(projectData)
-        .then(response => setProjects([response.data, ...projects]));
+            .then(response => setProjects([response.data, ...projects]));
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getAllProjects()
-    },[]);
+    }, []);
 
 
     return (
         <div className="user-page">
             <Header />
-            
+
             <div className="main-content">
             {/*eslint-disable-next-line react/prop-types*/}
             <p className="welcome"> Hello, {loggedInUser.name}</p>
             <BeanBoard/>
             <ProjectsBoard projects={projects} createProject={createProject}/>
             </div>
-            
-
         </div>
     );
 }

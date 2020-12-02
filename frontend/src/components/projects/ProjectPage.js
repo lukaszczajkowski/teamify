@@ -6,6 +6,7 @@ import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 
+
 function ProjectPage() {
     const history = useHistory();
     const { projectId } = useParams();
@@ -23,7 +24,7 @@ function ProjectPage() {
     const onDeleteProject = () => {
         if (window.confirm("Do you want to delete this project?")) {
             deleteCurrentProject();
-            history.push("/users");
+            history.push("/users/me");
             window.location.reload();
         }
     }
@@ -34,9 +35,9 @@ function ProjectPage() {
             .catch(err => console.log(`error on delete project: ${err}`));
     }
 
-    const addMemberByEmail = (projectId, userEmail) => {
+    const addMemberByEmail = (userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(alert(`add user: ${userEmail} to project`))
+            .then(alert(`add user: ${userEmail} to project ${projectId}`))
             .catch(err => console.log(`error on add member: ${err}`));
     }
 
@@ -67,7 +68,8 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <Header />
-            <div>project name: {currentProject.title}</div>
+            <div className="project-menu flex-start">
+                <div>project name: {currentProject.title}</div>
             <button className="button"
                 id="delete-project"
                 onClick={onDeleteProject}>
@@ -76,13 +78,15 @@ function ProjectPage() {
 
             <AddMemberPopup onSubmit={addMemberByEmail} />
 
+            </div>
+            
             <ProjectBoard
                 projectId={projectId}
                 categories={categories}
                 createCategory={createCategory}
                 deleteCategory={deleteCategory} />
-
         </div>
+
 
 
     );

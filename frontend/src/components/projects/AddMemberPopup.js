@@ -3,11 +3,11 @@ import Popup from "reactjs-popup";
 
 
 // eslint-disable-next-line react/prop-types
-export default function AddMemberPopup({ projectId, onSubmit }) {
+export default function AddMemberPopup({ onSubmit }) {
     const [userEmail, setUserEmail] = useState("");
 
     return (
-        <div className="create-bean-card">
+        <div className="add-member-popup">
             <div className="popup-container">
                 <Popup
                     trigger={<button className="button" id="add-member"> + invite members </button>}
@@ -36,7 +36,7 @@ export default function AddMemberPopup({ projectId, onSubmit }) {
                                 <button
                                     className="button"
                                     onClick={() => {
-                                        onSubmit(projectId, userEmail);
+                                        onSubmit(userEmail);
                                         close();
                                     }}>
                                     Add
