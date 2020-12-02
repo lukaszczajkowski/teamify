@@ -20,6 +20,11 @@ class UserApi {
     getUsersFromSharedProjects() {
         return Api.get('/users/from-shared-projects');
     }
+
+    getEventMembers(eventId) {
+        return Api.get('/users/get-members/' + eventId);
+    }
+
 }
 
 export default new UserApi();

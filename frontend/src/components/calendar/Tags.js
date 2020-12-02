@@ -18,20 +18,56 @@ const useStyles = makeStyles((theme) => ({
 
 // eslint-disable-next-line react/prop-types
 export default function Tags({ event }) {
+  const {
+    // eslint-disable-next-line react/prop-types
+    id,
+    // eslint-disable-next-line react/prop-types
+    extendedProps,
+} = event;
   console.log("event from tag", event);
+  console.log("event id", id);
+  // eslint-disable-next-line react/prop-types
+  console.log("members:", extendedProps.users);
   const classes = useStyles();
   const [userBase, setUserBase] = useState([]);
   // eslint-disable-next-line no-unused-vars
-  const [emails, setEmails] = useState([]);
+  // eslint-disable-next-line react/prop-types
+  const [invitedUsers, setInvitedUsers] = useState([]);
 
   useEffect(async () => {
-      UserApi.getUsersFromSharedProjects().then(response => {
-          const users = response.data;
-          console.log("Users from db:", users);
-          setUserBase(users);
-          console.log("User base ", userBase);
-      })
-  }, [])
+      // eslint-disable-next-line react/prop-types
+      setInvitedUsers(extendedProps.users);
+      loadContacts();
+      loadInvitedUsers();
+  }, [event])
+
+  const loadContacts = () => {
+    UserApi.getUsersFromSharedProjects().then(response => {
+      const users = response.data;
+      console.log("Users from db:", users);
+      setUserBase(users);
+    })
+  }
+
+  //fetches a list of users invited to that specific event
+  // eslint-disable-next-line no-unused-vars
+  const loadInvitedUsers = () => {
+    UserApi.getEventMembers(id)
+    .then(response=> {
+      setInvitedUsers(response.data);
+      console.log("Intived users fetched from the api:", response.data);
+    })
+    .catch(err => console.log(err));
+    
+  }
+
+  const updateInvitedUsers = (e) => {
+    setInvitedUsers(e.target.value);
+    loadInvitedUsers();
+  }
+
+  console.log("invited users:", invitedUsers);
+
   return (
    userBase === undefined ?
    null
@@ -41,7 +77,8 @@ export default function Tags({ event }) {
         multiple
         id="tags-filled"
         options={userBase.map((user) => user.email)}
-        //defaultValue={[userBase[0].email]}
+        value={invitedUsers.map((user) => user.email)}
+        onClose = {e => updateInvitedUsers(e)}
         freeSolo
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (

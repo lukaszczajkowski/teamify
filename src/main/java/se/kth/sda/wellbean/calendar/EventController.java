@@ -8,6 +8,7 @@ import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
+import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
 
 import java.text.ParseException;
@@ -26,17 +27,20 @@ public class EventController {
     private final AuthService authService;
     private final NotificationService notificationService;
     private final ProjectService projectService;
+    private final UserRepository userRepository;
 
     public EventController(EventRepository eventRepository,
                            UserService userService,
                            AuthService authService,
                            NotificationService notificationService,
-                           ProjectService projectService) {
+                           ProjectService projectService,
+                           UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userService = userService;
         this.authService = authService;
         this.notificationService = notificationService;
         this.projectService = projectService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("")
@@ -182,6 +186,12 @@ public class EventController {
         );
         if(checkCredentials(event)){
             User user = userService.findUserByEmail(userEmail);
+            if(user == null) {
+                user = new User();
+                user.setName("Anonymous");
+                user.setEmail(userEmail);
+                userRepository.save(user);
+            }
             event.addMember(user);
             notificationService.sendNotification(user, event);
             return eventRepository.save(event);
