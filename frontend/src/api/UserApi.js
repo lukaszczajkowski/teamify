@@ -16,6 +16,10 @@ class UserApi {
     getCurrentUser() {
         return Api.get('/users/current');
     }
+
+    getUsersFromSharedProjects() {
+        return Api.get('/users/from-shared-projects');
+    }
 }
 
 export default new UserApi();
