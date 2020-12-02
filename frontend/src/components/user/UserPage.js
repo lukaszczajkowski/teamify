@@ -10,30 +10,39 @@ function UserPage() {
 
     const getAllProjects = () => {
         ProjectApi.getCurrentUsersProjects()
-        .then(response => setProjects(response.data));
+            .then(response => setProjects(response.data));
     }
 
     const createProject = (projectData) => {
         ProjectApi.createProject(projectData)
-        .then(response => setProjects([response.data, ...projects]));
+            .then(response => setProjects([response.data, ...projects]));
     }
 
-    useEffect(()=>{
+    const sendInvite = (inviteData, callback) => {
+        alert(`${inviteData.projectId} ${inviteData.userEmail}`)
+        ProjectApi
+            .addMemberByEmail(inviteData.projectId, inviteData.userEmail)
+            .then(callback);
+    }
+
+    useEffect(() => {
         getAllProjects()
-    },[]);
+    }, []);
 
 
     return (
         <div className="user-page">
             <Header />
-            
-            <div className="main-content">
-            <p className="welcome"> Hello, userName </p>
-            <BeanBoard/>
-            <ProjectsBoard projects={projects} createProject={createProject}/>
-            </div>
-            
 
+            <div className="main-content">
+                <p className="welcome"> Hello, userName </p>
+                <BeanBoard />
+                <ProjectsBoard
+                    projects={projects}
+                    sendInvite={sendInvite}
+                    createProject={createProject}
+                />
+            </div>
         </div>
     );
 }

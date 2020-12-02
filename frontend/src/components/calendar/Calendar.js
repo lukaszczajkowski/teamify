@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-import EventApi from '../../api/EventApi'
+//import EventApi from '../../api/EventApi'
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 

@@ -6,6 +6,7 @@ import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 
+
 function ProjectPage() {
     const history = useHistory();
 
