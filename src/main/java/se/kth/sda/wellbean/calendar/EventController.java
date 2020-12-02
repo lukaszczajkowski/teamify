@@ -223,10 +223,13 @@ public class EventController {
     }
      */
 
-    @DeleteMapping("")
-    public void delete(Event event) {
-        if(checkCredentials(event)){
-            eventRepository.delete(event);
+    @DeleteMapping("{eventId}")
+    public void delete(@PathVariable Long eventId) {
+        Event eventToDelete = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if(checkCredentials(eventToDelete)){
+            eventRepository.delete(eventToDelete);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
