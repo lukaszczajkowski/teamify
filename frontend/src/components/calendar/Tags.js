@@ -64,14 +64,17 @@ export default function Tags({ event }) {
 
   const updateInvitedUsers = ({target}, fieldName) => {
     const { value } = target;
+  
     switch(fieldName) {
       case "tags":
-        console.log("Value:", value);
+        console.log("Value from tags:", value);
         break;
+
       case "select-option":
-        console.log("Value:", value);
-        UserApi.getUserByEmail(value).then(response => setInvitedUsers([...invitedUsers, response.data]))
+        console.log("Value from select option:", value);
+        //UserApi.getUserByEmail(value).then(response => setInvitedUsers([...invitedUsers, response.data]))
         break;
+      
     }
 
     // EventApi.inviteUserByEmail(id, email)
@@ -80,8 +83,16 @@ export default function Tags({ event }) {
     //           .catch(err => console.log(err));
   }
 
+  const handleChange = (e, value, reason) => {
+    switch(reason){
+      case "select-option":
+        console.log("Value from handle change:", value);
+        setInvitedUsers(value)
+        break;
+    }
+  }
   console.log("invited users:", invitedUsers);
-
+ 
   return (
    userBase === undefined ?
    null
@@ -89,23 +100,27 @@ export default function Tags({ event }) {
     <div className={classes.root}>
       <Autocomplete
         multiple
-        autoComplete ="true"
+        autoComplete={true}
         id="tags-filled"
         name="tags"
         options={userBase.map((user) => user.email)}
-        value={invitedUsers.map((user) => user.email)}
+        defaultValue={invitedUsers.map((user) => user.email)}
         onSelect = {(e) => updateInvitedUsers(e, "tags")}
         onClose = {(e) => updateInvitedUsers(e, "select-option")}
-        freeSolo
+        onChange = {(e, value) => handleChange(e, value, "select-option")}
+        freeSolo = {true}
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
             // eslint-disable-next-line react/jsx-key
-            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+            <Chip
+              variant="outlined" 
+              label={option} {...getTagProps({ index })} 
+              />
           ))
         }
         renderInput={(params) => (
           <TextField 
-          {...params} 
+          {...params}
           variant="filled" 
           label="freeSolo" 
           placeholder="Add users" />
