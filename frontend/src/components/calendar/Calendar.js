@@ -5,6 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
 import EventPopup from './EventPopup';
+import UserApi from "../../api/UserApi";
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -101,7 +102,6 @@ export default function Calendar() {
     }
 
     const updateFromPopup = (data) => {
-        console.log("data from updateFromPopup", data);
         const startDate = new Date(currentEvent.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -118,7 +118,7 @@ export default function Calendar() {
             creator: currentEvent.extendedProps.creator,
             allDay: currentEvent.allDay,
             editable: true,
-            }
+        }
         EventApi.update(updatedEvent).then((response) => {
             loadData();
             const eventAfterUpdate = response.data;
@@ -133,8 +133,31 @@ export default function Calendar() {
     const popupClosed = (value) => {
         setPopupOpen(value);
         setCurrentEvent({});
-    };
+    }
 
+    const updateMembers = (data) => {
+        console.log("update members from calendar:", data)
+        console.log("update members from calendar, emails:", data.emails);
+        console.log("update members from calendar, event:", data.currentEvent.id)
+        data.emails.forEach(email => console.log(JSON.stringify(email)));
+        EventApi.inviteUserByEmail(data.currentEvent.id, data.emails[0])
+                                                .catch(err => console.log(err));
+    }
+
+
+    //deletes the user after clcking X on a chip:
+    const removeUser = (data) => {
+        const emailToRemove = data.nativeEvent.srcElement.parentElement.parentElement.innerText
+        console.log("Email from removeUser in Calendar.js:", emailToRemove)
+        UserApi.getUserByEmail(emailToRemove)
+                .then(response => {
+                    console.log("Response after getUserByEmail", response.data)
+                    EventApi.removeUser(currentEvent.id, response.data.email).then(() => {
+                        loadData();
+                    }).catch(err => console.log(err));
+                }).catch(err => console.log(err));
+    }
+    
     return(
         <div>
         <FullCalendar
@@ -160,7 +183,9 @@ export default function Calendar() {
                 currentEvent = {currentEvent} 
                 deleteEvent = {deleteEvent}
                 updateEvent = {updateFromPopup}
+                onMembersChange = {updateMembers}
                 onClose = {popupClosed}
+                onDelete = {removeUser}
                 />
                 </div>
             </div>

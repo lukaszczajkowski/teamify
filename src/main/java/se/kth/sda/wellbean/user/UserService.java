@@ -61,4 +61,8 @@ public class UserService {
         userSummary.setName(user.getName());
         return userSummary;
     }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 }

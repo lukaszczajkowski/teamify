@@ -18,7 +18,7 @@ import Popup from "reactjs-popup";
 export default function CreateBeanPopup() {
 
     return (
-        <div className="create-bean-card">
+        <div id="create-bean">
             <div className="popup-container">
                 <Popup
                     trigger={<button className="button"> + create a new bean </button>}

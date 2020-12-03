@@ -17,41 +17,94 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line react/prop-types
-export default function Tags({ event }) {
-  console.log("event from tag", event);
+export default function Tags({ event, onEmailsChange }) {
+
   const classes = useStyles();
   const [userBase, setUserBase] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [emails, setEmails] = useState([]);
+  const [invitedUsers, setInvitedUsers] = useState([]);
 
   useEffect(async () => {
-      UserApi.getUsersFromSharedProjects().then(response => {
-          const users = response.data;
-          console.log("Users from db:", users);
-          setUserBase(users);
-          console.log("User base ", userBase);
-      })
-  }, [])
+      loadContacts();
+  }, [event])
+
+  const loadContacts = () => {
+    UserApi.getUsersFromSharedProjects().then(response => {
+      const users = response.data;
+      setUserBase(users);
+    })
+  }
+
+  useEffect(() => {
+    setInvitedUsers(invitedUsers);
+    onEmailsChange(invitedUsers);
+  }, [invitedUsers]);
+
+  //fetches a list of users invited to that specific event
+  // eslint-disable-next-line no-unused-vars
+  // const loadInvitedUsers = () => {
+  //   UserApi.getEventMembers(id)
+  //   .then(response=> {
+  //     setInvitedUsers(response.data);
+  //     console.log("Intived users fetched from the api:", response.data);
+  //   })
+  //   .catch(err => console.log(err));
+    
+  // }
+
+  const updateInvitedUsers = ({target}, fieldName) => {
+    const { value } = target;
+  
+    switch(fieldName) {
+      case "tags":
+        console.log("Value from tags:", value);
+        break;
+
+      case "select-option":
+        console.log("Value from select option:", value);
+        break;
+      
+    }
+  }
+
+  const handleChange = (e, value, reason) => {
+    switch(reason){
+      case "select-option":
+        setInvitedUsers(value);
+        console.log("passed to the event popup from tags:", invitedUsers);
+        break;
+    }
+  }
+  console.log("invited users:", invitedUsers);
+ 
   return (
    userBase === undefined ?
    null
    :
     <div className={classes.root}>
+
       <Autocomplete
-        multiple
+        multiple = {true}
+        autoComplete={true}
         id="tags-filled"
+        name="tags"
         options={userBase.map((user) => user.email)}
-        //defaultValue={[userBase[0].email]}
-        freeSolo
+        value={invitedUsers}
+        onSelect = {(e) => updateInvitedUsers(e, "tags")}
+        onClose = {(e) => updateInvitedUsers(e, "select-option")}
+        onChange = {(e, value) => handleChange(e, value, "select-option")}
+        freeSolo = {true}
         renderTags={(value, getTagProps) =>
           value.map((option, index) => (
             // eslint-disable-next-line react/jsx-key
-            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+            <Chip
+              variant="outlined" 
+              label={option} {...getTagProps({ index })} 
+              />
           ))
         }
         renderInput={(params) => (
           <TextField 
-          {...params} 
+          {...params}
           variant="filled" 
           label="freeSolo" 
           placeholder="Add users" />

@@ -1,11 +1,12 @@
 package se.kth.sda.wellbean.user;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.calendar.Event;
+import se.kth.sda.wellbean.calendar.EventRepository;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 
@@ -16,14 +17,26 @@ import java.util.*;
 public class UserController {
 
     private final UserService userService;
-    private  final AuthService authService;
+    private final AuthService authService;
     private final ProjectService projectService;
+    private final EventRepository eventRepository;
 
     public UserController(UserService userService, AuthService authService,
-                          ProjectService projectService) {
+                          ProjectService projectService, EventRepository eventRepository) {
         this.userService = userService;
         this.authService = authService;
         this.projectService = projectService;
+        this.eventRepository = eventRepository;
+    }
+
+    /**
+     * Returns a list of every user from the repository.
+     * For testing purposes only
+     * @return
+     */
+    @GetMapping("")
+    public List<User> getAllUsers() {
+        return userService.findAll();
     }
 
     /**
@@ -35,6 +48,11 @@ public class UserController {
         String email = authService.getLoggedInUserEmail();
         User currentUser = userService.findUserByEmail(email);
         return userService.getAllExceptLoggedIn(currentUser, projectId);
+    }
+
+    @GetMapping("/get-by-email")
+    public User getUserByEmail(@RequestParam String email){
+        return userService.findUserByEmail(email);
     }
 
     @GetMapping("/current")
@@ -92,4 +110,21 @@ public class UserController {
         });
         return usersFromSharedProjects;
     }
+
+    @GetMapping("/get-members/{eventId}")
+    public List<User> getMembers(@PathVariable Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        List<User> membersOfEvent = new ArrayList<>();
+        for (User user:
+                event.getUsers()) {
+            membersOfEvent.add(user);
+            System.out.println("Returned member of the event " + eventId +": " + user.getEmail());
+        }
+        System.out.println("All users fetched!");
+        return membersOfEvent;
+    }
+
+
 }

@@ -10,19 +10,23 @@ class TaskApi {
     }
 
     getTasksByMemberId(memberId) {
-        return Api.get('/tasks/memberId', {params: memberId });
+        return Api.get('/tasks/memberId', { params: memberId });
     }
 
     getTasksByCategoryId(categoryId) {
-        return Api.get('/tasks/categoryId', {params: categoryId });
+        return Api.get('/tasks/categoryId',
+            {
+                params:
+                    { categoryId: categoryId }
+            });
     }
 
     getTasksByProjectId(projectId) {
-        return Api.get('/tasks/projectId', {params: projectId });
+        return Api.get('/tasks/projectId', { params: projectId });
     }
 
-    getTasksByCategoryIdAndMemberId(categoryId, memberId ) {
-        return Api.get('/tasks/categoryMember', {params: categoryId, memberId});
+    getTasksByCategoryIdAndMemberId(categoryId, memberId) {
+        return Api.get('/tasks/categoryMember', { params: categoryId, memberId });
     }
 
     createTask(categoryId, task) {
@@ -34,7 +38,7 @@ class TaskApi {
     }
 
     deleteTask(taskId) {
-        return Api.delete('/tasks/'+ taskId);
+        return Api.delete('/tasks/' + taskId);
     }
 
     addMemberToTask(taskId, userId) {

@@ -1,25 +1,20 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
-import Tags from './Tags';
-import Chips from './Chips';
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({    isOpen,
-                                        currentEvent,
-                                        updateEvent,
-                                        onClose,
-                                        deleteEvent,
-                                        onMembersChange,
-                                        onDelete }) {
+export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask, onClose }) {
+    console.log(currentTask);
 
     const {
         id,
         title,
         extendedProps,
-    } = currentEvent;
+    } = currentTask;
+
+    console.log("extended props", extendedProps);
+
+  
 
     const initialDescription = (extendedProps) => {
         let initialDescription;
@@ -30,41 +25,21 @@ export default function EventPopup({    isOpen,
                 description
             } = extendedProps
             initialDescription = description;
-
         } else {
             initialDescription = "";
         }
         return initialDescription;
     }
 
-    const [eventTitle, setEventTitle] = useState("");
+    
     const desc = initialDescription(extendedProps);
-    const [eventDescription, setEventDescription] = useState(desc);
-    const [eventMembers, setEventMembers] = useState("");
-    const [emails, setEmails] = useState([]);
+    const [taskDescription, setTaskDescription] = useState(desc);
+    const [emailAddress, setEmailAddress] = useState("");
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
-        setEventTitle(title);
-        setEventDescription(desc);
-    }, [currentEvent])
-
-    useEffect(() => {
-        setEmails(emails);
-    }, []);
-
-    const onEmailsChange = (updatedEmails, eventToUpdate) => {
-        console.log("onEmailsChange from event popup:", updatedEmails);
-        setEmails(updatedEmails);
-        console.log("Emails from event popup:", emails);
-    }
-    //generates the chips with emails of invited users
-    const chips = extendedProps === undefined ?
-                null
-                :
-                extendedProps.users.map(user => user.email)
-                                // eslint-disable-next-line react/jsx-key
-                                .map(email => <Chips email = {email} handleDelete = {onDelete}/>)
-
+        setTaskDescription(desc);
+    }, [currentTask])
     // eslint-disable-next-line react/prop-types
     return (
         extendedProps === undefined ?
@@ -91,11 +66,9 @@ export default function EventPopup({    isOpen,
                                     <input
                                         type="text"
                                         className="input-box"
-                                        value={eventTitle}
-                                        placeholder="title"
-                                        onChange = {e => {
-                                            setEventTitle(e.target.value);
-                                        }}
+                                        value={name}
+                                        placeholder="name"
+                    
                                     >
                                     </input>
                                 </div>
@@ -104,30 +77,23 @@ export default function EventPopup({    isOpen,
                                     <textarea
                                         className="input-box"
                                         placeholder=""
-                                        value = {eventDescription}
+                                        value = {taskDescription}
                                         onChange = {e => {
-                                            setEventDescription(e.target.value);
+                                            setTaskDescription(e.target.value);
                                         }}
                                     >
                                     </textarea>
                                 </div>
                                 <div className="popup-item flex-start">
-                                    <h2 className="prompt">Members of the event:</h2>
-                                        <div className="popup-item flex-start">
-                                            {chips}
-                                        </div>
-                                </div>
-                                <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>
-                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
+                                    <Tags task = {currentTask}/>
                                 </div>
                             </div>
                             <div className="flex-end">
                                 <button
                                 className="button"
                                 onClick={() => {
-                                    {updateEvent({ eventTitle, eventDescription })}
-                                    {onMembersChange({emails, currentEvent})}
+                                    {updateTask({name, taskDescription})}
                                     close();
                                     {onClose(false)}
                                 }}>
@@ -136,7 +102,7 @@ export default function EventPopup({    isOpen,
                                 <button
                                 className="button"
                                 onClick={() => {
-                                    {deleteEvent(currentEvent)}
+                                    {deleteTask(currentTask)}
                                     close();
                                     {onClose(false)}
                                 }}>
