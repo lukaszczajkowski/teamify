@@ -34,6 +34,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                     <div className="modal">
                         <button className="close" onClick={() => {
                             close();
+                            { onClose(false) }
                         }
                         }>
                             <i className="fas fa-times"></i>
