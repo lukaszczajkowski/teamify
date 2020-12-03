@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 
 
-
 // eslint-disable-next-line react/prop-types
 export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask, onClose }) {
     console.log(currentTask);
@@ -24,7 +23,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
     useEffect(() => {
         setTaskTitle(title);
     }, [currentTask]);
- 
+
     return (
         <div className="task-popup popup-container">
             <Popup
@@ -46,8 +45,8 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                     type="text"
                                     className="input-box"
                                     value={title}
-                                    placeholder="title" 
-                                    onChange = {e => {
+                                    placeholder="title"
+                                    onChange={e => {
                                         setTaskTitle(e.target.value);
                                     }}
 
@@ -67,20 +66,17 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 </textarea>
                             </div>
                             <div className="popup-item flex-start">
-                                    <h2 className="prompt">Members:</h2>
-                                        <div className="popup-item flex-start">
-                                
-                                        </div>
+                                <h2 className="prompt">Members:</h2>
+                                <div className="popup-item flex-start">
+
                                 </div>
+                            </div>
 
                             <div className="popup-item flex-start">
                                 <h2 className="prompt">Invite user by email</h2>
-                        
-                            </div>
-                        </div>
-                        <div className="flex-end">
 
-                        <div className="popup-item flex-start">
+                            </div>
+                            <div className="popup-item flex-start">
                                 <h2 className="prompt">Comments</h2>
                                 <textarea
                                     className="input-box"
@@ -92,13 +88,15 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 >
                                 </textarea>
                             </div>
+                        </div>
+                        <div className="flex-end">
 
                             <button
                                 className="button"
                                 onClick={() => {
                                     { updateTask({ taskTitle, taskDescription, taskComments }) }
                                     close();
-                                    {onClose(false)}
+                                    { onClose(false) }
                                 }}>
                                 Update
                                 </button>
@@ -107,10 +105,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 onClick={() => {
                                     { deleteTask(currentTask) }
                                     close();
-                                    {onClose(false)}
-                                    
-
-                                    
+                                    { onClose(false) }
 
                                 }}>
                                 Delete
