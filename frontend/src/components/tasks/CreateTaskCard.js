@@ -6,7 +6,6 @@ export default function CreateTaskCard({onSubmit, categoryId}) {
     const [title, setTitle] = useState("");
     const [isCreatingTask, setIsCreatingTask] = useState(false);
 
-
     const handleClick = () => {
         setIsCreatingTask(true);
     }
@@ -15,6 +14,7 @@ export default function CreateTaskCard({onSubmit, categoryId}) {
         onSubmit(categoryId, 
                 { title: title });
         setIsCreatingTask(false);
+        setTitle("");
     }
 
     return (

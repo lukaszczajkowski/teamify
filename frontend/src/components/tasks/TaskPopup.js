@@ -1,17 +1,14 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
-import Tags from '../calendar/Tags';
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({ isOpen, currentTask, deleteTask, updateTask, onClose }) {
-    console.log(currentTask)
+export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask, onClose }) {
+    console.log(currentTask);
 
     const {
         id,
-        name,
+        title,
         extendedProps,
     } = currentTask;
 
