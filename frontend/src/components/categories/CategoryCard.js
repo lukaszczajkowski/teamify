@@ -68,7 +68,7 @@ export default function CategoryCard({ category }) {
 
     // const onDeleteCategory = ({category.id}) => {
     //     deleteCategory
-        
+
     //     }
 
     return (
@@ -99,7 +99,7 @@ export default function CategoryCard({ category }) {
         updateTask = {updateTask}/>
         
         </div>
-        
+             
 
 
     );

@@ -1,15 +1,12 @@
 .landing-page {
 height: 100vh;
+
 }
 
 .landing-page .quote {
   text-align: center;
   font-size: 30px;
   color: var(--theme-dark-green);
-}
-
-.landing-page .button {
-
 }
 
 .landing-page .buttons {
