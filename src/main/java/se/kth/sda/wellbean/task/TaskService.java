@@ -61,4 +61,8 @@ public class TaskService {
     public List<Task> findAllByCategoryIdAndMembers_Id(Long categoryId, Long memberId) {
         return repo.findAllByCategoryIdAndMembers_Id(categoryId, memberId);
     }
+
+    public List<Task> findAllByProjectIdIdAndMembers_Id(Long projectId, Long memberId) {
+        return repo.findAllByProjectIdAndMembers_Id(projectId, memberId);
+    }
 }
