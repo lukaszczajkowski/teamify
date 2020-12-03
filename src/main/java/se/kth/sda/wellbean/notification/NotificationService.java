@@ -26,9 +26,16 @@ public class NotificationService {
         mailMessage.setFrom("lukaszczajkowski.wroc@gmail.com");
 
         String eventTitle = event.getTitle();
+        if(eventTitle == null) {
+            eventTitle = " an ";
+        }
         String eventDescription = event.getDescription();
+
+        if(eventDescription == null) {
+            eventDescription = "You have an upcoming event!";
+        }
         mailMessage.setSubject("You've been invited to " + eventTitle + " event on WellBean!" );
-        String text = eventDescription;
+        String text = eventDescription +  "It starts on " + event.getStart() + ".";;
         mailMessage.setText(text);
 
         javaMailSender.send(mailMessage);
