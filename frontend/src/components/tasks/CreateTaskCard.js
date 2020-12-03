@@ -18,22 +18,22 @@ export default function CreateTaskCard({onSubmit, categoryId}) {
     }
 
     return (
-        <div className="category-card">
+        <div className="create-task">
             {
                 isCreatingTask ?
-                    <div className="category-input">
+                    <div className="task-input">
                         <input
                             type="text"
                             className="input-box"
-                            placeholder="Name"
+                            placeholder="title"
                             value={title}
                             onChange={e => setTitle(e.target.value)} />
-                        <button onClick={() => onCreateTask()}
+                        <button onClick={onCreateTask}
                             className="button">
-                            Add Task
+                            confirm add
                         </button>
                     </div> :
-                        <button onClick={handleClick}> Create Task</button>
+                        <button onClick={handleClick}>+ Add task</button>
             }
         </div>
 
