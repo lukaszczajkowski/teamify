@@ -50,7 +50,7 @@ export default function EventPopup({    isOpen,
         setEmails(emails);
     }, [emails]);
 
-    const onEmailsChange = (updatedEmails) => {
+    const onEmailsChange = (updatedEmails, eventToUpdate) => {
         console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
         console.log("Emails from event popup:", emails);
@@ -112,7 +112,7 @@ export default function EventPopup({    isOpen,
                                 className="button"
                                 onClick={() => {
                                     {updateEvent({ eventTitle, eventDescription })}
-                                    {onMembersChange(emails)}
+                                    {onMembersChange({emails, currentEvent})}
                                     close();
                                     {onClose(false)}
                                 }}>

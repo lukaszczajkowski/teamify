@@ -60,9 +60,7 @@ class EventApi {
      * @param {*} userEmail 
      */
     inviteUserByEmail(eventId, userEmail) {
-        return Api.put('/events/' + eventId + '/userEmail', {
-            params: userEmail
-        });
+        return Api.put(`/events/${eventId}/userEmail?userEmail=${userEmail}`);
     }
     /**
      * Accepts an event id and user email and removes the user identified by that
@@ -72,7 +70,9 @@ class EventApi {
      */
     removeUser(eventId, userEmail) {
         return Api.put('/events/' + eventId + '/delete/userEmail', {
-            params: userEmail
+            params: {
+                userEmail: userEmail
+            }
         });
     }
 

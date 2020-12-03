@@ -6,7 +6,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import UserApi from '../../api/UserApi';
-//import EventApi from '../../api/EventApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,7 +85,6 @@ export default function Tags({ event, onEmailsChange }) {
   const handleChange = (e, value, reason) => {
     switch(reason){
       case "select-option":
-        console.log("Value from handle change:", value);
         setInvitedUsers(value);
         console.log("passed to the event popup from tags:", invitedUsers);
         break;

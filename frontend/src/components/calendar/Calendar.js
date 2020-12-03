@@ -5,6 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
 import EventPopup from './EventPopup';
+//import EventApi from '../../api/EventApi';
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -117,7 +118,7 @@ export default function Calendar() {
             creator: currentEvent.extendedProps.creator,
             allDay: currentEvent.allDay,
             editable: true,
-            }
+        }
         EventApi.update(updatedEvent).then((response) => {
             loadData();
             const eventAfterUpdate = response.data;
@@ -134,8 +135,13 @@ export default function Calendar() {
         setCurrentEvent({});
     }
 
-    const updateMembers = (emails) => {
-        console.log("Updating members from calendar: " + emails)
+    const updateMembers = (data) => {
+        console.log("update members from calendar:", data)
+        console.log("update members from calendar, emails:", data.emails);
+        console.log("update members from calendar, event:", data.currentEvent.id)
+        data.emails.forEach(email => console.log(JSON.stringify(email)));
+        EventApi.inviteUserByEmail(data.currentEvent.id, data.emails[0])
+                                                .catch(err => console.log(err));
     }
 
 
