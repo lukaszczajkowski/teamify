@@ -82,9 +82,6 @@ function ProjectPage() {
                 categories={categories}
                 createCategory={createCategory}
                 deleteCategory={deleteCategory} />
-
-
-                <ProjectBoard categories={categories} createCategory={createCategory}/>
                
         </div>
 
