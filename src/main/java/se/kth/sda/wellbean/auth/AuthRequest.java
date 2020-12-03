@@ -1,5 +1,7 @@
 package se.kth.sda.wellbean.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AuthRequest {
     private String email;
     private String password;
@@ -17,10 +19,12 @@ public class AuthRequest {
         this.email = email;
     }
 
+    //@JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    //@JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }
