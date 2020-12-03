@@ -3,21 +3,23 @@
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import Tags from './Tags';
+import Chips from './Chips';
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEvent, onClose }) {
-    console.log(currentEvent)
+export default function EventPopup({    isOpen,
+                                        currentEvent,
+                                        updateEvent,
+                                        onClose,
+                                        deleteEvent,
+                                        onMembersChange,
+                                        onDelete }) {
 
     const {
         id,
         title,
         extendedProps,
     } = currentEvent;
-
-    console.log("extended props", extendedProps);
-
-  
 
     const initialDescription = (extendedProps) => {
         let initialDescription;
@@ -28,6 +30,7 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                 description
             } = extendedProps
             initialDescription = description;
+
         } else {
             initialDescription = "";
         }
@@ -37,12 +40,31 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
     const [eventTitle, setEventTitle] = useState("");
     const desc = initialDescription(extendedProps);
     const [eventDescription, setEventDescription] = useState(desc);
-    const [emailAddress, setEmailAddress] = useState("");
+    const [eventMembers, setEventMembers] = useState("");
+    const [emails, setEmails] = useState([]);
 
     useEffect(() => {
         setEventTitle(title);
         setEventDescription(desc);
     }, [currentEvent])
+
+    useEffect(() => {
+        setEmails(emails);
+    }, []);
+
+    const onEmailsChange = (updatedEmails, eventToUpdate) => {
+        console.log("onEmailsChange from event popup:", updatedEmails);
+        setEmails(updatedEmails);
+        console.log("Emails from event popup:", emails);
+    }
+    //generates the chips with emails of invited users
+    const chips = extendedProps === undefined ?
+                null
+                :
+                extendedProps.users.map(user => user.email)
+                                // eslint-disable-next-line react/jsx-key
+                                .map(email => <Chips email = {email} handleDelete = {onDelete}/>)
+
     // eslint-disable-next-line react/prop-types
     return (
         extendedProps === undefined ?
@@ -90,15 +112,22 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                                     </textarea>
                                 </div>
                                 <div className="popup-item flex-start">
+                                    <h2 className="prompt">Members of the event:</h2>
+                                        <div className="popup-item flex-start">
+                                            {chips}
+                                        </div>
+                                </div>
+                                <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>
-                                    <Tags event = {currentEvent}/>
+                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
                                 </div>
                             </div>
                             <div className="flex-end">
                                 <button
                                 className="button"
                                 onClick={() => {
-                                    {updateEvent({eventTitle, eventDescription})}
+                                    {updateEvent({ eventTitle, eventDescription })}
+                                    {onMembersChange({emails, currentEvent})}
                                     close();
                                     {onClose(false)}
                                 }}>
