@@ -101,7 +101,6 @@ export default function Calendar() {
     }
 
     const updateFromPopup = (data) => {
-        console.log("data from updateFromPopup", data);
         const startDate = new Date(currentEvent.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -133,8 +132,15 @@ export default function Calendar() {
     const popupClosed = (value) => {
         setPopupOpen(value);
         setCurrentEvent({});
-    };
+    }
 
+    const updateMembers = (emails) => {
+        console.log("Updating members from calendar: " + emails)
+    }
+
+
+    //accepts an array of emails from the event
+    
     return(
         <div>
         <FullCalendar
@@ -160,6 +166,7 @@ export default function Calendar() {
                 currentEvent = {currentEvent} 
                 deleteEvent = {deleteEvent}
                 updateEvent = {updateFromPopup}
+                onMembersChange = {updateMembers}
                 onClose = {popupClosed}
                 />
                 </div>

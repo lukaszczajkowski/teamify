@@ -6,18 +6,18 @@ import Tags from './Tags';
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEvent, onClose }) {
-    console.log(currentEvent)
+export default function EventPopup({    isOpen,
+                                        currentEvent,
+                                        updateEvent,
+                                        onClose,
+                                        deleteEvent,
+                                        onMembersChange }) {
 
     const {
         id,
         title,
         extendedProps,
     } = currentEvent;
-
-    console.log("extended props", extendedProps);
-
-  
 
     const initialDescription = (extendedProps) => {
         let initialDescription;
@@ -28,6 +28,7 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                 description
             } = extendedProps
             initialDescription = description;
+
         } else {
             initialDescription = "";
         }
@@ -37,12 +38,24 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
     const [eventTitle, setEventTitle] = useState("");
     const desc = initialDescription(extendedProps);
     const [eventDescription, setEventDescription] = useState(desc);
-    const [emailAddress, setEmailAddress] = useState("");
+    const [eventMembers, setEventMembers] = useState("");
+    const [emails, setEmails] = useState([]);
 
     useEffect(() => {
         setEventTitle(title);
         setEventDescription(desc);
     }, [currentEvent])
+
+    useEffect(() => {
+        setEmails(emails);
+    }, [emails]);
+
+    const onEmailsChange = (updatedEmails) => {
+        console.log("onEmailsChange from event popup:", updatedEmails);
+        setEmails(updatedEmails);
+        console.log("Emails from event popup:", emails);
+    }
+
     // eslint-disable-next-line react/prop-types
     return (
         extendedProps === undefined ?
@@ -91,14 +104,15 @@ export default function EventPopup({ isOpen, currentEvent, deleteEvent, updateEv
                                 </div>
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>
-                                    <Tags event = {currentEvent}/>
+                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
                                 </div>
                             </div>
                             <div className="flex-end">
                                 <button
                                 className="button"
                                 onClick={() => {
-                                    {updateEvent({eventTitle, eventDescription})}
+                                    {updateEvent({ eventTitle, eventDescription })}
+                                    {onMembersChange(emails)}
                                     close();
                                     {onClose(false)}
                                 }}>

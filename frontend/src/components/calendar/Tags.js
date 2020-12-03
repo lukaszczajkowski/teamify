@@ -18,17 +18,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line react/prop-types
-export default function Tags({ event }) {
-  const {
-    // eslint-disable-next-line react/prop-types
-    id,
-    // eslint-disable-next-line react/prop-types
-    extendedProps,
-} = event;
-  console.log("event from tag", event);
-  console.log("event id", id);
+export default function Tags({ event, onEmailsChange }) {
+//   const {
+//     // eslint-disable-next-line react/prop-types
+//     id,
+//     // eslint-disable-next-line react/prop-types
+//     //extendedProps,
+// } = event;
   // eslint-disable-next-line react/prop-types
-  console.log("members:", extendedProps.users);
   const classes = useStyles();
   const [userBase, setUserBase] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -37,30 +34,34 @@ export default function Tags({ event }) {
 
   useEffect(async () => {
       // eslint-disable-next-line react/prop-types
-      setInvitedUsers(extendedProps.users);
+      //setInvitedUsers(extendedProps.users);
       loadContacts();
-      loadInvitedUsers();
+      //loadInvitedUsers();
   }, [event])
 
   const loadContacts = () => {
     UserApi.getUsersFromSharedProjects().then(response => {
       const users = response.data;
-      console.log("Users from db:", users);
       setUserBase(users);
     })
   }
 
+  useEffect(() => {
+    setInvitedUsers(invitedUsers);
+    onEmailsChange(invitedUsers);
+  }, [invitedUsers]);
+
   //fetches a list of users invited to that specific event
   // eslint-disable-next-line no-unused-vars
-  const loadInvitedUsers = () => {
-    UserApi.getEventMembers(id)
-    .then(response=> {
-      setInvitedUsers(response.data);
-      console.log("Intived users fetched from the api:", response.data);
-    })
-    .catch(err => console.log(err));
+  // const loadInvitedUsers = () => {
+  //   UserApi.getEventMembers(id)
+  //   .then(response=> {
+  //     setInvitedUsers(response.data);
+  //     console.log("Intived users fetched from the api:", response.data);
+  //   })
+  //   .catch(err => console.log(err));
     
-  }
+  // }
 
   const updateInvitedUsers = ({target}, fieldName) => {
     const { value } = target;
@@ -72,7 +73,6 @@ export default function Tags({ event }) {
 
       case "select-option":
         console.log("Value from select option:", value);
-        //UserApi.getUserByEmail(value).then(response => setInvitedUsers([...invitedUsers, response.data]))
         break;
       
     }
@@ -87,7 +87,8 @@ export default function Tags({ event }) {
     switch(reason){
       case "select-option":
         console.log("Value from handle change:", value);
-        setInvitedUsers(value)
+        setInvitedUsers(value);
+        console.log("passed to the event popup from tags:", invitedUsers);
         break;
     }
   }
@@ -99,12 +100,12 @@ export default function Tags({ event }) {
    :
     <div className={classes.root}>
       <Autocomplete
-        multiple
+        multiple = {true}
         autoComplete={true}
         id="tags-filled"
         name="tags"
         options={userBase.map((user) => user.email)}
-        defaultValue={invitedUsers.map((user) => user.email)}
+        value={invitedUsers}
         onSelect = {(e) => updateInvitedUsers(e, "tags")}
         onClose = {(e) => updateInvitedUsers(e, "select-option")}
         onChange = {(e, value) => handleChange(e, value, "select-option")}
