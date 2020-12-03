@@ -5,6 +5,7 @@ import TaskApi from "../../api/TaskApi";
 import{useParams, useHistory} from "react-router-dom";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import CategoryApi from "../../api/CategoryApi";
+import TaskCard from "../tasks/TaskCard";
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category }) {
@@ -16,6 +17,7 @@ export default function CategoryCard({ category }) {
     // eslint-disable-next-line react/prop-types
     const [title, setTitle] = useState(category.title);
     const [categories, setCategories] = useState([]);
+    
 
     
 
@@ -71,6 +73,8 @@ export default function CategoryCard({ category }) {
 
     //     }
 
+    
+
     return (
         <div className="category-card">
             <div className="flex-between">
@@ -93,14 +97,18 @@ export default function CategoryCard({ category }) {
             onClick={onDeleteCategory}>Delete</button>
         </div>
 
+        <TaskCard />
+
         <CreateTaskCard tasks= {tasks}
         onSubmit ={createTask}
         deleteTask = {deleteTask}
-        updateTask = {updateTask}/>
+        updateTask = {updateTask}
+        />
         
-        </div>
+        
+        
              
-
+             </div>
 
     );
 }
