@@ -18,24 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 // eslint-disable-next-line react/prop-types
 export default function Tags({ event, onEmailsChange }) {
-//   const {
-//     // eslint-disable-next-line react/prop-types
-//     id,
-//     // eslint-disable-next-line react/prop-types
-//     //extendedProps,
-// } = event;
-  // eslint-disable-next-line react/prop-types
+
   const classes = useStyles();
   const [userBase, setUserBase] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  // eslint-disable-next-line react/prop-types
   const [invitedUsers, setInvitedUsers] = useState([]);
 
   useEffect(async () => {
-      // eslint-disable-next-line react/prop-types
-      //setInvitedUsers(extendedProps.users);
       loadContacts();
-      //loadInvitedUsers();
   }, [event])
 
   const loadContacts = () => {
@@ -75,11 +64,6 @@ export default function Tags({ event, onEmailsChange }) {
         break;
       
     }
-
-    // EventApi.inviteUserByEmail(id, email)
-    //           .then(response => setInvitedUsers(response.data))
-    //           .then(loadInvitedUsers())
-    //           .catch(err => console.log(err));
   }
 
   const handleChange = (e, value, reason) => {
@@ -97,6 +81,7 @@ export default function Tags({ event, onEmailsChange }) {
    null
    :
     <div className={classes.root}>
+
       <Autocomplete
         multiple = {true}
         autoComplete={true}
