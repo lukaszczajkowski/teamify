@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
+
 
 
 // eslint-disable-next-line react/prop-types
@@ -7,112 +9,116 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
     console.log(currentTask);
 
     const {
-        id,
         title,
-        extendedProps,
+        description,
+        // members,
+        comments,
     } = currentTask;
 
-    console.log("extended props", extendedProps);
-
-  
-
-    const initialDescription = (extendedProps) => {
-        let initialDescription;
-        if(extendedProps !== undefined) {
-            const {
-                creator,
-                users,
-                description
-            } = extendedProps
-            initialDescription = description;
-        } else {
-            initialDescription = "";
-        }
-        return initialDescription;
-    }
-
-    
-    const desc = initialDescription(extendedProps);
-    const [taskDescription, setTaskDescription] = useState(desc);
-    const [emailAddress, setEmailAddress] = useState("");
-    const [comment, setComment] = useState("");
+    const [taskTitle, setTaskTitle] = useState(title);
+    const [taskDescription, setTaskDescription] = useState("");
+    // const [taskMembers, setTaskMembers] = useState("");
+    // const [emails, setEmails] = useState([]);
+    const [taskComments, setTaskComments] = useState([]);
 
     useEffect(() => {
-        setTaskDescription(desc);
-    }, [currentTask])
-    // eslint-disable-next-line react/prop-types
+        setTaskTitle(title);
+    }, [currentTask]);
+ 
     return (
-        extendedProps === undefined ?
-        null
-        :
-        <div className="create-bean-card">
-            <div className="popup-container">
-                <Popup
-                    open = {isOpen}
-                    modal
-                    nested>
-                        {close => (
-                        <div className="modal">
-                            <button className="close" onClick={()=> {
-                                close();
-                                onClose(false);
-                                }    
+        <div className="task-popup popup-container">
+            <Popup
+                open={isOpen}
+                modal
+                nested>
+                {close => (
+                    <div className="modal">
+                        <button className="close" onClick={() => {
+                            close();
+                        }
                         }>
-                                <i className="fas fa-times"></i>
-                            </button>
-                            <div className="content">
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Title</h2>
-                                    <input
-                                        type="text"
-                                        className="input-box"
-                                        value={name}
-                                        placeholder="name"
-                    
-                                    >
-                                    </input>
-                                </div>
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Description</h2>
-                                    <textarea
-                                        className="input-box"
-                                        placeholder=""
-                                        value = {taskDescription}
-                                        onChange = {e => {
-                                            setTaskDescription(e.target.value);
-                                        }}
-                                    >
-                                    </textarea>
-                                </div>
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Invite user by email</h2>
-                                    <Tags task = {currentTask}/>
-                                </div>
+                            <i className="fas fa-times"></i>
+                        </button>
+                        <div className="content">
+                            <div className="popup-item flex-start">
+                                <h2 className="prompt">Title</h2>
+                                <input
+                                    type="text"
+                                    className="input-box"
+                                    value={title}
+                                    placeholder="title" 
+                                    onChange = {e => {
+                                        setTaskTitle(e.target.value);
+                                    }}
+
+                                >
+                                </input>
                             </div>
-                            <div className="flex-end">
-                                <button
+                            <div className="popup-item flex-start">
+                                <h2 className="prompt">Description</h2>
+                                <textarea
+                                    className="input-box"
+                                    placeholder=""
+                                    value={description}
+                                    onChange={e => {
+                                        setTaskDescription(e.target.value);
+                                    }}
+                                >
+                                </textarea>
+                            </div>
+                            <div className="popup-item flex-start">
+                                    <h2 className="prompt">Members:</h2>
+                                        <div className="popup-item flex-start">
+                                
+                                        </div>
+                                </div>
+
+                            <div className="popup-item flex-start">
+                                <h2 className="prompt">Invite user by email</h2>
+                        
+                            </div>
+                        </div>
+                        <div className="flex-end">
+
+                        <div className="popup-item flex-start">
+                                <h2 className="prompt">Comments</h2>
+                                <textarea
+                                    className="input-box"
+                                    placeholder=""
+                                    value={comments}
+                                    onChange={e => {
+                                        setTaskComments(e.target.value);
+                                    }}
+                                >
+                                </textarea>
+                            </div>
+
+                            <button
                                 className="button"
                                 onClick={() => {
-                                    {updateTask({name, taskDescription})}
+                                    { updateTask({ taskTitle, taskDescription, taskComments }) }
                                     close();
                                     {onClose(false)}
                                 }}>
                                 Update
                                 </button>
-                                <button
+                            <button
                                 className="button"
                                 onClick={() => {
-                                    {deleteTask(currentTask)}
+                                    { deleteTask(currentTask) }
                                     close();
                                     {onClose(false)}
+                                    
+
+                                    
+
                                 }}>
                                 Delete
                                 </button>
-                            </div>
                         </div>
-                    )}
-                </Popup>
-            </div>
+                    </div>
+                )}
+            </Popup>
         </div>
     );
 }

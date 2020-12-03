@@ -34,10 +34,10 @@ export default function CategoryCard({ category, deleteCategory }) {
     }
 
 
-    // const updateTask = (task) => {
-    //     return TaskApi.updateTask(task)
-    //         .then(res => console.log(res.data));
-    // }
+    const updateTask = (task) => {
+        return TaskApi.updateTask(task)
+            .then(res => console.log(res.data));
+    }
 
     const deleteTask = (taskId) => {
         return TaskApi.deleteTask(taskId)
@@ -76,7 +76,10 @@ export default function CategoryCard({ category, deleteCategory }) {
                         null :
                         <div>
                             {tasks.map(task => (
-                                <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+                                <TaskCard key={task.id} 
+                                        task={task} 
+                                        deleteTask={deleteTask} 
+                                        updateTask={updateTask}/>
                             ))}
                         </div>
                 }
