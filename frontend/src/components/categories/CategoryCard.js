@@ -14,9 +14,8 @@ export default function CategoryCard({ category, deleteCategory }) {
     const [title, setTitle] = useState(category.title);
 
     const onDeleteCategory = () => {
-        if (window.confirm("Do you want to delete this category?")) {
+        if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
             deleteCategory(categoryId);
-            window.location.reload();
         }
 
     }
@@ -40,9 +39,9 @@ export default function CategoryCard({ category, deleteCategory }) {
     //         .then(res => console.log(res.data));
     // }
 
-    const deleteTask = (task) => {
-        return TaskApi.deleteTask(task.id)
-            .then(() => setTasks(tasks.filter(a => a.id !== task.id)));
+    const deleteTask = (taskId) => {
+        return TaskApi.deleteTask(taskId)
+            .then(() => setTasks(tasks.filter(a => a.id !== taskId)));
     }
 
     useEffect(() => {
