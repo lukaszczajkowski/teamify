@@ -69,11 +69,7 @@ class EventApi {
      * @param {*} userEmail 
      */
     removeUser(eventId, userEmail) {
-        return Api.put('/events/' + eventId + '/delete/userEmail', {
-            params: {
-                userEmail: userEmail
-            }
-        });
+        return Api.put(`/events/${eventId}/delete/userEmail?userEmail=${userEmail}`);
     }
 
     /**

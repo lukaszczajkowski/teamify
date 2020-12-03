@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import Tags from './Tags';
+import Chips from './Chips';
 
 
 // eslint-disable-next-line react/prop-types
@@ -11,7 +12,8 @@ export default function EventPopup({    isOpen,
                                         updateEvent,
                                         onClose,
                                         deleteEvent,
-                                        onMembersChange }) {
+                                        onMembersChange,
+                                        onDelete }) {
 
     const {
         id,
@@ -48,13 +50,20 @@ export default function EventPopup({    isOpen,
 
     useEffect(() => {
         setEmails(emails);
-    }, [emails]);
+    }, []);
 
     const onEmailsChange = (updatedEmails, eventToUpdate) => {
         console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
         console.log("Emails from event popup:", emails);
     }
+    //generates the chips with emails of invited users
+    const chips = extendedProps === undefined ?
+                null
+                :
+                extendedProps.users.map(user => user.email)
+                                // eslint-disable-next-line react/jsx-key
+                                .map(email => <Chips email = {email} handleDelete = {onDelete}/>)
 
     // eslint-disable-next-line react/prop-types
     return (
@@ -101,6 +110,12 @@ export default function EventPopup({    isOpen,
                                         }}
                                     >
                                     </textarea>
+                                </div>
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Members of the event:</h2>
+                                        <div className="popup-item flex-start">
+                                            {chips}
+                                        </div>
                                 </div>
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>

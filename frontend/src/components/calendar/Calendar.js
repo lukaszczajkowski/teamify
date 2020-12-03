@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
 import EventPopup from './EventPopup';
-//import EventApi from '../../api/EventApi';
+import UserApi from "../../api/UserApi";
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -145,7 +145,18 @@ export default function Calendar() {
     }
 
 
-    //accepts an array of emails from the event
+    //deletes the user after clcking X on a chip:
+    const removeUser = (data) => {
+        const emailToRemove = data.nativeEvent.srcElement.parentElement.parentElement.innerText
+        console.log("Email from removeUser in Calendar.js:", emailToRemove)
+        UserApi.getUserByEmail(emailToRemove)
+                .then(response => {
+                    console.log("Response after getUserByEmail", response.data)
+                    EventApi.removeUser(currentEvent.id, response.data.email).then(() => {
+                        loadData();
+                    }).catch(err => console.log(err));
+                }).catch(err => console.log(err));
+    }
     
     return(
         <div>
@@ -174,6 +185,7 @@ export default function Calendar() {
                 updateEvent = {updateFromPopup}
                 onMembersChange = {updateMembers}
                 onClose = {popupClosed}
+                onDelete = {removeUser}
                 />
                 </div>
             </div>
