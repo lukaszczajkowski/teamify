@@ -8,16 +8,18 @@ export default function TaskCard({ task, deleteTask }) {
             // eslint-disable-next-line react/prop-types
             deleteTask(task.id);
         }
-
     }
 
     return (
         <div className="task-card flex-between">
-            {/* eslint-disable-next-line react/prop-types*/}
-            <p>{task.title}</p>
+            <div>
+                {/* eslint-disable-next-line react/prop-types*/}
+                <p>{task.title}</p>
+            </div>
+
             <button className="button"
-                    id="delete-category"
-                    onClick={onDeleteTask}>Delete</button>
+                id="delete-category"
+                onClick={onDeleteTask}>Delete</button>
         </div>
     );
 }
