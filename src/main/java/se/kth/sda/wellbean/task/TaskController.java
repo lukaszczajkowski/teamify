@@ -52,6 +52,7 @@ public class TaskController {
      * with projectId = 1
      * @param projectId
      * @return List of tasks with specific projectId
+     * @throws ResponseStatusException
      */
     @GetMapping("/projectId")
     public List<Task> gelAllTaskByProjectId(@RequestParam Long projectId) {
@@ -72,6 +73,7 @@ public class TaskController {
      * with category  ID = 1
      * @param categoryId
      * @return List of tasks with specific category id
+     * @throws ResponseStatusException
      */
     @GetMapping("/categoryId")
     public List<Task> getAllTaskByCategoryId(@RequestParam Long categoryId) {
@@ -92,6 +94,7 @@ public class TaskController {
      * to the user with the ID = 1
      * @param memberId
      * @return List of tasks with specific member id
+     * @throws ResponseStatusException
      */
     @GetMapping("/memberId")
     public List<Task> getAllTaskByMemberId(@RequestParam Long memberId) {
@@ -114,6 +117,7 @@ public class TaskController {
      * to the user with the ID = 1
      * @param memberId, categoryId
      * @return List of tasks with specific member id
+     * @throws ResponseStatusException
      */
     @GetMapping("/categoryMember")
     public List<Task> getAllTask ( @RequestParam Long categoryId, @RequestParam Long memberId) {
@@ -126,9 +130,6 @@ public class TaskController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
-
-    //TODO: find all tasks related to the specific project AND userID
 
 
     /**
