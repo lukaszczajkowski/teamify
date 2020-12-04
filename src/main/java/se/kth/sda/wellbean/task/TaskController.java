@@ -9,9 +9,11 @@ import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.category.CategoryService;
 import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +22,7 @@ import java.util.Set;
 public class TaskController {
 
     @Autowired
-    private TaskService service;
+    private TaskService taskService;
 
     @Autowired
     private AuthService authService;
@@ -30,6 +32,9 @@ public class TaskController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProjectService projectService;
 
     /**
      *
@@ -41,67 +46,74 @@ public class TaskController {
     @GetMapping("")
     public List<Task> getAllTask() {
         //TODO if current user has access to tasks
-        return service.getAllListTask();
+        return taskService.getAllListTask();
     }
 
     /**
-     * Returns all tasks related to specific projectId. If project doesn't exist
-     * method throw not found exception
+     * Returns all tasks related to specific project with Id. If user has not have
+     * access to project method throws method not allowed exception
      * Example of usage:
      * localhost:8080/tasks/projectId?projectId=1 - returns all the task
      * with projectId = 1
      * @param projectId
      * @return List of tasks with specific projectId
+     * @throws ResponseStatusException
      */
     @GetMapping("/projectId")
     public List<Task> gelAllTaskByProjectId(@RequestParam Long projectId) {
-        //TODO if current user has access to tasks
-        if (projectId != null) {
-            return service.gelAllTaskByProjectId(projectId);
+        //if current user has access to tasks
+        if (checkCredentialsByProjectId(projectId)) {
+            return taskService.gelAllTaskByProjectId(projectId);
         }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        else
+        {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
     /**
-     * Returns all tasks related to specific category. If category doesn't exist
-     * method throw not found exception
+     * Returns all tasks related to specific category. If user has not have
+     * access to category method throws method not allowed exception
      * Example of usage:
      * localhost:8080/tasks/categoryId?categoryId=1 - returns all the task
      * with category  ID = 1
      * @param categoryId
      * @return List of tasks with specific category id
+     * @throws ResponseStatusException
      */
     @GetMapping("/categoryId")
     public List<Task> getAllTaskByCategoryId(@RequestParam Long categoryId) {
-        //TODO if current user has access to tasks
-        if (categoryId != null) {
-            return service.getAllTaskByCategoryId(categoryId);
+        // if current user has access to tasks
+        if (checkCredentialsByCategoryId(categoryId)) {
+            return taskService.getAllTaskByCategoryId(categoryId);
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
     /**
-     * Returns all tasks created by specific user id. If user doesn't exist
-     * method throw not found exception
+     * Returns all tasks created by specific user id for specific project. If user doesn't exist
+     * method throws not found exception. If current user has no access for projcet -
+     * method throws method not allowed exception
      * Example of usage:
-     * localhost:8080/tasks/memberId?memberId=1 - returns the all tasks related
-     * to the user with the ID = 1
+     * localhost:8080/tasks/memberProject?memberId=1&projectId=1- returns the all tasks related
+     * to the user with the ID = 1 and project = 1
      * @param memberId
      * @return List of tasks with specific member id
+     * @throws ResponseStatusException
      */
-    @GetMapping("/memberId")
-    public List<Task> getAllTaskByMemberId(@RequestParam Long memberId) {
-        //TODO if current user has access to tasks
-        if (memberId != null)
-        {
-            return service.gelAllTaskByMemberId(memberId);
+    @GetMapping("/memberProject")
+    public List<Task> getAllTaskByMemberIdAndProjectId(@RequestParam Long memberId, @RequestParam Long projectId) {
+        if (checkCredentialsByProjectId(projectId)) {
+            if (memberId != null) {
+                return taskService.findAllByProjectIdIdAndMembers_Id(projectId, memberId);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
@@ -110,25 +122,26 @@ public class TaskController {
      * tegory doesn't exist
      * method throw not found exception
      * Example of usage:
-     * localhost:8080/tasks/memberCategory?categoryId=1&memberId=1 - returns the all tasks related
+     * localhost:8080/tasks/categoryMember?categoryId=1&memberId=1 - returns the all tasks related
      * to the user with the ID = 1
      * @param memberId, categoryId
      * @return List of tasks with specific member id
+     * @throws ResponseStatusException
      */
     @GetMapping("/categoryMember")
-    public List<Task> getAllTask ( @RequestParam Long categoryId, @RequestParam Long memberId) {
-        //TODO if current user has access to tasks
-        if (memberId != null && categoryId != null)
-        {
-            return service.findAllByCategoryIdAndMembers_Id(categoryId, memberId);
+    public List<Task> getAllTaskByMemberIdAndCategoryId( @RequestParam Long categoryId, @RequestParam Long memberId) {
+        //if current user has access to tasks
+        if (checkCredentialsByCategoryId(categoryId)){
+            if (memberId != null) {
+                return taskService.findAllByCategoryIdAndMembers_Id(categoryId, memberId);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
-
-
-    //TODO: find all tasks related to the specific project AND userID
 
 
     /**
@@ -144,8 +157,13 @@ public class TaskController {
 
     @GetMapping("/{taskId}")
     public Task getById(@PathVariable Long taskId) {
-        return service.getById(taskId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (checkCredentialsByTaskId(taskId)) {
+            return taskService.getById(taskId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
@@ -161,11 +179,17 @@ public class TaskController {
 
     @PostMapping("/{categoryId}")
     public Task create(@PathVariable Long categoryId, @RequestBody Task newTask){
-        Category newCategory =  categoryService.getById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        newTask.setProject(newCategory.getProject());
-        newTask.setCategory(newCategory);
-        service.create(newTask);
-        return newTask;
+        if (checkCredentialsByCategoryId(categoryId)) {
+            Category newCategory = categoryService.getById(categoryId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            newTask.setProject(newCategory.getProject());
+            newTask.setCategory(newCategory);
+            taskService.create(newTask);
+            return newTask;
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
@@ -173,25 +197,33 @@ public class TaskController {
      * and returns task after saving.
      *
      * Example of usage:
-     * localhost:8080/tasks/1
+     * localhost:8080/tasks/1 - updates task (see id of the task in body) with category  Id = 1
      * @param updatedTask, categoryId
      * @throws ResponseStatusException
      * @return created Task
      */
-
     @PutMapping("/{categoryId}")
     public Task update(@PathVariable Long categoryId, @RequestBody Task updatedTask)
     {
-        Category newCategory =  categoryService.getById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        updatedTask.setCategory(newCategory);
-        updatedTask.setProject(newCategory.getProject());
-        service.create(updatedTask);
-        return updatedTask;
+        if (checkCredentialsByCategoryId(categoryId)) {
+            Category newCategory = categoryService.getById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            updatedTask.setCategory(newCategory);
+            updatedTask.setProject(newCategory.getProject());
+            Task taskFromDb = taskService.getById(updatedTask.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            updatedTask.setMembers(taskFromDb.getMembers());
+            // TODO need to update  comments, otherwise it is null
+            //updatedTask.setComments(taskFromDb.getComments());
+            taskService.create(updatedTask);
+            return updatedTask;
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
      * Accepts a task and specific user id
-     * to add particular user the member list of the task
+     * to add particular user the member list of the task with id = 1
      *  localhost:8080/tasks/1/userId?userId=1
      * @param taskId, userId
      * @throws ResponseStatusException
@@ -202,16 +234,21 @@ public class TaskController {
     @PutMapping("/{taskId}/userId")
     public Task update(@PathVariable Long taskId, @RequestParam Long userId)
     {
-        Task updatedTask = service.getById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        User newMember = userService.findById(userId);
-        if (newMember != null) {
-            //TODO: Check if user already a member
-            updatedTask.addMember(newMember);
-            service.update(updatedTask);
-            return updatedTask;
+        if (checkCredentialsByTaskId(taskId)) {
+            Task updatedTask = taskService.getById(taskId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            User newMember = userService.findById(userId);
+            if (newMember != null) {
+                //TODO member should belong to project!
+                updatedTask.addMember(newMember);
+                taskService.update(updatedTask);
+                return updatedTask;
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
@@ -225,15 +262,19 @@ public class TaskController {
      */
     @PutMapping("{taskId}/remove/userId")
     public Task delete(@PathVariable Long taskId, @RequestParam Long userId){
-        Task updatedTask = service.getById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        User membertoBeDeleted = userService.findById(userId);
-        if (membertoBeDeleted != null) {
-            updatedTask.removeMember(membertoBeDeleted);
-            service.update(updatedTask);
-            return updatedTask;
+        if (checkCredentialsByTaskId(taskId)) {
+            Task updatedTask = taskService.getById(taskId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            User memberToBeDeleted = userService.findById(userId);
+            if (memberToBeDeleted != null) {
+                updatedTask.removeMember(memberToBeDeleted);
+                taskService.update(updatedTask);
+                return updatedTask;
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
     }
 
@@ -241,18 +282,76 @@ public class TaskController {
      * Deletes the task with the given id
      * Example of usage:
      * localhost:8080/tasks/1 - deletes the task with the ID = 1
-     * @param id
+     * @param taskId
      * @throws ResponseStatusException
      */
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        Task task = service.getById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        service.delete(id);
+    @DeleteMapping("/{taskId}")
+    public void delete(@PathVariable Long taskId){
+        if (checkCredentialsByTaskId(taskId)) {
+            Task task = taskService.getById(taskId).
+                    orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            taskService.delete(taskId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     private User getCurrentUser() {
         return userService.findUserByEmail(authService.getLoggedInUserEmail());
     }
+
+    private boolean checkCredentialsByProjectId(Long projectId) {
+        if (projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser())) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkCredentialsByCategoryId(Long categoryId) {
+        if (categoryId != null) {
+            Category currentCategory = categoryService.getById(categoryId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (checkCredentialsByProjectId(currentCategory.getProject().getId())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkCredentialsByTaskId (Long taskId)
+    {
+        Task currentTask = taskService.getById(taskId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Long currentProjectId = currentTask.getProject().getId();
+        if (projectService.getById(currentProjectId).getUsers().contains(getCurrentUser())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private List<Project> getAllAvailableProjectsForCurrentUser()
+    {
+        List<Project> allProjects =  projectService.getAll();
+        List<Project> availableProjects = new ArrayList<>();
+
+        for (Project prj: allProjects)
+        {
+            Set<User> allUsers = prj.getUsers();
+            if (allUsers.contains(getCurrentUser())){
+                availableProjects.add(prj);
+            }
+        }
+        return availableProjects;
+    }
+
+
 }
 

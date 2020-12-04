@@ -8,8 +8,10 @@ import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.project.ProjectService;
+import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.task.TaskController;
 import se.kth.sda.wellbean.task.TaskService;
+import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
 
 import java.util.List;
@@ -52,7 +54,12 @@ public class CategoryController {
      */
     @GetMapping("/categories/{projectId}")
     public List<Category> getAllCategoryByProjectId(@PathVariable Long projectId) {
+        if (checkCredentialsByProjectId(projectId)) {
             return categoryService.getAllCategoriesByProjectId(projectId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
@@ -69,8 +76,13 @@ public class CategoryController {
      */
     @PostMapping("/categories/{projectId}")
     public Category createNewCategory(@RequestBody Category newCategory, @PathVariable Long projectId) {
-        newCategory.setProject(projectService.getById(projectId));
-        return categoryService.createNewCategory(newCategory);
+        if (checkCredentialsByProjectId(projectId)) {
+            newCategory.setProject(projectService.getById(projectId));
+            return categoryService.createNewCategory(newCategory);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
@@ -88,8 +100,13 @@ public class CategoryController {
      */
     @PutMapping("/categories/{projectId}")
     public Category updateCategory(@RequestBody Category updatedCategory, @PathVariable Long projectId) {
-        updatedCategory.setProject(projectService.getById(projectId));
-        return categoryService.updateCategory(updatedCategory);
+        if (checkCredentialsByProjectId(projectId)) {
+            updatedCategory.setProject(projectService.getById(projectId));
+            return categoryService.updateCategory(updatedCategory);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     /**
@@ -102,14 +119,46 @@ public class CategoryController {
      */
     @DeleteMapping("/categories/{id}")
     public void deleteCategory(@PathVariable Long id) {
-        //TODO: add condition to check task in category using task controller
-        if(taskService.getAllTaskByCategoriesId(id).size()==0)
-        {
-            categoryService.deleteCategory(id);
+        if (checkCredentialsByCategoryId(id)) {
+            //TODO: add condition to check task in category using task controller
+            if (taskService.getAllTaskByCategoriesId(id).size() == 0) {
+                categoryService.deleteCategory(id);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         }
+    }
+
+    private boolean checkCredentialsByCategoryId(Long categoryId) {
+        if (categoryId != null) {
+            Category currentCategory = categoryService.getById(categoryId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            if (checkCredentialsByProjectId(currentCategory.getProject().getId())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    private boolean checkCredentialsByProjectId(Long projectId) {
+        if (projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser())) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private User getCurrentUser() {
+        return userService.findUserByEmail(authService.getLoggedInUserEmail());
     }
 
 }
