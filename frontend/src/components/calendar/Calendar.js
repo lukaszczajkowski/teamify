@@ -139,9 +139,10 @@ export default function Calendar() {
         console.log("update members from calendar:", data)
         console.log("update members from calendar, emails:", data.emails);
         console.log("update members from calendar, event:", data.currentEvent.id)
-        data.emails.forEach(email => console.log(JSON.stringify(email)));
-        EventApi.inviteUserByEmail(data.currentEvent.id, data.emails[0])
-                                                .catch(err => console.log(err));
+        data.emails.forEach(email =>  EventApi
+                        .inviteUserByEmail(data.currentEvent.id, email)
+                        .catch(err => console.log(err))
+                        );
     }
 
 

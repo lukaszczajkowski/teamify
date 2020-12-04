@@ -51,20 +51,20 @@ export default function Tags({ event, onEmailsChange }) {
     
   // }
 
-  const updateInvitedUsers = ({target}, fieldName) => {
-    const { value } = target;
+  // const updateInvitedUsers = ({target}, fieldName) => {
+  //   const { value } = target;
   
-    switch(fieldName) {
-      case "tags":
-        console.log("Value from tags:", value);
-        break;
+  //   switch(fieldName) {
+  //     case "tags":
+  //       console.log("Value from tags:", value);
+  //       break;
 
-      case "select-option":
-        console.log("Value from select option:", value);
-        break;
+  //     case "select-option":
+  //       console.log("Value from select option:", value);
+  //       break;
       
-    }
-  }
+  //   }
+  // }
 
   const handleChange = (e, value, reason) => {
     switch(reason){
@@ -89,8 +89,8 @@ export default function Tags({ event, onEmailsChange }) {
         name="tags"
         options={userBase.map((user) => user.email)}
         value={invitedUsers}
-        onSelect = {(e) => updateInvitedUsers(e, "tags")}
-        onClose = {(e) => updateInvitedUsers(e, "select-option")}
+        //onSelect = {(e) => updateInvitedUsers(e, "tags")}
+        //onClose = {(e) => updateInvitedUsers(e, "select-option")}
         onChange = {(e, value) => handleChange(e, value, "select-option")}
         freeSolo = {true}
         renderTags={(value, getTagProps) =>
@@ -107,7 +107,19 @@ export default function Tags({ event, onEmailsChange }) {
           {...params}
           variant="filled" 
           label="freeSolo" 
-          placeholder="Add users" />
+          placeholder="Add users"
+          onClick = {e => (e.target.value !== undefined && e.target.value !== "")  ?
+             setInvitedUsers(invitedUsers.concat(e.target.value))
+            :
+            null
+          }
+          onKeyPress = {
+            e => e.key === 13 ? 
+            setInvitedUsers(invitedUsers.concat(e.target.value))
+            :
+            null
+          }
+        />
         )}
       />
     </div>
