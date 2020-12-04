@@ -1,25 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import TaskPopup from "./TaskPopup";
+import {Paper} from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyle = makeStyles((theme) => ({
+    card: {
+        padding: theme.spacing(1,1,1,2),
+            margin: theme.spacing(1),
+          },
+}));
 
 // eslint-disable-next-line react/prop-types
-export default function TaskCard({ task, deleteTask }) {
-    const onDeleteTask = () => {
+export default function TaskCard({ task, deleteTask, updateTask }) {
+    const classes = useStyle();
+    const [popupIsOpen, setPopupIsOpen] = useState(false);
+   // const onDeleteTask = () => {
         // eslint-disable-next-line react/prop-types
-        if (window.confirm(`Do you want to delete task ${task.id}?\n**Redesign this to a popup later**`)) {
+      //  if (window.confirm(`Do you want to delete task ${task.id}?\n**Redesign this to a popup later**`)) {
             // eslint-disable-next-line react/prop-types
-            deleteTask(task.id);
-        }
+          //  deleteTask(task.id);
+       // }
+   // }
+
+    const openPopup = () => {
+        setPopupIsOpen(true);
+
     }
 
     return (
-        <div className="task-card flex-between">
+        <div>
             <div>
+                <div className="flex-grow" onClick={openPopup}>
                 {/* eslint-disable-next-line react/prop-types*/}
-                <p>{task.title}</p>
+                <Paper className={classes.card}>{task.title}</Paper>
             </div>
 
-            <button className="button"
+           {/* <button className="button flex-ungrow"
                 id="delete-category"
-                onClick={onDeleteTask}>Delete</button>
+                onClick={onDeleteTask}>
+                Delete
+    </button> */}
+            </div>
+            
+            <TaskPopup isOpen={popupIsOpen} 
+                        currentTask={task} 
+                        deleteTask={deleteTask} 
+                        updateTask={updateTask} 
+                        onClose={(v)=> setPopupIsOpen(v)}  />
         </div>
     );
 }
