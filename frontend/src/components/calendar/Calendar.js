@@ -141,9 +141,6 @@ export default function Calendar() {
     }
 
     const updateMembers = async (data) => {
-        console.log("update members from calendar:", data)
-        console.log("update members from calendar, emails:", data.emails);
-        console.log("update members from calendar, event:", data.currentEvent.id)
         data.emails.forEach(async email => await EventApi
                         .inviteUserByEmail(data.currentEvent.id, email).then(() => loadData())
                         .catch(err => console.log(err))
@@ -214,6 +211,7 @@ export default function Calendar() {
             <div className="create-bean-card">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
+                defaultOpen = {false}
                 currentEvent = {currentEvent} 
                 deleteEvent = {deleteEvent}
                 updateEvent = {updateFromPopup}
@@ -222,6 +220,8 @@ export default function Calendar() {
                 onDelete = {removeUser}
                 changesMade = {changesMade}
                 emailRemoved = {emailRemoved}
+                closeOnDocumentClick = {true}
+                closeOnEscape = {false}
                 />
                 </div>
             </div>

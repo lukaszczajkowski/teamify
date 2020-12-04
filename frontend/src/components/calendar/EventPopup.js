@@ -16,7 +16,7 @@ export default function EventPopup({    isOpen,
                                         onMembersChange,
                                         onDelete,
                                         changesMade,
-                                        emailRemoved
+                                        emailRemoved,
                                     } ) {
 
     const [chips, setChips] = useState([]);
@@ -28,8 +28,6 @@ export default function EventPopup({    isOpen,
 
     useEffect(() => {
         setEvent(currentEvent);
-        console.log("current event after setting in popup", event);
-        console.log("chages made noticed in the event popup:", changesMade)
         if(currentEvent !== {}){
             const {
                 id,
@@ -56,7 +54,6 @@ export default function EventPopup({    isOpen,
     }, []);
 
     const onEmailsChange = (updatedEmails, eventToUpdate) => {
-        console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
     }
 
@@ -77,12 +74,14 @@ export default function EventPopup({    isOpen,
             <div className="popup-container">
                 <Popup
                     open = {isOpen}
+                    closeOnDocumentClick = {false}
+                    closeOnEscape = {false}
                     modal
                     nested>
                         {close => (
                         <div className="modal">
                             <button className="close" onClick={()=> {
-                                close();
+                                //close();
                                 onClose(false);
                                 }    
                         }>
