@@ -1,8 +1,20 @@
 .category-card {
     width: 270px;
-    background-color: aquamarine;
+    background-color: var(--opac-light-grey);
+    border-radius: 10px;
+}
+
+.category-card .card-title {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.category-card #delete-category {
+    font-size: 20px;
+
 }
 
 .task-card {
-    background-color: beige;
+
 }

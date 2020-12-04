@@ -1,5 +1,11 @@
 .project-page .project-board {
     margin-left: 2vw;
+    align-items: flex-start;
+
+}
+
+.project-page .category-cards {
+    align-items: flex-start;
 }
 .project-page 
 .category-card {
