@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import Auth from "../../services/Auth";
-
+import { useHistory } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const history = useHistory();
     
     const login = async (loginData) => {
         event.preventDefault();
@@ -13,7 +14,7 @@ function LoginForm() {
             alert("Invalid credentials");
         } else {
             alert("login successful");
-            
+            history.push("/users/me");
         }
     }
     return (

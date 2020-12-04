@@ -17,7 +17,7 @@ function RegisterForm() {
             alert("Couldn't register check credentials and try again");
             } else {
                 alert("signup successful");
-                history.push("/users");
+                history.push("/users/me");
             }
         }
 
