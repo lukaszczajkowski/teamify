@@ -19,10 +19,6 @@ import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
 import Navbar from "./components/layout/Navbar";
 
-// testing login
-import LoginPageTest from "./components/auth_test/LoginPageTest";
-import RegisterPageTest from "./components/auth_test/RegisterPageTest";
-
 
 
 function App() {
@@ -73,13 +69,6 @@ function App() {
                 </Route>
                 <Route exact path="/login">
                     <LoginPage />
-                </Route>
-
-                <Route exact path="/login/test">
-                    <LoginPageTest />
-                </Route>
-                <Route exact path="/register/test">
-                    <RegisterPageTest />
                 </Route>
 
                 <Route exact path="/projects/:projectId">

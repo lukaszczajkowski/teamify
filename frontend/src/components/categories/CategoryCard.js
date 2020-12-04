@@ -50,7 +50,7 @@ export default function CategoryCard({ category, deleteCategory }) {
 
     return (
         <div className="category-card">
-            <div className="flex-between">
+            <div className="card-title flex-between">
                 <Editable
                     text={title}
                     placeholder="title"
@@ -65,9 +65,9 @@ export default function CategoryCard({ category, deleteCategory }) {
                 </Editable>
 
 
-                <button className="button"
+                <button
                     id="delete-category"
-                    onClick={onDeleteCategory}>Delete</button>
+                    onClick={onDeleteCategory}><i className="fas fa-times"></i></button>
             </div>
 
             <div className="tasks-list">
