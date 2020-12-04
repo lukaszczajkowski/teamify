@@ -9,8 +9,8 @@ class TaskApi {
         return Api.get('/tasks/' + taskId)
     }
 
-    getTasksByMemberId(memberId) {
-        return Api.get('/tasks/memberId', { params: memberId });
+    getTasksByMemberIdAndProjectId(memberId, projectId) {
+        return Api.get('/tasks/memberProject', { params: memberId, projectId });
     }
 
     getTasksByCategoryId(categoryId) {
