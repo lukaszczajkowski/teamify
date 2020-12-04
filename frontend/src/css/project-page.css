@@ -1,7 +1,16 @@
 .project-page .project-board {
-    margin-left: 2vw;
+    margin-left: 30px;
     align-items: flex-start;
 
+}
+.project-page .project-menu {
+    margin-left: 35px;
+    margin-bottom: 2vh;
+}
+
+.project-menu .project-title {
+    font-size: 25px;
+    margin-right: 10px;
 }
 
 .project-page .category-cards {
