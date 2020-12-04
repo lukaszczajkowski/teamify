@@ -18,7 +18,6 @@ export default function EventPopup({    isOpen,
                                         changesMade }) {
 
 
-    const [event, setEvent] = useState(currentEvent)
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventMembersEmails, setEventMembersEmails] = useState([]);
@@ -26,7 +25,6 @@ export default function EventPopup({    isOpen,
 
     useEffect(() => {
         console.log("chages made noticed in the event popup:", changesMade)
-        setEvent(currentEvent);
         if(currentEvent !== {}){
             const {
                 id,
@@ -39,10 +37,10 @@ export default function EventPopup({    isOpen,
                 const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
                 console.log("setting eventMembersEmails to", eventMembersEmailsFromProps);
                 setEventMembersEmails(eventMembersEmailsFromProps);
-                console.log("eventMembersEmails set to", eventMembersEmails);
+                console.log("eventMembersEmails set to", eventMembersEmailsFromProps);
             }
         }
-    }, [event, changesMade]);
+    }, [currentEvent, changesMade])
 
     useEffect(() => {
         setEmails(emails);
