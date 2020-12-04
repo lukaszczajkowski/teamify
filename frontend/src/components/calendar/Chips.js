@@ -8,14 +8,22 @@ import FaceIcon from '@material-ui/icons/Face';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
-export default function Chips({email, handleDelete}) {
+export default function Chips({email, handleDelete, changesMade}) {
     
+    const [currentEmail, setCurrentEmail] = useState("");
+
+    useEffect(() => {
+        setCurrentEmail(email);
+    }, [changesMade]);
+
     return (
         <Chip
               variant="outlined" 
-              label={email}
+              label={currentEmail}
               icon = {<FaceIcon/>}
-              onDelete={handleDelete}
+              autofocus = {true}
+              onClick = {e => handleDelete(e)}
+              onDelete = {e => handleDelete(e)}
         />
     );
 

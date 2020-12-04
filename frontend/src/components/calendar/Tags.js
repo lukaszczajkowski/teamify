@@ -39,42 +39,14 @@ export default function Tags({ event, onEmailsChange }) {
     onEmailsChange(invitedUsers);
   }, [invitedUsers]);
 
-  //fetches a list of users invited to that specific event
-  // eslint-disable-next-line no-unused-vars
-  // const loadInvitedUsers = () => {
-  //   UserApi.getEventMembers(id)
-  //   .then(response=> {
-  //     setInvitedUsers(response.data);
-  //     console.log("Intived users fetched from the api:", response.data);
-  //   })
-  //   .catch(err => console.log(err));
-    
-  // }
-
-  const updateInvitedUsers = ({target}, fieldName) => {
-    const { value } = target;
-  
-    switch(fieldName) {
-      case "tags":
-        console.log("Value from tags:", value);
-        break;
-
-      case "select-option":
-        console.log("Value from select option:", value);
-        break;
-      
-    }
-  }
 
   const handleChange = (e, value, reason) => {
     switch(reason){
       case "select-option":
         setInvitedUsers(value);
-        console.log("passed to the event popup from tags:", invitedUsers);
         break;
     }
   }
-  console.log("invited users:", invitedUsers);
  
   return (
    userBase === undefined ?
@@ -89,8 +61,8 @@ export default function Tags({ event, onEmailsChange }) {
         name="tags"
         options={userBase.map((user) => user.email)}
         value={invitedUsers}
-        onSelect = {(e) => updateInvitedUsers(e, "tags")}
-        onClose = {(e) => updateInvitedUsers(e, "select-option")}
+        //onSelect = {(e) => updateInvitedUsers(e, "tags")}
+        //onClose = {(e) => updateInvitedUsers(e, "select-option")}
         onChange = {(e, value) => handleChange(e, value, "select-option")}
         freeSolo = {true}
         renderTags={(value, getTagProps) =>
@@ -107,7 +79,19 @@ export default function Tags({ event, onEmailsChange }) {
           {...params}
           variant="filled" 
           label="freeSolo" 
-          placeholder="Add users" />
+          placeholder="Add users"
+          onClick = {e => (e.target.value !== undefined && e.target.value !== "")  ?
+             setInvitedUsers(invitedUsers.concat(e.target.value))
+            :
+            null
+          }
+          onKeyPress = {
+            e => e.key === 13 ? 
+            setInvitedUsers(invitedUsers.concat(e.target.value))
+            :
+            null
+          }
+        />
         )}
       />
     </div>
