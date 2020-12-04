@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -13,40 +14,35 @@ export default function EventPopup({    isOpen,
                                         onClose,
                                         deleteEvent,
                                         onMembersChange,
-                                        onDelete }) {
+                                        onDelete,
+                                        changesMade }) {
 
-    const {
-        id,
-        title,
-        extendedProps,
-    } = currentEvent;
 
-    const initialDescription = (extendedProps) => {
-        let initialDescription;
-        if(extendedProps !== undefined) {
-            const {
-                creator,
-                users,
-                description
-            } = extendedProps
-            initialDescription = description;
-
-        } else {
-            initialDescription = "";
-        }
-        return initialDescription;
-    }
-
+    const [event, setEvent] = useState(currentEvent)
     const [eventTitle, setEventTitle] = useState("");
-    const desc = initialDescription(extendedProps);
-    const [eventDescription, setEventDescription] = useState(desc);
-    const [eventMembers, setEventMembers] = useState("");
+    const [eventDescription, setEventDescription] = useState("");
+    const [eventMembersEmails, setEventMembersEmails] = useState([]);
     const [emails, setEmails] = useState([]);
 
     useEffect(() => {
-        setEventTitle(title);
-        setEventDescription(desc);
-    }, [currentEvent])
+        console.log("chages made noticed in the event popup:", changesMade)
+        setEvent(currentEvent);
+        if(currentEvent !== {}){
+            const {
+                id,
+                title,
+                extendedProps,
+            } = currentEvent;
+            setEventTitle(title);
+            if(extendedProps !== undefined){
+                setEventDescription(extendedProps.description);
+                const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
+                console.log("setting eventMembersEmails to", eventMembersEmailsFromProps);
+                setEventMembersEmails(eventMembersEmailsFromProps);
+                console.log("eventMembersEmails set to", eventMembersEmails);
+            }
+        }
+    }, [event, changesMade]);
 
     useEffect(() => {
         setEmails(emails);
@@ -55,21 +51,19 @@ export default function EventPopup({    isOpen,
     const onEmailsChange = (updatedEmails, eventToUpdate) => {
         console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
-        console.log("Emails from event popup:", emails);
     }
     //generates the chips with emails of invited users
-    const chips = extendedProps === undefined ?
-                null
-                :
-                extendedProps.users.map(user => user.email)
-                                // eslint-disable-next-line react/jsx-key
-                                .map(email => <Chips email = {email} handleDelete = {onDelete}/>)
+    // eslint-disable-next-line react/jsx-key
+    const chips = currentEvent !== {} ? 
+    eventMembersEmails.map(email => <Chips email = {email} 
+                                    handleDelete = {onDelete}
+                                    changesMade = {changesMade}
+                                    />)
+                        :
+                        null;
 
     // eslint-disable-next-line react/prop-types
     return (
-        extendedProps === undefined ?
-        null
-        :
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup

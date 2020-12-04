@@ -18,20 +18,22 @@ export default function Calendar() {
     const [popupOpen, setPopupOpen] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [currentEvent, setCurrentEvent] = useState({});
+    const [changesMade, setChangesMade] = useState(false);
 
     
     useEffect( async () => {
         loadData();
-    }, []);
+        console.log("data loaded!")
+    }, [changesMade]);
 
-    const loadData = () => {
-        EventApi.getAllUserEvents().then(response => {
+    const loadData = async () => {
+        await EventApi.getAllUserEvents().then(response => {
             const listOfEvents = response.data;
             setCalendarEvents(listOfEvents);
-        })   
+        })  
     }
 
-    const handleDateClick = (e) => {
+    const handleDateClick = async (e) => {
         if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
             var startDate = new Date(e.dateStr);
             var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
@@ -47,20 +49,20 @@ export default function Calendar() {
                 allDay: false,
                 editable: true,
             }
-            EventApi.create(newEvent).then(response => {
+            await EventApi.create(newEvent).then(response => {
                 const events = response.data;
                 setCalendarEvents([...calendarEvents, events]);
             });
+            setChangesMade(!changesMade);
         }
     };
 
     const handleEventClick = (info) => {
         setCurrentEvent(info.event);
-        loadData();
         setPopupOpen(true);
     }
 
-    const handleEventChange = (info) => {
+    const handleEventChange = async (info) => {
         const startDate = new Date(info.event.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -78,7 +80,7 @@ export default function Calendar() {
             allDay: info.event.allDay,
             editable: true
         }
-        EventApi.update(updatedEvent).then(response => {
+        await EventApi.update(updatedEvent).then(response => {
             loadData();
             const eventAfterUpdate = response.data;
             calendarEvents.filter((e) => {
@@ -87,21 +89,22 @@ export default function Calendar() {
                 }
             })
         });
-        
+        setChangesMade(!changesMade); 
     }
 
-    const deleteEvent = (toBeRemoved) => {
+    const deleteEvent = async (toBeRemoved) => {
         const idToRemove = toBeRemoved.id;
         // eslint-disable-next-line no-unused-vars
-        EventApi.delete(idToRemove).then(() => { 
+        await EventApi.delete(idToRemove).then(() => { 
             loadData();
             var removeIndex = calendarEvents.findIndex(item => item.id == idToRemove);
             calendarEvents.splice(removeIndex, 1);
             }
         )
+        setChangesMade(!changesMade);
     }
 
-    const updateFromPopup = (data) => {
+    const updateFromPopup = async (data) => {
         const startDate = new Date(currentEvent.start);
         var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
@@ -119,7 +122,7 @@ export default function Calendar() {
             allDay: currentEvent.allDay,
             editable: true,
         }
-        EventApi.update(updatedEvent).then((response) => {
+        await EventApi.update(updatedEvent).then((response) => {
             loadData();
             const eventAfterUpdate = response.data;
             calendarEvents.filter((e) => {
@@ -128,6 +131,7 @@ export default function Calendar() {
                 }
             })
         })
+        setChangesMade(!changesMade);
     }
 
     const popupClosed = (value) => {
@@ -135,28 +139,29 @@ export default function Calendar() {
         setCurrentEvent({});
     }
 
-    const updateMembers = (data) => {
+    const updateMembers = async (data) => {
         console.log("update members from calendar:", data)
         console.log("update members from calendar, emails:", data.emails);
         console.log("update members from calendar, event:", data.currentEvent.id)
-        data.emails.forEach(email =>  EventApi
+        data.emails.forEach(async email => await EventApi
                         .inviteUserByEmail(data.currentEvent.id, email)
                         .catch(err => console.log(err))
                         );
+        setChangesMade(!changesMade); 
     }
 
 
     //deletes the user after clcking X on a chip:
-    const removeUser = (data) => {
+    const removeUser = async (data) => {
         const emailToRemove = data.nativeEvent.srcElement.parentElement.parentElement.innerText
         console.log("Email from removeUser in Calendar.js:", emailToRemove)
-        UserApi.getUserByEmail(emailToRemove)
-                .then(response => {
+        await UserApi.getUserByEmail(emailToRemove)
+                .then(async response => {
                     console.log("Response after getUserByEmail", response.data)
-                    EventApi.removeUser(currentEvent.id, response.data.email).then(() => {
-                        loadData();
+                    await EventApi.removeUser(currentEvent.id, response.data.email).then(() => {
                     }).catch(err => console.log(err));
                 }).catch(err => console.log(err));
+        setChangesMade(!changesMade);
     }
     
     return(
@@ -187,6 +192,7 @@ export default function Calendar() {
                 onMembersChange = {updateMembers}
                 onClose = {popupClosed}
                 onDelete = {removeUser}
+                changesMade = {changesMade}
                 />
                 </div>
             </div>
