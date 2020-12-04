@@ -13,16 +13,16 @@ export default function Chips({email, handleDelete, changesMade}) {
     const [currentEmail, setCurrentEmail] = useState("");
 
     useEffect(() => {
-        console.log("changes noticed in chips", changesMade);
         setCurrentEmail(email);
-    }, [email, changesMade]);
+    }, [changesMade]);
 
     return (
         <Chip
               variant="outlined" 
               label={currentEmail}
               icon = {<FaceIcon/>}
-              autofocus
+              autofocus = {true}
+              onClick = {e => handleDelete(e)}
               onDelete = {e => handleDelete(e)}
         />
     );

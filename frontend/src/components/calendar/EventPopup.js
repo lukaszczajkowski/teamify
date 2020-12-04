@@ -15,15 +15,20 @@ export default function EventPopup({    isOpen,
                                         deleteEvent,
                                         onMembersChange,
                                         onDelete,
-                                        changesMade }) {
+                                        changesMade,
+                                        emailRemoved
+                                    } ) {
 
-
+    const [chips, setChips] = useState([]);
+    const [event, setEvent] = useState({});
     const [eventTitle, setEventTitle] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventMembersEmails, setEventMembersEmails] = useState([]);
     const [emails, setEmails] = useState([]);
 
     useEffect(() => {
+        setEvent(currentEvent);
+        console.log("current event after setting in popup", event);
         console.log("chages made noticed in the event popup:", changesMade)
         if(currentEvent !== {}){
             const {
@@ -38,9 +43,13 @@ export default function EventPopup({    isOpen,
                 console.log("setting eventMembersEmails to", eventMembersEmailsFromProps);
                 setEventMembersEmails(eventMembersEmailsFromProps);
                 console.log("eventMembersEmails set to", eventMembersEmailsFromProps);
+                const renderedChips = renderChips(eventMembersEmails);
+                console.log(renderedChips);
+                setChips(renderedChips);
             }
         }
-    }, [currentEvent, changesMade])
+        
+    }, [currentEvent, changesMade, emailRemoved])
 
     useEffect(() => {
         setEmails(emails);
@@ -50,15 +59,17 @@ export default function EventPopup({    isOpen,
         console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
     }
-    //generates the chips with emails of invited users
-    // eslint-disable-next-line react/jsx-key
-    const chips = currentEvent !== {} ? 
-    eventMembersEmails.map(email => <Chips email = {email} 
+
+    const renderChips = (eventMembersEmails) => {
+    const chips = eventMembersEmails.map(email => <Chips email = {email} 
                                     handleDelete = {onDelete}
                                     changesMade = {changesMade}
                                     />)
-                        :
-                        null;
+        return chips;
+    }
+    //generates the chips with emails of invited users
+    // eslint-disable-next-line react/jsx-key
+    
 
     // eslint-disable-next-line react/prop-types
     return (

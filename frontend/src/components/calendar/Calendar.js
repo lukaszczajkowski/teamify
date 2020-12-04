@@ -19,18 +19,18 @@ export default function Calendar() {
     // eslint-disable-next-line no-unused-vars
     const [currentEvent, setCurrentEvent] = useState({});
     const [changesMade, setChangesMade] = useState(false);
+    const [emailRemoved, setEmailRemoved] = useState(false);
 
     
     useEffect( async () => {
         loadData();
-        console.log("data loaded!")
     }, [changesMade]);
 
     const loadData = async () => {
         await EventApi.getAllUserEvents().then(response => {
             const listOfEvents = response.data;
             setCalendarEvents(listOfEvents);
-        })  
+        })
     }
 
     const handleDateClick = async (e) => {
@@ -59,6 +59,7 @@ export default function Calendar() {
 
     const handleEventClick = (info) => {
         setCurrentEvent(info.event);
+        setChangesMade(!changesMade);
         setPopupOpen(true);
     }
 
@@ -144,7 +145,7 @@ export default function Calendar() {
         console.log("update members from calendar, emails:", data.emails);
         console.log("update members from calendar, event:", data.currentEvent.id)
         data.emails.forEach(async email => await EventApi
-                        .inviteUserByEmail(data.currentEvent.id, email)
+                        .inviteUserByEmail(data.currentEvent.id, email).then(() => loadData())
                         .catch(err => console.log(err))
                         );
         setChangesMade(!changesMade); 
@@ -159,9 +160,27 @@ export default function Calendar() {
                 .then(async response => {
                     console.log("Response after getUserByEmail", response.data)
                     await EventApi.removeUser(currentEvent.id, response.data.email).then(() => {
-                    }).catch(err => console.log(err));
+                        loadData();
+                    }).then(() => removeEmailFromMembers(currentEvent, emailToRemove))
+                    .then(() => {
+                        console.log("current email removed: " + emailRemoved)
+                        setEmailRemoved(!emailRemoved)
+                        console.log("email removed set to: " + emailRemoved)
+                    })
+                    .catch(err => console.log(err))
                 }).catch(err => console.log(err));
         setChangesMade(!changesMade);
+    }
+
+    const removeEmailFromMembers = (event, emailToRemove) => {
+        const removeIndex = event.extendedProps.users
+                        .map(user => user.email)
+                        .findIndex(email => email == emailToRemove);
+        console.log("index to remove from emails:", removeIndex);
+        if(removeIndex > -1){
+            event.extendedProps.users.splice(removeIndex, 1);
+        }
+        console.log("index removed")
     }
     
     return(
@@ -179,10 +198,6 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
-
-        {currentEvent === null ? 
-            null
-            :
             <div className="create-bean-card">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
@@ -193,10 +208,10 @@ export default function Calendar() {
                 onClose = {popupClosed}
                 onDelete = {removeUser}
                 changesMade = {changesMade}
+                emailRemoved = {emailRemoved}
                 />
                 </div>
             </div>
-        }
     </div>
     );
 }
