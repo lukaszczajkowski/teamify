@@ -13,7 +13,7 @@ height: 100vh;
   margin-right: 25px;
 }
 
-.landing-page #login {
+/* .landing-page #login {
   background-color: var(--theme-green);
   color: var(--theme-dark-green);
 }
@@ -21,7 +21,7 @@ height: 100vh;
 .landing-page #signup {
   background-color: var(--theme-purple);
   color: #ffffff;
-}
+} */
 
 .landing-page #get-started {
   background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
