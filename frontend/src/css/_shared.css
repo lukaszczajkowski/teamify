@@ -71,6 +71,14 @@ body {
 
 }
 
+.flex-grow {
+    flex-grow: 1;
+}
+
+.flex-ungrow {
+    flex-grow: 0;
+}
+
 
 .flex-wrap {
     flex-wrap: wrap;

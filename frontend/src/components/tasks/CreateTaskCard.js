@@ -1,9 +1,33 @@
 import React, { useState } from "react";
+import { Paper, InputBase, Button, IconButton } from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
+import { makeStyles, fade } from '@material-ui/core/styles';
 
+const useStyle = makeStyles((theme) => ({
+  card: {
+    width: '255px',
+    margin: theme.spacing(0, 1, 1, 1),
+    paddingBottom: theme.spacing(5),
+  },
+  input: {
+    margin: theme.spacing(1),
+  },
+  btnConfirm: {
+    background: '#5AAC44',
+    color: '#fff',
+    '&:hover': {
+      background: fade('#5AAC44', 0.75),
+    },
+  },
+  confirm: {
+    margin: theme.spacing(0, 1, 1, 1),
+  },
+}));
 
 // eslint-disable-next-line react/prop-types
-export default function CreateTaskCard({onSubmit, categoryId}) {
+export default function CreateTaskCard({onSubmit, categoryId, setOpen}) {
     const [title, setTitle] = useState("");
+    const classes = useStyle();
     const [isCreatingTask, setIsCreatingTask] = useState(false);
 
     const handleClick = () => {
@@ -18,22 +42,29 @@ export default function CreateTaskCard({onSubmit, categoryId}) {
     }
 
     return (
-        <div className="create-task">
+        <div>
             {
                 isCreatingTask ?
-                    <div className="task-input">
-                        <input
+                <div>
+                    <Paper className={classes.card}>
+                        <InputBase
                             type="text"
-                            className="input-box"
-                            placeholder="title"
+                            inputProps={{
+                              className: classes.input,
+                            }}
+                            placeholder="Enter a title of this card"
                             value={title}
                             onChange={e => setTitle(e.target.value)} />
-                        <button onClick={onCreateTask}
-                            className="button">
-                            confirm add
-                        </button>
+                            </Paper>
+                        <Button onClick={onCreateTask}
+                            className={classes.confirm}>
+                            Add Card
+                        </Button>
+                        <IconButton onClick={() => setOpen(false)}>
+                        <ClearIcon />
+                  </IconButton>
                     </div> :
-                        <button onClick={handleClick}>+ Add task</button>
+                        <button onClick={handleClick}>+ Add a Card</button>
             }
         </div>
 
