@@ -104,4 +104,8 @@ public class Task {
     public void setMembers(Set<User> members) {
         this.members = members;
     }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

@@ -97,14 +97,14 @@ public class TaskController {
      * method throws not found exception. If current user has no access for projcet -
      * method throws method not allowed exception
      * Example of usage:
-     * localhost:8080/tasks/memberProject?memberId=1&projectId?projectId=1- returns the all tasks related
+     * localhost:8080/tasks/memberProject?memberId=1&projectId=1- returns the all tasks related
      * to the user with the ID = 1 and project = 1
      * @param memberId
      * @return List of tasks with specific member id
      * @throws ResponseStatusException
      */
     @GetMapping("/memberProject")
-    public List<Task> getAllTaskByMemberId(@RequestParam Long memberId, @RequestParam Long projectId) {
+    public List<Task> getAllTaskByMemberIdAndProjectId(@RequestParam Long memberId, @RequestParam Long projectId) {
         if (checkCredentialsByProjectId(projectId)) {
             if (memberId != null) {
                 return taskService.findAllByProjectIdIdAndMembers_Id(projectId, memberId);
@@ -129,7 +129,7 @@ public class TaskController {
      * @throws ResponseStatusException
      */
     @GetMapping("/categoryMember")
-    public List<Task> getAllTask ( @RequestParam Long categoryId, @RequestParam Long memberId) {
+    public List<Task> getAllTaskByMemberIdAndCategoryId( @RequestParam Long categoryId, @RequestParam Long memberId) {
         //if current user has access to tasks
         if (checkCredentialsByCategoryId(categoryId)){
             if (memberId != null) {
@@ -197,12 +197,11 @@ public class TaskController {
      * and returns task after saving.
      *
      * Example of usage:
-     * localhost:8080/tasks/1
+     * localhost:8080/tasks/1 - updates task (see id of the task in body) with category  Id = 1
      * @param updatedTask, categoryId
      * @throws ResponseStatusException
      * @return created Task
      */
-
     @PutMapping("/{categoryId}")
     public Task update(@PathVariable Long categoryId, @RequestBody Task updatedTask)
     {
@@ -210,6 +209,10 @@ public class TaskController {
             Category newCategory = categoryService.getById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             updatedTask.setCategory(newCategory);
             updatedTask.setProject(newCategory.getProject());
+            Task taskFromDb = taskService.getById(updatedTask.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            updatedTask.setMembers(taskFromDb.getMembers());
+            // TODO need to update  comments, otherwise it is null
+            //updatedTask.setComments(taskFromDb.getComments());
             taskService.create(updatedTask);
             return updatedTask;
         }
@@ -220,7 +223,7 @@ public class TaskController {
 
     /**
      * Accepts a task and specific user id
-     * to add particular user the member list of the task
+     * to add particular user the member list of the task with id = 1
      *  localhost:8080/tasks/1/userId?userId=1
      * @param taskId, userId
      * @throws ResponseStatusException
@@ -231,11 +234,12 @@ public class TaskController {
     @PutMapping("/{taskId}/userId")
     public Task update(@PathVariable Long taskId, @RequestParam Long userId)
     {
-        if (checkCredentialsByCategoryId(taskId)) {
+        if (checkCredentialsByTaskId(taskId)) {
             Task updatedTask = taskService.getById(taskId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             User newMember = userService.findById(userId);
             if (newMember != null) {
+                //TODO member should belong to project!
                 updatedTask.addMember(newMember);
                 taskService.update(updatedTask);
                 return updatedTask;
@@ -281,7 +285,7 @@ public class TaskController {
      * @param taskId
      * @throws ResponseStatusException
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{taskId}")
     public void delete(@PathVariable Long taskId){
         if (checkCredentialsByTaskId(taskId)) {
             Task task = taskService.getById(taskId).
