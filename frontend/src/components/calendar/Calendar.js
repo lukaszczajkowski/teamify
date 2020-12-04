@@ -151,6 +151,15 @@ export default function Calendar() {
         setChangesMade(!changesMade); 
     }
 
+    // eslint-disable-next-line no-unused-vars
+    const changesMadeChange = (changesMade) => {
+        if(changesMade == true) {
+            setChangesMade(false);
+        } else {
+            setChangesMade(true);
+        }
+    }
+
 
     //deletes the user after clcking X on a chip:
     const removeUser = async (data) => {
@@ -164,7 +173,11 @@ export default function Calendar() {
                     }).then(() => removeEmailFromMembers(currentEvent, emailToRemove))
                     .then(() => {
                         console.log("current email removed: " + emailRemoved)
-                        setEmailRemoved(!emailRemoved)
+                        if(emailRemoved == true) {
+                            setEmailRemoved(false);
+                        } else {
+                            setEmailRemoved(true);
+                        }
                         console.log("email removed set to: " + emailRemoved)
                     })
                     .catch(err => console.log(err))
