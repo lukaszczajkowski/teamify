@@ -50,8 +50,8 @@ export default function CategoryCard({ category, deleteCategory }) {
 
     return (
         <div className="category-card">
-            <div className="card-title flex-between">
-                <Editable
+            <div className="flex-between">
+                <Editable className="card-title"
                     text={title}
                     placeholder="title"
                     type="input"

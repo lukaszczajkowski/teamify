@@ -1,13 +1,15 @@
 .category-card {
-    width: 270px;
+    width: 280px;
     background-color: var(--opac-light-grey);
     border-radius: 10px;
 }
 
+.category-card #add-category,
+.category-card #create-task,
 .category-card .card-title {
-    margin-top: 10px;
-    margin-left: 10px;
+    margin: 10px;
     font-size: 20px;
+    color: grey;
 }
 
 .category-card #delete-category {
@@ -15,6 +17,24 @@
 
 }
 
-.task-card {
+.category-card #create-task {
+    font-size: 15px;
+    margin-left: 90px;
+}
 
+.task-card {
+    padding: 8px;
+    margin:10px;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px -1px rgba(87,87,87,0.8);
+}
+
+.task-card .task-title {
+    font-size: 18px;
+    color: var(--text-dark-grey);
+}
+
+.task-card #delete-task {
+    margin-right: 4px;
 }
