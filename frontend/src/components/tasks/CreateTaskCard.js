@@ -64,7 +64,7 @@ export default function CreateTaskCard({onSubmit, categoryId, setOpen}) {
                         <ClearIcon />
                   </IconButton>
                     </div> :
-                        <button onClick={handleClick}>+ Add a Card</button>
+                      <button id="create-task" onClick={handleClick}>+ Add a Task</button>                        
             }
         </div>
 

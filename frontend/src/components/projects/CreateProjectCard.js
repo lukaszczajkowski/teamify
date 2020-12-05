@@ -4,13 +4,17 @@ import Popup from "reactjs-popup";
 
 
 // eslint-disable-next-line react/prop-types
-export default function CreateProjectCard({onSubmit}) {
+export default function CreateProjectCard({creator, onSubmit}) {
 
     const [projectName, setProjectName] = useState("");
 
 
     function onCreateProject() {
-        const projectData = {title: projectName};
+        const projectData = 
+        {
+            title: projectName,
+            creator: creator
+        };
         onSubmit(projectData);
         console.log(projectData);
     }

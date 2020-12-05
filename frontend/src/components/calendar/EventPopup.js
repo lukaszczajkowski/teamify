@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -13,73 +14,74 @@ export default function EventPopup({    isOpen,
                                         onClose,
                                         deleteEvent,
                                         onMembersChange,
-                                        onDelete }) {
+                                        onDelete,
+                                        changesMade,
+                                        emailRemoved,
+                                    } ) {
 
-    const {
-        id,
-        title,
-        extendedProps,
-    } = currentEvent;
-
-    const initialDescription = (extendedProps) => {
-        let initialDescription;
-        if(extendedProps !== undefined) {
-            const {
-                creator,
-                users,
-                description
-            } = extendedProps
-            initialDescription = description;
-
-        } else {
-            initialDescription = "";
-        }
-        return initialDescription;
-    }
-
+    const [chips, setChips] = useState([]);
+    const [event, setEvent] = useState({});
     const [eventTitle, setEventTitle] = useState("");
-    const desc = initialDescription(extendedProps);
-    const [eventDescription, setEventDescription] = useState(desc);
-    const [eventMembers, setEventMembers] = useState("");
+    const [eventDescription, setEventDescription] = useState("");
+    const [eventMembersEmails, setEventMembersEmails] = useState([]);
     const [emails, setEmails] = useState([]);
 
     useEffect(() => {
-        setEventTitle(title);
-        setEventDescription(desc);
-    }, [currentEvent])
+        setEvent(currentEvent);
+        if(currentEvent !== {}){
+            const {
+                id,
+                title,
+                extendedProps,
+            } = currentEvent;
+            setEventTitle(title);
+            if(extendedProps !== undefined){
+                setEventDescription(extendedProps.description);
+                const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
+                console.log("setting eventMembersEmails to", eventMembersEmailsFromProps);
+                setEventMembersEmails(eventMembersEmailsFromProps);
+                console.log("eventMembersEmails set to", eventMembersEmailsFromProps);
+                const renderedChips = renderChips(eventMembersEmails);
+                console.log(renderedChips);
+                setChips(renderedChips);
+            }
+        }
+        
+    }, [currentEvent, changesMade, emailRemoved])
 
     useEffect(() => {
         setEmails(emails);
     }, []);
 
     const onEmailsChange = (updatedEmails, eventToUpdate) => {
-        console.log("onEmailsChange from event popup:", updatedEmails);
         setEmails(updatedEmails);
-        console.log("Emails from event popup:", emails);
+    }
+
+    const renderChips = (eventMembersEmails) => {
+    const chips = eventMembersEmails.map(email => <Chips email = {email} 
+                                    handleDelete = {onDelete}
+                                    changesMade = {changesMade}
+                                    />)
+        return chips;
     }
     //generates the chips with emails of invited users
-    const chips = extendedProps === undefined ?
-                null
-                :
-                extendedProps.users.map(user => user.email)
-                                // eslint-disable-next-line react/jsx-key
-                                .map(email => <Chips email = {email} handleDelete = {onDelete}/>)
+    // eslint-disable-next-line react/jsx-key
+    
 
     // eslint-disable-next-line react/prop-types
     return (
-        extendedProps === undefined ?
-        null
-        :
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup
                     open = {isOpen}
+                    closeOnDocumentClick = {false}
+                    closeOnEscape = {false}
                     modal
                     nested>
                         {close => (
                         <div className="modal">
                             <button className="close" onClick={()=> {
-                                close();
+                                //close();
                                 onClose(false);
                                 }    
                         }>

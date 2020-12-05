@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
 
-/* Reset styles */
 html, body, body *{
     box-sizing: border-box;
     font-family: 'PT Sans', sans-serif;
@@ -35,7 +34,7 @@ html, body, body *{
     box-shadow: 0px 2px;
     overflow: hidden;
     color: #ffffff;
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(66,148,148,1) 0%, rgba(123,219,219,0.9402135854341737) 53%);
+    background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
 }
 
 /*Nav-buttons*/

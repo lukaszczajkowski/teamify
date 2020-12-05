@@ -9,7 +9,7 @@ export default function ProjectBoard( {projectId, categories, createCategory, de
                 {
                 categories === null ?
                     null :
-                    <div className="flex-start">
+                    <div className="category-cards flex-start">
                         {/* eslint-disable-next-line react/prop-types */}
                         {categories.map(category => (
                             <CategoryCard key={category.id} category={category} deleteCategory={deleteCategory}/>

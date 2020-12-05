@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../layout/Header";
+import ProjectHeader from "../layout/ProjectHeader";
 import CategoryApi from "../../api/CategoryApi";
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
@@ -67,14 +67,15 @@ function ProjectPage() {
 
     return (
         <div className="project-page">
-            <Header />
+            <ProjectHeader />
             <div className="project-menu flex-start">
-                <div>project name: {currentProject.title}</div>
-            <button className="button"
-                id="delete-project"
-                onClick={onDeleteProject}>
-                Delete project
-            </button>
+                <p className="project-title prompt">project name:</p>
+                <p className="project-title">{currentProject.title}</p>
+                <button className="button"
+                    id="delete-project"
+                    onClick={onDeleteProject}>
+                    Delete project
+                </button>
 
             <AddMemberPopup onSubmit={addMemberByEmail} />
 
