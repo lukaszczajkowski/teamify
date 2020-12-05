@@ -18,6 +18,7 @@ import ChatClient from './components/chat/ChatClient'
 import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
 import Navbar from "./components/layout/Navbar";
+import UserContext from './UserContext';
 
 
 
@@ -36,11 +37,12 @@ function App() {
 
 
     const loggedInRouter = (
-        <Router>
+        <UserContext.Provider value={loggedInUser}>
+            <Router>
             <Navbar onLogout={() => Auth.logout()} />
             <Switch>
                 <Route exact path= "/users/me">
-                    <UserPage loggedInUser={loggedInUser} />
+                    <UserPage />
                 </Route>
                 
                 <Route path='/projects/:projectId'>
@@ -59,6 +61,8 @@ function App() {
                 </Route>
             </Switch>
         </Router>
+        </UserContext.Provider>
+        
     );
 
     const notLoggedIn = (
