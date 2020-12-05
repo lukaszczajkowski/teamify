@@ -1,16 +1,16 @@
 import Api from "./Api";
 
 class ProjectApi {
-    getCurrentUsersProjects(currentUser_id) {
-        return Api.get('/projects', {
-            params: {
-                userId: currentUser_id
-            }
-        });
+    getCurrentUsersProjects(userId) {
+        return Api.get(`/projects/userId?userId=${userId}`);
     }
 
-    getProjectById(id) {
-        return Api.get('/projects/'+id);
+    getCreatorsProjects(creatorId) {
+        return Api.get(`/projects/creatorId?creatorId=${creatorId}`);
+    }
+
+    getProjectById(projectId) {
+        return Api.get('/projects/'+projectId);
     }
 
     createProject(project) {
@@ -21,16 +21,16 @@ class ProjectApi {
         return Api.put('/projects', project);
     }
 
+    addMemberById(projectId, memberId) {
+        return Api.put(`/projects/${projectId}/userId?userId=${memberId}`);
+    }
+
     addMemberByEmail(projectId, userEmail) {
-        return Api.put('/projects/' + projectId + '/userEmail', {
-            params: userEmail
-        });
+        return Api.put(`/projects/${projectId}/userEmail?userEmail=${userEmail}`);
     }
 
     removeMemberById(projectId, memberId) {
-        return Api.put('/projects/' + projectId + '/remove/memberId', {
-            params: memberId
-        });
+        return Api.put(`/projects/${projectId}remove/memberId=${memberId}`);
     }
 
     deleteProject(projectId) {
