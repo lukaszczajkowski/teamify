@@ -8,17 +8,28 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
     console.log(currentTask);
 
     const {
+        id,
         title,
         description,
         // members,
-        comments,
+        category,
     } = currentTask;
 
+    const {
+        id: categoryId,
+    } = category;
+
     const [taskTitle, setTaskTitle] = useState(title);
-    const [taskDescription, setTaskDescription] = useState("");
+    const [taskDescription, setTaskDescription] = useState(description);
     // const [taskMembers, setTaskMembers] = useState("");
     // const [emails, setEmails] = useState([]);
-    const [taskComments, setTaskComments] = useState([]);
+    //const [taskComments, setTaskComments] = useState([]);
+
+    const updatedTask = {
+        id,
+        title: taskTitle,
+        description: taskDescription
+    }
 
     useEffect(() => {
         setTaskTitle(title);
@@ -45,7 +56,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 <input
                                     type="text"
                                     className="input-box"
-                                    value={title}
+                                    value={taskTitle}
                                     placeholder="title"
                                     onChange={e => {
                                         setTaskTitle(e.target.value);
@@ -59,7 +70,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 <textarea
                                     className="input-box"
                                     placeholder=""
-                                    value={description}
+                                    value={taskDescription}
                                     onChange={e => {
                                         setTaskDescription(e.target.value);
                                     }}
@@ -77,7 +88,8 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 <h2 className="prompt">Invite user by email</h2>
 
                             </div>
-                            <div className="popup-item flex-start">
+                           
+                            {/* <div className="popup-item flex-start"> 
                                 <h2 className="prompt">Comments</h2>
                                 <textarea
                                     className="input-box"
@@ -88,15 +100,15 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                     }}
                                 >
                                 </textarea>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex-end">
 
                             <button
                                 className="button"
                                 onClick={() => {
-                                    { updateTask({ taskTitle, taskDescription, taskComments }) }
-                                    close();
+                                    { updateTask(categoryId, updatedTask) }  
+                                    close()
                                     { onClose(false) }
                                 }}>
                                 Update
