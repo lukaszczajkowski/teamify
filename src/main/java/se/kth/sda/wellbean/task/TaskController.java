@@ -253,6 +253,34 @@ public class TaskController {
     }
 
     /**
+     * Accepts a task and specific task id and move it to specific category ID
+     *
+     *  localhost:8080/tasks/2/newCategoryId?newCategoryId=3
+     * @param taskId, categoryId
+     * @throws ResponseStatusException
+     * @return updated task
+     *
+     */
+
+    @PutMapping("/{taskId}/newCategoryId")
+    public Task updateCategory(@PathVariable Long taskId, @RequestParam Long newCategoryId)
+    {
+        if (checkCredentialsByTaskId(taskId) && checkCredentialsByCategoryId(newCategoryId)) {
+            Task updatedTask = taskService.getById(taskId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            Category newCat = categoryService.getById(newCategoryId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            updatedTask.setCategory(newCat);
+            taskService.update(updatedTask);
+            return updatedTask;
+            }
+        else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    /**
      * Delete member from the task with the given id
      * and return updated task
      * localhost:8080/tasks/1/remove/userId?userId=1
