@@ -21,7 +21,7 @@ export default function Chips({email, handleDelete, changesMade}) {
               variant="outlined" 
               label={currentEmail}
               icon = {<FaceIcon/>}
-              autofocus = {true}
+              autoFocus = {true}
               onClick = {e => handleDelete(e)}
               onDelete = {e => handleDelete(e)}
         />
