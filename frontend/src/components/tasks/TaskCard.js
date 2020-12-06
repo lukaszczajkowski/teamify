@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
+import TaskActions from "./TaskActions";
 
 // *****************The code below has been refactored to css **********************
 // import {Paper} from '@material-ui/core';
@@ -41,11 +42,8 @@ export default function TaskCard({ task, deleteTask, updateTask }) {
                         <p className="task-title">{task.title}</p>
                         {/* <Paper className={classes.card}>{task.title}</Paper> */}
                     </div>
+                    <TaskActions onDeleteTask={onDeleteTask}/>
 
-                    <button id="delete-task" className="flex-ungrow"
-                        onClick={onDeleteTask}>
-                        <i className="fas fa-times"></i>
-                    </button>
                 </div>
                 <div className="task-member">
 

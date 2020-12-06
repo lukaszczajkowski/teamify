@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import TaskApi from "../../api/TaskApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
+import CategoryActions from "./CategoryActions";
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category, updateCategory, deleteCategory, projectId }) {
@@ -65,21 +66,6 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     return (
         <div className="category-card">
             <div className="flex-between category-title">
-                {/* <Editable className="card-title"
-                    text={title}
-                    placeholder="title"
-                    type="input"
-                >
-                    <input
-                        type="text"
-                        name="category title"
-                        value={title}
-                        onChange={e => {setTitle(e.target.value); onUpdateCategory()}}
-                    />
-                    <button className="button" onClick={onUpdateCategory}><i className="fas fa-check"></i></button>
-                </Editable> */}
-
-
                 {
                     isEditingTitle ?
                         <div className="title-input flex-between">
@@ -91,7 +77,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                 onChange={e => setTitle(e.target.value)}
                             />
                             <button
-                                className="button"
+                                className="button" id="confirm-update"
                                 onClick={onUpdateCategory}>
                                 <i className="fas fa-check"></i>
                             </button>
@@ -101,10 +87,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
                 }
 
-
-                <button
-                    id="delete-category"
-                    onClick={onDeleteCategory}><i className="fas fa-times"></i></button>
+                <CategoryActions onDeleteCategory={onDeleteCategory}/>
+                
             </div>
 
             <div className="tasks-list">

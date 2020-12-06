@@ -6,6 +6,7 @@ import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
 import MemberCard from "./MemberCard";
+import ProjectActions from "./ProjectActions";
 
 
 function ProjectPage() {
@@ -88,11 +89,7 @@ function ProjectPage() {
                 <div className="project-menu flex-start">
                 {/* <p className="project-title prompt">project name:</p> */}
                 <p className="project-title">{currentProject.title}</p>
-                <button className="button"
-                    id="delete-project"
-                    onClick={onDeleteProject}>
-                    Delete project
-                </button>
+                <ProjectActions onDeleteProject={onDeleteProject}/>
 
             </div>
             <div className="member-menu flex-start">

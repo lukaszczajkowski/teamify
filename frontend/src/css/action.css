@@ -1,0 +1,38 @@
+.action {
+    position: relative;
+    display: inline-block;
+}
+
+.action-button {
+    background-color: transparent;
+    color: black;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px 8px;
+    transition: all 0.5s;
+}
+
+.action-button:hover {
+    border: 1px solid grey;
+    background-color: var(--bg-light-grey);
+}
+
+.action-menu {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.action-item {
+    padding: 10px;
+    min-width: 120px;
+    transition: all 0.3s;
+}
+
+.action-item:hover {
+    background-color: var( --bg-medium-grey);
+}
