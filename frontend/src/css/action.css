@@ -17,8 +17,6 @@
     background-color: var(--bg-light-grey);
 }
 
-.project-actions .action-button {}
-
 .action-menu {
     display: block;
     position: absolute;
@@ -36,5 +34,5 @@
 }
 
 .action-item:hover {
-    background-color: var( --bg-dark-grey);
+    background-color: var( --bg-medium-grey);
 }

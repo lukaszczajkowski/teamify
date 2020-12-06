@@ -12,13 +12,25 @@
 
 .category-card #create-category {
     color: grey;
+}
 
+#create-category:hover {
+    color: var(--theme-green);
+    transition: all 0.3s;
 }
 
 .category-card #create-task {
     font-size: 15px;
-    margin-left: 90px;
+    margin-left: 10px;
     margin-bottom: 10px;
     color: grey;
-    padding: 5px;
+    padding: 8px;
+    transition: all 0.3s;
+    width: 260px;
+    border-radius: 3px;
+}
+
+#create-task:hover {
+    background-color: var( --bg-medium-grey);
+    color: var(--text-dark-grey);
 }
