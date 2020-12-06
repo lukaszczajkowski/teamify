@@ -8,7 +8,6 @@
 
 .task-card .task-title {
     font-size: 18px;
-    color: var(--text-dark-grey);
 }
 
 .task-card #delete-task {

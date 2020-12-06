@@ -64,7 +64,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     return (
         <div className="category-card">
-            <div className="flex-between">
+            <div className="flex-between category-title">
                 {/* <Editable className="card-title"
                     text={title}
                     placeholder="title"
@@ -82,7 +82,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
                 {
                     isEditingTitle ?
-                        <div>
+                        <div className="title-input flex-between">
                             <input
                                 type="text"
                                 className="input-box"
@@ -97,7 +97,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                             </button>
                         </div>
                         :
-                        <button onClick={() => setIsEditingTitle(true)}>{title}</button>
+                        <button className="category-title" onClick={() => setIsEditingTitle(true)}>{title}</button>
 
                 }
 
