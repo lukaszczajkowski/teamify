@@ -33,7 +33,7 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
                             Add list
                         </button>
                     </div> :
-                        <button id="add-category" onClick={handleClick}>+ Add a list</button>
+                        <button className="button" id="add-category" onClick={handleClick}>+ Add a list</button>
             }
         </div>
 
