@@ -1,5 +1,6 @@
 .project-header .icon {
     height: 30px;
+    width: 30px;
 }
 .project-header .member-nav {
     margin-top: 15px;
@@ -7,4 +8,12 @@
 }
 .project-header .nav-item {
     margin: 5px;
+}
+
+.project-header .calendar-icon {
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    font-size: 23px;
+    color: black;
 }

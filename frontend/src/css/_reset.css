@@ -61,10 +61,16 @@ video {
 }
 
 
-
-
-
 td:not([align]),
 th:not([align]) {
   text-align: left;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+button:focus{
+  outline: 0px;
 }

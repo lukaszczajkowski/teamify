@@ -10,7 +10,7 @@ class ProjectApi {
     }
 
     getProjectById(projectId) {
-        return Api.get('/projects/'+projectId);
+        return Api.get(`/projects/${projectId}`);
     }
 
     createProject(project) {
