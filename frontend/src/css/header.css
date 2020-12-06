@@ -1,6 +1,6 @@
 .header {
 
-    height: 10vh;
+    height: 55px;
     display: flex;
     flex-direction: column; 
     
@@ -67,7 +67,7 @@
 
   .nav-menu.active {
     background: wheat;
-    top: 50px;
+    top: 55px;
     z-index: 1;
   }
 

@@ -1,0 +1,15 @@
+.task-card {
+    padding: 18px;
+    margin:10px;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px -1px rgba(87,87,87,0.8);
+}
+
+.task-card .task-title {
+    font-size: 18px;
+}
+
+.task-card #delete-task {
+    margin-right: 4px;
+}

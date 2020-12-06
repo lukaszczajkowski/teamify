@@ -4,12 +4,15 @@
     border-radius: 10px;
 }
 
-.category-card #add-category,
-.category-card #create-task,
-.category-card .card-title {
-    margin: 10px;
-    font-size: 20px;
+.category-card #create-category,
+.category-card .category-title {
+    margin: 9px;
+    font-size: 21px;
+}
+
+.category-card #create-category {
     color: grey;
+
 }
 
 .category-card #delete-category {
@@ -21,21 +24,7 @@
 .category-card #create-task {
     font-size: 15px;
     margin-left: 90px;
-}
-
-.task-card {
-    padding: 8px;
-    margin:10px;
-    background-color: white;
-    border-radius: 2px;
-    box-shadow: 0px 2px 2px -1px rgba(87,87,87,0.8);
-}
-
-.task-card .task-title {
-    font-size: 18px;
-    color: var(--text-dark-grey);
-}
-
-.task-card #delete-task {
-    margin-right: 4px;
+    margin-bottom: 10px;
+    color: grey;
+    padding: 5px;
 }

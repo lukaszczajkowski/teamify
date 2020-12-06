@@ -9,10 +9,8 @@ class CategoryApi {
         return Api.post('/categories/' + projectId, category);
     }
 
-    updateCategory(projectId, category) {
-        return Api.put('/categories/' + projectId, {
-                "updatedCategory": category
-        });
+    updateCategory(projectId, updatedCategory) {
+        return Api.put('/categories/' + projectId, updatedCategory);
     }
 
     deleteCategory(categoryId) {

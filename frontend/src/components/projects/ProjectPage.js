@@ -62,9 +62,16 @@ function ProjectPage() {
             .catch(err => console.log(`error on create new category: ${err}`));
     }
 
+    const updateCategory = (projectId, newCategoryData) => {
+        CategoryApi.updateCategory(projectId, newCategoryData).
+        then(response => console.log(JSON.stringify(response.data)))
+        .catch(err => console.log(`error on update category: ${err}`));
+    }
+
     const deleteCategory = (categoryId) => {
         CategoryApi.deleteCategory(categoryId)
             .then(console.log(`Deleting category: ${categoryId}`))
+            .then(setCategories(categories.filter(c => c.id !== categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
     }
 
@@ -77,7 +84,8 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <ProjectHeader />
-            <div className="project-menu flex-start">
+            <div className="flex-start">
+                <div className="project-menu flex-start">
                 {/* <p className="project-title prompt">project name:</p> */}
                 <p className="project-title">{currentProject.title}</p>
                 <button className="button"
@@ -88,7 +96,6 @@ function ProjectPage() {
 
             </div>
             <div className="member-menu flex-start">
-                <p className="member-title">members:</p>
                 {
                     members === null ?
                         null :
@@ -103,11 +110,14 @@ function ProjectPage() {
                 }
                 <AddMemberPopup onSubmit={addMemberByEmail} />
             </div>
+            </div>
+            
 
             <ProjectBoard
                 projectId={projectId}
                 categories={categories}
-                createCategory={createCategory}
+                createCategory={createCategory} 
+                updateCategory={updateCategory}
                 deleteCategory={deleteCategory} />
         </div>
 
