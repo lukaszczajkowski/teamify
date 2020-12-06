@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import {useSpring, animated} from 'react-spring';
-import Header from "../layout/Header";
+
 
 
 function LoginPage() {
@@ -23,9 +23,13 @@ function LoginPage() {
     const loginBtnProps = useSpring({borderBottom: registrationFormStatus ? 'solid 0px transparent' : 'solid 2px #0F545C'})
     const registerBtnProps = useSpring({borderBottom: registrationFormStatus ? 'solid 2px #0F545C' : 'solid 0px transparent' })
 
+    const logos = document.querySelectorAll("#pic path");
+    for(let i=0; i<logos.length; i++){
+        console.log(`Letter ${i} is ${logos[i].getTotalLength()}`);
+    }
     return (
-        <div>
-            <Header />
+        <div className="loginpage">
+            
             <div className="login-register-wrapper">
             <div className="nav-buttons">
                 <animated.button onClick={loginClicked} id="loginBtn" class='active' style= {loginBtnProps}>Login</animated.button>
