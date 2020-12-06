@@ -31,6 +31,8 @@
 @import url("./member-card.css");
 @import url("./task-card.css");
 
+/* buttons */
+@import url("./action.css");
 
 /* test */
 @import url("./login-test.css");
