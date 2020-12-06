@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
+
+// *****************The code below has been refactored to css **********************
 // import {Paper} from '@material-ui/core';
 // import { makeStyles } from "@material-ui/core/styles";
 

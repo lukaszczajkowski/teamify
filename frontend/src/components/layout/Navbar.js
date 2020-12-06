@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Auth from "../../services/Auth";
 
     // eslint-disable-next-line react/prop-types
-    function Navbar({onLogout}) {
+    function Navbar() {
 
     const [click, setClick] = useState(false);
 
@@ -36,7 +37,7 @@ import { Link } from "react-router-dom";
                 </li>
 
                 <li>
-                <button className="button" onClick={onLogout}>Logout</button>
+                <button className="button nav-item" onClick={() => Auth.logout()}>Logout</button>
                 </li>
 
             </ul>

@@ -24,9 +24,9 @@
 
 .logo img{
    width: auto;
-   height: 6vh;
-   margin-top:1vh;
-   margin-left: 1vh;
+   height: 38px;
+   margin-top:10px;
+   margin-left: 10px;
 
 }
 
@@ -36,8 +36,8 @@
     cursor: pointer;
     font-size: 25px;
     position: absolute;
-    top: 3vh;
-    right: 3vh; 
+    top: 15px;
+    right: 18px; 
 }
 
 .nav-link:hover,
@@ -50,7 +50,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 18vh;
+    height: 28vh;
     position: absolute;
     left: 0;
     top: -100%;
@@ -66,11 +66,11 @@
   }
 
   .nav-menu.active {
-    background: var(--header-green);
-    top: 10vh;
+    background: wheat;
+    top: 50px;
     z-index: 1;
   }
 
   .nav-item {
-      margin-bottom: 3vh;
+      margin-bottom: 15px;
   }

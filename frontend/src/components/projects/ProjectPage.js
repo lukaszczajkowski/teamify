@@ -5,6 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
 import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
+import MemberCard from "./MemberCard";
 
 
 function ProjectPage() {
@@ -13,11 +14,11 @@ function ProjectPage() {
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
+    const [members, setMembers] = useState([]);
 
     const getCurrentProject = () => {
-        ProjectApi.getProjectById(projectId)
+        return ProjectApi.getProjectById(projectId)
             .then(response => setCurrentProject(response.data))
-            .then(console.log(`current project id: ${projectId}`))
             .catch(err => console.log(`error on delete project ${err}`));
     }
 
@@ -35,8 +36,15 @@ function ProjectPage() {
             .catch(err => console.log(`error on delete project: ${err}`));
     }
 
+    const getMembers = () => {
+        return ProjectApi.getProjectById(projectId)
+            .then(response => setMembers(response.data.users))
+            .then(console.log(JSON.stringify(members)));
+    }
+
     const addMemberByEmail = (userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
+            .then(setMembers(currentProject.users))
             .then(alert(`add user: ${userEmail} to project ${projectId}`))
             .catch(err => console.log(`error on add member: ${err}`));
     }
@@ -56,20 +64,21 @@ function ProjectPage() {
 
     const deleteCategory = (categoryId) => {
         CategoryApi.deleteCategory(categoryId)
-        .then(console.log(`Deleting category: ${categoryId}`))
-        .catch(err => console.log(`error on delete category: ${err}`));
+            .then(console.log(`Deleting category: ${categoryId}`))
+            .catch(err => console.log(`error on delete category: ${err}`));
     }
 
     useEffect(() => {
         getCurrentProject();
         getAllCategories(projectId);
+        getMembers();
     }, []);
 
     return (
         <div className="project-page">
             <ProjectHeader />
             <div className="project-menu flex-start">
-                <p className="project-title prompt">project name:</p>
+                {/* <p className="project-title prompt">project name:</p> */}
                 <p className="project-title">{currentProject.title}</p>
                 <button className="button"
                     id="delete-project"
@@ -77,10 +86,24 @@ function ProjectPage() {
                     Delete project
                 </button>
 
-            <AddMemberPopup onSubmit={addMemberByEmail} />
-
             </div>
-            
+            <div className="member-menu flex-start">
+                <p className="member-title">members:</p>
+                {
+                    members === null ?
+                        null :
+                        <div className="member-list flex-start">
+                            {members.map(member => (
+                                <MemberCard key={member.id}
+                                    member={member}
+                                />
+                            ))}
+
+                        </div>
+                }
+                <AddMemberPopup onSubmit={addMemberByEmail} />
+            </div>
+
             <ProjectBoard
                 projectId={projectId}
                 categories={categories}
