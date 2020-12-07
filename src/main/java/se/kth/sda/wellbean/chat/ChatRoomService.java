@@ -13,16 +13,22 @@ public class ChatRoomService {
         this.chatRoomRepository = chatRoomRepository;
     }
 
-    public Optional<String> getChatId(String senderId, String recipientId,
-                                    boolean createIfNotExist) {
+    public Optional<String> getChatId(Long senderId, Long recipientId,
+                                      boolean createIfNotExist) {
+        System.out.println("Inside getChatId");
         return chatRoomRepository
                 .findBySenderIdAndRecipientId(senderId, recipientId)
-                .map(ChatRoom::getChatId)
+                .map(chatRoom -> {
+                    return chatRoom.getChatId();
+                })
                     .or(() -> {
+                        System.out.println("Crete if not exist");
                         if(!createIfNotExist) {
                             return Optional.empty();
                         }
-                        var chatId = String.format("%s_%s", senderId, recipientId);
+                        String chatId = String.format("%d_%d", senderId, recipientId);
+                        System.out.println("Chat id = " + chatId);
+
                         ChatRoom senderRecipient = new ChatRoom();
                         senderRecipient.setChatId(chatId);
                         senderRecipient.setSenderId(senderId);
@@ -32,6 +38,9 @@ public class ChatRoomService {
                         recipientSender.setChatId(chatId);
                         recipientSender.setSenderId(recipientId);
                         recipientSender.setRecipientId(senderId);
+
+                        System.out.println("senderRecipient" + senderRecipient.getChatId());
+                        System.out.println("recipientSender" + recipientSender.getChatId());
 
                         chatRoomRepository.save(senderRecipient);
                         chatRoomRepository.save(recipientSender);

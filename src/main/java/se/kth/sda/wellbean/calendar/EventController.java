@@ -124,7 +124,9 @@ public class EventController {
         Event eventToDelete = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
+        System.out.println("Deleting event: " + eventToDelete.getId() + " " + eventToDelete.getTitle());
         if(checkCredentials(eventToDelete)){
+            System.out.println("Deleting....");
             eventRepository.delete(eventToDelete);
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
