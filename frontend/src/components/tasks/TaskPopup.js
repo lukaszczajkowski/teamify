@@ -84,10 +84,7 @@ export default function TaskPopup({ isOpen, currentTask, deleteTask, updateTask,
                                 </div>
                             </div>
 
-                            <div className="popup-item flex-start">
-                                <h2 className="prompt">Invite user by email</h2>
-
-                            </div>
+    
                            
                             {/* <div className="popup-item flex-start"> 
                                 <h2 className="prompt">Comments</h2>
