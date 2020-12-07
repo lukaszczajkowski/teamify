@@ -28,35 +28,33 @@ export default function TaskCard({ task, deleteTask, updateTask }) {
         }
     }
 
-    const openPopup = () => {
+    const onUpdateTask = () => {
         setPopupIsOpen(true);
+    }
 
+    const onClosePopup = () => {
+        setPopupIsOpen(false);
     }
 
     return (
         <div>
             <div className="task-card">
                 <div className="flex-between">
-                    <div className="flex-grow" onClick={openPopup}>
+                    <div className="flex-grow">
                         {/* eslint-disable-next-line react/prop-types*/}
                         <p className="task-title">{task.title}</p>
                         {/* <Paper className={classes.card}>{task.title}</Paper> */}
                     </div>
-                    <TaskActions onDeleteTask={onDeleteTask}/>
+                    <TaskActions onDeleteTask={onDeleteTask} onUpdateTask={onUpdateTask}/>
 
                 </div>
-                <div className="task-member">
-
-                    
-                </div>
-
+                <div className="task-member"></div>
             </div>
 
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
-                deleteTask={deleteTask}
                 updateTask={updateTask}
-                onClose={(v) => setPopupIsOpen(v)} />
+                onClose={onClosePopup} />
         </div>
     );
 }
