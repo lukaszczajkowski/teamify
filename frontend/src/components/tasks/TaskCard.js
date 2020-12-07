@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
+import TaskActions from "./TaskActions";
+
+// *****************The code below has been refactored to css **********************
 // import {Paper} from '@material-ui/core';
 // import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,8 +17,9 @@ import TaskPopup from "./TaskPopup";
 export default function TaskCard({ task, deleteTask, updateTask }) {
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
-    const onDeleteTask = () => {
+    //const [taskMembers, setTaskMembers] = useState([]);
 
+    const onDeleteTask = () => {
         // eslint-disable-next-line react/prop-types
         if (window.confirm(`Do you want to delete task ${task.id}?\n**Redesign this to a popup later**`)) {
 
@@ -24,31 +28,33 @@ export default function TaskCard({ task, deleteTask, updateTask }) {
         }
     }
 
-    const openPopup = () => {
+    const onUpdateTask = () => {
         setPopupIsOpen(true);
+    }
 
+    const onClosePopup = () => {
+        setPopupIsOpen(false);
     }
 
     return (
         <div>
-            <div className="task-card flex-between">
-                <div className="flex-grow" onClick={openPopup}>
-                    {/* eslint-disable-next-line react/prop-types*/}
-                    <p className="task-title">{task.title}</p>
-                    {/* <Paper className={classes.card}>{task.title}</Paper> */}
-                </div>
+            <div className="task-card">
+                <div className="flex-between">
+                    <div className="flex-grow">
+                        {/* eslint-disable-next-line react/prop-types*/}
+                        <p className="task-title">{task.title}</p>
+                        {/* <Paper className={classes.card}>{task.title}</Paper> */}
+                    </div>
+                    <TaskActions onDeleteTask={onDeleteTask} onUpdateTask={onUpdateTask}/>
 
-                <button id="delete-task" className="flex-ungrow"
-                    onClick={onDeleteTask}>
-                    <i className="fas fa-times"></i>
-                </button>
+                </div>
+                <div className="task-member"></div>
             </div>
 
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
-                deleteTask={deleteTask}
                 updateTask={updateTask}
-                onClose={(v) => setPopupIsOpen(v)} />
+                onClose={onClosePopup} />
         </div>
     );
 }

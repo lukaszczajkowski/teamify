@@ -18,6 +18,7 @@ function RegisterForm() {
             } else {
                 alert("signup successful");
                 history.push("/users/me");
+                window.location.reload();
             }
         }
 

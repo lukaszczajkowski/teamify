@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Popup from "reactjs-popup";
+import UserContext from "../../UserContext";
 
 
 
 // eslint-disable-next-line react/prop-types
-export default function CreateProjectCard({creator, onSubmit}) {
-
+export default function CreateProjectCard({ onSubmit}) {
+    const creator = useContext(UserContext);
     const [projectName, setProjectName] = useState("");
+
 
 
     function onCreateProject() {
         const projectData = 
         {
             title: projectName,
-            creator: creator
+            creator: creator,
+            users: [creator]
+    
         };
         onSubmit(projectData);
         console.log(projectData);

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
 
-html, body, body *{
+/************ please refactor the section below ********/
+/* html, body, body *{
     box-sizing: border-box;
     font-family: 'PT Sans', sans-serif;
     margin: 0;
@@ -9,13 +10,8 @@ html, body, body *{
     font-weight: bold;
     
     background-color: inherit;
-} 
+}  */
 
-/*body {
-    background-image: url(backg.jpeg);
-    background-size: cover;
-    background-position: center center;
-}*/
 
 .loginpage {
     width: 100%;
@@ -44,24 +40,6 @@ html, body, body *{
     padding-top: 40px;
     opacity: 1;
     margin-bottom: 3em;
-}
-
-button {
-    font-size: 1.5em;
-    margin-right: 1em;
-    border: 0px;
-    cursor: pointer;
-    
-}
-
-button:focus{
-    outline: 0px;
-}
-
-button.active{
-    padding-bottom: 2px;
-    border-bottom: solid 2px #0F545C;
-    margin-right: 15px;
 }
 
 /*footer: forgot section */

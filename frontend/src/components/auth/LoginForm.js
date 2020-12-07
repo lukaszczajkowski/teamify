@@ -15,6 +15,7 @@ function LoginForm() {
         } else {
             alert("login successful");
             history.push("/users/me");
+            window.location.reload();
         }
     }
     return (

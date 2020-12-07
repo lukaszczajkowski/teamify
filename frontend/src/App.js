@@ -17,8 +17,10 @@ import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
 import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
+
 import Navbar from "./components/layout/Navbar";
 import ChatClient from './components/chat/ChatClient';
+import UserContext from './UserContext';
 
 
 function App() {
@@ -36,11 +38,11 @@ function App() {
 
 
     const loggedInRouter = (
-        <Router>
-            <Navbar onLogout={() => Auth.logout()} />
+        <UserContext.Provider value={loggedInUser}>
+            <Router>
             <Switch>
                 <Route exact path= "/users/me">
-                    <UserPage loggedInUser={loggedInUser} />
+                    <UserPage />
                 </Route>
                 
                 <Route path='/projects/:projectId'>
@@ -59,6 +61,7 @@ function App() {
                 </Route>
             </Switch>
         </Router>
+        </UserContext.Provider>
         
     );
 

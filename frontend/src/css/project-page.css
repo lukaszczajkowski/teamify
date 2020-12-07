@@ -3,9 +3,10 @@
     align-items: flex-start;
 
 }
-.project-page .project-menu {
+.project-page .project-menu,
+.project-page .member-menu {
     margin-left: 35px;
-    margin-bottom: 2vh;
+    margin-bottom: 18px;
 }
 
 .project-menu .project-title {
@@ -13,10 +14,23 @@
     margin-right: 10px;
 }
 
+.member-menu .member-title {
+    font-size: 20px;
+}
+
 .project-page .category-cards {
     align-items: flex-start;
 }
-.project-page 
-.category-card {
+
+.project-page .category-card {
     margin-right: 10px;
 }
+
+.project-page .member-list {
+    margin-left: 10px;
+}
+.project-page .member-card {
+    margin-right: 10px;
+}
+
+
