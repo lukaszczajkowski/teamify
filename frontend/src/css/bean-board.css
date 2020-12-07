@@ -1,7 +1,20 @@
 .bean-board .board-container {
     max-width: 1024px;
     margin: auto;
-    padding: 10vh;
+    padding: 50px;
+}
+
+.bean-board .board-title {
+    margin-bottom: 5vh;
+}
+
+.bean-board .board-section {
+    margin-bottom: 3vh;
+}
+
+.bean-board .goal-prompt,
+.bean-board .collect-prompt {
+    margin: 3vh 2vw 3vh 2vw;
 }
 
 .bean-board .board-name {
@@ -19,24 +32,16 @@
 .bean-board .prompt {
     font-size: 20px;
     color: var(--theme-dark-green);
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
 }
 
 .bean-board .sub-prompt {
-    margin-top: 1vh;
     margin-left: 1vw;
-    font-size: 18px;
+    font-size: 15px;
     color: var(--text-dark-grey);
-    font-weight: 500;
-    font-family: 'Rubik', sans-serif;
 }
 
-.bean-board .board-item {
-    margin-bottom: 6vh;
-}
 
-.bean-board .button {
+.bean-board .bean-button {
     margin: 1vh;
     color: white;
     background-color: #07B4B5;

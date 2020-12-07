@@ -7,38 +7,55 @@ export default function BeanBoard() {
 
     // const [beans, setBeans] = useState([]);
     // const createBean = (beanData) => (
-        
+
     // );
 
 
     return (
-        <div className="bean-board">
+        <article className="bean-board">
             <div className="board-container">
                 <div className="flip-front">
-                    <div className="flex-start board-item board-title">
+                    <div className="board-title flex-start">
                         <img className="bean-icon" src={BeanIcon}></img>
                         <h1 className="board-name">Your personal bean board</h1>
                     </div>
-                    <div className="flex-between board-item">
-                        <p className="prompt">How are you feeling today? </p>
-                        <p className="">Here is a slide</p>
-                    </div>
-                    <div className="flex-start board-item">
-                        <p className="prompt">What are your well-being goals for today? </p>
-                        <p className="sub-prompt">Add new beans to your task list</p>
-                    </div>
-                    <div className="flex-center board-item">
-                        <button className="button">Drink water</button>
-                        <button className="button">Exericise</button>
-                        <button className="button">Meditate</button>
 
-                        {/* <CreateBeanCard onSubmit= {createBean}/> */}
-                        <CreateBeanPopup />
+                    <div className="board-section">
+                        <div className="goal-prompt flex-between">
+                            <h2 className="prompt">Your well-being goals for today: </h2>
+                            <p className="sub-prompt">Add new beans to your calendar</p>
+                        </div>
+
+                        <div className="bean-buttons flex-center">
+                            <button className="button bean-button">Stay hyrated</button>
+                            <button className="button bean-button">Exericise</button>
+                            <button className="button bean-button">Meditate</button>
+                            <button className="button bean-button">Eat on time</button>
+
+                            {/* <CreateBeanCard onSubmit= {createBean}/> */}
+                            <CreateBeanPopup />
+                        </div>
                     </div>
-                 <div className="flex-end">
-                     <button className="flip-arrow"><i className="fas fa-arrow-right"></i></button>
-                 </div>
-                    
+
+                    <hr />
+
+                    <div className="board-section">
+                        <div className="collect-prompt board-item flex-between">
+                            <h2 className="prompt">Beans to collect today: </h2>
+                            <p className="sub-prompt">Click if you have completed the bean</p>
+                        </div>
+
+                        <div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div className="flex-end">
+                        <button className="flip-arrow"><i className="fas fa-arrow-right"></i></button>
+                    </div>
+
                 </div>
 
                 <div className="flip-back">
@@ -46,6 +63,6 @@ export default function BeanBoard() {
                 </div>
             </div>
 
-        </div>
+        </article>
     );
 }

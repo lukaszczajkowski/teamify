@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import randomColor from "randomcolor";
 
 // eslint-disable-next-line react/prop-types
 export default function MemberCard({member}) {
     const [click, setClick] = useState(false);
-    const [color, setColor] = useState();
+    //const [color, setColor] = useState();
 
     const handleClick = () => setClick(!click);
 
-    const getRandomColor = () => {
-        const newColor = randomColor();
-        setColor(newColor);
-    }
+    // const getRandomColor = () => {
+    //     const newColor = randomColor();
+    //     setColor(newColor);
+    // }
 
-    useEffect(
-        getRandomColor
-    ,[]);
+    // useEffect(
+    //     getRandomColor
+    // ,[]);
 
     return (
-        <div className="member-card" onClick={handleClick} style={{ backgroundColor: `${color}`}}>
+        <div className="member-card" onClick={handleClick} style={{ backgroundColor: `${randomColor()}`}}>
           
             <button className="member-button">  
                     {/*eslint-disable-next-line react/prop-types*/}

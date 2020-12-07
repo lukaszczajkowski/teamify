@@ -9,8 +9,8 @@
     padding-left: 10vh;
     font-size: 20px;
     color: var(--theme-dark-green);
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
+    /* font-weight: 600;
+    font-family: 'Rubik', sans-serif; */
     margin-bottom: 5vh;
 }
 .projects-board #create-new-project,
