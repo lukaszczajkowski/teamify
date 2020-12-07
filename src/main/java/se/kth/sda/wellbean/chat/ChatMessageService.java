@@ -1,52 +1,72 @@
 package se.kth.sda.wellbean.chat;
 
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import javax.mail.Message;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class ChatMessageService {
+
     private ChatMessageRepository chatMessageRepository;
     private ChatRoomService chatRoomService;
+    private MongoOperations mongoOperations;
+
+    public ChatMessageService(ChatMessageRepository chatMessageRepository,
+                              ChatRoomService chatRoomService,
+                              MongoOperations mongoOperations) {
+        this.chatMessageRepository = chatMessageRepository;
+        this.chatRoomService = chatRoomService;
+        this.mongoOperations = mongoOperations;
+
+    }
 
     public ChatMessage save(ChatMessage chatMessage) {
         chatMessage.setStatus(MessageStatus.RECEIVED);
-        return chatMessageRepository.save(chatMessage);
+        chatMessageRepository.save(chatMessage);
+        return chatMessage;
     }
 
-    public long countNewMessages(String senderId, String recipientId) {
+    public long countNewMessages (Long senderId, Long recipientId) {
         return chatMessageRepository.countBySenderIdAndRecipientIdAndStatus(senderId, recipientId, MessageStatus.RECEIVED);
     }
 
-    public List<ChatMessage> findChatMessages(String senderId, String recipientId) {
+    public List<ChatMessage> findChatMessages(Long senderId, Long recipientId) {
         var chatId = chatRoomService.getChatId(senderId, recipientId, false);
 
-        var messages = chatId
-                .map(cId -> chatMessageRepository.findByChatId(cId))
-                .orElse(new ArrayList<>());
+        var messages = chatId.map(cId -> chatMessageRepository.findByChatId(cId))
+                                                .orElse(new ArrayList<>());
 
         if(messages.size() > 0) {
-            updateStatuses(messages, senderId, recipientId, MessageStatus.DELIVERED);
+            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
         }
 
         return messages;
-
-    }
-
-    public void updateStatuses(List<ChatMessage> messages, String senderId, String recipientId, MessageStatus status) {
-        List<ChatMessage> updatedMessages = new ArrayList<>();
-        for (ChatMessage message:
-             messages) {
-            message.setStatus(status);
-            updatedMessages.add(message);
-            chatMessageRepository.save(message);
-        }
     }
 
     public ChatMessage findById(String id) {
-        return chatMessageRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("can't find message (" + id + ")")
+        return chatMessageRepository.findById(id)
+                .map(chatMessage -> {
+                    chatMessage.setStatus(MessageStatus.DELIVERED);
+                    return chatMessageRepository.save(chatMessage);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("can't find message (" + id + ")"));
+    }
+
+    public void updateStatuses(Long senderId, Long recipientId, MessageStatus status) {
+        Query query = new Query(
+                Criteria
+                    .where("senderId").is(senderId)
+                    .and("recipientId").is(recipientId)
         );
+
+        Update update = Update.update("status", status);
+        mongoOperations.updateMulti(query, update, ChatMessage.class);
     }
 }

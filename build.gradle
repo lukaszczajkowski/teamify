@@ -20,6 +20,10 @@ repositories {
 }
 
 dependencies {
+	// https://mvnrepository.com/artifact/org.springframework/spring-websocket
+	compile group: 'org.springframework', name: 'spring-websocket', version: '5.3.1'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail

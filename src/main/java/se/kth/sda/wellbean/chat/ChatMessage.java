@@ -1,37 +1,40 @@
 package se.kth.sda.wellbean.chat;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table (name = "chat_message")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Document
 public class ChatMessage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-
     private String chatId;
-
-    private String senderId;
-
-    private String recipientId;
-
+    private Long senderId;
+    private Long recipientId;
     private String senderName;
-
     private String recipientName;
-
     private String content;
-
-    private Date timeStamp;
-
+    private Date timestamp;
     private MessageStatus status;
 
     public ChatMessage() {
+    }
+
+    public ChatMessage(String id, String chatId, Long senderId, Long recipientId, String senderName, String recipientName, String content, Date timestamp, MessageStatus status) {
+        this.id = id;
+        this.chatId = chatId;
+        this.senderId = senderId;
+        this.recipientId = recipientId;
+        this.senderName = senderName;
+        this.recipientName = recipientName;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.status = status;
     }
 
     public String getId() {
@@ -50,19 +53,19 @@ public class ChatMessage {
         this.chatId = chatId;
     }
 
-    public String getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
-    public String getRecipientId() {
+    public Long getRecipientId() {
         return recipientId;
     }
 
-    public void setRecipientId(String recipientId) {
+    public void setRecipientId(Long recipientId) {
         this.recipientId = recipientId;
     }
 
@@ -90,12 +93,12 @@ public class ChatMessage {
         this.content = content;
     }
 
-    public Date getTimeStamp() {
-        return timeStamp;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(Date timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public MessageStatus getStatus() {

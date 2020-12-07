@@ -1,21 +1,20 @@
 package se.kth.sda.wellbean.chat;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "chat_notification")
+@Data
 public class ChatNotification {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-
-    private String senderId;
+    private Long senderId;
     private String senderName;
 
     public ChatNotification() {
     }
 
-    public ChatNotification(String id, String senderId, String senderName) {
+    public ChatNotification(String id, Long senderId, String senderName) {
         this.id = id;
         this.senderId = senderId;
         this.senderName = senderName;
@@ -29,11 +28,11 @@ public class ChatNotification {
         this.id = id;
     }
 
-    public String getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
