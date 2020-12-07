@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChatApi from '../../api/ChatApi';
 import './ChatClient.css';
 import { Button, message } from "antd";
-//import ScrollToBottom from "react-scroll-to-bottom";
+import ScrollToBottom from "react-scroll-to-bottom";
 import UserApi from '../../api/UserApi';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
@@ -23,6 +23,7 @@ export default function ChatClient() {
     const [text, setText] = useState("");
     const [contacts, setContacts] = useState([]);
     const [messages, setMessages] = useState([]);
+    //const [changesMade, setChangesMade] = useState(false);
 
     useEffect(() => {
       UserApi.getCurrentUser().then(response => setCurrentUser(response.data))
@@ -68,16 +69,16 @@ export default function ChatClient() {
     const onMessageReceived = (msg) => {
         const notification = JSON.parse(msg.body);
     
-        // if (activeContact.id === notification.senderId) {
-        //     ChatApi.findChatMessage(notification.id).then((message) => {
-        //     const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
-        //               .chatMessages;
-        //     newMessages.push(message);
-        //     setMessages(newMessages);
-        //     });
-        // } else {
+        if (activeContact.id === notification.senderId) {
+            ChatApi.findChatMessage(notification.id).then((message) => {
+            const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
+                      .chatMessages;
+            newMessages.push(message);
+            setMessages(newMessages);
+            });
+        } else {
         message.info("Received a new message from " + notification.senderName);
-        // }
+        }
         loadContacts();
       };
 
@@ -176,7 +177,7 @@ export default function ChatClient() {
               <img src={activeContact && activeContact.profilePicture} alt="" />
               <p>{activeContact && activeContact.name}</p>
             </div>
-            {/* <ScrollToBottom className="messages"> */}
+            <ScrollToBottom className="messages">
             {/* {messages !== undefined ? */}
               <ul>
                 {messages.map((msg) => (
@@ -192,7 +193,7 @@ export default function ChatClient() {
               
               {/* : 
               null */}
-            {/* </ScrollToBottom> */}
+            </ScrollToBottom>
             <div className="message-input">
               <div className="wrap">
                 <input
