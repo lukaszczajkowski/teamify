@@ -51,7 +51,6 @@ function ProjectPage() {
         if (userId === currentProject.creator.id && userId !== memberId) {
             console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
             deleteMember(projectId, memberId);
-            getAllMembers(projectId);
         } else if (userId !== currentProject.creator.id) {
             alert("you are not allowed to remove member.");
         } else {
@@ -68,14 +67,14 @@ function ProjectPage() {
 
     const addMemberByEmail = (userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(alert(`add user: ${userEmail} to project ${projectId}`))
-            .then(getAllMembers())
+            // .then(alert(`add user: ${userEmail} to project ${projectId}`))
+            .then(() => getAllMembers(projectId))
             .catch(err => console.log(`error on add member: ${err}`));
     };
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-        .then(getAllMembers(projectId))
+        .then(() => getAllMembers(projectId))
         .catch(err => console.log(`error on delete member: ${err}`));
     }
 

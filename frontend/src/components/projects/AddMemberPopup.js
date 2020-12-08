@@ -37,6 +37,7 @@ export default function AddMemberPopup({ onSubmit }) {
                                     className="button"
                                     onClick={() => {
                                         onSubmit(userEmail);
+                                        setUserEmail("");
                                         close();
                                     }}>
                                     Add
