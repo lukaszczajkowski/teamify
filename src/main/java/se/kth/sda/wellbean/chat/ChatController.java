@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
@@ -21,17 +22,20 @@ public class ChatController {
     private final ChatRoomService chatRoomService;
     private final AuthService authService;
     private final UserService userService;
+    private final ProjectService projectService;
 
     public ChatController(SimpMessagingTemplate messagingTemplate,
                           ChatMessageService chatMessageService,
                           ChatRoomService chatRoomService,
                           AuthService authService,
-                          UserService userService) {
+                          UserService userService,
+                          ProjectService projectService) {
         this.messagingTemplate = messagingTemplate;
         this.chatMessageService = chatMessageService;
         this.chatRoomService = chatRoomService;
         this.authService = authService;
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     @MessageMapping("/chat")
@@ -57,6 +61,32 @@ public class ChatController {
                 ));
     }
 
+    @MessageMapping("/chat/general/")
+    public void processProjectMessage(@Payload ChatMessage chatMessage) {
+
+        Long projectId = chatMessage.getRecipientId();
+        var chatId = chatRoomService
+                .getChatId(projectId.toString(),
+                        true);
+        chatMessage.setChatId(chatId.get());
+
+        chatMessage.setRecipientId(projectId);
+
+        String recipientName = projectService.getById(projectId).getTitle();
+
+        chatMessage.setRecipientName(recipientName);
+
+        ChatMessage saved = chatMessageService.save(chatMessage);
+
+        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientName(),
+                "/queue/messages",
+                new ChatNotification(
+                        saved.getId(),
+                        saved.getSenderId(),
+                        saved.getSenderName()
+                ));
+    }
+
     @GetMapping("/messages/{senderId}/count")
     public ResponseEntity<Long> countNewMessages(@PathVariable Long senderId) {
         Long recipientId = getLoggedInUser().getId();
@@ -67,8 +97,6 @@ public class ChatController {
     @GetMapping("/messages/{senderId}")
     public ResponseEntity<?> findChatMessages(@PathVariable Long senderId) {
         Long recipientId = getLoggedInUser().getId();
-        System.out.println("Sender id = " + senderId);
-        System.out.println("Recipient id = " + recipientId);
         return ResponseEntity
                 .ok(chatMessageService.findChatMessages(senderId, recipientId));
     }
@@ -77,6 +105,12 @@ public class ChatController {
     public ResponseEntity<?> findMessage(@PathVariable String id) {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));
+    }
+
+    @GetMapping("/messages/project/{projectId}")
+    public ResponseEntity<?> findProjectMessages(@PathVariable String projectId) {
+        return ResponseEntity
+                .ok(chatMessageService.findProjectMessages(projectId));
     }
 
     private User getLoggedInUser () {
