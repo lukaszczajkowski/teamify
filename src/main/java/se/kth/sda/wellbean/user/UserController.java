@@ -43,11 +43,9 @@ public class UserController {
      * Returns every user in the project
      * @return
      */
-    @GetMapping("/summaries")
+    @GetMapping("/summaries/{projectId}")
     public List<UserSummary> getUsersSummaries(@PathVariable Long projectId){
-        String email = authService.getLoggedInUserEmail();
-        User currentUser = userService.findUserByEmail(email);
-        return userService.getAllExceptLoggedIn(currentUser, projectId);
+        return userService.getAllProjectUsers(projectId);
     }
 
     @GetMapping("/get-by-email")

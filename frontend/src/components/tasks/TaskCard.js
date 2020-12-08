@@ -14,7 +14,7 @@ import TaskActions from "./TaskActions";
 // }));
 
 // eslint-disable-next-line react/prop-types
-export default function TaskCard({ task, deleteTask, updateTask }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask }) {
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
@@ -54,6 +54,8 @@ export default function TaskCard({ task, deleteTask, updateTask }) {
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
                 updateTask={updateTask}
+                addMemberToTask={addMemberToTask}
+                deleteMemberFromTask={deleteMemberFromTask}
                 onClose={onClosePopup} />
         </div>
     );
