@@ -211,7 +211,7 @@ export default function Calendar() {
         <div>
             <ProjectHeader/>
         <FullCalendar
-            initialView = "dayGridMonth"
+            initialView = "timeGridWeek"
             headerToolbar={{
                 left: 'prev, next, today',
                 center: 'title',
