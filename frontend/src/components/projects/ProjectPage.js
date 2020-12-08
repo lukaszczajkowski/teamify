@@ -30,7 +30,7 @@ function ProjectPage() {
 
     const onDeleteProject = () => {
         if (window.confirm("Do you want to delete this project?")) {
-            if (currentProject.creator.id === userId) {
+            if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
                 history.push("/users/me");
                 window.location.reload();
@@ -40,24 +40,44 @@ function ProjectPage() {
         }
     };
 
+    function getAllMembers(projectId) {
+        return ProjectApi.getProjectById(projectId)
+        .then(response => setMembers(response.data.users))
+        .then(console.log("members: " + JSON.stringify(members)));
+    }
+
+    const onDeleteMember = (memberId) => {
+        if (window.confirm("Do you want to remove this member?")) {
+        if (userId === currentProject.creator.id && userId !== memberId) {
+            console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
+            deleteMember(projectId, memberId);
+            getAllMembers(projectId);
+        } else if (userId !== currentProject.creator.id) {
+            alert("you are not allowed to remove member.");
+        } else {
+            alert("Are you sure you want to remove yourself from this project?");
+        }
+    }
+    }
+
     function deleteCurrentProject() {
         return ProjectApi.deleteProject(projectId)
             .then(console.log(`Deleting project ${projectId}`))
             .catch(err => console.log(`error on delete project: ${err}`));
     }
 
-    const getMembers = () => {
-        return ProjectApi.getProjectById(projectId)
-            .then(response => setMembers(response.data.users))
-            .then(console.log(JSON.stringify(members)));
-    };
-
     const addMemberByEmail = (userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(setMembers(currentProject.users))
             .then(alert(`add user: ${userEmail} to project ${projectId}`))
+            .then(getAllMembers())
             .catch(err => console.log(`error on add member: ${err}`));
     };
+
+    function deleteMember(projectId, memberId) {
+        ProjectApi.removeMemberById(projectId, memberId)
+        .then(getAllMembers(projectId))
+        .catch(err => console.log(`error on delete member: ${err}`));
+    }
 
     const getAllCategories = (projectId) => {
         return CategoryApi.getAllCategories(projectId)
@@ -88,7 +108,7 @@ function ProjectPage() {
     useEffect(() => {
         getCurrentProject();
         getAllCategories(projectId);
-        getMembers();
+        getAllMembers(projectId);
     }, []);
 
     return (
@@ -97,7 +117,8 @@ function ProjectPage() {
             <ProjectMenu currentProject={currentProject}
                 members={members}
                 onDeleteProject={onDeleteProject}
-                addMemberByEmail={addMemberByEmail} />
+                addMemberByEmail={addMemberByEmail} 
+                onDeleteMember={onDeleteMember} />
 
 
             <ProjectBoard

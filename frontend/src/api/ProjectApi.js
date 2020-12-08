@@ -30,7 +30,7 @@ class ProjectApi {
     }
 
     removeMemberById(projectId, memberId) {
-        return Api.put(`/projects/${projectId}remove/memberId=${memberId}`);
+        return Api.put(`/projects/${projectId}/remove/memberId?memberId=${memberId}`);
     }
 
     deleteProject(projectId) {
