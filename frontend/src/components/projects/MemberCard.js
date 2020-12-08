@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import randomColor from "randomcolor";
+import React from "react";
+import useComponentVisible from "../hooks/useComponentVisible";
+// import randomColor from "randomcolor";
 
 // eslint-disable-next-line react/prop-types
-export default function MemberCard({member}) {
-    const [click, setClick] = useState(false);
-    //const [color, setColor] = useState();
+export default function MemberCard({ member, onSubmit }) {
 
-    const handleClick = () => setClick(!click);
+    // const [color, setColor] = useState();
+
+    const {
+        ref,
+        isComponentVisible,
+        setIsComponentVisible
+    } = useComponentVisible(false);
+
+    const handleClick = () => {
+        setIsComponentVisible(true);
+    }
 
     // const getRandomColor = () => {
     //     const newColor = randomColor();
@@ -15,27 +24,32 @@ export default function MemberCard({member}) {
 
     // useEffect(
     //     getRandomColor
-    // ,[]);
+    //     , []);
 
     return (
-        <div className="member-card" onClick={handleClick} style={{ backgroundColor: `${randomColor()}`}}>
-          
-            <button className="member-button">  
-                    {/*eslint-disable-next-line react/prop-types*/}
-                        {member.name.charAt(0)}
+        <div className="member-card" onClick={handleClick}>
+
+            <button className="member-button">
+                {/*eslint-disable-next-line react/prop-types*/}
+                {member.name.charAt(0)}
             </button>
 
-            {
-                click ?
+            <div ref={ref}>
+                {isComponentVisible && (
                     <div className="action-menu">
+                        {/* eslint-disable-next-line react/prop-types */}
+                        <p>{member.name}</p>
+                        {/* eslint-disable-next-line react/prop-types */}
+                        <p>{member.email}</p>
                         <button className="action-item"
-                            id="delete-project">
-                            Delete member
-                </button>
-                    </div> :
-                    null
-            }
-
+                            id="delete-member"
+                            // eslint-disable-next-line react/prop-types
+                            onClick={()=> onSubmit(member.id)}>
+                            Delete Member
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

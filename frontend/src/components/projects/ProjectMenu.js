@@ -5,8 +5,9 @@ import AddMemberPopup from "./AddMemberPopup";
 import MemberIcon from "../../assets/icon/member.png";
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectMenu({ currentProject, members, onDeleteProject, addMemberByEmail }) {
+export default function ProjectMenu({ currentProject, members, onDeleteProject, addMemberByEmail, onDeleteMember }) {
 
+    
     return (
         <div className="project-menu flex-start">
             <div id="project-menu" className="flex-start">
@@ -25,6 +26,7 @@ export default function ProjectMenu({ currentProject, members, onDeleteProject, 
                             {members.map(member => (
                                 <MemberCard key={member.id}
                                     member={member}
+                                    onSubmit={onDeleteMember}
                                 />
                             ))}
 

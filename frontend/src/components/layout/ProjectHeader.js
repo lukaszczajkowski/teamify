@@ -11,7 +11,7 @@ export default function ProjectHeader() {
                 <Link to="" className="nav-item">
                     <img className="icon" src={BeanIcon} />
                 </Link>
-                <Link to="" className="nav-item">
+                <Link to="/chat" className="nav-item">
                     <img className="icon" src={ChatIcon} />
                 </Link>
                 <Link to="/calendar" className="nav-item"><i className="far fa-calendar-alt calendar-icon"></i></Link>
