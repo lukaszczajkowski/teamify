@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+//import { RecoilRoot } from 'recoil';
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,11 +15,12 @@ import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
-import ChatClient from './components/chat/ChatClient'
 import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
-import UserContext from './UserContext';
 
+import Navbar from "./components/layout/Navbar";
+import ChatClient from './components/chat/ChatClient';
+import UserContext from './UserContext';
 
 
 function App() {
@@ -85,7 +87,6 @@ function App() {
                 <Route exact path="/calendar">
                     <Calendar />
                 </Route>
-
                 <Route exact path="/chat">
                     <ChatClient />
                 </Route>

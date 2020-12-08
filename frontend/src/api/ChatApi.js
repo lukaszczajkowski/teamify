@@ -3,19 +3,19 @@ import Api from './Api';
 class ChatApi {
 
     getUsers() {
-        return Api.get("/users/summaries");
+        return Api.get("/from-shared-projects");
     }
 
-    countNewMessages(senderId, recipientId) {
-        return Api.get("/messages/" + senderId + "/" + recipientId + "/count");
+    countNewMessages(senderId) {
+        return Api.get("/messages/" + senderId + "/count");
     }
     
-    findChatMessages(senderId, recipientId) {
-        return Api.get("/messages/" + senderId + "/" + recipientId);
+    findChatMessages(senderId) {
+        return Api.get("/messages/" + senderId);
     }
       
     findChatMessage(id) {
-        return Api.get("/messages/" + id);
+        return Api.get("/messages/findMessage/" + id);
     }
 
 }

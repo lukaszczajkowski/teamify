@@ -51,7 +51,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
         console.log(`update task on category: ${categoryId}`);
         console.log(` task `, task);
         return TaskApi.updateTask(categoryId, task)
-            .then(getTasksByCategory(categoryId));
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const deleteTask = (taskId) => {

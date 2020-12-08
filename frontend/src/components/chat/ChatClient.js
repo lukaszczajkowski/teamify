@@ -1,42 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import SockJsClient from 'react-stomp';
-import Stomp from 'react-stomp';
-import { useRecoilValue, useRecoilState } from "recoil";
 import ChatApi from '../../api/ChatApi';
-import { loggedInUser, chatActiveContact, chatMessages} from '../../atom/globalState.js';
 import './ChatClient.css';
 import { Button, message } from "antd";
 import ScrollToBottom from "react-scroll-to-bottom";
+import UserApi from '../../api/UserApi';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
+const wsEndpoint = 'http://localhost:8080/ws';
+const sockJsConfig = {
+      transports: ['xhr-streaming'],
+      headers: { Authorization: window.sessionStorage.getItem("_token") }
+}
+
+var stompClient = null;
+// let stompClient = Stomp.over(socket);
 //eslint-disable-line no-undef
 export default function ChatClient() {
 
-    const currentUser = useRecoilValue(loggedInUser);
+    const [currentUser, setCurrentUser] = useState({});
+    const [activeContact, setActiveContact] = useState({});
     const [text, setText] = useState("");
     const [contacts, setContacts] = useState([]);
-    const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
-    const [messages, setMessages] = useRecoilState(chatMessages);
+    const [messages, setMessages] = useState([]);
+    //const [changesMade, setChangesMade] = useState(false);
 
     useEffect(() => {
-        if (activeContact === undefined) return;
-        ChatApi.findChatMessages(activeContact.id, currentUser.id).then((msgs) =>
-          setMessages(msgs)
-        );
-        connect();
+      UserApi.getCurrentUser().then(response => setCurrentUser(response.data))
+      .then(() => {
         loadContacts();
-      }, [activeContact]);
+        connect();
+      }
+    );
+    }, [])
 
-    var sockJs = new SockJsClient("http://localhost:8080/ws");
-    const stompClient = Stomp.over(sockJs);
-    
+
+    useEffect(() => {
+        if(activeContact === undefined) return;
+        ChatApi.findChatMessages(activeContact.id).then((msgs) =>
+          setMessages(msgs.data)
+        ).catch(err => console.log(err));
+        loadContacts();
+    }, [activeContact]);
+
+    console.log("Current user", currentUser);
+    console.log("Active contact", activeContact);
+
     // eslint-disable-next-line no-unused-vars
     const connect = () => {
-        stompClient.connect({}, onConnected, onError);
+      var socket = new SockJS(wsEndpoint, null, sockJsConfig);
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, onConnected, onError);
     };
 
     const onConnected = () => {
         console.log("connected");
-        console.log(currentUser);
+        
         stompClient.subscribe(
             "/user/" + currentUser.id + "/queue/messages",
             onMessageReceived
@@ -49,18 +68,16 @@ export default function ChatClient() {
 
     const onMessageReceived = (msg) => {
         const notification = JSON.parse(msg.body);
-        const active = JSON.parse(sessionStorage.getItem("recoil-persist"))
-          .chatActiveContact;
     
-        if (active.id === notification.senderId) {
-          ChatApi.findChatMessage(notification.id).then((message) => {
+        if (activeContact.id === notification.senderId) {
+            ChatApi.findChatMessage(notification.id).then((message) => {
             const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
-              .chatMessages;
+                      .chatMessages;
             newMessages.push(message);
             setMessages(newMessages);
-          });
+            });
         } else {
-          message.info("Received a new message from " + notification.senderName);
+        message.info("Received a new message from " + notification.senderName);
         }
         loadContacts();
       };
@@ -81,25 +98,16 @@ export default function ChatClient() {
         }
     };
 
-    const loadContacts = () => {
+    const loadContacts = async() => {
         // eslint-disable-next-line no-undef
-        const promise = getUsers().then((users) =>
-          users.map((contact) =>
-          ChatApi.countNewMessages(contact.id, currentUser.id).then((count) => {
-              contact.newMessages = count;
-              return contact;
-            })
-          )
-        );
-    
-        promise.then((promises) =>
-          Promise.all(promises).then((users) => {
-            setContacts(users);
-            if (activeContact === undefined && users.length > 0) {
-              setActiveContact(users[0]);
-            }
-          })
-        );
+        await UserApi.getUsersFromSharedProjects().then((response) =>
+          setContacts(response.data)
+        ).then(() => {
+          if(activeContact === undefined && contacts.length > 0) {
+            setActiveContact(contacts[0])
+          }
+        })
+        console.log("contacts loaded");
       };
 
       return (
@@ -134,6 +142,7 @@ export default function ChatClient() {
             </div>
             <div id="search" />
             <div id="contacts">
+              Contacts:
               <ul>
                 {contacts.map((contact) => (
                   // eslint-disable-next-line react/jsx-key
@@ -162,16 +171,6 @@ export default function ChatClient() {
                 ))}
               </ul>
             </div>
-            <div id="bottom-bar">
-              <button id="addcontact">
-                <i className="fa fa-user fa-fw" aria-hidden="true"></i>{" "}
-                <span>Profile</span>
-              </button>
-              <button id="settings">
-                <i className="fa fa-cog fa-fw" aria-hidden="true"></i>{" "}
-                <span>Settings</span>
-              </button>
-            </div>
           </div>
           <div className="content">
             <div className="contact-profile">
@@ -179,6 +178,7 @@ export default function ChatClient() {
               <p>{activeContact && activeContact.name}</p>
             </div>
             <ScrollToBottom className="messages">
+            {/* {messages !== undefined ? */}
               <ul>
                 {messages.map((msg) => (
                   // eslint-disable-next-line react/jsx-key
@@ -189,7 +189,10 @@ export default function ChatClient() {
                     <p>{msg.content}</p>
                   </li>
                 ))}
-              </ul>
+              </ul> 
+              
+              {/* : 
+              null */}
             </ScrollToBottom>
             <div className="message-input">
               <div className="wrap">
