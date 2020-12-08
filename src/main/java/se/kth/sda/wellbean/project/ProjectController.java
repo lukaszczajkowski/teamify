@@ -210,10 +210,10 @@ public class ProjectController {
     public Project removeMember(@PathVariable Long projectId, @RequestParam Long memberId) {
         Project project = projectService.getById(projectId);
         User userToRemove = userService.findById(memberId);
-        if(checkCredentials(project) && !userAlreadyAMember(project, userToRemove)){
+        if(checkCredentials(project) && userAlreadyAMember(project, userToRemove)){
             project.removeUser(userToRemove);
             return projectService.update(project);
-        } else if (userAlreadyAMember(project, userToRemove)){
+        } else if (!userAlreadyAMember(project, userToRemove)){
             return project;
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
