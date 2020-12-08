@@ -1,6 +1,5 @@
 import React from "react";
 import BeanIcon from "../../assets/icon/beans.png";
-import MemberIcon from "../../assets/icon/member.png";
 import ChatIcon from "../../assets/icon/chat.png";
 import { Link } from "react-router-dom";
 import NavBar from "../layout/Navbar";
@@ -11,9 +10,6 @@ export default function ProjectHeader() {
             <div className="member-nav">
                 <Link to="" className="nav-item">
                     <img className="icon" src={BeanIcon} />
-                </Link>
-                <Link to="" className="nav-item">
-                    <img className="icon" src={MemberIcon} />
                 </Link>
                 <Link to="" className="nav-item">
                     <img className="icon" src={ChatIcon} />

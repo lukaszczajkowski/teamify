@@ -27,11 +27,9 @@ body {
 
 .board-container {
     background-color: var(--bg-light-grey);
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 5vh 8vw;
     padding: 5vh 5vw;
-    box-shadow: 10px 10px 30px 0px rgba(179,179,179,0.7);
-
 }
 
 .card-container {
@@ -45,6 +43,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.flex-around {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
 }
 
 .flex-start {

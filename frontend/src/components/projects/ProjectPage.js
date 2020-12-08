@@ -3,10 +3,8 @@ import ProjectHeader from "../layout/ProjectHeader";
 import CategoryApi from "../../api/CategoryApi";
 import { useParams, useHistory } from "react-router-dom";
 import ProjectApi from "../../api/ProjectApi";
-import AddMemberPopup from "./AddMemberPopup";
 import ProjectBoard from "./ProjectBoard";
-import MemberCard from "./MemberCard";
-import ProjectActions from "./ProjectActions";
+import ProjectMenu from "./ProjectMenu";
 
 
 function ProjectPage() {
@@ -65,8 +63,8 @@ function ProjectPage() {
 
     const updateCategory = (projectId, newCategoryData) => {
         CategoryApi.updateCategory(projectId, newCategoryData).
-        then(response => console.log(JSON.stringify(response.data)))
-        .catch(err => console.log(`error on update category: ${err}`));
+            then(response => console.log(JSON.stringify(response.data)))
+            .catch(err => console.log(`error on update category: ${err}`));
     }
 
     const deleteCategory = (categoryId) => {
@@ -85,35 +83,16 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <ProjectHeader />
-            <div className="flex-start">
-                <div className="project-menu flex-start">
-                {/* <p className="project-title prompt">project name:</p> */}
-                <p className="project-title">{currentProject.title}</p>
-                <ProjectActions onDeleteProject={onDeleteProject}/>
+           <ProjectMenu currentProject={currentProject} 
+                        members={members}
+                        onDeleteProject={onDeleteProject} 
+                        addMemberByEmail={addMemberByEmail}/>
 
-            </div>
-            <div className="member-menu flex-start">
-                {
-                    members === null ?
-                        null :
-                        <div className="member-list flex-start">
-                            {members.map(member => (
-                                <MemberCard key={member.id}
-                                    member={member}
-                                />
-                            ))}
-
-                        </div>
-                }
-                <AddMemberPopup onSubmit={addMemberByEmail} />
-            </div>
-            </div>
-            
 
             <ProjectBoard
                 projectId={projectId}
                 categories={categories}
-                createCategory={createCategory} 
+                createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory} />
         </div>

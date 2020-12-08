@@ -3,12 +3,25 @@
     flex-direction: column;
 }
 
+.user-page .user-header {
+    margin-bottom: 3vh;
+}
+
 .user-page .user-prompt{
-    font-size: 36px;
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
+    font-size: 32px;
+    /* font-weight: 600;
+    font-family: 'Rubik', sans-serif; */
     color: var(--theme-dark-green);
+    margin-left: 5vw;
+}
+
+.user-page #user-name {
+    color: var(--theme-green);
+    margin-left: 10px;
+}
+
+.user-page .time-prompt {
+    font-size: 24px;
     margin-left: 6vw;
-    margin-bottom: 8vh;
-    margin-top: 5vh;
+    color: var(--theme-dark-green);
 }

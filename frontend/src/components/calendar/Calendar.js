@@ -223,7 +223,7 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
-            <div className="create-bean-card">
+            <div className="event-popup">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
                 defaultOpen = {false}
