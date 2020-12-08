@@ -28,6 +28,7 @@ export default function ChatClient() {
     const [contacts, setContacts] = useState([]);
     const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
     const [messages, setMessages] = useRecoilState(chatMessages);
+    const [project] = useState(1);
     //const [changesMade, setChangesMade] = useState(false);
 
     useEffect(() => {
@@ -43,9 +44,15 @@ export default function ChatClient() {
     useEffect(() => {
         //if(activeContact === undefined) return;
         const interval = setInterval( () => {
+          if(activeContact === 1) {
+              ChatApi.findProjectMessages(project).then((msgs) =>
+              setMessages(msgs.data)
+              ).catch(err => console.log(err))
+            } else {
             ChatApi.findChatMessages(activeContact.id).then((msgs) =>
             setMessages(msgs.data)
             ).catch(err => console.log(err))
+            }
           }, 3000)
         loadContacts();
         return () => clearInterval(interval)
@@ -93,16 +100,31 @@ export default function ChatClient() {
       };
 
     const sendMessage = (msg) => {
-        if(msg.trim() !== ""){
-            const message = {
-                senderId: currentUser.id,
-                recipientId: activeContact.id,
-                senderName: currentUser.name,
-                recipientName: activeContact.name,
-                content: msg,
-                timestamp: new Date()
+          let message;
+          if(activeContact === 1) {
+            if(msg.trim() !== ""){
+              message = {
+                  senderId: currentUser.id,
+                  recipientId: activeContact,
+                  senderName: currentUser.name,
+                  recipientName: activeContact,
+                  content: msg,
+                  timestamp: new Date()
+            };
+          }
+            stompClient.send("/app/chat/general/", {}, JSON.stringify(message))
+          } else {
+            if(msg.trim() !== ""){
+              message = {
+                  senderId: currentUser.id,
+                  recipientId: activeContact.id,
+                  senderName: currentUser.name,
+                  recipientName: activeContact.name,
+                  content: msg,
+                  timestamp: new Date()
             };
             stompClient.send("/app/chat", {}, JSON.stringify(message));
+          }
             const newMessages = [...messages];
             newMessages.push(message);
             setMessages(newMessages);
@@ -200,6 +222,27 @@ export default function ChatClient() {
                     </div>
                   </li>
                 ))}
+                <li
+                  onClick = {() => setActiveContact(project)}
+                  className={
+                    activeContact === project
+                      ? "contact active"
+                      : "contact"
+                  }
+                >
+                  <div className="wrap">
+                      <span className="contact-status online"></span>
+                      <div className="meta">
+                        <p className="name">General {project}</p>
+                        {project.newMessages !== undefined &&
+                          project.newMessages > 0 && (
+                            <p className="preview">
+                              {project.newMessages} new messages
+                            </p>
+                          )}
+                      </div>
+                    </div>
+                </li>
               </ul>
             </div>
             
