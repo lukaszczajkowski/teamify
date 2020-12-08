@@ -1,0 +1,55 @@
+.bean-card .bean-popup {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 35vh;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+.bean-popup .popup-content {
+    background-color: var(--theme-green);
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px; 
+    width: 150px;
+    height: 150px;
+}
+.popup-content .content {
+    margin-top: 14px;
+}
+.bean-popup img {
+    width: 36px;
+    margin-right: 3px;
+}
+
+.bean-popup p {
+    color: var(--theme-purple);
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bean-popup .close-button {
+    font-size: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    cursor: pointer;
+    color: var(--theme-purple);
+
+
+}
+

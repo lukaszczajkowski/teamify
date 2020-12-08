@@ -2,6 +2,7 @@ import React from "react";
 
 import BeanIcon from "../../assets/beanicon.png";
 import CreateBeanPopup from "./CreateBeanPopup";
+import BeanCard from "./BeanCard";
 
 export default function BeanBoard() {
 
@@ -45,9 +46,7 @@ export default function BeanBoard() {
                             <p className="sub-prompt">Click if you have completed the bean</p>
                         </div>
 
-                        <div>
-
-                        </div>
+                        <BeanCard/>
                     </div>
 
 
