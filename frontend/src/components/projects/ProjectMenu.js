@@ -26,7 +26,8 @@ export default function ProjectMenu({ currentProject, members, onDeleteProject, 
                             {members.map(member => (
                                 <MemberCard key={member.id}
                                     member={member}
-                                    onSubmit={onDeleteMember}
+                                    onClick={onDeleteMember}
+                                    onClickName="Delete member"
                                 />
                             ))}
 

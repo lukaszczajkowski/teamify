@@ -3,7 +3,7 @@ import useComponentVisible from "../hooks/useComponentVisible";
 // import randomColor from "randomcolor";
 
 // eslint-disable-next-line react/prop-types
-export default function MemberCard({ member, onSubmit }) {
+export default function MemberCard({ member, onClick, onClickName }) {
 
     // const [color, setColor] = useState();
 
@@ -41,12 +41,15 @@ export default function MemberCard({ member, onSubmit }) {
                         <p>{member.name}</p>
                         {/* eslint-disable-next-line react/prop-types */}
                         <p>{member.email}</p>
-                        <button className="action-item"
-                            id="delete-member"
-                            // eslint-disable-next-line react/prop-types
-                            onClick={()=> onSubmit(member.id)}>
-                            Delete Member
-                        </button>
+
+                        {onClick && 
+                            <button className="action-item"
+                                id="delete-member"
+                                // eslint-disable-next-line react/prop-types
+                                onClick={()=> onClick(member.id)}>
+                                {onClickName}
+                            </button>
+                        }
                     </div>
                 )}
             </div>
