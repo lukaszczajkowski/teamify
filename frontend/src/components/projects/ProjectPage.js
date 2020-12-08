@@ -6,6 +6,7 @@ import ProjectApi from "../../api/ProjectApi";
 import ProjectBoard from "./ProjectBoard";
 import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
+import MemberMenu from "./MemberMenu";
 
 
 function ProjectPage() {
@@ -28,6 +29,12 @@ function ProjectPage() {
             .catch(err => console.log(`error on get project ${err}`));
     }
 
+    const updateProject = (updatedProject) => {
+        return ProjectApi.updateProject(updatedProject)
+            .then(response => console.log("updated project: " + JSON.stringify(response.data)))
+            .catch(err => console.log(`error on update project: ${err}`));
+    }
+
     const onDeleteProject = () => {
         if (window.confirm("Do you want to delete this project?")) {
             if (userId === currentProject.creator.id) {
@@ -40,24 +47,24 @@ function ProjectPage() {
         }
     };
 
-    function getAllMembers(projectId) {
+    const getAllMembers = (projectId) => {
         return ProjectApi.getProjectById(projectId)
-        .then(response => setMembers(response.data.users))
-        .then(console.log("members: " + JSON.stringify(members)));
+            .then(response => setMembers(response.data.users))
+            .then(console.log("members: " + JSON.stringify(members)));
     }
 
     const onDeleteMember = (memberId) => {
         if (window.confirm("Do you want to remove this member?")) {
-        if (userId === currentProject.creator.id && userId !== memberId) {
-            console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
-            deleteMember(projectId, memberId);
-            getAllMembers(projectId);
-        } else if (userId !== currentProject.creator.id) {
-            alert("you are not allowed to remove member.");
-        } else {
-            alert("Are you sure you want to remove yourself from this project?");
+            if (userId === currentProject.creator.id && userId !== memberId) {
+                console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
+                deleteMember(projectId, memberId);
+                getAllMembers(projectId);
+            } else if (userId !== currentProject.creator.id) {
+                alert("you are not allowed to remove member.");
+            } else {
+                alert("Are you sure you want to remove yourself from this project?");
+            }
         }
-    }
     }
 
     function deleteCurrentProject() {
@@ -75,8 +82,8 @@ function ProjectPage() {
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-        .then(getAllMembers(projectId))
-        .catch(err => console.log(`error on delete member: ${err}`));
+            .then(getAllMembers(projectId))
+            .catch(err => console.log(`error on delete member: ${err}`));
     }
 
     const getAllCategories = (projectId) => {
@@ -94,7 +101,7 @@ function ProjectPage() {
 
     const updateCategory = (projectId, newCategoryData) => {
         CategoryApi.updateCategory(projectId, newCategoryData).
-            then(response => console.log(JSON.stringify(response.data)))
+            then(response => console.log("updated category: " + JSON.stringify(response.data)))
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -109,16 +116,25 @@ function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, []);
+    }, [projectId]);
 
     return (
         <div className="project-page">
             <ProjectHeader />
-            <ProjectMenu currentProject={currentProject}
-                members={members}
-                onDeleteProject={onDeleteProject}
-                addMemberByEmail={addMemberByEmail} 
-                onDeleteMember={onDeleteMember} />
+
+            <div className="flex-start">
+                <ProjectMenu
+                    currentProject={currentProject}
+                    onDeleteProject={onDeleteProject}
+                    updateProject={updateProject}
+                />
+
+                <MemberMenu
+                    currentProject={currentProject}
+                    members={members}
+                    addMemberByEmail={addMemberByEmail}
+                    onDeleteMember={onDeleteMember} />
+            </div>
 
 
             <ProjectBoard
@@ -128,9 +144,6 @@ function ProjectPage() {
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory} />
         </div>
-
-
-
     );
 }
 

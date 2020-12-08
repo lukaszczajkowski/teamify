@@ -37,10 +37,13 @@ export default function MemberCard({ member, onSubmit }) {
             <div ref={ref}>
                 {isComponentVisible && (
                     <div className="action-menu">
-                        {/* eslint-disable-next-line react/prop-types */}
+                        <div className="action-item">
+                            {/* eslint-disable-next-line react/prop-types */}
                         <p>{member.name}</p>
                         {/* eslint-disable-next-line react/prop-types */}
                         <p>{member.email}</p>
+                        </div>
+                        
                         <button className="action-item"
                             id="delete-member"
                             // eslint-disable-next-line react/prop-types
