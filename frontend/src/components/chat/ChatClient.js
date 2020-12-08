@@ -6,6 +6,11 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import UserApi from '../../api/UserApi';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import { useRecoilState } from "recoil";
+import {
+  chatActiveContact,
+  chatMessages,
+} from "../../atom/globalState";
 
 const wsEndpoint = 'http://localhost:8080/ws';
 const sockJsConfig = {
@@ -19,10 +24,10 @@ var stompClient = null;
 export default function ChatClient() {
 
     const [currentUser, setCurrentUser] = useState({});
-    const [activeContact, setActiveContact] = useState({});
     const [text, setText] = useState("");
     const [contacts, setContacts] = useState([]);
-    const [messages, setMessages] = useState([]);
+    const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
+    const [messages, setMessages] = useRecoilState(chatMessages);
     //const [changesMade, setChangesMade] = useState(false);
 
     useEffect(() => {
@@ -36,15 +41,15 @@ export default function ChatClient() {
 
 
     useEffect(() => {
-        if(activeContact === undefined) return;
-        ChatApi.findChatMessages(activeContact.id).then((msgs) =>
-          setMessages(msgs.data)
-        ).catch(err => console.log(err));
+        //if(activeContact === undefined) return;
+        const interval = setInterval( () => {
+            ChatApi.findChatMessages(activeContact.id).then((msgs) =>
+            setMessages(msgs.data)
+            ).catch(err => console.log(err))
+          }, 3000)
         loadContacts();
+        return () => clearInterval(interval)
     }, [activeContact]);
-
-    console.log("Current user", currentUser);
-    console.log("Active contact", activeContact);
 
     // eslint-disable-next-line no-unused-vars
     const connect = () => {
@@ -66,19 +71,24 @@ export default function ChatClient() {
         console.log(err);
     };
 
-    const onMessageReceived = (msg) => {
+    const onMessageReceived = async (msg) => {
         const notification = JSON.parse(msg.body);
+        console.log("notification:", notification)
+        const active = JSON.parse(sessionStorage.getItem("recoil-persist"))
+        .chatActiveContact;
     
-        if (activeContact.id === notification.senderId) {
-            ChatApi.findChatMessage(notification.id).then((message) => {
+        if (active.id === notification.senderId) {
+            await ChatApi.findChatMessage(notification.id).then((message) => {
             const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
                       .chatMessages;
             newMessages.push(message);
             setMessages(newMessages);
             });
         } else {
-        message.info("Received a new message from " + notification.senderName);
+          message.info("Received a new message from " + notification.senderName);
+          alert("Received a new message from " + notification.senderName);
         }
+
         loadContacts();
       };
 
@@ -88,6 +98,7 @@ export default function ChatClient() {
                 senderId: currentUser.id,
                 recipientId: activeContact.id,
                 senderName: currentUser.name,
+                recipientName: activeContact.name,
                 content: msg,
                 timestamp: new Date()
             };
@@ -98,16 +109,36 @@ export default function ChatClient() {
         }
     };
 
-    const loadContacts = async() => {
-        // eslint-disable-next-line no-undef
-        await UserApi.getUsersFromSharedProjects().then((response) =>
-          setContacts(response.data)
-        ).then(() => {
-          if(activeContact === undefined && contacts.length > 0) {
-            setActiveContact(contacts[0])
-          }
-        })
-        console.log("contacts loaded");
+    // const loadContacts = async() => {
+    //     // eslint-disable-next-line no-undef
+    //     await UserApi.getUsersFromSharedProjects().then((response) =>
+    //       setContacts(response.data)
+    //     ).then(() => {
+    //       if(activeContact === undefined && contacts.length > 0) {
+    //         setActiveContact(contacts[0])
+    //       }
+    //     })
+    //   };
+
+      const loadContacts = () => {
+        const promise = UserApi.getUsersFromSharedProjects()
+        .then((users) => users.data.map((contact) => 
+          ChatApi.countNewMessages(contact.id)
+                  .then((count) => {
+                          contact.newMessages = count.data;
+                          console.log("count", count);
+            return contact;
+          })
+        ))
+    
+        promise.then((promises) =>
+          Promise.all(promises).then((users) => {
+            setContacts(users);
+            if (activeContact === undefined && users.length > 0) {
+              setActiveContact(users[0]);
+            }
+          })
+        );
       };
 
       return (
@@ -115,12 +146,12 @@ export default function ChatClient() {
           <div id="sidepanel">
             <div id="profile">
               <div className="wrap">
-                <img
+                {/* <img
                   id="profile-img"
                   src={currentUser.profilePicture}
                   className="online"
                   alt=""
-                />
+                /> */}
                 <p>{currentUser.name}</p>
                 <div id="status-options">
                   <ul>
@@ -171,29 +202,27 @@ export default function ChatClient() {
                 ))}
               </ul>
             </div>
+            
           </div>
           <div className="content">
             <div className="contact-profile">
               <img src={activeContact && activeContact.profilePicture} alt="" />
               <p>{activeContact && activeContact.name}</p>
             </div>
+            
             <ScrollToBottom className="messages">
-            {/* {messages !== undefined ? */}
               <ul>
                 {messages.map((msg) => (
                   // eslint-disable-next-line react/jsx-key
                   <li className={msg.senderId === currentUser.id ? "sent" : "replies"}>
-                    {msg.senderId !== currentUser.id && (
-                      <img src={activeContact.profilePicture} alt="" />
-                    )}
-                    <p>{msg.content}</p>
+                    <p>{msg.senderName}: {msg.content}</p>
                   </li>
                 ))}
               </ul> 
-              
-              {/* : 
-              null */}
+            
             </ScrollToBottom>
+            <p>
+            </p>
             <div className="message-input">
               <div className="wrap">
                 <input
