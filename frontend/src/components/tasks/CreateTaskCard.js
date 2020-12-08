@@ -25,7 +25,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line react/prop-types
-export default function CreateTaskCard({onSubmit, categoryId, setOpen}) {
+export default function CreateTaskCard({onSubmit, categoryId}) {
     const [title, setTitle] = useState("");
     const classes = useStyle();
     const [isCreatingTask, setIsCreatingTask] = useState(false);
@@ -60,7 +60,7 @@ export default function CreateTaskCard({onSubmit, categoryId, setOpen}) {
                             className={classes.confirm}>
                             Add Card
                         </Button>
-                        <IconButton onClick={() => setOpen(false)}>
+                        <IconButton onClick={() => setIsCreatingTask(false)}>
                         <ClearIcon />
                   </IconButton>
                     </div> :
