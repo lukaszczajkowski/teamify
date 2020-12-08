@@ -41,15 +41,15 @@ export default function ChatClient() {
 
 
     useEffect(() => {
-        if(activeContact === undefined) return;
-        ChatApi.findChatMessages(activeContact.id).then((msgs) =>
-          setMessages(msgs.data)
-        ).catch(err => console.log(err));
+        //if(activeContact === undefined) return;
+        const interval = setInterval( () => {
+            ChatApi.findChatMessages(activeContact.id).then((msgs) =>
+            setMessages(msgs.data)
+            ).catch(err => console.log(err))
+          }, 3000)
         loadContacts();
+        return () => clearInterval(interval)
     }, [activeContact]);
-
-    console.log("Current user", currentUser);
-    console.log("Active contact", activeContact);
 
     // eslint-disable-next-line no-unused-vars
     const connect = () => {
@@ -71,13 +71,14 @@ export default function ChatClient() {
         console.log(err);
     };
 
-    const onMessageReceived = (msg) => {
+    const onMessageReceived = async (msg) => {
         const notification = JSON.parse(msg.body);
+        console.log("notification:", notification)
         const active = JSON.parse(sessionStorage.getItem("recoil-persist"))
         .chatActiveContact;
     
         if (active.id === notification.senderId) {
-            ChatApi.findChatMessage(notification.id).then((message) => {
+            await ChatApi.findChatMessage(notification.id).then((message) => {
             const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
                       .chatMessages;
             newMessages.push(message);
@@ -122,8 +123,10 @@ export default function ChatClient() {
       const loadContacts = () => {
         const promise = UserApi.getUsersFromSharedProjects()
         .then((users) => users.data.map((contact) => 
-          ChatApi.countNewMessages(contact.id).then((count) => {
-            contact.newMessages = count;
+          ChatApi.countNewMessages(contact.id)
+                  .then((count) => {
+                          contact.newMessages = count.data;
+                          console.log("count", count);
             return contact;
           })
         ))
