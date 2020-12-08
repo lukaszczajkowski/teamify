@@ -5,6 +5,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import { RecoilRoot } from 'recoil';
 
 // Import custom styles for our application
 import './css/style.css';
@@ -20,7 +21,7 @@ import UserApi from './api/UserApi';
 import Navbar from "./components/layout/Navbar";
 import ChatClient from './components/chat/ChatClient';
 
-
+export const AppContext = React.createContext();
 function App() {
 
     const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
@@ -36,7 +37,9 @@ function App() {
 
 
     const loggedInRouter = (
+        <RecoilRoot>
         <Router>
+            
             <Navbar onLogout={() => Auth.logout()} />
             <Switch>
                 <Route exact path= "/users/me">
@@ -51,18 +54,23 @@ function App() {
                     <Calendar />
                 </Route>
 
+               
                 <Route exact path="/chat">
                     <ChatClient />
                 </Route>
+                
                 <Route exact path="/">
                     <LandingPage />
                 </Route>
             </Switch>
+         
         </Router>
+        </RecoilRoot>
         
     );
 
     const notLoggedIn = (
+        <RecoilRoot>
         <Router>
             <Switch>
                 <Route exact path="/">
@@ -84,12 +92,13 @@ function App() {
                 <Route exact path="/calendar">
                     <Calendar />
                 </Route>
-                <Route exact path="/chat">
+                {/* <Route exact path="/chat">
                     <ChatClient />
-                </Route>
+                </Route> */}
 
             </Switch>
         </Router>
+        </RecoilRoot>
     )
 
     return (loggedIn ? loggedInRouter : notLoggedIn);
