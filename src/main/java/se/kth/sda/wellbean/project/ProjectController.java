@@ -122,10 +122,14 @@ public class ProjectController {
         String currentUserEmail = authService.getLoggedInUserEmail();
         User currentUser = userService.findUserByEmail(currentUserEmail);
         User creator = projectService.getById(updatedProject.getId()).getCreator();
+        Project prjFromDb = projectService.getById(updatedProject.getId());
 
         if(currentUser.getId() != creator.getId()) {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
+            //need to update all the fields ManyToMany and ManyToOne, otherwise it will be 0
+            updatedProject.setCreator(creator);
+            updatedProject.setUsers(prjFromDb.getUsers());
             return projectService.update(updatedProject);
         }
     }

@@ -18,7 +18,7 @@ export default function MemberMenu({ members, addMemberByEmail, onDeleteMember})
                             <MemberCard key={member.id}
                                 member={member}
                                 onClick={onDeleteMember}
-                                
+                                onClickTitle="Delete member"
                             />
                         ))}
 

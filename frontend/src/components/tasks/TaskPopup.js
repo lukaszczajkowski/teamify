@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import UserApi from '../../api/UserApi';
 import MemberCard from "../projects/MemberCard";
+import EditableText from "../projects/EditableText";
 
 
-// eslint-disable-next-line react/prop-types
 export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose }) {
     console.log(currentTask);
 
@@ -22,22 +21,8 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
         },
     } = currentTask;
 
-    const [taskTitle, setTaskTitle] = useState(title);
-    const [taskDescription, setTaskDescription] = useState(description);
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
-
     const [isMemberAdding, setIsMemberAdding] = useState(false);
     const [projectMembers, setProjectMembers] = useState([]);
-
-    // const [taskMembers, setTaskMembers] = useState("");
-    //const [taskComments, setTaskComments] = useState([]);
-
-    const updatedTask = {
-        id,
-        title: taskTitle,
-        description: taskDescription
-    }
 
     const loadContacts = () => {
         UserApi.getUsersSummaries(projectId).then(response => {
@@ -48,15 +33,28 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     }
 
     useEffect(() => {
-        setTaskTitle(title);
         loadContacts();
     }, [currentTask]);
 
-    const onUpdateTask = () => {
+    const onTitleUpdated = (newTitle) => {
+        const updatedTask = {
+            id,
+            title: newTitle,
+            description,
+        };
+
         updateTask(categoryId, updatedTask);
-        setIsEditingTitle(false);
-        setIsEditingDescription(false);
-    };
+    }
+
+    const onDescriptionUpdated = (newDescription) => {
+        const updatedTask = {
+            id,
+            title,
+            description: newDescription,
+        };
+
+        updateTask(categoryId, updatedTask);
+    }
 
     const onOpenAddMemberPopup = () => {
         setIsMemberAdding(true);
@@ -86,51 +84,17 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                     <div className="content">
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Title</h2>
-                            {
-                                isEditingTitle ?
-                                    <div className="title-input flex-between">
-                                        <form onSubmit={onUpdateTask}>
-                                            <input
-                                                type="text"
-                                                className="input-box"
-                                                placeholder="Title"
-                                                value={taskTitle}
-                                                onChange={e => setTaskTitle(e.target.value)}
-                                                required
-
-                                            />
-                                            <button
-                                                className="action-button confirm-update"
-                                                type="submit">
-                                                <i className="fas fa-check"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    :
-                                    <h2 className="input-box" onClick={() => setIsEditingTitle(true)}>{taskTitle}</h2>
-                            }
+                            <EditableText
+                                text={title}
+                                onUpdateText={onTitleUpdated} 
+                            />
                         </div>
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Description</h2>
-                            {
-                                isEditingDescription ?
-                                    <div className="title-input flex-between">
-                                        <input
-                                            type="text"
-                                            className="input-box"
-                                            placeholder="Description"
-                                            value={taskDescription}
-                                            onChange={e => setTaskDescription(e.target.value)}
-                                        />
-                                        <button
-                                            className="action-button confirm-update"
-                                            onClick={onUpdateTask}>
-                                            <i className="fas fa-check"></i>
-                                        </button>
-                                    </div>
-                                    :
-                                    <h2 onClick={() => setIsEditingDescription(true)}>{taskDescription || "No description"}</h2>
-                            }
+                            <EditableText
+                                text={description}
+                                onUpdateText={onDescriptionUpdated} 
+                            />
                         </div>
                         <div className="popup-item">
 
@@ -139,19 +103,20 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                 <div className="member-list flex-start">
                                     {members && members.map(member => (
                                         <MemberCard
-
                                             key={member.id}
                                             member={member}
                                             onClick={() => onDeleteMember(member)}
-                    
+                                            onClickTitle="Delete member"
                                         />
                                     ))}
                                 </div>
-                                <button
-                                    className="action-button add-member"
-                                    onClick={onOpenAddMemberPopup}>
-                                    <i className="fas fa-plus"></i>
-                                </button>
+                                {projectMembers.length > 0 && 
+                                    <button
+                                        className="action-button add-member"
+                                        onClick={onOpenAddMemberPopup}>
+                                        <i className="fas fa-plus"></i>
+                                    </button>
+                                }
                             </div>
 
 
@@ -161,7 +126,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                         <MemberCard key={member.id}
                                             member={member}
                                             onClick={() => onAddMember(member)}
-                                            onClickName="Add member"
+                                            onClickTitle="Add member"
                                         />
                                     ))}
                                     <button
