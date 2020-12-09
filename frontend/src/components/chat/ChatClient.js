@@ -40,6 +40,20 @@ export default function ChatClient() {
     );
     }, [])
 
+    useEffect(() => {
+      if(activeContact === undefined) return;
+        if(activeContact === 1) {
+            ChatApi.findProjectMessages(project).then((msgs) =>
+            setMessages(msgs.data)
+            ).catch(err => console.log(err))
+          } else {
+          ChatApi.findChatMessages(activeContact.id).then((msgs) =>
+          setMessages(msgs.data)
+          ).catch(err => console.log(err))
+          }
+      loadContacts();
+  }, [activeContact]);
+
 
     useEffect(() => {
         if(activeContact === undefined) return;

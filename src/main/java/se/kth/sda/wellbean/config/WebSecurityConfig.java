@@ -48,10 +48,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Disable cors, csrf for Stateless service handling
-        //http
-        //    .cors().disable()
-        //    .csrf().disable()
-         //   .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http
+            .cors().disable()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Whitelist
 
         http
