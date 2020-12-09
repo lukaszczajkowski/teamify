@@ -52,6 +52,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, onClose }) 
                     </button>
                     <div className="content">
                         <div className="popup-item flex-start">
+                            <h2 className="prompt">Title</h2>
                         {
                             isEditingTitle ?
                                 <div className="title-input flex-between">
@@ -63,16 +64,17 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, onClose }) 
                                         onChange={e => setTaskTitle(e.target.value)}
                                     />
                                     <button
-                                        className="button" id="confirm-update"
+                                        className="action-button" id="confirm-update"
                                         onClick={onUpdateTask}>
                                         <i className="fas fa-check"></i>
                                     </button>
                                 </div>
                                 :
-                                <h2 className="prompt" onClick={() => setIsEditingTitle(true)}>{taskTitle}</h2>
+                                <h2 className="input-box" onClick={() => setIsEditingTitle(true)}>{taskTitle}</h2>
                         }
                         </div>
                         <div className="popup-item flex-start">
+                            <h2 className="prompt">Description</h2>
                         {
                             isEditingDescription ?
                                 <div className="title-input flex-between">
@@ -84,17 +86,17 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, onClose }) 
                                         onChange={e => setTaskDescription(e.target.value)}
                                     />
                                     <button
-                                        className="button" id="confirm-update"
+                                        className="action-button" id="confirm-update"
                                         onClick={onUpdateTask}>
                                         <i className="fas fa-check"></i>
                                     </button>
                                 </div>
                                 :
-                                <h2 className="prompt" onClick={() => setIsEditingDescription(true)}>{taskDescription || "No description"}</h2>
+                                <h2 onClick={() => setIsEditingDescription(true)}>{taskDescription || "No description"}</h2>
                         }
                         </div>
                         <div className="popup-item flex-start">
-                            <h2 className="prompt">Members:</h2>
+                            <h2 className="prompt">Members</h2>
                             <div className="popup-item flex-start">
 
                             </div>

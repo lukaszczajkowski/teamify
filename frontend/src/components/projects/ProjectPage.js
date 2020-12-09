@@ -93,20 +93,20 @@ function ProjectPage() {
     };
 
     const createCategory = (projectId, categoryData) => {
-        CategoryApi.createCategory(projectId, categoryData)
+        return CategoryApi.createCategory(projectId, categoryData)
             .then(response => setCategories([...categories, response.data]))
             .then(console.log(`new category: ${categoryData.title} is added`))
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
     const updateCategory = (projectId, newCategoryData) => {
-        CategoryApi.updateCategory(projectId, newCategoryData).
-            then(response => console.log("updated category: " + JSON.stringify(response.data)))
+        return CategoryApi.updateCategory(projectId, newCategoryData)
+            .then(getCurrentProject())
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
     const deleteCategory = (categoryId) => {
-        CategoryApi.deleteCategory(categoryId)
+        return CategoryApi.deleteCategory(categoryId)
             .then(console.log(`Deleting category: ${categoryId}`))
             .then(setCategories(categories.filter(c => c.id !== categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));

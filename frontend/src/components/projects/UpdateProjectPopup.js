@@ -47,46 +47,50 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                     </button>
                     <div className="content">
                         <div className="popup-item flex-start">
-                        {
-                            isEditingTitle ?
-                                <div className="title-input flex-between">
-                                    <input
-                                        type="text"
-                                        className="input-box"
-                                        placeholder="Title"
-                                        value={projectTitle}
-                                        onChange={e => setProjectTitle(e.target.value)}
-                                    />
-                                    <button
-                                        className="button" id="confirm-update"
-                                        onClick={onUpdateProject}>
-                                        <i className="fas fa-check"></i>
-                                    </button>
-                                </div>
-                                :
-                                <h2 className="prompt" onClick={() => setIsEditingTitle(true)}>{projectTitle}</h2>
-                        }
+                            <h2 className="prompt">Title</h2>
+                            {
+                                isEditingTitle ?
+                                    <div className="title-input flex-between">
+                                        <input
+                                            type="text"
+                                            className="input-box"
+                                            placeholder="Title"
+                                            value={projectTitle}
+                                            onChange={e => setProjectTitle(e.target.value)}
+                                        />
+                                        <button
+                                            className="action-button" id="confirm-update"
+                                            onClick={onUpdateProject}>
+                                            <i className="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    :
+
+                                    <p className="input-box" onClick={() => setIsEditingTitle(true)}>{projectTitle}</p>
+
+                            }
                         </div>
                         <div className="popup-item flex-start">
-                        {
-                            isEditingDescription ?
-                                <div className="title-input flex-between">
-                                    <input
-                                        type="text"
-                                        className="input-box"
-                                        placeholder="Description"
-                                        value={projectDescription}
-                                        onChange={e => setProjectDescription(e.target.value)}
-                                    />
-                                    <button
-                                        className="button" id="confirm-update"
-                                        onClick={onUpdateProject}>
-                                        <i className="fas fa-check"></i>
-                                    </button>
-                                </div>
-                                :
-                                <h2 className="prompt" onClick={() => setIsEditingDescription(true)}>{projectDescription || "No description"}</h2>
-                        }
+                            <h2 className="prompt">Description</h2>
+                            {
+                                isEditingDescription ?
+                                    <div className="title-input flex-between">
+                                        <textarea
+                                        
+                                            className="input-box"
+                                            placeholder="Enter description"
+                                            value={projectDescription}
+                                            onChange={e => setProjectDescription(e.target.value)}
+                                        />
+                                        <button
+                                            className="action-button" id="confirm-update"
+                                            onClick={onUpdateProject}>
+                                            <i className="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    :
+                                    <p className="input-box" onClick={() => setIsEditingDescription(true)}>{projectDescription || "No description"}</p>
+                            }
                         </div>
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Members:</h2>

@@ -15,7 +15,7 @@ body {
     border: 1px solid transparent;
     border-radius: 20px;
     padding: 5px 18px 5px 18px;
-    transition: all 0.5s;
+    transition: all 0.3s;
     margin-top: 25px;
     margin: 1vh;
     background-color: var(--bg-light-grey);
