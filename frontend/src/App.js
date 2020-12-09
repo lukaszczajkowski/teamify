@@ -23,6 +23,8 @@ import UserContext from './UserContext';
 
 function App() {
 
+    
+
     const [loggedIn, setLoggedIn] = useState(Auth.isLoggedIn());
     Auth.bindLoggedInStateSetter(setLoggedIn);
 

@@ -17,6 +17,7 @@
 /* Header */
 @import url("./header.css");
 @import url("./project-header.css");
+@import url("./landingHeader.css");
 
 /* board */
 @import url("./bean-board.css");
