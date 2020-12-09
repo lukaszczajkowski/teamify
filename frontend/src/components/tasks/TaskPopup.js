@@ -143,7 +143,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                             key={member.id}
                                             member={member}
                                             onClick={() => onDeleteMember(member)}
-                                            onClickName="Remove member"
+                    
                                         />
                                     ))}
                                 </div>

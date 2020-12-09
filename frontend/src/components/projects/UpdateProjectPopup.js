@@ -76,7 +76,7 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                                 isEditingDescription ?
                                     <div className="title-input flex-between">
                                         <textarea
-                                        
+
                                             className="input-box"
                                             placeholder="Enter description"
                                             value={projectDescription}
@@ -92,12 +92,7 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                                     <p className="input-box" onClick={() => setIsEditingDescription(true)}>{projectDescription || "No description"}</p>
                             }
                         </div>
-                        <div className="popup-item flex-start">
-                            <h2 className="prompt">Members:</h2>
-                            <div className="popup-item flex-start">
 
-                            </div>
-                        </div>
                     </div>
                 </div>
             </Popup>

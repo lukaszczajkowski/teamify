@@ -8,6 +8,9 @@
 }
 
 .member-card .action-menu {
-    padding-top: 5px;
-    
+    padding-top: 5px;   
+}
+
+.member-card .user-info {
+    color: var(--theme-green);
 }
