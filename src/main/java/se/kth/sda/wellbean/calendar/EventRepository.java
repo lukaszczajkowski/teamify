@@ -14,4 +14,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByUsers_id(Long userId);
     //@Query("select b from Event b where b.start >= ?1 and b.finish <= ?2")
     //List<Event> findByDateBetween(LocalDateTime start, LocalDateTime end);
+    List<Event> getEventsByBeanId(Long beanId);
 }
