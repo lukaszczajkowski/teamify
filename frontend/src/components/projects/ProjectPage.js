@@ -31,6 +31,7 @@ function ProjectPage() {
 
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
+            .then(response => setCurrentProject(response.data))
             .then(response => console.log("updated project: " + JSON.stringify(response.data)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
