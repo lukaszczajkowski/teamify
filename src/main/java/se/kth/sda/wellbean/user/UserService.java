@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,4 +61,21 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public LocalDateTime getPreviousLoginTime(String email) {
+        return findUserByEmail(email).getPreviousLoginTime();
+    }
+    public void setPreviousLoginTime(User user) {
+        user.setPreviousLoginTime(LocalDateTime.now());
+        userRepository.save(user);
+    }
+
+    public long increaseBeanScore(User user) {
+        long currentBeanScore= user.getBeanScore();
+        long newBeanScore=currentBeanScore+1;
+        user.setBeanScore(newBeanScore);
+        userRepository.save(user);
+        return newBeanScore;
+    }
+
 }

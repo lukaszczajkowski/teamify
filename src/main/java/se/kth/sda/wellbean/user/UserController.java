@@ -10,6 +10,8 @@ import se.kth.sda.wellbean.calendar.EventRepository;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -57,6 +59,14 @@ public class UserController {
     public User getCurrentUser() {
         String email = authService.getLoggedInUserEmail();
         return userService.findUserByEmail(email);
+    }
+
+    @GetMapping("/bean-score")
+    public long getUserBeanScore() {
+        String email = authService.getLoggedInUserEmail();
+         User user = userService.findUserByEmail(email);
+         return user.getBeanScore();
+
     }
 
     @GetMapping("/from-shared-projects")
@@ -122,6 +132,24 @@ public class UserController {
         }
         System.out.println("All users fetched!");
         return membersOfEvent;
+    }
+
+    /**
+     * This method return True/False based on User Login
+     * True if user is logged in for first time
+     * False if not
+     * @return
+     */
+    @GetMapping("/isUserFirstTimeLoggedIn")
+    public boolean getIsUserFirstTimeLoggedIn() {
+        String userEmail=authService.getLoggedInUserEmail();
+        LocalDate previous_login_date = userService.getPreviousLoginTime(userEmail).toLocalDate();
+        userService.setPreviousLoginTime(userService.findUserByEmail(userEmail));
+        LocalDate  current_login_date=       LocalDateTime.now().toLocalDate();
+        if (current_login_date.isAfter(previous_login_date)) {
+            return true;
+        }
+        return false;
     }
 
 
