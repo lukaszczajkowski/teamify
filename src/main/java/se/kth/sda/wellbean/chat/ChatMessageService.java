@@ -59,6 +59,10 @@ public class ChatMessageService {
                 .orElseThrow(() -> new ResourceNotFoundException("can't find message (" + id + ")"));
     }
 
+    public List<ChatMessage> findProjectMessages(String projectId) {
+        return chatMessageRepository.findByChatId(projectId);
+    }
+
     public void updateStatuses(Long senderId, Long recipientId, MessageStatus status) {
         Query query = new Query(
                 Criteria

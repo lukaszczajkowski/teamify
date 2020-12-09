@@ -42,6 +42,11 @@ function () {
     value: function findChatMessage(id) {
       return _Api["default"].get("/messages/findMessage/" + id);
     }
+  }, {
+    key: "findProjectMessages",
+    value: function findProjectMessages(projectId) {
+      return _Api["default"].get("/messages/project/" + projectId);
+    }
   }]);
 
   return ChatApi;

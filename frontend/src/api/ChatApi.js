@@ -18,6 +18,10 @@ class ChatApi {
         return Api.get("/messages/findMessage/" + id);
     }
 
+    findProjectMessages(projectId) {
+        return Api.get("/messages/project/" + projectId);
+    }
+
 }
 
 export default new ChatApi();
