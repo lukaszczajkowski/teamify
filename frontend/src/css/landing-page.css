@@ -1,16 +1,18 @@
 .landing-page {
 height: 100vh;
-
+background: #07b4b5;
+  background: radial-gradient(circle, rgb(85, 193, 205) 0%, rgb(203, 228, 228) 100%);
 }
 
 .landing-page .quote {
   text-align: center;
-  font-size: 30px;
-  color: var(--theme-dark-green);
+  font-size: 35px;
+  color: #0F545C;
+
 }
 
 .landing-page .buttons {
-  margin-right: 25px;
+  margin-right: 40px;
 }
 
 /* .landing-page #login {
@@ -26,8 +28,11 @@ height: 100vh;
 .landing-page #get-started {
   background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
   color: #ffffff;
-  margin-top: 25px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
+
 
 /* #get-started:after {
   content: '\00bb';
@@ -36,19 +41,9 @@ height: 100vh;
   top: 0;
   right: -20px;
   transition: 0.5s;
-}
+}*/
 
-#get-started:hover {
-  padding-right: 25px;
-}
-
-
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-} */
 
 .landing-page #hero {
-  height: 65vh;
+  height: 60vh;
 }
