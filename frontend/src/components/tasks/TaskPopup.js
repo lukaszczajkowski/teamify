@@ -41,7 +41,8 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
     const loadContacts = () => {
         UserApi.getUsersSummaries(projectId).then(response => {
-            const existingMemberIds = currentTask.members.map(member => member.id);
+            
+            const existingMemberIds = members ? currentTask.members.map(member => member.id) : [];
             setProjectMembers(response.data.filter(member => !existingMemberIds.includes(member.id)));
         })
       }
@@ -88,18 +89,22 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                         {
                             isEditingTitle ?
                                 <div className="title-input flex-between">
+                                   <form onSubmit={onUpdateTask}>
                                     <input
                                         type="text"
                                         className="input-box"
                                         placeholder="Title"
                                         value={taskTitle}
                                         onChange={e => setTaskTitle(e.target.value)}
+                                        required
+
                                     />
                                     <button
                                         className="action-button" id="confirm-update"
-                                        onClick={onUpdateTask}>
+                                        type="submit">
                                         <i className="fas fa-check"></i>
                                     </button>
+                                    </form>
                                 </div>
                                 :
                                 <h2 className="input-box" onClick={() => setIsEditingTitle(true)}>{taskTitle}</h2>
@@ -131,7 +136,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <h2 className="prompt">Members:</h2>
                             <div className="">
                                 <div className="member-list flex-start">
-                                    {members.map(member => (
+                                    {members && members.map(member => (
                                         <MemberCard key={member.id}
                                             member={member}
                                             onClick={() => onDeleteMember(member)}
