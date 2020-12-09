@@ -27,4 +27,7 @@ public class EventService {
     public List<Event> findAllByUserId(Long userId) {
         return this.eventRepository.findAllByUsers_id(userId);
     }
+    public List<Event> getEventsByBeanId(Long beanId) {
+        return this.eventRepository.getEventsByBeanId(beanId);
+    }
 }

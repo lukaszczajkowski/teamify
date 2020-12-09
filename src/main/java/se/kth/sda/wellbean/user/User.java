@@ -10,6 +10,7 @@ import se.kth.sda.wellbean.project.Project;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,13 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "previouslogintime")
+    private LocalDateTime previousLoginTime = LocalDateTime.now();
+
+    @Column
+    private long beanScore;
+
     @ManyToMany
     private List<Task> tasks;
 
@@ -58,10 +66,11 @@ public class User {
     // Hibernate needs a default constructor to function
     public User() {}
 
-    public User(@Email(message = "Invalid email address! Please provide a valid email address") @NotEmpty(message = "Please provide an email address") String email, @Length(min = 5, max = 100, message = "Password length most be between 5-100 characters") String password, @Length(min = 3, max = 100, message = "Name must be between 3-100 characters") String name) {
+    public User(@Email(message = "Invalid email address! Please provide a valid email address") @NotEmpty(message = "Please provide an email address") String email, @Length(min = 5, max = 100, message = "Password length most be between 5-100 characters") String password, @Length(min = 3, max = 100, message = "Name must be between 3-100 characters") String name, LocalDateTime previousLoginTime) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.previousLoginTime=previousLoginTime;
     }
 
 
@@ -95,6 +104,22 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDateTime getPreviousLoginTime() {
+        return previousLoginTime;
+    }
+
+    public void setPreviousLoginTime(LocalDateTime previousLoginTime) {
+        this.previousLoginTime = previousLoginTime;
+    }
+
+    public void setBeanScore(long beanScore) {
+        this.beanScore = beanScore;
+    }
+
+    public long getBeanScore() {
+        return beanScore;
     }
 
     @Override

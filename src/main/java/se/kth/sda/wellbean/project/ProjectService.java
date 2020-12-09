@@ -3,6 +3,7 @@ package se.kth.sda.wellbean.project;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import se.kth.sda.wellbean.user.User;
 
 import java.util.List;
 
@@ -44,4 +45,14 @@ public class ProjectService {
     public void delete(Long id) {
         projectRepository.deleteById(id);
     }
+
+    public void increaseTeamBeanScore(User user) {
+        List<Project> projectsList= getProjectsByUserId(user.getId());
+        for (Project project: projectsList) {
+            long currentTeamBeanScore= project.getTeamBeanScore();
+            long newTeamBeanScore=currentTeamBeanScore+1;
+            project.setTeamBeanScore(newTeamBeanScore);
+        }
+    }
+
 }

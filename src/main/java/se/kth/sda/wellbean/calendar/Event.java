@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.calendar;
 
+import se.kth.sda.wellbean.bean.Bean;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
@@ -32,6 +33,9 @@ public class Event {
 
     @ManyToOne
     private Project project;
+
+    @ManyToOne
+    private Bean bean;
 
     private boolean allDay;
 
@@ -140,6 +144,14 @@ public class Event {
 
     public void setEditable(boolean editable) {
         this.editable = editable;
+    }
+
+    public void setBean(Bean bean) {
+        this.bean = bean;
+    }
+
+    public Bean getBean() {
+        return bean;
     }
 
     @Override

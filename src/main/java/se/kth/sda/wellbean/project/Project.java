@@ -21,6 +21,9 @@ public class Project {
     @Column(name = "title")
     private String title;
 
+    @Column
+    private long teamBeanScore;
+
     @ManyToOne
     private User creator;
 
@@ -93,6 +96,14 @@ public class Project {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public void setTeamBeanScore(long teamBeanScore) {
+        this.teamBeanScore = teamBeanScore;
+    }
+
+    public long getTeamBeanScore() {
+        return teamBeanScore;
     }
 
     public Set<Task> addTask(Task task) {
