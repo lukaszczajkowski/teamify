@@ -37,21 +37,19 @@ export default function MemberCard({ member, onClick, onClickName }) {
             <div ref={ref}>
                 {isComponentVisible && (
                     <div className="action-menu">
-                        <div className="action-item">
-                            {/* eslint-disable-next-line react/prop-types */}
-                            <p>{member.name}</p>
-                            {/* eslint-disable-next-line react/prop-types */}
-                            <p>{member.email}</p>
+                        {/* eslint-disable-next-line react/prop-types */}
+                        <p>{member.name}</p>
+                        {/* eslint-disable-next-line react/prop-types */}
+                        <p>{member.email}</p>
 
-                            {onClick &&
-                                <button className="action-item"
-                                    id="delete-member"
-                                    // eslint-disable-next-line react/prop-types
-                                    onClick={() => onClick(member.id)}>
-                                    {onClickName}
-                                </button>
-                            }
-                        </div>
+                        {onClick && 
+                            <button className="action-item"
+                                id="delete-member"
+                                // eslint-disable-next-line react/prop-types
+                                onClick={()=> onClick(member.id)}>
+                                {onClickName}
+                            </button>
+                        }
                     </div>
                 )}
             </div>
