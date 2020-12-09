@@ -49,14 +49,14 @@ class TaskApi {
     }
 
     addMemberToTask(taskId, userId) {
-        return Api.update('/tasks/' + taskId + '/userId', {
-            params: userId
+        return Api.put('/tasks/' + taskId + '/userId', null, {
+            params: {userId}
         })
     }
 
     deleteMemberFromTask(taskId, userId) {
-        return Api.update('/tasks/' + taskId + '/remove/userId', {
-            params: userId
+        return Api.put('/tasks/' + taskId + '/remove/userId', null, {
+            params: {userId}
         })
     }
 

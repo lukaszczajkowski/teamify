@@ -40,18 +40,13 @@ public class UserService {
         );
     }
 
-    public List<UserSummary> getAllExceptLoggedIn(User currentUser, Long projectId) {
-         List<User> allUsersExceptLoggedIn =  userRepository.findAll()
-                .stream()
-                .filter(user -> !currentUser.getId().equals(user.getId())).collect(Collectors.toList());
-
+    public List<UserSummary> getAllProjectUsers(Long projectId) {
          Project project = projectService.getById(projectId);
-
-         List<User> usersInProject = allUsersExceptLoggedIn
-                                .stream()
-                                .filter(user -> project.getUsers().contains(user)).collect(Collectors.toList());
-
-         return (List<UserSummary>) usersInProject.stream().map(this::convertTo);
+         return userRepository.findAll()
+                 .stream()
+                 .filter(user -> project.getUsers().contains(user))
+                 .map(this::convertTo)
+                 .collect(Collectors.toList());
     }
 
     private UserSummary convertTo(User user) {

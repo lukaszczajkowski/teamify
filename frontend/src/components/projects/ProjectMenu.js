@@ -37,6 +37,7 @@ export default function ProjectMenu({ currentProject, updateProject, onDeletePro
                 />
 
             </div>
+            
         </div>
     );
 }

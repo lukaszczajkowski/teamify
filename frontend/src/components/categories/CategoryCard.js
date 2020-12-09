@@ -46,7 +46,6 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
             .then(response => setTasks([...tasks, response.data]));
     };
 
-
     const updateTask = (categoryId, task) => {
         console.log(`update task on category: ${categoryId}`);
         console.log(` task `, task);
@@ -57,6 +56,18 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     const deleteTask = (taskId) => {
         return TaskApi.deleteTask(taskId)
             .then(() => setTasks(tasks.filter(a => a.id !== taskId)));
+    };
+
+    const addMemberToTask = (task, member) => {
+        console.log("updateTaskAddMember:", task, member);
+        return TaskApi.addMemberToTask(task.id, member.id)
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
+    };
+
+    const deleteMemberFromTask = (task, member) => {
+        console.log("deleteMemberFromTask:", task, member);
+        return TaskApi.deleteMemberFromTask(task.id, member.id)
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     useEffect(() => {
@@ -100,7 +111,9 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                 <TaskCard key={task.id}
                                     task={task}
                                     deleteTask={deleteTask}
-                                    updateTask={updateTask} />
+                                    updateTask={updateTask}
+                                    addMemberToTask={addMemberToTask}
+                                    deleteMemberFromTask={deleteMemberFromTask} />
                             ))}
                         </div>
                 }

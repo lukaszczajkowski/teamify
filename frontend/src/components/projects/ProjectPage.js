@@ -75,15 +75,15 @@ function ProjectPage() {
 
     const addMemberByEmail = (userEmail) => {
         ProjectApi.addMemberByEmail(projectId, userEmail)
-            .then(alert(`add user: ${userEmail} to project ${projectId}`))
-            .then(getAllMembers())
+            // .then(alert(`add user: ${userEmail} to project ${projectId}`))
+            .then(() => getAllMembers(projectId))
             .catch(err => console.log(`error on add member: ${err}`));
     };
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-            .then(getAllMembers(projectId))
-            .catch(err => console.log(`error on delete member: ${err}`));
+        .then(() => getAllMembers(projectId))
+        .catch(err => console.log(`error on delete member: ${err}`));
     }
 
     const getAllCategories = (projectId) => {
