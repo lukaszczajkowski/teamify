@@ -11,6 +11,10 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
     }
 
     const onCreateCategory = () => {
+        if (!title) {
+            setTitle("untitled list");
+            console.log("after set:" + title);
+        }
         onSubmit(projectId, 
                 { title: title });
         setIsCreatingCategory(false);

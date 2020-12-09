@@ -1,9 +1,11 @@
 import React from "react";
 import useComponentVisible from "../hooks/useComponentVisible";
 
-// eslint-disable-next-line react/prop-types
-export default function ProjectActions({ onDeleteProject }) {
 
+// eslint-disable-next-line react/prop-types
+export default function ProjectActions({ currentProject, onUpdateProject, onDeleteProject }) {
+
+    console.log("on project action. current project:" + currentProject);
     const {
         ref,
         isComponentVisible,
@@ -22,6 +24,11 @@ export default function ProjectActions({ onDeleteProject }) {
             <div ref={ref}>
                 {isComponentVisible && (
                     <div className="action-menu">
+                        <button className="action-item"
+                            id="update-project"
+                            onClick={onUpdateProject}>
+                            Update project
+                        </button>
                         <button className="action-item"
                             id="delete-project"
                             onClick={onDeleteProject}>
