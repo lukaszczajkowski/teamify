@@ -27,7 +27,7 @@ export default function ProjectActions({ currentProject, onUpdateProject, onDele
                         <button className="action-item"
                             id="update-project"
                             onClick={onUpdateProject}>
-                            Update project
+                            Edit project
                         </button>
                         <button className="action-item"
                             id="delete-project"

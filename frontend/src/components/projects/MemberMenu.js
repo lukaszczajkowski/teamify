@@ -17,7 +17,8 @@ export default function MemberMenu({ members, addMemberByEmail, onDeleteMember})
                         {members.map(member => (
                             <MemberCard key={member.id}
                                 member={member}
-                                onSubmit={onDeleteMember}
+                                onClick={onDeleteMember}
+                                
                             />
                         ))}
 

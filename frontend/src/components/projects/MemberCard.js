@@ -3,7 +3,7 @@ import useComponentVisible from "../hooks/useComponentVisible";
 // import randomColor from "randomcolor";
 
 // eslint-disable-next-line react/prop-types
-export default function MemberCard({ member, onClick, onClickName }) {
+export default function MemberCard({ member, onClick }) {
 
     // const [color, setColor] = useState();
 
@@ -37,22 +37,22 @@ export default function MemberCard({ member, onClick, onClickName }) {
             <div ref={ref}>
                 {isComponentVisible && (
                     <div className="action-menu">
-                        <div className="action-item">
+                        <div className="user-info">
                             {/* eslint-disable-next-line react/prop-types */}
                             <p>{member.name}</p>
                             {/* eslint-disable-next-line react/prop-types */}
                             <p>{member.email}</p>
-
-                            {onClick &&
-                                <button className="action-item"
-                                    id="delete-member"
-                                    // eslint-disable-next-line react/prop-types
-                                    onClick={() => onClick(member.id)}>
-                                    {onClickName}
-                                </button>
-                            }
                         </div>
+                        {onClick &&
+                            <button className="action-item"
+                                id="delete-member"
+                                // eslint-disable-next-line react/prop-types
+                                onClick={() => onClick(member.id)}>
+                                Delete member
+                                </button>
+                        }
                     </div>
+
                 )}
             </div>
         </div>
