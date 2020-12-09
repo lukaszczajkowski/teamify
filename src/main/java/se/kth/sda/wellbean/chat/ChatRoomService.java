@@ -15,7 +15,6 @@ public class ChatRoomService {
 
     public Optional<String> getChatId(Long senderId, Long recipientId,
                                       boolean createIfNotExist) {
-        System.out.println("Inside getChatId");
         return chatRoomRepository
                 .findBySenderIdAndRecipientId(senderId, recipientId)
                 .map(chatRoom -> {
@@ -47,5 +46,30 @@ public class ChatRoomService {
 
                         return Optional.of(chatId);
                     });
+    }
+
+    public Optional<String> getChatId(String projectId,
+                                      boolean createIfNotExist) {
+        String id = projectId.toString();
+        return chatRoomRepository
+                .findById(id)
+                .map(chatRoom -> {
+                    return chatRoom.getChatId();
+                })
+                .or(() -> {
+                    System.out.println("Crete if not exist");
+                    if(!createIfNotExist) {
+                        return Optional.empty();
+                    }
+                    String chatId = id;
+                    System.out.println("Chat id = " + chatId);
+
+                    ChatRoom projectRoom = new ChatRoom();
+                    projectRoom.setChatId(chatId);
+
+                    chatRoomRepository.save(projectRoom);
+
+                    return Optional.of(chatId);
+                });
     }
 }
