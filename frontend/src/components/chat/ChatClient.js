@@ -42,7 +42,7 @@ export default function ChatClient() {
 
 
     useEffect(() => {
-        //if(activeContact === undefined) return;
+        if(activeContact === undefined) return;
         const interval = setInterval( () => {
           if(activeContact === 1) {
               ChatApi.findProjectMessages(project).then((msgs) =>
