@@ -20,12 +20,9 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
     //const [taskMembers, setTaskMembers] = useState([]);
 
     const onDeleteTask = () => {
-        // eslint-disable-next-line react/prop-types
-        if (window.confirm(`Do you want to delete task ${task.id}?\n**Redesign this to a popup later**`)) {
-
             // eslint-disable-next-line react/prop-types
             deleteTask(task.id);
-        }
+        
     }
 
     const onUpdateTask = () => {
