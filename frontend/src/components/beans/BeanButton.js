@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import BeanPopup from "./BeanPopup";
 
 // eslint-disable-next-line react/prop-types
-export default function BeanButton() {
+export default function BeanButton({ bean, createBean }) {
+    const [popupIsOpen, setPopupIsOpen] = useState(false);
 
-    console.log("at bean button");
+    const onCreateBean = () => {
+        setPopupIsOpen(true);
+    }
 
-    return(
-    // eslint-disable-next-line react/prop-types
-    <button className="bean-button button">a preset bean</button>
-     
+    const onClosePopup = () => {
+        setPopupIsOpen(false);
+    }
+
+    return (
+        <div>
+
+            <button className="bean-button button"
+                onClick={onCreateBean}>
+
+                {/* eslint-disable-next-line react/prop-types */}
+                {bean.title}
+            </button>
+            <BeanPopup
+                isOpen={popupIsOpen}
+                initialData={bean} 
+                createBean={createBean} 
+                onClose={onClosePopup}/>
+
+        </div>
+
     );
 }

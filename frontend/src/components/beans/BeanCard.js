@@ -8,7 +8,7 @@ export default function BeanCard() {
     return (
         <div className="bean-card">
             <div onClick={handleClick} className="flex-start">
-                <img src={BeanIcon} />
+                <img className="bean-icon" src={BeanIcon} />
             </div>
 
             {

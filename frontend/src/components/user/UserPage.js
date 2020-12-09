@@ -15,9 +15,9 @@ function UserPage() {
     const [currentTime, setCurrentTime] = useState("");
     const user = useContext(UserContext);
     const userId = user.id;
-    
+
     const [projects, setProjects] = useState([]);
-    //const [presetBeans, setPresetBeans] = useState([]);
+    const [presetBeans, setPresetBeans] = useState([]);
     const [addedBeans, setAddedBeans] = useState([]);
 
 
@@ -28,23 +28,21 @@ function UserPage() {
         console.log(date);
     }
 
-    const [presetBeans, setPresetBeans] = useState([]);
 
-    const getPresetBeans = () => {
+    function getPresetBeans() {
         return BeanApi.getPresets()
-            .then(response => setPresetBeans(response.data))
-            .then(console.log("get all preset beans" + JSON.stringify(presetBeans)));
-    };
+            .then(response => setPresetBeans(response.data));
+    }
 
     const getAllBeans = () => {
         return Api.getAllBeans()
-        .then(response => setAddedBeans(response.data))
-        .then(console.log("get all beans" + JSON.stringify(addedBeans)));
+            .then(response => setAddedBeans(response.data))
+            .then(console.log("get all beans" + JSON.stringify(addedBeans)));
     }
 
     const createBean = (newBeanData) => {
         return Api.createNewBean(newBeanData)
-        .then(response => setAddedBeans([...addedBeans, response.data]))
+            .then(response => setAddedBeans([...addedBeans, response.data]))
     }
 
     const getAllProjects = () => {
@@ -58,8 +56,8 @@ function UserPage() {
     }
 
     useEffect(() => {
-        getPresetBeans,
-        getAllBeans,
+        getPresetBeans(),
+            getAllBeans,
             getAllProjects(userId),
             getCurrentTime()
     }, [user]);
@@ -83,13 +81,15 @@ function UserPage() {
                         <span id="current-time" style={{ color: `${randomColor()}` }}>{currentTime}</span>
                     </div>
                 </div>
-                <button onClick={getPresetBeans}>get preset beans (test)</button>
-                {presetBeans.map(item => (<p key={item.id}>{item.title}</p>))}
 
-
-
-                <BeanBoard createBean={createBean}/>
-                <ProjectsBoard creator={user} projects={projects} createProject={createProject} />
+                <BeanBoard
+                    presetBeans={presetBeans}
+                    addedBeans={addedBeans} 
+                    createBean={createBean} />
+                <ProjectsBoard
+                    creator={user}
+                    projects={projects}
+                    createProject={createProject} />
             </main>
         </div>
     );

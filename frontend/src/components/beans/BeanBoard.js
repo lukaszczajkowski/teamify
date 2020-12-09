@@ -1,12 +1,10 @@
 import React from "react";
 import BeanIcon from "../../assets/beanicon.png";
-import CreateBeanPopup from "./CreateBeanPopup";
 import BeanCard from "./BeanCard";
 import PresetBeans from "./PresetBeans";
 
 // eslint-disable-next-line react/prop-types
-export default function BeanBoard({ createBean }) {
-
+export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
 
     return (
         <article className="bean-board">
@@ -24,12 +22,13 @@ export default function BeanBoard({ createBean }) {
                         </div>
 
                         <div className="bean-buttons flex-center">
-                            
 
-                            <PresetBeans />
 
-                            {/* <CreateBeanCard onSubmit= {createBean}/> */}
-                            <CreateBeanPopup onSubmit={createBean}/>
+                            <PresetBeans
+                                presetBeans={presetBeans}
+                                createBean={createBean} />
+                            <button className="button">+ Create a new bean</button>
+
                         </div>
                     </div>
 
@@ -40,8 +39,16 @@ export default function BeanBoard({ createBean }) {
                             <h2 className="prompt">Beans to collect today: </h2>
                             <p className="sub-prompt">Click if you have completed the bean</p>
                         </div>
+                        {
+                            addedBeans !== null ?
+                                <div>
+                                    {/* eslint-disable-next-line react/prop-types */}
+                                    {addedBeans.map(bean => (
+                                        <BeanCard key={bean.id} bean={bean} />
+                                    ))}
+                                </div> : null
+                        }
 
-                        <BeanCard/>
                     </div>
 
 

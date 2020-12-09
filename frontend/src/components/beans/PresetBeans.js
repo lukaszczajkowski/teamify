@@ -2,22 +2,22 @@ import React from "react";
 import BeanButton from "./BeanButton";
 
 // eslint-disable-next-line react/prop-types
-export default function PresetBeans({PresetBeans}) {
+export default function PresetBeans({ presetBeans, createBean }) {
 
-   
 
     return (
         <div className="preset-beans">
-            {/* {
+            {
                 // eslint-disable-next-line react/prop-types
-                presetBeans.map(item => (
+                presetBeans.map(bean => (
                     <BeanButton
-                        key={item.id}
-                        bean={item}
-                    />))
-            } */}
+                        key={bean.id}
+                        bean={bean}
+                        createBean={createBean}
+                    />
 
-           <BeanButton />
+                ))
+            }
         </div>
     );
 }
