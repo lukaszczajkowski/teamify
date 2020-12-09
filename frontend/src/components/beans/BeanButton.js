@@ -1,10 +1,13 @@
 import React from "react";
 
-export default function PresetBeanButton() {
+// eslint-disable-next-line react/prop-types
+export default function BeanButton() {
 
-    return (
-        <div>
+    console.log("at bean button");
 
-        </div>
+    return(
+    // eslint-disable-next-line react/prop-types
+    <button className="bean-button button">a preset bean</button>
+     
     );
 }

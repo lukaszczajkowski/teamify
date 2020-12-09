@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Popup from "reactjs-popup";
 
-// export default function CreateBeanCard({ onSubmit }) {
-//     const [name, setName] = useState("");
-//     const [description, setDescription] = useState("");
-//     const [points, setPoints] = useState();
+export default function CreateBeanCard({ onSubmit }) {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [eventCount, setEventCount] = useState();
+    const [duration, setDuration] = useState();
 
-//     function onCreateBean() {
-//         const beanData = {name, description, points};
-//         onSubmit(beanData);
-//     }
+    const onCreateBean = () => {
+        const beanData = {title, description, eventCount, duration};
+        onSubmit(beanData);
+    };
 
 // Added value and onChange property to the input fields
 // value={points}
 // onChange={e => setPoints(e.target.value)}
-
-export default function CreateBeanPopup() {
 
     return (
         <div className="popup" id="create-bean">
@@ -52,7 +51,7 @@ export default function CreateBeanPopup() {
 
                                 <div className="popup-item">
                                     <div className="flex-start">
-                                        <h2 className="prompt">Points</h2>
+                                        <h2 className="prompt">Repeat</h2>
                                         <h6 className="sub-prompt">How many times do you want to do this bean task today?</h6>
                                     </div>
 

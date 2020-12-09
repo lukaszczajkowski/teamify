@@ -1,15 +1,11 @@
 import React from "react";
-
 import BeanIcon from "../../assets/beanicon.png";
 import CreateBeanPopup from "./CreateBeanPopup";
 import BeanCard from "./BeanCard";
+import PresetBeans from "./PresetBeans";
 
-export default function BeanBoard() {
-
-    // const [beans, setBeans] = useState([]);
-    // const createBean = (beanData) => (
-
-    // );
+// eslint-disable-next-line react/prop-types
+export default function BeanBoard({ createBean }) {
 
 
     return (
@@ -28,13 +24,12 @@ export default function BeanBoard() {
                         </div>
 
                         <div className="bean-buttons flex-center">
-                            <button className="button bean-button">Stay hyrated</button>
-                            <button className="button bean-button">Exericise</button>
-                            <button className="button bean-button">Meditate</button>
-                            <button className="button bean-button">Eat on time</button>
+                            
+
+                            <PresetBeans />
 
                             {/* <CreateBeanCard onSubmit= {createBean}/> */}
-                            <CreateBeanPopup />
+                            <CreateBeanPopup onSubmit={createBean}/>
                         </div>
                     </div>
 
