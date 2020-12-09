@@ -24,7 +24,8 @@
 
 /* Popup */
 @import url("./create-bean-popup.css");
-@import url("./create-task-popup.css");
+@import url("./task-popup.css");
+
 
 /* Card */
 @import url("./category-card.css");
@@ -34,10 +35,6 @@
 
 /* buttons */
 @import url("./action.css");
-
-/* test */
-@import url("./login-test.css");
-/* @import url("./createTaskCard.css"); */
 
 
 /* Google fonts */
