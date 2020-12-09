@@ -1,4 +1,6 @@
 .member-card {
+    height: 40px;
+    width: 40px;
     padding: 9px;
     background-color: var(--theme-green);
     border-radius: 50%;
