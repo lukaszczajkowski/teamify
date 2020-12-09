@@ -37,19 +37,19 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
     }
 
     return (
-        <div className="task-card">
-            <div className="flex-between">
-                <div className="flex-grow">
-                    {/* eslint-disable-next-line react/prop-types*/}
-                    <p className="task-title">{task.title}</p>
-                    {/* <Paper className={classes.card}>{task.title}</Paper> */}
-                </div>
+        <div>
+            <div className="task-card">
+                <div className="flex-between">
+                    <div className="flex-grow">
+                        {/* eslint-disable-next-line react/prop-types*/}
+                        <p className="task-title">{task.title}</p>
+                        {/* <Paper className={classes.card}>{task.title}</Paper> */}
+                    </div>
+                    <TaskActions onDeleteTask={onDeleteTask} onUpdateTask={onUpdateTask}/>
 
-                <TaskActions
-                    onDeleteTask={onDeleteTask}
-                    onUpdateTask={onUpdateTask} />
+                </div>
+                <div className="task-member"></div>
             </div>
-            <div className="task-member"></div>
 
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
