@@ -12,21 +12,24 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
                 <div className="flip-front">
                     <div className="board-title flex-start">
                         <img className="bean-icon" src={BeanIcon}></img>
-                        <h1 className="board-name">Your personal bean board</h1>
+                        <h1 className="board-name">Personal bean board</h1>
                     </div>
 
                     <div className="board-section">
                         <div className="goal-prompt flex-between">
-                            <h2 className="prompt">Your well-being goals for today: </h2>
-                            <p className="sub-prompt">Add new beans to your calendar</p>
+                            <h2 className="prompt">Choose your well-being goals for today: </h2>
+                            <p className="sub-prompt">Click to add new beans to your calendar</p>
                         </div>
 
-                        <div className="bean-buttons flex-center">
+                        <div className="bean-buttons">
 
 
                             <PresetBeans
                                 presetBeans={presetBeans}
                                 createBean={createBean} />
+
+
+
                             <button className="button">+ Create a new bean</button>
 
                         </div>
@@ -50,6 +53,8 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
                         }
 
                     </div>
+
+                    <BeanCard />
 
 
 

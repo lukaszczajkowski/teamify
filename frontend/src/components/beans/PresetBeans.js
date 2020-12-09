@@ -6,7 +6,7 @@ export default function PresetBeans({ presetBeans, createBean }) {
 
 
     return (
-        <div className="preset-beans">
+        <div className="preset-beans flex-start">
             {
                 // eslint-disable-next-line react/prop-types
                 presetBeans.map(bean => (
