@@ -109,7 +109,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                     tasks === null ?
                         null :
                         <div>
-                            <Droppable droppableId={categoryId}>
+                            <Droppable droppableId={categoryId.toString()}>
                                 {(provided) => (
                                     <div ref={provided.innerRef} {...provided.droppableProps}>
                                     {tasks.map(task => (

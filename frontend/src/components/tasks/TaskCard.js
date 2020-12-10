@@ -35,14 +35,16 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
     }
 
     return (
-        
-        <div className="task-card">
-            {/* eslint-disable-next-line react/prop-types*/}
-        <Draggable draggableId={task.id} index={index}>{
+        <div>
+        {/* eslint-disable-next-line react/prop-types*/}
+        <Draggable draggableId={task.id.toString()} index={index}>{
             (provided) => (
                 <div ref={provided.innerRef} 
                 {...provided.dragHandleProps} 
                 {...provided.draggableProps}>
+        <div className="task-card">
+            
+       
 
            
             <div className="flex-between">
@@ -67,8 +69,10 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                 deleteMemberFromTask={deleteMemberFromTask}
           onClose={onClosePopup} />
           </div>
-           )}
-          </Draggable>
+          
+        </div>
+        )}
+        </Draggable>
         </div>
        
     );
