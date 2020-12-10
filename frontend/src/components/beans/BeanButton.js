@@ -24,7 +24,7 @@ export default function BeanButton({ bean, createBean }) {
                 isAdded ?
                 
                     <div>
-                        <button className="added-button button">{bean.title}</button>
+                        <button className="added-button button">this is added</button>
                     </div> :
 
                     <div>

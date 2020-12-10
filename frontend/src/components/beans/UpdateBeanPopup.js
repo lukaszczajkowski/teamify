@@ -3,36 +3,36 @@ import Popup from "reactjs-popup";
 // import Popup from "reactjs-popup";
 
 // eslint-disable-next-line react/prop-types
-export default function UpdateProjectPopup({ isOpen, currentProject, updateProject, onClose }) {
+export default function UpdateBeanPopup({ isOpen, currentBean, updateBean, onClose }) {
     // eslint-disable-next-line react/prop-types
-    console.log("on updateProjectPopup. current project: " + currentProject.id);
+    console.log("on updateBeanPopup. current bean: " + currentBean.id);
 
     const {
         // eslint-disable-next-line react/prop-types
         id, title, description,
         // users
-    } = currentProject;
+    } = currentBean;
 
-    const [projectTitle, setProjectTitle] = useState(title);
-    const [projectDescription, setProjectDescription] = useState(description);
+    const [beanTitle, setBeanTitle] = useState(title);
+    const [beanDescription, setBeanDescription] = useState(description);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
     // const [taskMembers, setTaskMembers] = useState("");
     //const [taskComments, setTaskComments] = useState([]);
 
-    const updatedProject = {
+    const updatedBean = {
         id,
-        title: projectTitle,
-        description: projectDescription
+        title: beanTitle,
+        description: beanDescription
     }
 
     useEffect(() => {
-        setProjectTitle(title);
-    }, [currentProject]);
+        setBeanTitle(title);
+    }, [currentBean]);
 
-    const onUpdateProject = () => {
-        updateProject(updatedProject);
+    const onUpdateBean = () => {
+        updateBean(updatedBean);
         setIsEditingTitle(false);
         setIsEditingDescription(false);
     };
@@ -54,18 +54,18 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                                             type="text"
                                             className="input-box"
                                             placeholder="Title"
-                                            value={projectTitle}
-                                            onChange={e => setProjectTitle(e.target.value)}
+                                            value={beanTitle}
+                                            onChange={e => setBeanTitle(e.target.value)}
                                         />
                                         <button
                                             className="action-button" id="confirm-update"
-                                            onClick={onUpdateProject}>
+                                            onClick={onUpdateBean}>
                                             <i className="fas fa-check"></i>
                                         </button>
                                     </div>
                                     :
 
-                                    <p className="input-box" onClick={() => setIsEditingTitle(true)}>{projectTitle}</p>
+                                    <p className="input-box" onClick={() => setIsEditingTitle(true)}>{beanTitle}</p>
 
                             }
                         </div>
@@ -78,17 +78,17 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
 
                                             className="input-box"
                                             placeholder="Enter description"
-                                            value={projectDescription}
-                                            onChange={e => setProjectDescription(e.target.value)}
+                                            value={beanDescription}
+                                            onChange={e => setBeanDescription(e.target.value)}
                                         />
                                         <button
                                             className="action-button" id="confirm-update"
-                                            onClick={onUpdateProject}>
+                                            onClick={onUpdateBean}>
                                             <i className="fas fa-check"></i>
                                         </button>
                                     </div>
                                     :
-                                    <p className="input-box" onClick={() => setIsEditingDescription(true)}>{projectDescription || "No description"}</p>
+                                    <p className="input-box" onClick={() => setIsEditingDescription(true)}>{beanDescription || "No description"}</p>
                             }
                         </div>
 

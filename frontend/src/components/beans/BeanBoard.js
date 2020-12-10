@@ -6,7 +6,7 @@ import CreateBeanButton from "./CreateBeanButton";
 
 
 // eslint-disable-next-line react/prop-types
-export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
+export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean }) {
 
     return (
         <article className="bean-board">
@@ -32,8 +32,8 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
 
 
 
-                            <CreateBeanButton/>
-                           
+                            <CreateBeanButton createBean={createBean} />
+
 
                         </div>
                     </div>
@@ -45,20 +45,23 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
                             <h2 className="prompt">Beans to collect today: </h2>
                             <p className="sub-prompt">Click if you have completed the bean</p>
                         </div>
+
                         {
-                            addedBeans !== null ?
-                                <div>
+                            addedBeans !== undefined ?
+                                <div className="bean-cards flex-start">
                                     {/* eslint-disable-next-line react/prop-types */}
                                     {addedBeans.map(bean => (
-                                        <BeanCard key={bean.id} bean={bean} />
+                                        <BeanCard
+                                            key={bean.id}
+                                            bean={bean}
+                                            updateBean={updateBean} 
+                                            deleteBean={deleteBean}/>
                                     ))}
                                 </div> : null
                         }
 
+
                     </div>
-
-                    <BeanCard />
-
 
 
                     <div className="flex-end">

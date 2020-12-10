@@ -13,6 +13,10 @@ class BeanApi {
         return Api.get(`/beans/${beanId}`);
     }
 
+    getLastEventTimeById(beanId) {
+        return Api.get(`/beanLastEventTime/${beanId}`);
+    }
+
     createNewBean(bean) {
         return Api.post("/beans", bean);
     }
@@ -22,11 +26,11 @@ class BeanApi {
     }
 
     updateBean(updatedBean) {
-        return Api.put("/beans", updatedBean);
+        return Api.put("/beans/", updatedBean);
     }
 
     deleteBean(beanId) {
-        return Api.delete("/beans" + beanId);
+        return Api.delete("/beans/" + beanId);
     }
 }
 

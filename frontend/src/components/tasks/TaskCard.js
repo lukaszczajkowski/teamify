@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
 import TaskActions from "./TaskActions";
+import {Draggable} from "react-beautiful-dnd";
 
 // *****************The code below has been refactored to css **********************
 // import {Paper} from '@material-ui/core';
@@ -14,7 +15,7 @@ import TaskActions from "./TaskActions";
 // }));
 
 // eslint-disable-next-line react/prop-types
-export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, index }) {
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
@@ -34,11 +35,24 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
     }
 
     return (
+        <div>
+        {/* eslint-disable-next-line react/prop-types*/}
+        <Draggable draggableId={task.id.toString()} index={index}>{
+            (provided) => (
+                <div ref={provided.innerRef} 
+                {...provided.dragHandleProps} 
+                {...provided.draggableProps}>
         <div className="task-card">
+            
+       
+
+           
             <div className="flex-between">
                 <div className="flex-grow">
-                    {/* eslint-disable-next-line react/prop-types*/}
-                    <p className="task-title">{task.title}</p>
+                    
+                    
+                 {/* eslint-disable-next-line react/prop-types*/}
+                <p className="task-title">{task.title}</p>
                     {/* <Paper className={classes.card}>{task.title}</Paper> */}
                 </div>
 
@@ -53,7 +67,16 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                 updateTask={updateTask}
                 addMemberToTask={addMemberToTask}
                 deleteMemberFromTask={deleteMemberFromTask}
-                onClose={onClosePopup} />
+                addComment = {addCommentToTask}
+                updateComment = {updateCommentTask}
+
+          onClose={onClosePopup} />
+          </div>
+          
         </div>
+        )}
+        </Draggable>
+        </div>
+       
     );
 }
