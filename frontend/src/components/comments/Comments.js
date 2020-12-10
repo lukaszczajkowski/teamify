@@ -64,11 +64,14 @@ export default function Comments({task, onCreate, onUpdate, onDelete}){
                 </button> 
             }
             <div>
-                {task.comments.map(comment => {
+                {task.comments ? task.comments.map( comment => {
                     return <div key={comment.id}>
                         {comment.user.name}: <EditableText text={comment.body} onUpdateText={(text) => onEditComment(comment, text)}/>
                     </div>
-                })}
+                } 
+                )
+                : 
+                null}
             </div>
         </div>
     )
