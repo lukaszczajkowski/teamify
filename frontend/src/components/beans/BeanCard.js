@@ -65,6 +65,15 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     }
 
 
+    const onCloseWellBean = () => {
+        setOpenWellBean(false);
+    }
+
+    const onCloseWarning = () => {
+        setOpenWarning(false);
+    }
+
+
     return (
         <div>
             <div className=" bean-card flex-column">
@@ -91,7 +100,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
             {
                 openWellBean ?
                     <WellBeanPopup
-                        onClose={setOpenWellBean(false)} />
+                        onClose={onCloseWellBean} />
                     : null
 
             }
@@ -99,7 +108,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
             {
                 openWarning ? <MessagePopup
                     message="Collect when you finish the task!"
-                    onClose={setOpenWarning(false)} />
+                    onClose={onCloseWarning} />
                     : null
             }
         </div>
