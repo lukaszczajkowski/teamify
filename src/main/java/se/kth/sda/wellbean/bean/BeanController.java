@@ -52,22 +52,16 @@ public class BeanController {
         return beanService.findByBeanId(beanId);
     }
 
-    @PostMapping(value = {"", "/{presetBeanId}"})
-    public Bean createBean(@PathVariable Optional<Long> presetBeanId,@RequestBody(required = false) BeansPreSet customBeanDetails) {
+    @PostMapping("")
+    public Bean createBean(@RequestBody BeansPreSet customBeanDetails) {
         Bean newBean = new Bean();
-        BeansPreSet beanDetails;
         User user = getUser();
-        if( presetBeanId.isPresent() )
-            beanDetails = beanService.getBeanPreSetDetailsById(presetBeanId.orElse((long) 0));
-       else
-           beanDetails = customBeanDetails;
-
         newBean.setUser(user);
-        newBean.setTitle(beanDetails.getTitle());
-        newBean.setDescription(beanDetails.getDescription());
+        newBean.setTitle(customBeanDetails.getTitle());
+        newBean.setDescription(customBeanDetails.getDescription());
         newBean.setCreatedDate(LocalDate.now());
         newBean = beanService.createNewBean(newBean);
-        createBeanEvents(newBean,beanDetails);
+        createBeanEvents(newBean,customBeanDetails);
         return newBean;
     }
 
@@ -76,6 +70,9 @@ public class BeanController {
         User user = getUser();
         if(updatedBean.isCompleted() == true)
         {
+            Bean currentBeanDetails = beanService.findByBeanId(updatedBean.getId()).orElseThrow();
+            updatedBean.setTitle(currentBeanDetails.getTitle());
+            updatedBean.setDescription(currentBeanDetails.getDescription());
             userService.increaseBeanScore(user);
             projectService.increaseTeamBeanScore(user);
         }
@@ -105,7 +102,7 @@ public class BeanController {
         long eventCount = beanEventDetails.getEventCount();
         long eventDuration = beanEventDetails.getDuration();
         switch (beanEventDetails.getTitle()) {
-            case "Drink water" :
+            case "Keep hydrated" :
                 eventStartTime  = LocalDate.now().atTime(8,0,0);
                 for(int i = 0; i < beanEventDetails.getEventCount(); i++) {
                     createEvent(eventStartTime,eventDuration,bean,creator);
@@ -120,7 +117,7 @@ public class BeanController {
                 eventStartTime  = LocalDate.now().atTime(15,00,0);
                 createEvent(eventStartTime,eventDuration,bean,creator);
                 break;
-            case "Eat food on time" :
+            case "Eat on time" :
                 eventStartTime  = LocalDate.now().atTime(8,0,0);
                 String[] description = {
                         "Have you had breakfast?",
