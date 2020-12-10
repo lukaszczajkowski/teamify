@@ -1,7 +1,20 @@
 .bean-board .board-container {
     max-width: 1024px;
     margin: auto;
-    padding: 10vh;
+    padding: 50px;
+}
+
+.bean-board .board-title {
+    margin-bottom: 60px;
+}
+
+.bean-board .board-section {
+    margin-bottom: 60px;
+}
+
+.bean-board .goal-prompt,
+.bean-board .collect-prompt {
+    margin: 3vh 4vw 5vh 4vw;
 }
 
 .bean-board .board-name {
@@ -13,35 +26,54 @@
 
 .bean-board .bean-icon {
     margin-top: 1vh;
+    margin-right: 8px;
     height: 5vh;
 }
 
 .bean-board .prompt {
+    font-weight: bold;
     font-size: 20px;
     color: var(--theme-dark-green);
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
 }
 
 .bean-board .sub-prompt {
-    margin-top: 1vh;
     margin-left: 1vw;
-    font-size: 18px;
+    font-size: 15px;
     color: var(--text-dark-grey);
-    font-weight: 500;
-    font-family: 'Rubik', sans-serif;
 }
 
-.bean-board .board-item {
-    margin-bottom: 6vh;
-}
-
-.bean-board .button {
+.bean-board .bean-button {
+    font-size: 17px;
     margin: 1vh;
     color: white;
-    background-color: #07B4B5;
+    background-color: var(--opac-dark-grey);
+}
+
+.bean-board .bean-button:hover {
+    border-color: var(--theme-green);
+    background-color: var(--theme-green);
+    color: white;
+
+}
+
+.bean-board .added-button {
+    background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
+}
+
+
+#create-bean {
+    background-color: transparent;
+    color: var(--text-dark-grey);
+    font-size: 15px;
+}
+
+#create-bean:hover {
+    color: white;
+    border-color: transparent;
+    background-color: var(--theme-purple);
 }
 
 .bean-board .flip-arrow {
     font-size: 38px;
 }
+

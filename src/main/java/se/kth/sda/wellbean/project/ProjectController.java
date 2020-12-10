@@ -122,10 +122,14 @@ public class ProjectController {
         String currentUserEmail = authService.getLoggedInUserEmail();
         User currentUser = userService.findUserByEmail(currentUserEmail);
         User creator = projectService.getById(updatedProject.getId()).getCreator();
-        updatedProject.setTeamBeanScore(projectService.getById(updatedProject.getId()).getTeamBeanScore());
+        Project prjFromDb = projectService.getById(updatedProject.getId());
         if(currentUser.getId() != creator.getId()) {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
+            //need to update all the fields ManyToMany and ManyToOne, otherwise it will be 0
+            updatedProject.setCreator(creator);
+            updatedProject.setUsers(prjFromDb.getUsers());
+            updatedProject.setTeamBeanScore(prjFromDb.getTeamBeanScore());
             return projectService.update(updatedProject);
         }
     }
@@ -210,10 +214,10 @@ public class ProjectController {
     public Project removeMember(@PathVariable Long projectId, @RequestParam Long memberId) {
         Project project = projectService.getById(projectId);
         User userToRemove = userService.findById(memberId);
-        if(checkCredentials(project) && !userAlreadyAMember(project, userToRemove)){
+        if(checkCredentials(project) && userAlreadyAMember(project, userToRemove)){
             project.removeUser(userToRemove);
             return projectService.update(project);
-        } else if (userAlreadyAMember(project, userToRemove)){
+        } else if (!userAlreadyAMember(project, userToRemove)){
             return project;
         } else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);

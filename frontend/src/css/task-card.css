@@ -1,15 +1,41 @@
 .task-card {
+    height: 75px;
     padding: 18px 10px 18px 18px;
-    margin:10px;
+    margin: 10px;
     background-color: white;
     border-radius: 2px;
-    box-shadow: 0px 2px 2px -1px rgba(87,87,87,0.8);
+    box-shadow: 0px 2px 2px -1px rgba(87, 87, 87, 0.8);
 }
 
 .task-card .task-title {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .task-card #delete-task {
     margin-right: 4px;
+}
+
+.create-task-card .input-box {
+    padding: 18px;
+    width: 260px;
+    height: 75px;
+    margin: 3px 10px;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px -1px rgba(87, 87, 87, 0.8);
+    border: 1px solid transparent;
+}
+
+.create-task-card .input-box:hover {
+    border: 1px solid var(--bg-dark-grey);
+    transition: all 0.1s;
+}
+
+.create-task-card .button {
+    border: none;
+}
+
+.create-task-card .button:hover {
+    color: var(--theme-green);
+    transition: all 0.1s;
 }

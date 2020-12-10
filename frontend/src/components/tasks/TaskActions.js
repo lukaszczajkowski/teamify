@@ -1,27 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import useComponentVisible from "../hooks/useComponentVisible";
 
 // eslint-disable-next-line react/prop-types
-export default function TaskActions({ onDeleteTask }) {
-    const [click, setClick] = useState(false);
+export default function TaskActions({ onDeleteTask, onUpdateTask }) {
 
-    const handleClick = () => setClick(!click);
+    const {
+        ref,
+        isComponentVisible,
+        setIsComponentVisible
+    } = useComponentVisible(false);
+
+    const handleClick = () => {
+        setIsComponentVisible(true);
+    }
 
     return (
         <div className="action category-actions">
             <button className="action-button" onClick={handleClick}>
                 <i className="fas fa-ellipsis-v"></i>
             </button>
-            {
-                click ?
+            <div ref={ref}>
+                {isComponentVisible &&
                     <div className="action-menu">
                         <button
                             className="action-item"
                             id="delete-task"
-                            onClick={onDeleteTask}>Delete Task
+                            onClick={() => {
+                           
+                                onDeleteTask();
+                            }}>Delete Task
                         </button>
-                    </div> :
-                    null
-            }
+                        <button
+                            className="action-item"
+                            id="update-task"
+                            onClick={() => {
+                               
+                                onUpdateTask();
+                            }}>Update Task
+                        </button>
+                    </div>}
+            </div>
         </div>
     );
 }

@@ -1,11 +1,16 @@
 .member-card {
+    height: 40px;
+    width: 40px;
     padding: 9px;
     background-color: var(--theme-green);
     border-radius: 50%;
     text-align: center;
 }
 
-.member-card:hover {
-    background-color: var(--theme-dark-green);
-    transition: 0.3s;
+.member-card .action-menu {
+    padding-top: 5px;   
+}
+
+.member-card .user-info {
+    color: var(--theme-green);
 }

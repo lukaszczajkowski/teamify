@@ -3,19 +3,25 @@
     align-items: flex-start;
 
 }
-.project-page .project-menu,
-.project-page .member-menu {
+.project-page #project-menu,
+.project-page #member-menu {
     margin-left: 35px;
     margin-bottom: 18px;
 }
 
-.project-menu .project-title {
+#project-menu .project-title {
     font-size: 25px;
     margin-right: 10px;
 }
 
-.member-menu .member-title {
+#member-menu .member-title {
     font-size: 20px;
+}
+
+#member-menu .member-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 3px;
 }
 
 .project-page .category-cards {

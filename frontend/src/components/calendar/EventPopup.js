@@ -17,6 +17,9 @@ export default function EventPopup({    isOpen,
                                         onDelete,
                                         changesMade,
                                         emailRemoved,
+                                        sourceOfEvent,
+                                        createEvent,
+                                        purpose
                                     } ) {
 
     const [chips, setChips] = useState([]);
@@ -28,26 +31,32 @@ export default function EventPopup({    isOpen,
 
     useEffect(() => {
         setEvent(currentEvent);
-        if(currentEvent !== {}){
-            const {
-                id,
-                title,
-                extendedProps,
-            } = currentEvent;
-            setEventTitle(title);
-            if(extendedProps !== undefined){
-                setEventDescription(extendedProps.description);
-                const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
-                console.log("setting eventMembersEmails to", eventMembersEmailsFromProps);
-                setEventMembersEmails(eventMembersEmailsFromProps);
-                console.log("eventMembersEmails set to", eventMembersEmailsFromProps);
-                const renderedChips = renderChips(eventMembersEmails);
-                console.log(renderedChips);
-                setChips(renderedChips);
+        if (purpose == 'create') {
+            setEventTitle("");
+            setEventDescription("");
+            setEmails("");
+            setEventMembersEmails([]);
+            setChips([]);
+        } else if(purpose == 'update'){
+            if(currentEvent != {}){
+                const {
+                    id,
+                    title,
+                    extendedProps,
+                } = currentEvent;
+                setEventTitle(title);
+
+                if(extendedProps !== undefined){
+                    setEventDescription(extendedProps.description);
+                    const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
+                    setEventMembersEmails(eventMembersEmailsFromProps);
+                    const renderedChips = renderChips(eventMembersEmails);
+                    setChips(renderedChips);
+                }
             }
-        }
+        } 
         
-    }, [currentEvent, changesMade, emailRemoved])
+    }, [currentEvent, changesMade, emailRemoved, purpose])
 
     useEffect(() => {
         setEmails(emails);
@@ -66,66 +75,22 @@ export default function EventPopup({    isOpen,
     }
     //generates the chips with emails of invited users
     // eslint-disable-next-line react/jsx-key
-    
 
-    // eslint-disable-next-line react/prop-types
-    return (
-        <div className="create-bean-card">
-            <div className="popup-container">
-                <Popup
-                    open = {isOpen}
-                    closeOnDocumentClick = {false}
-                    closeOnEscape = {false}
-                    modal
-                    nested>
-                        {close => (
-                        <div className="modal">
-                            <button className="close" onClick={()=> {
-                                //close();
-                                onClose(false);
-                                }    
-                        }>
-                                <i className="fas fa-times"></i>
-                            </button>
-                            <div className="content">
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Title</h2>
-                                    <input
-                                        type="text"
-                                        className="input-box"
-                                        value={eventTitle}
-                                        placeholder="title"
-                                        onChange = {e => {
-                                            setEventTitle(e.target.value);
-                                        }}
-                                    >
-                                    </input>
-                                </div>
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Description</h2>
-                                    <textarea
-                                        className="input-box"
-                                        placeholder=""
-                                        value = {eventDescription}
-                                        onChange = {e => {
-                                            setEventDescription(e.target.value);
-                                        }}
-                                    >
-                                    </textarea>
-                                </div>
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Members of the event:</h2>
-                                        <div className="popup-item flex-start">
-                                            {chips}
-                                        </div>
-                                </div>
-                                <div className="popup-item flex-start">
-                                    <h2 className="prompt">Invite user by email</h2>
-                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
-                                </div>
-                            </div>
-                            <div className="flex-end">
+
+    const buttons = purpose == 'create' ? 
                                 <button
+                                    className="button"
+                                    onClick={() => {
+                                        {createEvent({ eventTitle, eventDescription, emails})}
+                                        {onMembersChange({emails, currentEvent})}
+                                        close();
+                                        {onClose(false)}
+                                }}>
+                                Create
+                                </button>
+                                : 
+                                <div>
+                                 <button
                                 className="button"
                                 onClick={() => {
                                     {updateEvent({ eventTitle, eventDescription })}
@@ -144,6 +109,68 @@ export default function EventPopup({    isOpen,
                                 }}>
                                 Delete
                                 </button>
+                                </div>
+    
+    console.log(sourceOfEvent);
+
+    // eslint-disable-next-line react/prop-types
+    return (
+        <div className="create-bean-card">
+            <div className="popup-container">
+                <Popup
+                    open = {isOpen}
+                    closeOnDocumentClick = {false}
+                    closeOnEscape = {false}
+                    modal
+                    nested>
+                        {close => (
+                        <div className="modal">
+                            <button className="close" onClick={()=> {
+                                close();
+                                onClose(false);
+                                }    
+                        }>
+                                <i className="fas fa-times"></i>
+                            </button>
+                            <div className="content">
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Title</h2>
+                                    <input
+                                        type="text"
+                                        className="input-box"
+                                        defaultValue={eventTitle}
+                                        placeholder="Your title here..."
+                                        onChange = {e => {
+                                            setEventTitle(e.target.value);
+                                        }}
+                                    >
+                                    </input>
+                                </div>
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Description</h2>
+                                    <textarea
+                                        className="input-box"
+                                        placeholder="Your description here..."
+                                        defaultValue = {eventDescription}
+                                        onChange = {e => {
+                                            setEventDescription(e.target.value);
+                                        }}
+                                    >
+                                    </textarea>
+                                </div>
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Members of the event:</h2>
+                                        <div className="popup-item flex-start">
+                                            {chips}
+                                        </div>
+                                </div>
+                                <div className="popup-item flex-start">
+                                    <h2 className="prompt">Invite user by email</h2>
+                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
+                                </div>
+                            </div>
+                            <div className="flex-end">
+                                {buttons}
                             </div>
                         </div>
                     )}

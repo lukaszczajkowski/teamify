@@ -3,12 +3,43 @@
     flex-direction: column;
 }
 
+.user-page .user-menu {
+    margin-bottom: 18px;
+}
+
 .user-page .user-prompt{
-    font-size: 36px;
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
+    font-size: 32px;
+    /* font-weight: 600;
+    font-family: 'Rubik', sans-serif; */
     color: var(--theme-dark-green);
+}
+
+.user-page #user-name {
+    color: var(--theme-green);
+    margin-left: 10px;
+}
+
+.user-page .user-menu .time-prompt {
+    font-size: 24px;
     margin-left: 6vw;
-    margin-bottom: 8vh;
-    margin-top: 5vh;
+    color: var(--theme-dark-green);
+}
+
+.user-page .user-menu #current-time {
+    margin-left: 10px;
+}
+
+.user-page .user-menu .calendar-icon {
+    margin-right: 10px;
+    color: var(--theme-dark-green);
+}
+
+
+
+.user-menu .board-container {
+    max-width: 1024px;
+    margin: auto;
+    background-color: transparent;
+    padding: 20px 0;
+
 }

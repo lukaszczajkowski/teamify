@@ -1,70 +1,86 @@
 .modal {
-    width: 50vw;
-    font-size: 20px;
-    background-color: var(--opac-light-grey);
-    border-radius: 10px;
-    border: 10px solid var(--opac-light-grey);
-    box-shadow: 10px 10px 32px -2px rgba(0,0,0,0.3);
-  }
+  width: 50vw;
+  background-color: var(--opac-light-grey);
+  border-radius: 10px;
+  box-shadow: 5px 5px 19px -2px rgba(150, 150, 150, 0.6);
+}
 
-  .modal > .header {
-    margin-top: 10px;
-    margin-left: 10px;
-    font-weight: 600;
-  }
+.modal>.header {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-weight: 600;
+}
 
-  .modal > .content {
-    width: 100%;
-    padding: 10px 5px;
-  }
-  .modal > .actions {
-    width: 100%;
-    padding: 10px 5px;
-    margin: auto;
-  }
+.modal>.content {
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.modal>.actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+}
+
+.modal>.close {
+  font-size: 28px;
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  line-height: 20px;
+  right: 20px;
+  top: 27px;
+}
+
+.modal>.close:hover {
+  color: var(--theme-green);
+  transition: all 0.1s;
   
-  .modal > .close {
-    cursor: pointer;
-    position: absolute;
-    display: block;
-    line-height: 20px;
-    right: 20px;
-    top: 20px;
+}
 
-  }
+.modal .popup-item {
+  padding: 20px;
+  background: transparent;
+}
 
-  .modal .popup-item {
-      margin: 4vh;
-      background: transparent;
-  }
+.modal .input-box {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 6px;
+  font-size: 20px;
+  height: 35px;
+}
 
-  .modal .input-box {
-      background-color: var(--opac-dark-grey);
-      border-radius: 10px;
-      padding: 5px;
-  }
+.modal .text-area {
+  font-family: 'Rubik', sans-serif;
+}
 
-  .modal .header,
-  .modal .prompt,
-  .modal .sub-prompt {
-    font-family: 'Rubik', sans-serif;
-  }
-  .modal .prompt {
-      margin-right: 2vw;
-    font-weight: 600;
-    color: var(--theme-purple);
-  }
+.modal .input-box:hover {
+  border: 1px solid var(--bg-dark-grey);
+  transition: all 0.1s;
+}
 
-  .modal .sub-prompt {
-    font-weight: 400;
-  }
+.modal .header, .modal .prompt, .modal .sub-prompt {
+  color: var(--theme-green);
+  font-weight: bold;
+  font-size: 20px;
+}
 
-  .modal .button {
-    border-radius: 10px;
-      padding: 10px 30px;
-      border-radius: 30px;
-      background-color: var(--theme-purple);
-      margin-right: 20px;
-      margin-bottom: 20px;
-    
-  }
+.modal .prompt {
+  margin-right: 2vw;
+}
+
+.modal .sub-prompt {
+  font-weight: 400;
+}
+
+.modal .button {
+  border-radius: 10px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  background-color: var(--theme-purple);
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+

@@ -24,7 +24,7 @@ public class WellBeanApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
 					.addMapping("/**")
-					.allowedOrigins("*")
+					.allowedOrigins("http://localhost:8080", "http://localhost:3000").allowCredentials(true).allowedHeaders("*")
 					.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
 			}
 		};

@@ -4,6 +4,8 @@ import TaskApi from "../../api/TaskApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
+import { Droppable } from 'react-beautiful-dnd';
+
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category, updateCategory, deleteCategory, projectId }) {
@@ -46,17 +48,28 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
             .then(response => setTasks([...tasks, response.data]));
     };
 
-
     const updateTask = (categoryId, task) => {
         console.log(`update task on category: ${categoryId}`);
         console.log(` task `, task);
         return TaskApi.updateTask(categoryId, task)
-            .then(getTasksByCategory(categoryId));
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const deleteTask = (taskId) => {
         return TaskApi.deleteTask(taskId)
             .then(() => setTasks(tasks.filter(a => a.id !== taskId)));
+    };
+
+    const addMemberToTask = (task, member) => {
+        console.log("updateTaskAddMember:", task, member);
+        return TaskApi.addMemberToTask(task.id, member.id)
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
+    };
+
+    const deleteMemberFromTask = (task, member) => {
+        console.log("deleteMemberFromTask:", task, member);
+        return TaskApi.deleteMemberFromTask(task.id, member.id)
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     useEffect(() => {
@@ -96,12 +109,22 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                     tasks === null ?
                         null :
                         <div>
-                            {tasks.map(task => (
-                                <TaskCard key={task.id}
-                                    task={task}
-                                    deleteTask={deleteTask}
-                                    updateTask={updateTask} />
-                            ))}
+                            <Droppable droppableId={categoryId.toString()}>
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                    {tasks.map(task => (
+                                        <TaskCard key={task.id}
+                                            task={task}
+                                            deleteTask={deleteTask}
+                                            updateTask={updateTask}
+                                            addMemberToTask={addMemberToTask}
+                                            deleteMemberFromTask={deleteMemberFromTask} />
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                           
                         </div>
                 }
             </div>

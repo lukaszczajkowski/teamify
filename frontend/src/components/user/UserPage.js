@@ -4,17 +4,46 @@ import BeanBoard from "../beans/BeanBoard";
 import ProjectsBoard from "../projects/ProjectsBoard";
 import ProjectApi from "../../api/ProjectApi";
 import UserContext from "../../UserContext";
+import BeanApi from "../../api/BeanApi";
+import Api from "../../api/Api";
+import UserMenu from "./UserMenu";
 
 
 
 // eslint-disable-next-line react/prop-types
 function UserPage() {
-    const [projects, setProjects] = useState([]);
+    const [currentTime, setCurrentTime] = useState("");
     const user = useContext(UserContext);
     const userId = user.id;
-    console.log(user);
-    console.log(userId);
-    console.log(JSON.stringify(projects));
+
+    const [projects, setProjects] = useState([]);
+    const [presetBeans, setPresetBeans] = useState([]);
+    const [addedBeans, setAddedBeans] = useState([]);
+
+
+    function getCurrentTime() {
+        let today = new Date();
+        let date = today.toLocaleDateString();
+        setCurrentTime(date);
+        console.log(date);
+    }
+
+
+    function getPresetBeans() {
+        return BeanApi.getPresets()
+            .then(response => setPresetBeans(response.data));
+    }
+
+    const getAllBeans = () => {
+        return Api.getAllBeans()
+            .then(response => setAddedBeans(response.data))
+            .then(console.log("get all beans" + JSON.stringify(addedBeans)));
+    }
+
+    const createBean = (newBeanData) => {
+        return Api.createNewBean(newBeanData)
+            .then(response => setAddedBeans([...addedBeans, response.data]))
+    }
 
     const getAllProjects = () => {
         return ProjectApi.getCurrentUsersProjects(userId)
@@ -27,7 +56,10 @@ function UserPage() {
     }
 
     useEffect(() => {
-        getAllProjects(userId)
+        getPresetBeans(),
+            getAllBeans,
+            getAllProjects(userId),
+            getCurrentTime()
     }, [user]);
 
 
@@ -35,12 +67,22 @@ function UserPage() {
         <div className="user-page">
             <Header />
 
-            <div className="main-content">
-                {/*eslint-disable-next-line react/prop-types*/}
-                <p className="welcome"> Hello, {user.name}</p>
-                <BeanBoard />
-                <ProjectsBoard creator={user} projects={projects} createProject={createProject} />
-            </div>
+            <main className="main-content">
+                
+                <UserMenu
+                    user={user}
+                    currentTime={currentTime}
+                />
+
+                <BeanBoard
+                    presetBeans={presetBeans}
+                    addedBeans={addedBeans}
+                    createBean={createBean} />
+                <ProjectsBoard
+                    creator={user}
+                    projects={projects}
+                    createProject={createProject} />
+            </main>
         </div>
     );
 }

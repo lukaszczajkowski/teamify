@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
 import TaskActions from "./TaskActions";
+import {Draggable} from "react-beautiful-dnd";
 
 // *****************The code below has been refactored to css **********************
 // import {Paper} from '@material-ui/core';
@@ -14,49 +15,65 @@ import TaskActions from "./TaskActions";
 // }));
 
 // eslint-disable-next-line react/prop-types
-export default function TaskCard({ task, deleteTask, updateTask }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, index }) {
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
 
     const onDeleteTask = () => {
-        // eslint-disable-next-line react/prop-types
-        if (window.confirm(`Do you want to delete task ${task.id}?\n**Redesign this to a popup later**`)) {
-
             // eslint-disable-next-line react/prop-types
             deleteTask(task.id);
-        }
+        
     }
 
-    const openPopup = () => {
+    const onUpdateTask = () => {
         setPopupIsOpen(true);
+    }
 
+    const onClosePopup = () => {
+        setPopupIsOpen(false);
     }
 
     return (
         <div>
-            <div className="task-card">
-                <div className="flex-between">
-                    <div className="flex-grow" onClick={openPopup}>
-                        {/* eslint-disable-next-line react/prop-types*/}
-                        <p className="task-title">{task.title}</p>
-                        {/* <Paper className={classes.card}>{task.title}</Paper> */}
-                    </div>
-                    <TaskActions onDeleteTask={onDeleteTask}/>
+        {/* eslint-disable-next-line react/prop-types*/}
+        <Draggable draggableId={task.id.toString()} index={index}>{
+            (provided) => (
+                <div ref={provided.innerRef} 
+                {...provided.dragHandleProps} 
+                {...provided.draggableProps}>
+        <div className="task-card">
+            
+       
 
-                </div>
-                <div className="task-member">
-
+           
+            <div className="flex-between">
+                <div className="flex-grow">
                     
+                    
+                 {/* eslint-disable-next-line react/prop-types*/}
+                <p className="task-title">{task.title}</p>
+                    {/* <Paper className={classes.card}>{task.title}</Paper> */}
                 </div>
 
+                <TaskActions
+                    onDeleteTask={onDeleteTask}
+                    onUpdateTask={onUpdateTask} />
             </div>
+            <div className="task-member"></div>
 
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
-                deleteTask={deleteTask}
                 updateTask={updateTask}
-                onClose={(v) => setPopupIsOpen(v)} />
+                addMemberToTask={addMemberToTask}
+                deleteMemberFromTask={deleteMemberFromTask}
+          onClose={onClosePopup} />
+          </div>
+          
         </div>
+        )}
+        </Draggable>
+        </div>
+       
     );
 }

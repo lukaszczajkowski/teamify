@@ -1,0 +1,23 @@
+#bean-popup .prompt {
+    color: var(--theme-purple);
+   
+  }
+
+  #bean-popup .sub-prompt {
+      color: var(--text-dark-grey);
+  }
+
+  #bean-popup .close:hover {
+      color: var(--theme-purple);
+  }
+
+  #bean-popup #add-bean {
+      color: white;
+      background-color: var(--bg-dark-grey);
+  }
+
+  #bean-popup #add-bean:hover {
+      background-color: var(--theme-purple);
+      border-color: transparent;
+
+  }

@@ -7,7 +7,7 @@ class UserApi {
      * @param {Long} projectId 
      */
     getUsersSummaries(projectId) {
-        return Api.get('/users/summaries' + projectId);
+        return Api.get('/users/summaries/' + projectId);
     }
 
     /**

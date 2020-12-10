@@ -21,10 +21,13 @@ export default function Calendar() {
     const [currentEvent, setCurrentEvent] = useState({});
     const [changesMade, setChangesMade] = useState(false);
     const [emailRemoved, setEmailRemoved] = useState(false);
+    const [date, setDate] = useState("");
+    const [purpose, setPurpose] = useState("");
 
     
-    useEffect( async () => {
+    useEffect(() => {
         loadData();
+        setDate("");
     }, [changesMade]);
 
     const loadData = async () => {
@@ -34,31 +37,41 @@ export default function Calendar() {
         })
     }
 
-    const handleDateClick = async (e) => {
-        if(confirm('Would you like to add an event to ' + e.dateStr + '?')) {
-            var startDate = new Date(e.dateStr);
-            var startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
+    const createEvent = (data) => {
+        const usersToInvite = [];
+        data.emails.forEach(email => UserApi.getUserByEmail(email).then(
+            response => usersToInvite.push(response.data)
+        ));
+        const startDate = new Date(date);
+        const startDateOutput = new Date(startDate.getFullYear(), startDate.getMonth(),
              startDate.getDate(), startDate.getHours(), startDate.getMinutes() + 60)
-            var startInMililis = startDate.getMilliseconds();
-            var endDate = startInMililis + 60000*30;
-            var endDateOutput = new Date(endDate.toDateString)
-            const newEvent = {
-                title: 'test event',
-                description : 'test description',
-                start: startDateOutput,
-                end: endDateOutput,
-                allDay: false,
-                editable: true,
-            }
-            await EventApi.create(newEvent).then(response => {
-                const events = response.data;
-                setCalendarEvents([...calendarEvents, events]);
-            });
-            setChangesMade(!changesMade);
+        const startInMillis = startDateOutput.getTime();
+        const end = new Date(startInMillis + 30*6000);
+        var endDateOutput = new Date(end.getFullYear(), end.getMonth(),
+        end.getDate(), end.getHours(), end.getMinutes() + 60)
+        const eventToAdd = {
+            title: data.eventTitle,
+            description: data.eventDescription,
+            start: startDateOutput,
+            end: endDateOutput,
+            users: usersToInvite,
+            allDay: false,
+            editable: true
         }
+
+        EventApi.create(eventToAdd)
+                .then(response => setCalendarEvents([...calendarEvents, response.data]));
+        setChangesMade(!changesMade);
+    }
+
+    const handleDateClick = (e) => {
+        setPurpose('create');
+        setDate(e.dateStr);
+        setPopupOpen(true);
     };
 
     const handleEventClick = (info) => {
+        setPurpose('update')
         setCurrentEvent(info.event);
         setChangesMade(!changesMade);
         setPopupOpen(true);
@@ -198,7 +211,7 @@ export default function Calendar() {
         <div>
             <ProjectHeader/>
         <FullCalendar
-            initialView = "dayGridMonth"
+            initialView = "timeGridWeek"
             headerToolbar={{
                 left: 'prev, next, today',
                 center: 'title',
@@ -210,7 +223,7 @@ export default function Calendar() {
             eventClick = {(info) => handleEventClick(info)}
             eventChange = {(info) => handleEventChange(info)}
         />
-            <div className="create-bean-card">
+            <div className="event-popup">
                 <div className="popup-container">
                 <EventPopup isOpen = {popupOpen} 
                 defaultOpen = {false}
@@ -224,6 +237,8 @@ export default function Calendar() {
                 emailRemoved = {emailRemoved}
                 closeOnDocumentClick = {true}
                 closeOnEscape = {false}
+                createEvent = {createEvent}
+                purpose = {purpose}
                 />
                 </div>
             </div>
