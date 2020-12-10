@@ -4,12 +4,14 @@ import BeanApi from "../../api/BeanApi";
 import WellBeanPopup from "./WellBeanPopup";
 import MessagePopup from "../reusables/MessagePopup";
 import BeanActions from "./BeanActions";
+import UpdateBeanPopup from "./UpdateBeanPopup";
 
 export default function BeanCard({ bean, updateBean, deleteBean }) {
     const [isCollectible, setIsCollectible] = useState(true);
     const [lastEventTime, setLastEventTime] = useState();
     const [openWellBean, setOpenWellBean] = useState(false);
     const [openWarning, setOpenWarning] = useState(false);
+    const [openUpdate, setOpenUpdate] = useState(false);
 
     const {
         // eslint-disable-next-line no-unused-vars
@@ -53,16 +55,13 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
         }
     };
 
+    const onUpdateBean = () => {
+        setOpenUpdate(true);
+        
+    }
+
     const onDeleteBean = () => {
         deleteBean(id);
-    }
-
-    const onCloseWellBean = () => {
-        setOpenWellBean(false);
-    }
-
-    const onCloseWarning = () => {
-        setOpenWarning(false);
     }
 
 
@@ -73,19 +72,26 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
                 <button onClick={onCollect}>
                     <img className="bean-icon" src={BeanIcon} />
                 </button>
-                    <BeanActions
-                        currentBean={bean}
-                        onDeleteBean={onDeleteBean}
-                    />
+                <BeanActions
+                    currentBean={bean}
+                    onUpdateBean={onUpdateBean}
+                    onDeleteBean={onDeleteBean}
+
+                />
             </div>
 
+            <UpdateBeanPopup
+            isOpen={openUpdate} 
+            currentBean={bean} 
+            updateBean={updateBean} 
+            onClose={() => setOpenUpdate(false)}
 
-
+            />
 
             {
                 openWellBean ?
                     <WellBeanPopup
-                        onClose={onCloseWellBean} />
+                        onClose={setOpenWellBean(false)} />
                     : null
 
             }
@@ -93,7 +99,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
             {
                 openWarning ? <MessagePopup
                     message="Collect when you finish the task!"
-                    onClose={onCloseWarning} />
+                    onClose={setOpenWarning(false)} />
                     : null
             }
         </div>

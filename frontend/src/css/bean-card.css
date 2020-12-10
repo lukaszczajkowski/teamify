@@ -1,13 +1,13 @@
 .bean-card {
-    background-color: antiquewhite;
     margin-right: 20px;
-    width: 80px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     border-radius: 5px;
 }
 
 .bean-card:hover {
-    background-color: 
+    background: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    transition: all 0.3s;
 }
 
 
@@ -67,3 +67,11 @@
     color: white;
 }
 
+#bean-action .action-button {
+    font-size: 16px;
+}
+#bean-action .action-button:hover {
+    color: white;
+    background-color: transparent;
+    border-color: transparent;
+}

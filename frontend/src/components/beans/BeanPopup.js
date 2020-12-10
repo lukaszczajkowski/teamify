@@ -24,11 +24,10 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
         console.log(JSON.stringify(beanData));
         createBean(beanData);
         ()=> {onAddBean}; 
+        onClose();
     };
 
-// Added value and onChange property to the input fields
-// value={points}
-// onChange={e => setPoints(e.target.value)}
+    
 
     return (
         <div className="bean-popup">
