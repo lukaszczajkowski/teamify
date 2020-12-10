@@ -3,8 +3,8 @@
     flex-direction: column;
 }
 
-.user-page .user-header {
-    margin-bottom: 3vh;
+.user-page .user-menu {
+    margin-bottom: 18px;
 }
 
 .user-page .user-prompt{
@@ -12,7 +12,6 @@
     /* font-weight: 600;
     font-family: 'Rubik', sans-serif; */
     color: var(--theme-dark-green);
-    margin-left: 5vw;
 }
 
 .user-page #user-name {
@@ -20,8 +19,27 @@
     margin-left: 10px;
 }
 
-.user-page .time-prompt {
+.user-page .user-menu .time-prompt {
     font-size: 24px;
     margin-left: 6vw;
     color: var(--theme-dark-green);
+}
+
+.user-page .user-menu #current-time {
+    margin-left: 10px;
+}
+
+.user-page .user-menu .calendar-icon {
+    margin-right: 10px;
+    color: var(--theme-dark-green);
+}
+
+
+
+.user-menu .board-container {
+    max-width: 1024px;
+    margin: auto;
+    background-color: transparent;
+    padding: 20px 0;
+
 }

@@ -1,4 +1,4 @@
-.bean-card .bean-popup {
+.bean-card .well-bean-popup {
     width: 100%;
     height: 100%;
     display: block;
@@ -18,8 +18,9 @@
     /* Black w/ opacity */
 }
 
-.bean-popup .popup-content {
-    background-color: var(--theme-green);
+.well-bean-popup .popup-content {
+    background-color: #07b4b5;
+    background-image: linear-gradient(76deg, #07b4b5 0%, #8f34eb 100%);
     margin: auto;
     padding: 10px;
     border-radius: 5px; 
@@ -29,26 +30,26 @@
 .popup-content .content {
     margin-top: 14px;
 }
-.bean-popup img {
+.well-bean-popup img {
     width: 36px;
     margin-right: 3px;
 }
 
-.bean-popup p {
-    color: var(--theme-purple);
+.well-bean-popup p {
+    color: white;
     margin-top: 5px;
     font-size: 18px;
     font-weight: bold;
 }
 
 .bean-popup .close-button {
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .close-button:hover,
 .close-button:focus {
     cursor: pointer;
-    color: var(--theme-purple);
+    color: white;
 
 
 }

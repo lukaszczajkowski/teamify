@@ -4,6 +4,7 @@ import BeanPopup from "./BeanPopup";
 // eslint-disable-next-line react/prop-types
 export default function BeanButton({ bean, createBean }) {
     const [popupIsOpen, setPopupIsOpen] = useState(false);
+    const [isAdded, setIsAdded] = useState(false);
 
     const onCreateBean = () => {
         setPopupIsOpen(true);
@@ -13,21 +14,35 @@ export default function BeanButton({ bean, createBean }) {
         setPopupIsOpen(false);
     }
 
+    const onAddBean = () => {
+        setIsAdded(true);
+    }
+
     return (
         <div>
+            {
+                isAdded ?
+                
+                    <div>
+                        <button className="added-button button">{bean.title}</button>
+                    </div> :
 
-            <button className="bean-button button"
-                onClick={onCreateBean}>
+                    <div>
+                        <button className="bean-button button"
+                            onClick={onCreateBean}>
 
-                {/* eslint-disable-next-line react/prop-types */}
-                {bean.title}
-            </button>
-            <BeanPopup
-                isOpen={popupIsOpen}
-                initialData={bean} 
-                createBean={createBean} 
-                onClose={onClosePopup}/>
+                            {/* eslint-disable-next-line react/prop-types */}
+                            {bean.title}
+                        </button>
 
+                        <BeanPopup
+                            isOpen={popupIsOpen}
+                            initialData={bean}
+                            createBean={createBean}
+                            onAddBean={onAddBean}
+                            onClose={onClosePopup} />
+                    </div>
+            }
         </div>
 
     );

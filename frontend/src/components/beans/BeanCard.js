@@ -13,10 +13,10 @@ export default function BeanCard() {
 
             {
                 click ?
-                    <div className="bean-popup">
+                    <div className="well-bean-popup">
 
                         <div className="popup-content">
-                            <span onClick={handleClick} className=" close-button flex-end">&times;</span>
+                            <span onClick={handleClick} className=" close-button flex-end"><i className="fas fa-times"></i></span>
                             <div className="flex-column content">
                                 <div className="flex-center">
                                     <img src={BeanIcon} />

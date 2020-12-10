@@ -2,6 +2,8 @@ import React from "react";
 import BeanIcon from "../../assets/beanicon.png";
 import BeanCard from "./BeanCard";
 import PresetBeans from "./PresetBeans";
+import CreateBeanButton from "./CreateBeanButton";
+
 
 // eslint-disable-next-line react/prop-types
 export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
@@ -21,7 +23,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
                             <p className="sub-prompt">Click to add new beans to your calendar</p>
                         </div>
 
-                        <div className="bean-buttons">
+                        <div className="bean-buttons flex-center">
 
 
                             <PresetBeans
@@ -30,7 +32,8 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean }) {
 
 
 
-                            <button className="button">+ Create a new bean</button>
+                            <CreateBeanButton/>
+                           
 
                         </div>
                     </div>
