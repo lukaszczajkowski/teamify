@@ -53,7 +53,9 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
 
-        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientName(),
+        System.out.println("Recipient id = " + chatMessage.getRecipientId().toString());
+
+        messagingTemplate.convertAndSendToUser(String.valueOf(chatMessage.getRecipientId()),
                 "/queue/messages",
                 new ChatNotification(
                         saved.getId(),
@@ -79,7 +81,9 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
 
-        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientName(),
+        System.out.println("Recipient id = " + chatMessage.getRecipientId().toString());
+
+        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientId().toString(),
                 "/queue/messages",
                 new ChatNotification(
                         saved.getId(),

@@ -120,7 +120,7 @@ function ProjectPage() {
 
     return (
         <div className="project-page">
-            <ProjectHeader />
+            <ProjectHeader project = {currentProject} />
 
             <div className="flex-start">
                 <ProjectMenu
