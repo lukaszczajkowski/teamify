@@ -1,19 +1,22 @@
+.project-header {
+    margin-bottom: 10px;
+}
 .project-header .icon {
     height: 30px;
     width: 30px;
 }
-.project-header .member-nav {
-    margin-top: 15px;
-    margin-left: 15px;
+.project-header .project-nav {
+   background-color: var(--bg-light-grey);
+    padding: 20px 0px 10px 33px; 
 }
-.project-header .nav-item {
-    margin: 5px;
+.project-header .project-nav-item {
+    margin-right: 12px;
 }
 
-.project-header .calendar-icon {
-    display: inline-block;
-    line-height: 30px;
+.project-header .font-icon {
+
+    margin-bottom: 3px;
     text-align: center;
-    font-size: 23px;
-    color: black;
+    font-size: 25px;
+    color: rgb(75, 75, 75);
 }
