@@ -13,6 +13,10 @@ class BeanApi {
         return Api.get(`/beans/${beanId}`);
     }
 
+    getLastEventTimeById(beanId) {
+        return Api.get(`/beanLastEventTime/${beanId}`);
+    }
+
     createNewBean(bean) {
         return Api.post("/beans", bean);
     }

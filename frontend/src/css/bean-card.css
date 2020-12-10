@@ -1,4 +1,7 @@
-.bean-card .well-bean-popup {
+.bean-card 
+
+
+.well-bean-popup {
     width: 100%;
     height: 100%;
     display: block;
@@ -50,7 +53,5 @@
 .close-button:focus {
     cursor: pointer;
     color: white;
-
-
 }
 
