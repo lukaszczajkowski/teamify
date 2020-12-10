@@ -4,6 +4,8 @@ import TaskApi from "../../api/TaskApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
+import { Droppable } from 'react-beautiful-dnd';
+
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category, updateCategory, deleteCategory, projectId }) {
@@ -107,14 +109,22 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                     tasks === null ?
                         null :
                         <div>
-                            {tasks.map(task => (
-                                <TaskCard key={task.id}
-                                    task={task}
-                                    deleteTask={deleteTask}
-                                    updateTask={updateTask}
-                                    addMemberToTask={addMemberToTask}
-                                    deleteMemberFromTask={deleteMemberFromTask} />
-                            ))}
+                            <Droppable droppableId={categoryId.toString()}>
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                    {tasks.map(task => (
+                                        <TaskCard key={task.id}
+                                            task={task}
+                                            deleteTask={deleteTask}
+                                            updateTask={updateTask}
+                                            addMemberToTask={addMemberToTask}
+                                            deleteMemberFromTask={deleteMemberFromTask} />
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                           
                         </div>
                 }
             </div>
