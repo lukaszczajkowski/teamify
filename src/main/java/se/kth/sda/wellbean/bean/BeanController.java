@@ -51,6 +51,18 @@ public class BeanController {
     public Optional<Bean> getBeanByBeanId(@PathVariable Long beanId) {
         return beanService.findByBeanId(beanId);
     }
+    
+    @GetMapping("/beanLastEventTime/{beanId}")
+    public LocalDateTime getBeanLastEventTime(@PathVariable Long beanId) {
+        List<Event> beanEvents = eventService.getEventsByBeanId(beanId);
+        LocalDateTime beanLastEventTime = null;
+        for (Event event: beanEvents) {
+            if(beanLastEventTime == null || beanLastEventTime.isBefore(event.getEnd())) {
+                beanLastEventTime = event.getEnd();
+            }
+        }
+        return beanLastEventTime;
+    }
 
     @PostMapping("")
     public Bean createBean(@RequestBody BeansPreSet customBeanDetails) {
