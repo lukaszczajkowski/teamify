@@ -15,7 +15,7 @@ import {Draggable} from "react-beautiful-dnd";
 // }));
 
 // eslint-disable-next-line react/prop-types
-export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, index }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, index }) {
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
@@ -68,6 +68,7 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                 addMemberToTask={addMemberToTask}
                 deleteMemberFromTask={deleteMemberFromTask}
                 addComment = {addCommentToTask}
+                updateComment = {updateCommentTask}
 
           onClose={onClosePopup} />
           </div>

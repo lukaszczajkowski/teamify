@@ -24,7 +24,8 @@ export default function Comments({task, onCreate, onUpdate, onDelete}){
             body: text,
         }
         console.log("Update comment", newComment)
-        // onUpdate(task, newComment)
+        onUpdate(task, newComment)
+        setIsCreatingNewComment(false)
     }
 
     if (onCreate == "qweqweqw") {
