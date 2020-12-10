@@ -3,9 +3,10 @@ import Popup from "reactjs-popup";
 import UserApi from '../../api/UserApi';
 import MemberCard from "../projects/MemberCard";
 import EditableText from "../projects/EditableText";
+import Comments from "../comments/Comments";
 
 
-export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose }) {
+export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
     console.log(currentTask);
 
     const {
@@ -141,18 +142,15 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
                         </div>
 
-                        {/* <div className="popup-item flex-start"> 
+                         <div className="popup-item flex-start"> 
                             <h2 className="prompt">Comments</h2>
-                            <textarea
-                                className="input-box"
-                                placeholder=""
-                                value={comments}
-                                onChange={e => {
-                                    setTaskComments(e.target.value);
-                                }}
-                            >
-                            </textarea>
-                        </div> */}
+                            <Comments 
+                                task={currentTask}
+                                onCreate={addComment}
+                                onUpdate={updateComment}
+                                OnDelete={deleteComment}
+                            />
+                        </div> 
                     </div>
                 </div>
             </Popup>
