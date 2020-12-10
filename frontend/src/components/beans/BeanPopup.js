@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Popup from "reactjs-popup";
 
 // eslint-disable-next-line react/prop-types
-export default function BeanPopup({ isOpen, initialData, createBean, onClose }) {
+export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, onClose }) {
 
     const {
         // eslint-disable-next-line react/prop-types
@@ -21,7 +21,7 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
             eventCount: beanEventCount, 
             duration: beanDuration};
         createBean(beanData);
-
+        () => {onAddBean}; 
     };
 
 // Added value and onChange property to the input fields
@@ -29,7 +29,7 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
 // onChange={e => setPoints(e.target.value)}
 
     return (
-        <div className="popup" id="create-bean">
+        <div className="bean-popup">
             <div className="popup-container">
                 <Popup
                    open={isOpen}
@@ -38,7 +38,7 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
                     onClose={onClose}
                     >
                     
-                        <div className="modal">
+                        <div className="modal" id="bean-popup">
                             <button className="close" onClick={onClose}>
                                 <i className="fas fa-times"></i>
                             </button>
@@ -59,8 +59,9 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
                                     <h2 className="prompt">Description</h2>
                                     <textarea
                     
-                                        className="input-box"
+                                        className="input-box text-area"
                                         placeholder=""
+                                        rows="6" cols="50"
                                         value={beanDescription}
                                         onChange={e => setBeanDescription(e.target.value)}
                                     />
@@ -75,7 +76,7 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
 
                                     <input
                                         type="number"
-                                        className="input-slide"
+                                        className="input-box"
                                         min="0"
                                         max="10"
                                         value={beanEventCount}
@@ -87,12 +88,12 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
                                 <div className="popup-item">
                                     <div className="flex-start">
                                         <h2 className="prompt">Duration</h2>
-                                        <h6 className="sub-prompt">How much time does it take for one task?</h6>
+                                        <h6 className="sub-prompt">How many minutes does one task take?</h6>
                                     </div>
 
                                     <input
                                         type="number"
-                                        className="input-slide"
+                                        className="input-box"
                                         min="0"
                                         max="60"
                                         value={beanDuration}
@@ -105,6 +106,7 @@ export default function BeanPopup({ isOpen, initialData, createBean, onClose }) 
                             <div className="flex-end">
                                 <button
                                 className="button"
+                                id="add-bean"
                                 onClick={onCreateBean}>
                                 Add
                             </button>

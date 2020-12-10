@@ -4,9 +4,9 @@ import BeanBoard from "../beans/BeanBoard";
 import ProjectsBoard from "../projects/ProjectsBoard";
 import ProjectApi from "../../api/ProjectApi";
 import UserContext from "../../UserContext";
-import randomColor from "randomcolor";
 import BeanApi from "../../api/BeanApi";
 import Api from "../../api/Api";
+import UserMenu from "./UserMenu";
 
 
 
@@ -68,23 +68,15 @@ function UserPage() {
             <Header />
 
             <main className="main-content">
-                <div className="user-header flex-between">
-                    <div className="user-prompt">
-                        <span className="prompt"> Hello,</span>
-                        {/*eslint-disable-next-line react/prop-types*/}
-                        <span id="user-name">{user.name}</span>
-                    </div>
-
-                    {/* This section below is for testing displaying time and using random color */}
-                    <div className="time-prompt">
-                        <span className="promt">today: </span>
-                        <span id="current-time" style={{ color: `${randomColor()}` }}>{currentTime}</span>
-                    </div>
-                </div>
+                
+                <UserMenu
+                    user={user}
+                    currentTime={currentTime}
+                />
 
                 <BeanBoard
                     presetBeans={presetBeans}
-                    addedBeans={addedBeans} 
+                    addedBeans={addedBeans}
                     createBean={createBean} />
                 <ProjectsBoard
                     creator={user}
