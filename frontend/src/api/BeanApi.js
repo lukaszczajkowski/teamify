@@ -26,11 +26,11 @@ class BeanApi {
     }
 
     updateBean(updatedBean) {
-        return Api.put("/beans", updatedBean);
+        return Api.put("/beans/", updatedBean);
     }
 
     deleteBean(beanId) {
-        return Api.delete("/beans" + beanId);
+        return Api.delete("/beans/" + beanId);
     }
 }
 

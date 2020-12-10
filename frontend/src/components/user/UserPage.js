@@ -43,11 +43,17 @@ function UserPage() {
             .then(response => setAddedBeans([...addedBeans, response.data]))
     };
 
-    // const updateBean = (updatedBean) => {
-    //     return BeanApi.updateBean(updatedBean)
-    //     .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
+    const updateBean = (updatedBean) => {
+        return BeanApi.updateBean(updatedBean)
+        .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
         
-    // }
+    }
+
+    const deleteBean = (beanId) => {
+        return BeanApi.deleteBean(beanId)
+        .then(() => setAddedBeans(addedBeans.filter(b => b.id !== beanId)));
+
+    }
 
     const getAllProjects = () => {
         return ProjectApi.getCurrentUsersProjects(userId)
@@ -81,7 +87,11 @@ function UserPage() {
                 <BeanBoard
                     presetBeans={presetBeans}
                     addedBeans={addedBeans}
-                    createBean={createBean} />
+                    createBean={createBean} 
+                    updateBean={updateBean} 
+                    deleteBean={deleteBean} 
+                    />
+                    
                 <ProjectsBoard
                     creator={user}
                     projects={projects}

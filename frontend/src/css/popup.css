@@ -107,19 +107,22 @@
 
 .message-popup .popup-content {
   background-color: white;
-  width: 40vw;
+  width: 30vw;
   height: 30vh;
   margin: auto;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .message-popup .close-button {
-  font-size: 30px;
+  font-size: 28px;
+  margin-right: 10px;
+  margin-top: 8px;
+
 }
 
-.close-button:hover,
-.close-button:focus {
+.message-popup .close-button:hover,
+.message-popup .close-button:focus {
   cursor: pointer;
-  color: white;
+  color: var(--theme-green);
 }

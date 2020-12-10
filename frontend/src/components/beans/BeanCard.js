@@ -3,9 +3,9 @@ import BeanIcon from "../../assets/bean-black.png";
 import BeanApi from "../../api/BeanApi";
 import WellBeanPopup from "./WellBeanPopup";
 import MessagePopup from "../reusables/MessagePopup";
+import BeanActions from "./BeanActions";
 
-export default function BeanCard({ bean }) {
-
+export default function BeanCard({ bean, updateBean, deleteBean }) {
     const [isCollectible, setIsCollectible] = useState(true);
     const [lastEventTime, setLastEventTime] = useState();
     const [openWellBean, setOpenWellBean] = useState(false);
@@ -22,9 +22,15 @@ export default function BeanCard({ bean }) {
             .then(response => setLastEventTime(response.data));
     };
 
-    // const completeBean = () => {
-    //     return BeanApi.updateBean()
-    // }
+    const completeBean = () => {
+        const completedBean = {
+            id: id,
+            title: title,
+            description: description,
+            completed: true
+        }
+        updateBean(completedBean);
+    }
 
     const checkIfCollectible = () => {
         getLastEventTimeById(id);
@@ -38,12 +44,18 @@ export default function BeanCard({ bean }) {
     const onCollect = () => {
         checkIfCollectible();
         if (isCollectible) {
-            setOpenWarning(true);
-            
-        } else {
             setOpenWellBean(true);
+            completeBean();
+
+
+        } else {
+            setOpenWarning(true);
         }
     };
+
+    const onDeleteBean = () => {
+        deleteBean(id);
+    }
 
     const onCloseWellBean = () => {
         setOpenWellBean(false);
@@ -57,13 +69,19 @@ export default function BeanCard({ bean }) {
     return (
         <div>
             <div className=" bean-card flex-column">
-               
+
                 <button onClick={onCollect}>
                     <img className="bean-icon" src={BeanIcon} />
-                </button> 
-                <p>{title}</p>
-
+                </button>
+                    <BeanActions
+                        currentBean={bean}
+                        onDeleteBean={onDeleteBean}
+                    />
             </div>
+
+
+
+
             {
                 openWellBean ?
                     <WellBeanPopup

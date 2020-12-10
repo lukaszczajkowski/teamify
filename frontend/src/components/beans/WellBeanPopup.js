@@ -3,7 +3,7 @@ import BeanIcon from "../../assets/bean-black.png";
 
 export default function WellBeanPopup({onClose}) {
     return (
-        <div className="well-bean-popup">
+        <div id="well-bean">
             <div className="popup-content">
                 <span onClick={onClose} className=" close-button flex-end"><i className="fas fa-times"></i></span>
                 <div className="flex-column content">
