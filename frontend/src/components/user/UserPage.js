@@ -5,7 +5,6 @@ import ProjectsBoard from "../projects/ProjectsBoard";
 import ProjectApi from "../../api/ProjectApi";
 import UserContext from "../../UserContext";
 import BeanApi from "../../api/BeanApi";
-import Api from "../../api/Api";
 import UserMenu from "./UserMenu";
 
 
@@ -34,30 +33,35 @@ function UserPage() {
             .then(response => setPresetBeans(response.data));
     }
 
-    const getAllBeans = () => {
-        return Api.getAllBeans()
-            .then(response => setAddedBeans(response.data))
-            .then(console.log("get all beans" + JSON.stringify(addedBeans)));
+    function getAllBeans() {
+        return BeanApi.getAllBeans()
+            .then(response => setAddedBeans(response.data));
     }
 
     const createBean = (newBeanData) => {
-        return Api.createNewBean(newBeanData)
+        return BeanApi.createNewBean(newBeanData)
             .then(response => setAddedBeans([...addedBeans, response.data]))
-    }
+    };
+
+    // const updateBean = (updatedBean) => {
+    //     return BeanApi.updateBean(updatedBean)
+    //     .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
+        
+    // }
 
     const getAllProjects = () => {
         return ProjectApi.getCurrentUsersProjects(userId)
             .then(response => setProjects(response.data));
-    }
+    };
 
     const createProject = (projectData) => {
         ProjectApi.createProject(projectData)
             .then(response => setProjects([response.data, ...projects]));
-    }
+    };
 
     useEffect(() => {
         getPresetBeans(),
-            getAllBeans,
+            getAllBeans(),
             getAllProjects(userId),
             getCurrentTime()
     }, [user]);

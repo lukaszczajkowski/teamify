@@ -19,9 +19,11 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
             title: beanTitle, 
             description: beanDescription, 
             eventCount: beanEventCount, 
-            duration: beanDuration};
+            duration: beanDuration
+        };
+        console.log(JSON.stringify(beanData));
         createBean(beanData);
-        () => {onAddBean}; 
+        ()=> {onAddBean}; 
     };
 
 // Added value and onChange property to the input fields
