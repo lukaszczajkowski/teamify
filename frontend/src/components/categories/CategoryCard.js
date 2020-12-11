@@ -116,37 +116,37 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                 <CategoryActions onDeleteCategory={onDeleteCategory}/>
                 
             </div>
-
+            <Droppable droppableId={categoryId.toString()}>
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
             <div className="tasks-list">
                 {
                     tasks === null ?
                         null :
                         <div>
-                            <Droppable droppableId={categoryId.toString()}>
-                                {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {tasks.map((task, index) => (
-                                        <TaskCard key={task.id}
-                                            task={task}
-                                            index={index}
-                                            deleteTask={deleteTask}
-                                            updateTask={updateTask}
-                                            addMemberToTask={addMemberToTask}
-                                            addCommentToTask={addCommentToTask}
-                                            updateCommentTask={updateCommentTask}
-                                            deleteMemberFromTask={deleteMemberFromTask} />
+                             {tasks.map((task, index) => (
+                                <TaskCard key={task.id}
+                                    task={task}
+                                    index={index}
+                                    deleteTask={deleteTask}
+                                    updateTask={updateTask}
+                                    addMemberToTask={addMemberToTask}
+                                    addCommentToTask = {addCommentToTask}
+                                    updateCommentTask = {updateCommentTask}
+                                    deleteMemberFromTask={deleteMemberFromTask} />
                                       ))}
 
                                             
 
                                         {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                           
+                                   
                         </div>
                 }
             </div>
+            </div>
+              )}
+            </Droppable>
+                           
 
             <CreateTaskCard
                 onSubmit={createTask}

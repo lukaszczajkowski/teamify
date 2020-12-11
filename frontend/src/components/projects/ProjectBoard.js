@@ -4,24 +4,22 @@ import CategoryCard from "../categories/CategoryCard";
 import {DragDropContext} from 'react-beautiful-dnd';
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectBoard( {projectId, categories, createCategory, updateCategory, deleteCategory, category }) {
+export default function ProjectBoard( {projectId, categories, createCategory, updateCategory, deleteCategory}) {
     const onDragEnd = (result) => {
         const {destination, source, draggableId} = result;
-        console.log("destination", destination, "source", source, draggableId);
-        if (!result.destination) {
+        if (!destination) {
             return;
             }
-        let sourceIdx = parseInt(result.source.index)
-        let destIdx = parseInt(result.destination.index)
-         {/* eslint-disable-next-line react/prop-types */}
-        let draggingCard = category.task[sourceIdx]
-         {/* eslint-disable-next-line react/prop-types */}
-        let newList = category.task.slice();
-        newList.splice(sourceIdx, 1);
-        newList.splice(destIdx, 0, draggingCard)
-         {/* eslint-disable-next-line react/prop-types */}
-        category.task = newList;
-    }
+        const sourceCategory = categories[source.droppableId];
+        const destinationCategory = categories[destination.droppableId];
+        const draggingTask = sourceCategory.tasks.filter(
+            (task) => task.id === draggableId
+        )[0];
+        if (source.droppableId === destination.droppableId){
+            sourceCategory.tasks.splice(source.index, 1);
+            destinationCategory.tasks.splice(destination.index, 0, draggingTask);
+        }
+    };
     
     return (
         <div className="project-board flex-start">
