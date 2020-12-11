@@ -16,6 +16,7 @@ import {Draggable} from "react-beautiful-dnd";
 
 // eslint-disable-next-line react/prop-types
 export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, index }) {
+    
     // const classes = useStyle();
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
@@ -43,15 +44,11 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                 {...provided.dragHandleProps} 
                 {...provided.draggableProps}>
         <div className="task-card">
-            
-       
-
-           
-            <div className="flex-between">
+             <div className="flex-between">
                 <div className="flex-grow">
                     
                     
-                 {/* eslint-disable-next-line react/prop-types*/}
+ {/* eslint-disable-next-line react/prop-types*/}
                 <p className="task-title">{task.title}</p>
                     {/* <Paper className={classes.card}>{task.title}</Paper> */}
                 </div>
