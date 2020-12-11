@@ -50,7 +50,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean, updateB
                             addedBeans !== undefined ?
                                 <div className="bean-cards flex-start">
                                     {/* eslint-disable-next-line react/prop-types */}
-                                    {addedBeans.map(bean => (
+                                    {addedBeans.filter(bean => bean.completed != true).map(bean => (
                                         <BeanCard
                                             key={bean.id}
                                             bean={bean}

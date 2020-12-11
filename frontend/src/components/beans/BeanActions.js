@@ -5,8 +5,6 @@ import useComponentVisible from "../hooks/useComponentVisible";
 // eslint-disable-next-line react/prop-types
 export default function BeanActions({ currentBean, onUpdateBean, onDeleteBean }) {
 
-    console.log("on bean actions. current bean:" + currentBean);
-
     const {
         ref,
         isComponentVisible,

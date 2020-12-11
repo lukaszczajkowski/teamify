@@ -36,7 +36,9 @@ export default function CreateProjectCard({ onSubmit}) {
                                 <button className="close" onClick={close}>
                                     <i className="fas fa-times"></i>
                                 </button>
-                                <div className="header">New Project</div>
+                                <div className="header">
+                                    <h1 className="header-title"> New Project</h1>
+                                   </div>
                                 <div className="content">
                                     <div className="popup-item flex-start">
                                         <h2 className="prompt">Name</h2>
