@@ -5,9 +5,10 @@ import WellBeanPopup from "./WellBeanPopup";
 import MessagePopup from "../reusables/MessagePopup";
 import BeanActions from "./BeanActions";
 import UpdateBeanPopup from "./UpdateBeanPopup";
+import { Link } from "react-router-dom";
 
 export default function BeanCard({ bean, updateBean, deleteBean }) {
-    const [isCollectible, setIsCollectible] = useState(true);
+    const [isCollectible, setIsCollectible] = useState(false);
     const [lastEventTime, setLastEventTime] = useState();
     const [openWellBean, setOpenWellBean] = useState(false);
     const [openWarning, setOpenWarning] = useState(false);
@@ -19,7 +20,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     } = bean;
 
 
-    const getLastEventTimeById = () => {
+    const getLastEventTimeById = (id) => {
         return BeanApi.getLastEventTimeById(id)
             .then(response => setLastEventTime(response.data));
     };
@@ -37,9 +38,12 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     const checkIfCollectible = () => {
         getLastEventTimeById(id);
         console.log("lastEventTime: " + lastEventTime);
-        const current = new Date();
+        const current = new Date().toISOString().split(".")[0];
         console.log("current: " + current);
-        setIsCollectible(true);
+
+        console.log(current > lastEventTime);
+
+        if (current > lastEventTime) { setIsCollectible(true) }
     };
 
 
@@ -47,7 +51,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
         checkIfCollectible();
         if (isCollectible) {
             setOpenWellBean(true);
-            completeBean();
+            console.log(JSON.stringify(bean));
 
 
         } else {
@@ -57,7 +61,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
     const onUpdateBean = () => {
         setOpenUpdate(true);
-        
+
     }
 
     const onDeleteBean = () => {
@@ -67,6 +71,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
     const onCloseWellBean = () => {
         setOpenWellBean(false);
+        completeBean();
     }
 
     const onCloseWarning = () => {
@@ -90,10 +95,10 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
             </div>
 
             <UpdateBeanPopup
-            isOpen={openUpdate} 
-            currentBean={bean} 
-            updateBean={updateBean} 
-            onClose={() => setOpenUpdate(false)}
+                isOpen={openUpdate}
+                currentBean={bean}
+                updateBean={updateBean}
+                onClose={() => setOpenUpdate(false)}
 
             />
 
@@ -107,7 +112,12 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
             {
                 openWarning ? <MessagePopup
-                    message="Collect when you finish the task!"
+                    message={
+                        <div>
+                            <p>Collect when you finish the task!</p>
+                            <Link to="/calendar">Check your calendar here</Link>
+                        </div>
+                    }
                     onClose={onCloseWarning} />
                     : null
             }

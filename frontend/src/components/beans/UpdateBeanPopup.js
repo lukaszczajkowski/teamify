@@ -4,8 +4,7 @@ import Popup from "reactjs-popup";
 
 // eslint-disable-next-line react/prop-types
 export default function UpdateBeanPopup({ isOpen, currentBean, updateBean, onClose }) {
-    // eslint-disable-next-line react/prop-types
-    console.log("on updateBeanPopup. current bean: " + currentBean.id);
+
 
     const {
         // eslint-disable-next-line react/prop-types
