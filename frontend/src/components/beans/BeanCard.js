@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BeanIcon from "../../assets/bean-black.png";
 import BeanApi from "../../api/BeanApi";
 import WellBeanPopup from "./WellBeanPopup";
@@ -20,7 +20,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     } = bean;
 
 
-    const getLastEventTimeById = (id) => {
+    const getLastEventTime = () => {
         return BeanApi.getLastEventTimeById(id)
             .then(response => setLastEventTime(response.data));
     };
@@ -36,15 +36,19 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     }
 
     const checkIfCollectible = () => {
-        getLastEventTimeById(id);
-        console.log("lastEventTime: " + lastEventTime);
+        getLastEventTime();
         const current = new Date().toISOString().split(".")[0];
+        
         console.log("current: " + current);
-
-        console.log(current > lastEventTime);
+        console.log(lastEventTime);
+        console.log(current > lastEventTime );
 
         if (current > lastEventTime) { setIsCollectible(true) }
     };
+
+    useEffect(() => {
+        checkIfCollectible()
+    }, [id]);
 
 
     const onCollect = () => {
