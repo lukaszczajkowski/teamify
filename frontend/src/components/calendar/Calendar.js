@@ -87,11 +87,12 @@ export default function Calendar() {
         const updatedEvent = {
             id: info.event.id,
             title: info.event.title,
-            description: info.event.description,
+            description: info.event.extendedProps.description,
             start: startDateOutput,
             end: endDateOutput,
             users: info.event.extendedProps.users,
             creator: info.event.extendedProps.creator,
+            bean: info.event.extendedProps.bean,
             allDay: info.event.allDay,
             editable: true
         }
@@ -134,6 +135,7 @@ export default function Calendar() {
             end: endDateOutput,
             users: currentEvent.extendedProps.users,
             creator: currentEvent.extendedProps.creator,
+            bean : currentEvent.extendedProps.bean,
             allDay: currentEvent.allDay,
             editable: true,
         }

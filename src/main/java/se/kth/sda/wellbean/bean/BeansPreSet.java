@@ -20,6 +20,14 @@ public class BeansPreSet {
 
     @Column
     private Long duration;
+    public BeansPreSet() {}
+
+    public BeansPreSet(String description, long eventCount, String title, long duration) {
+        this.title = title;
+        this.description = description;
+        this.eventCount = eventCount;
+        this.duration = duration;
+    }
 
     public void setId(Long id) {
         this.id = id;

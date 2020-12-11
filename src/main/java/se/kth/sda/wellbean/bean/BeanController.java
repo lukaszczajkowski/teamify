@@ -162,6 +162,7 @@ public class BeanController {
         beanEvent.setBean(bean);
         beanEvent.setCreator(creator);
         beanEvent.addMember(creator);
+        beanEvent.setEditable(true);
         eventService.create(beanEvent);
     }
 }
