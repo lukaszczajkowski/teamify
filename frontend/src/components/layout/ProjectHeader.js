@@ -8,7 +8,7 @@ export default function ProjectHeader() {
     return (
         <div className="project-header ">
             <div className="project-nav flex-start">
-                <Link to="/users/me" className="project-nav-item"><i className="fas fa-house-user font-icon"></i></Link>
+                <Link to="/home" className="project-nav-item"><i className="fas fa-house-user font-icon"></i></Link>
                 <Link to="" className="project-nav-item">
                     <img className="icon" src={BeanIcon} />
                 </Link>

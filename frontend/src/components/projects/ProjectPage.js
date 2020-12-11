@@ -40,7 +40,7 @@ function ProjectPage() {
         if (window.confirm("Do you want to delete this project?")) {
             if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
-                history.push("/users/me");
+                history.push("/home");
                 window.location.reload();
             } else {
                 alert("you are not the creator of the project, deleting project is not allowed");

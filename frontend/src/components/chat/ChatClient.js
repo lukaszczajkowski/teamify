@@ -178,6 +178,7 @@ export default function ChatClient() {
       };
 
       return (
+        <div id="chat">
         <div id="frame">
           <div id="sidepanel">
             <div id="profile">
@@ -306,6 +307,7 @@ export default function ChatClient() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       );
 }

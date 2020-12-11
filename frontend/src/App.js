@@ -18,9 +18,8 @@ import Auth from './services/Auth';
 import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
 
-//import Navbar from "./components/layout/Navbar";
-import ChatClient from './components/chat/ChatClient';
 import UserContext from './UserContext';
+import ChatPage from './components/chat/ChatPage';
 
 function App() {
 
@@ -42,7 +41,7 @@ function App() {
         <UserContext.Provider value={loggedInUser}>
             <Router>
             <Switch>
-                <Route exact path= "/users/me">
+                <Route exact path= "/home">
                     <UserPage />
                 </Route>
                 
@@ -55,7 +54,7 @@ function App() {
                 </Route>
                 <RecoilRoot>
                 <Route exact path="/chat">
-                    <ChatClient/>
+                    <ChatPage/>
                 </Route>
                 </RecoilRoot>
                 <Route exact path="/">
@@ -81,16 +80,11 @@ function App() {
                     <ProjectPage />
                 </Route>
 
-                <Route exact path="/users">
-                    <UserPage />
-                </Route>
-
-
                 <Route exact path="/calendar">
                     <Calendar />
                 </Route>
                 <Route exact path="/chat">
-                    <ChatClient />
+                    <ChatPage />
                 </Route>
 
             </Switch>
