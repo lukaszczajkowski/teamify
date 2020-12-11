@@ -82,6 +82,10 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
+                    <div className="header">
+                        <h2 className="header-title">Update task</h2>
+
+                    </div>
                     <div className="content">
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Title</h2>

@@ -44,6 +44,10 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
+                    <div className="header">
+                        <h2 className="header-title">Edit project detail</h2>
+
+                    </div>
                     <div className="content">
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Title</h2>
@@ -75,8 +79,8 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                                 isEditingDescription ?
                                     <div className="title-input flex-between">
                                         <textarea
-
-                                            className="input-box"
+                                           
+                                            className="input-box text-area"
                                             placeholder="Enter description"
                                             value={projectDescription}
                                             onChange={e => setProjectDescription(e.target.value)}

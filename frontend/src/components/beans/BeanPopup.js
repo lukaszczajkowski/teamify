@@ -71,7 +71,7 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
 
                                     className="input-box text-area"
                                     placeholder="Add more detail to this bean..."
-                                    rows="6" cols="50"
+                                   cols="50"
                                     value={beanDescription}
                                     onChange={e => setBeanDescription(e.target.value)}
                                 />

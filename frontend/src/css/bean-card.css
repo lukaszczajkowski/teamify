@@ -68,7 +68,9 @@
 }
 
 #bean-action .action-button {
-    font-size: 16px;
+    font-size: 15px;
+    color: var(--text-dark-grey);
+
 }
 #bean-action .action-button:hover {
     color: white;
