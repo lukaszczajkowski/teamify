@@ -142,6 +142,13 @@
   border-radius: 8px;
 }
 
+.message-popup .content {
+  font-size: 20px;
+  margin-top: 6vh;
+  color: var(--theme-green);
+  font-weight: bold;
+}
+
 .message-popup .close-button {
   font-size: 28px;
   margin-right: 10px;

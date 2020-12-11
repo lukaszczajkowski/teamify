@@ -1,11 +1,15 @@
-.task-card {
+.task-card,
+.create-task-card .input-box {
     height: 75px;
+    width: 270px;
     padding: 18px 10px 18px 18px;
     margin: 10px;
     background-color: white;
-    border-radius: 2px;
+    border-radius: 5px;
     box-shadow: 0px 2px 2px -1px rgba(87, 87, 87, 0.8);
+
 }
+
 
 .task-card .task-title {
     font-size: 16px;
@@ -16,16 +20,11 @@
 }
 
 .create-task-card .input-box {
-    padding: 18px;
-    width: 260px;
-    height: 75px;
     margin: 3px 10px;
-    background-color: white;
-    border-radius: 2px;
-    box-shadow: 0px 2px 2px -1px rgba(87, 87, 87, 0.8);
-    border: 1px solid transparent;
+    border: 1px solid white;
 }
 
+.task-card:hover,
 .create-task-card .input-box:hover {
     border: 1px solid var(--bg-dark-grey);
     transition: all 0.1s;

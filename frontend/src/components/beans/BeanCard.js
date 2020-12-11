@@ -38,10 +38,10 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     const checkIfCollectible = () => {
         getLastEventTime();
         const current = new Date().toISOString().split(".")[0];
-        
+
         console.log("current: " + current);
         console.log(lastEventTime);
-        console.log(current > lastEventTime );
+        console.log(current > lastEventTime);
 
         if (current > lastEventTime) { setIsCollectible(true) }
     };
@@ -116,6 +116,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
             {
                 openWarning ? <MessagePopup
+                    id="bean-warning"
                     message={
                         <div>
                             <p>Collect when you finish the task!</p>

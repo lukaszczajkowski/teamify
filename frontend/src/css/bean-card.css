@@ -7,7 +7,7 @@
 
 .bean-card:hover {
     background: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-    transition: all 0.3s;
+    transition: all 0.3s ease-in-out;
 }
 
 
@@ -19,7 +19,7 @@
     /* Stay in place */
     z-index: 1;
     /* Sit on top */
-    padding-top: 35vh;
+    padding-top: 32vh;
     /* Location of the box */
     left: 0;
     top: 0;
@@ -36,22 +36,26 @@
     background-image: linear-gradient(76deg, #07b4b5 0%, #8f34eb 100%);
     margin: auto;
     padding: 10px;
-    border-radius: 5px; 
-    width: 150px;
-    height: 150px;
+    border-radius: 10px; 
+    width: 300px;
+    height: 300px;
 }
 #well-bean .popup-content .content {
-    margin-top: 10px;
+    margin-top: 8vh;
 }
 #well-bean img {
-    width: 36px;
-    margin-right: 3px;
+    width: 50px;
+    margin-right: 5px;
+}
+
+#well-bean span {
+    font-size: 28px;
 }
 
 #well-bean p {
     color: white;
-    margin-top: 5px;
-    font-size: 18px;
+    margin-top: 8px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -76,4 +80,8 @@
     color: white;
     background-color: transparent;
     border-color: transparent;
+}
+
+#bean-warning>.content{
+    background-color: red;
 }
