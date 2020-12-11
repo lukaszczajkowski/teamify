@@ -132,7 +132,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                             deleteTask={deleteTask}
                                             updateTask={updateTask}
                                             addMemberToTask={addMemberToTask}
-
+                                            addCommentToTask = {addCommentToTask}
+                                            updateCommentTask = {updateCommentTask}
                                             deleteMemberFromTask={deleteMemberFromTask} />
                                       ))}
 
