@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import Editable from "./Editable";
 import TaskApi from "../../api/TaskApi";
+import CommentApi from "../../api/CommentApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
@@ -72,6 +73,18 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
+    const addCommentToTask = (task, comment) => {
+        console.log("addCommentToTask:", task, comment);
+        return CommentApi.createComment(comment, task.id)
+        .then(() => getTasksByCategory(categoryId))
+    }
+
+    const updateCommentTask = (task, comment) => {
+        console.log("updateCommentTaskz:", task, comment);
+        return CommentApi.updateComment(comment, task.id)
+        .then(() => getTasksByCategory(categoryId))
+    }
+
     useEffect(() => {
         getTasksByCategory(categoryId);
     }, [categoryId]);
@@ -119,8 +132,12 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                             deleteTask={deleteTask}
                                             updateTask={updateTask}
                                             addMemberToTask={addMemberToTask}
+
                                             deleteMemberFromTask={deleteMemberFromTask} />
                                       ))}
+
+                                            
+
                                         {provided.placeholder}
                                     </div>
                                 )}

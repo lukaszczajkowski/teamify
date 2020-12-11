@@ -1,4 +1,17 @@
-.bean-card .bean-popup {
+.bean-card {
+    margin-right: 20px;
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+}
+
+.bean-card:hover {
+    background: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    transition: all 0.3s;
+}
+
+
+#well-bean {
     width: 100%;
     height: 100%;
     display: block;
@@ -18,38 +31,47 @@
     /* Black w/ opacity */
 }
 
-.bean-popup .popup-content {
-    background-color: var(--theme-green);
+#well-bean .popup-content {
+    background-color: #07b4b5;
+    background-image: linear-gradient(76deg, #07b4b5 0%, #8f34eb 100%);
     margin: auto;
     padding: 10px;
     border-radius: 5px; 
     width: 150px;
     height: 150px;
 }
-.popup-content .content {
-    margin-top: 14px;
+#well-bean .popup-content .content {
+    margin-top: 10px;
 }
-.bean-popup img {
+#well-bean img {
     width: 36px;
     margin-right: 3px;
 }
 
-.bean-popup p {
-    color: var(--theme-purple);
+#well-bean p {
+    color: white;
     margin-top: 5px;
     font-size: 18px;
     font-weight: bold;
 }
 
-.bean-popup .close-button {
-    font-size: 20px;
+#well-bean .close-button {
+    font-size: 25px;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
-.close-button:hover,
+#well-bean .close-button:hover,
 .close-button:focus {
     cursor: pointer;
-    color: var(--theme-purple);
-
-
+    color: white;
 }
 
+#bean-action .action-button {
+    font-size: 16px;
+}
+#bean-action .action-button:hover {
+    color: white;
+    background-color: transparent;
+    border-color: transparent;
+}

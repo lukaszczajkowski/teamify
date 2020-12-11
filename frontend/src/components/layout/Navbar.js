@@ -21,15 +21,11 @@ import Auth from "../../services/Auth";
 
             <ul className={click ? "nav-menu active" : "nav-menu"}>
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/" onClick={closeMenu}>Home</Link>
+                    <Link className="link nav-link" to="/home" onClick={closeMenu}>Home</Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/users/me" onClick={closeMenu}>Your page</Link>
-                </li>
-
-                <li className="nav-item">
-                    <Link className="link nav-link" to="/users/me" onClick={closeMenu}>ProjectBoard</Link>
+                    <Link className="link nav-link" to="/home" onClick={closeMenu}>ProjectBoard</Link>
                 </li>
 
                 <li className="nav-item">

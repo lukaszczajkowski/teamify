@@ -14,7 +14,7 @@ function LoginForm() {
             alert("Invalid credentials");
         } else {
             alert("login successful");
-            history.push("/users/me");
+            history.push("/home");
             window.location.reload();
         }
     }

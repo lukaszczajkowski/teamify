@@ -3,7 +3,7 @@ import useComponentVisible from "../hooks/useComponentVisible";
 // import randomColor from "randomcolor";
 
 // eslint-disable-next-line react/prop-types
-export default function MemberCard({ member, onClick }) {
+export default function MemberCard({ member, onClick, onClickTitle }) {
 
     // const [color, setColor] = useState();
 
@@ -48,7 +48,7 @@ export default function MemberCard({ member, onClick }) {
                                 id="delete-member"
                                 // eslint-disable-next-line react/prop-types
                                 onClick={() => onClick(member.id)}>
-                                Delete member
+                                {onClickTitle}
                                 </button>
                         }
                     </div>

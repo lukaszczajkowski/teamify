@@ -27,14 +27,21 @@
 }
 
 .projects-board #create-new-project {
-    background-color: var(--bg-dark-grey);
-    color: var(--theme-dark-green);
+    background-color: var(--bg-medium-grey);
+    opacity: 60%;
 }
 
 .projects-board .project-card {
-    /* background-color: var(--theme-dark-green); */
     background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
+    opacity: 60%;
     color: white;
+
+}
+
+.projects-board #create-new-project:hover,
+.projects-board .project-card:hover {
+    opacity: 100%;
+    transition: all 0.1s;
 
 }
 
