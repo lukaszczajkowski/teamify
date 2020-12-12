@@ -102,7 +102,7 @@ export default function UpdateBeanPopup({ isOpen, currentBean, updateBean, onClo
                         </div>
 
                         <div className="popup-item flex-start">
-                        <Link to="/calendar" className="sub-prompt">
+                        <Link to="/calendar" className="link sub-prompt">
                             <i className="far fa-calendar-alt calendar-icon"></i>
                             Go to calendar to edit the time of your bean</Link>
                         </div>

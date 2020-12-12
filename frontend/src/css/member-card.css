@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+.member-card:hover {
+    background-color: var(--theme-dark-green);
+
+}
+
 .member-card .action-menu {
     padding-top: 5px;   
 }

@@ -1,12 +1,25 @@
-.project-page .project-board {
-    margin-left: 30px;
-    align-items: flex-start;
-
+.project-page {
+    background-color: var(--bg-light-grey);
+    height: calc(100vh - 120px);
+    width: 100%;
 }
-.project-page #project-menu,
-.project-page #member-menu {
+
+.project-page .project-menu {
+    height: 60px;
+    background-color: var(--bg-light-grey);
+}
+
+.project-page .project-board {
+    margin-top: 120px;
+    padding-left: 30px;
+    align-items: flex-start;
+    z-index: 1;
+}
+
+.project-page #project-menu, .project-page #member-menu {
     margin-left: 35px;
     margin-bottom: 18px;
+    margin-top: 10px;
 }
 
 #project-menu .project-title {
@@ -25,18 +38,39 @@
 }
 
 .project-page .category-cards {
-    align-items: flex-start;
+    display: grid;
+    grid-auto-columns: 290px;
+    grid-auto-flow: column;
+    grid-gap: 12px;
+    overflow-x: scroll;
 }
 
 .project-page .category-card {
-    margin-right: 10px;
+    height: calc(100vh - 120px);
+    background: linear-gradient(0deg, rgba(243, 243, 243, 1) 20%, rgba(235, 235, 235, 1) 100%);
+    
 }
 
 .project-page .member-list {
     margin-left: 10px;
 }
+
 .project-page .member-card {
     margin-right: 10px;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
 
+.category-cards::-webkit-scrollbar, 
+.category-card::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+.category-cards, .category-card {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

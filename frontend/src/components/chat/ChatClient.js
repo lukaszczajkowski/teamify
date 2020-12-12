@@ -208,9 +208,10 @@ export default function ChatClient() {
                 </div>
               </div>
             </div>
-            <div id="search" />
+            {/* <div id="search" /> */}
             <div id="contacts">
-              Contacts:
+              <div id="contact-prompt">Contacts:</div>
+              
               <ul>
                 {contacts.map((contact) => (
                   // eslint-disable-next-line react/jsx-key

@@ -1,9 +1,15 @@
 .header {
-
     height: 55px;
     display: flex;
-    flex-direction: column; 
-    
+    flex-direction: column;  
+}
+
+.fixed-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%; 
 }
 
 .navbar {

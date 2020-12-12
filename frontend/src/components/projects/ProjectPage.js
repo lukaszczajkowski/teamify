@@ -83,8 +83,8 @@ function ProjectPage() {
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-        .then(() => getAllMembers(projectId))
-        .catch(err => console.log(`error on delete member: ${err}`));
+            .then(() => getAllMembers(projectId))
+            .catch(err => console.log(`error on delete member: ${err}`));
     }
 
     const getAllCategories = (projectId) => {
@@ -121,21 +121,24 @@ function ProjectPage() {
 
     return (
         <div className="project-page">
-            <ProjectHeader />
+            <div className="fixed-header">
+                <ProjectHeader />
 
-            <div className="flex-start">
-                <ProjectMenu
-                    currentProject={currentProject}
-                    onDeleteProject={onDeleteProject}
-                    updateProject={updateProject}
-                />
+                <div className="project-menu flex-start ">
+                    <ProjectMenu
+                        currentProject={currentProject}
+                        onDeleteProject={onDeleteProject}
+                        updateProject={updateProject}
+                    />
 
-                <MemberMenu
-                    currentProject={currentProject}
-                    members={members}
-                    addMemberByEmail={addMemberByEmail}
-                    onDeleteMember={onDeleteMember} />
+                    <MemberMenu
+                        currentProject={currentProject}
+                        members={members}
+                        addMemberByEmail={addMemberByEmail}
+                        onDeleteMember={onDeleteMember} />
+                </div>
             </div>
+
 
 
             <ProjectBoard
