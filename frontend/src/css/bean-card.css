@@ -82,6 +82,8 @@
     border-color: transparent;
 }
 
-#bean-warning>.content{
-    background-color: red;
+#bean-warning .link{
+    color: var(--theme-dark-green);
 }
+
+

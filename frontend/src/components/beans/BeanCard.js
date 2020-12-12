@@ -116,11 +116,10 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
             {
                 openWarning ? <MessagePopup
-                    id="bean-warning"
                     message={
-                        <div>
+                        <div id="bean-warning" className="flex-column">
                             <p>Collect when you finish the task!</p>
-                            <Link to="/calendar">Check your calendar here</Link>
+                            <Link className="link" to="/calendar">Check your calendar here</Link>
                         </div>
                     }
                     onClose={onCloseWarning} />
