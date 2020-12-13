@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { Link, useHistory } from "react-router-dom";
-// import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 import NavItem from "./NavItem";
 
 // eslint-disable-next-line react/prop-types
@@ -20,17 +20,17 @@ export default function Navbar() {
         },
         {
             id: 2,
-            link:"/home",
+            link: "/home",
             title: "Projects"
         },
         {
             id: 3,
-            link:"/calendar",
+            link: "/calendar",
             title: "Calendar"
         },
         {
             id: 4,
-            link:"/",
+            link: "/",
             title: "Logout"
         }
     ];
@@ -38,15 +38,18 @@ export default function Navbar() {
     return (
         <nav className="navbar">
 
-            <div className=" link menu-icon" onClick={handleClick}>
+            <motion.div
+                whileHover={{ scale: 1.1 }}
+                className=" link menu-icon"
+                onClick={handleClick}>
                 <i className={click ? "fas fa-times" : "fas fa-bars"} />
-            </div>
+            </motion.div>
 
             <ul className={click ? "nav-menu active" : "nav-menu"}>
 
-                {navItems.map(item =>  (<NavItem key={item.id} item={item}/>))}
+                {navItems.map(item => (<NavItem key={item.id} item={item} />))}
 
-{/* 
+                {/* 
                 <motion.li className="nav-item"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}>
