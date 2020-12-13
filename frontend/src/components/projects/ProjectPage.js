@@ -67,7 +67,6 @@ function ProjectPage() {
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
             .then(response => setCurrentProject(response.data))
-            .then(response => console.log("updated project: " + JSON.stringify(response.data)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
 
@@ -85,8 +84,7 @@ function ProjectPage() {
 
     const getAllMembers = (projectId) => {
         return ProjectApi.getProjectById(projectId)
-            .then(response => setMembers(response.data.users))
-            .then(console.log("members: " + JSON.stringify(members)));
+            .then(response => setMembers(response.data.users));
     }
 
     const onDeleteMember = (memberId) => {
