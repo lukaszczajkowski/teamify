@@ -5,18 +5,21 @@ import CommentApi from "../../api/CommentApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
+import EditableText from "../projects/EditableText";
 // import { Droppable } from 'react-beautiful-dnd';
 
 
 // eslint-disable-next-line react/prop-types
 export default function CategoryCard({ category, updateCategory, deleteCategory }) {
-    // eslint-disable-next-line react/prop-types
     const categoryId = category.id;
-    // eslint-disable-next-line react/prop-types
     const [tasks, setTasks] = useState([]);
-    // eslint-disable-next-line react/prop-types
-    const [title, setTitle] = useState(category.title);
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+    const {
+        // eslint-disable-next-line react/prop-types
+        id, title
+        // users
+    } = category;
+   
 
     const onDeleteCategory = () => {
         if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
@@ -24,15 +27,13 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
         }
     };
 
-    const onUpdateCategory = () => {
-        const newCategoryData =
-        {
-            id: categoryId,
-            title: title,
+    const onTitleUpdated = (newTitle) => {
+        const updatedCategory = {
+            id,
+            title: newTitle,
         };
-        updateCategory(newCategoryData);
-        setIsEditingTitle(false);
-    };
+        updateCategory(updatedCategory);
+    }
 
 
 
@@ -92,26 +93,11 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     return (
         <div className="category-card">
             <div className="flex-between category-title">
-                {
-                    isEditingTitle ?
-                        <div className="title-input flex-between">
-                            <input
-                                type="text"
-                                className="input-box"
-                                placeholder="Title"
-                                value={title}
-                                onChange={e => setTitle(e.target.value)}
-                            />
-                            <button
-                                className="button" id="confirm-update"
-                                onClick={onUpdateCategory}>
-                                <i className="fas fa-check"></i>
-                            </button>
-                        </div>
-                        :
-                        <button className="category-title" onClick={() => setIsEditingTitle(true)}>{title}</button>
-
-                }
+                <EditableText
+                text={title}
+                placeholder="title"
+                onUpdateText={onTitleUpdated}
+                />
 
                 <CategoryActions onDeleteCategory={onDeleteCategory}/>
                 
@@ -149,7 +135,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
             </div>
 
             <CreateTaskCard
-                onSubmit={createTask}
+                createTask={createTask}
                 categoryId={categoryId}
             />
         </div >
