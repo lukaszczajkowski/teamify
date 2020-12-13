@@ -1,49 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
-
-/************ please refactor the section below ********/
-/* html, body, body *{
-    box-sizing: border-box;
+.login
+ {
     font-family: 'PT Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #0F545C;
-    font-weight: bold;
-    
-    background-color: inherit;
-}  */
-
-
-.loginpage {
     width: 100%;
-    padding-top: 60px;
-    padding-bottom: 100px;
-}
+    height: 100vh;
+    padding-bottom: 80px;
+    font-weight: bold;
+    font-size: 15px;
+    color:#0F545C;
+    background: #07b4b5;
+  background: radial-gradient(circle, rgb(85, 193, 205) 0%, rgb(203, 228, 228) 100%);
+ }
+/*body {
+    background-image: url(backg.jpeg);
+    background-size: cover;
+    background-position: center center;
+}*/
 
-.login-register-wrapper{
+.login .login-register-wrapper{
     height: 470px;
     width: 350px;
-    margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 2em;
     border-radius: 5px;
-    box-shadow: 0px 2px;
+    box-shadow: 0px 2px 7px rgba(0,0,0,0.2);
     overflow: hidden;
-    color: #ffffff;
-    background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
+    color: #0F545C;
+    background: linear-gradient(0deg, rgba(12,112,124,1) 0%, rgba(14,204,205,1) 54%, rgb(157, 220, 220) 83%);
 }
 
 /*Nav-buttons*/
-.nav-buttons{
+.login .nav-buttons{
     width: 100%;
     height: 100px;
     padding-top: 40px;
     opacity: 1;
     margin-bottom: 3em;
+    color: #0F545C;
+}
+
+.login .button {
+    font-size: 1.5em;
+    margin-right: 1em;
+    border: 0px;
+    cursor: pointer;
+}
+
+ .button:focus{
+    outline: 0px;
+}
+
+ .button.active{
+    padding-bottom: 1.8px;
+    border-bottom: solid 2px #0F545C;
 }
 
 /*footer: forgot section */
-.forgot-panel{
+ .forgot-panel{
     position: relative;
     height: 100px;
     margin-left: auto;
@@ -61,16 +74,16 @@
     border: none;
     border-radius: 5px;
     margin-bottom: 20px;
-    background:rgba(255,255,255,.5);
-    
+    background: rgb(241, 233, 233);
+
 }
 
 .form-group label{
     text-transform: uppercase;
 }
 
-input.submit{
-    font-weight: 500;
+.login input.submit{
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 1em;
     text-align: center;
@@ -81,32 +94,37 @@ input.submit{
     border: none;
     border-radius: 20px;
     margin-top: 23px;
-    background-color: #0F545C;
+    background-color:#0F545C;
+    color: white;
+    cursor: pointer;
 }
 
+
 /*Form positioning and animation */
-form#registerform{
+ form#registerform{
     left: 500px;
     top: -230px;
     position: relative;
 }
 
-.forgot-panel{
-    margin-top: -250px;
+.login .forgot-panel{
+    margin-top: -270px;
     color:#0F545C;
-    font-weight: bold;
-    }
+    padding-bottom: 1px;
+    border-bottom: solid 2px #0F545C;
+}
 
 form, .forgot-panel{
     position: relative;
     transition: all .1s ease;
+    color: #0F545C
 }
 
-#loginBtn, #registerBtn {
+#loginBtn, #registrationBtn {
     transition: all .1s ease;
+    color: #0F545C;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'PT Sans', sans-serif;
 }
-
-.forgot{
-    margin-top: 20px;
-}
-

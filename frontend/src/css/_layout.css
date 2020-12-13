@@ -1,0 +1,9 @@
+.chat-page,
+.project-page {
+    height: 100vh;
+}
+
+#chat #frame {
+    height: calc(100vh - 60px);
+}
+

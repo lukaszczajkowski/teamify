@@ -1,16 +1,12 @@
 import React from "react";
-
 import BeanIcon from "../../assets/beanicon.png";
-import CreateBeanPopup from "./CreateBeanPopup";
 import BeanCard from "./BeanCard";
+import PresetBeans from "./PresetBeans";
+import CreateBeanButton from "./CreateBeanButton";
 
-export default function BeanBoard() {
 
-    // const [beans, setBeans] = useState([]);
-    // const createBean = (beanData) => (
-
-    // );
-
+// eslint-disable-next-line react/prop-types
+export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean }) {
 
     return (
         <article className="bean-board">
@@ -18,23 +14,27 @@ export default function BeanBoard() {
                 <div className="flip-front">
                     <div className="board-title flex-start">
                         <img className="bean-icon" src={BeanIcon}></img>
-                        <h1 className="board-name">Your personal bean board</h1>
+                        <h1 className="board-name">Personal bean board</h1>
                     </div>
 
                     <div className="board-section">
                         <div className="goal-prompt flex-between">
-                            <h2 className="prompt">Your well-being goals for today: </h2>
-                            <p className="sub-prompt">Add new beans to your calendar</p>
+                            <h2 className="prompt">Choose your well-being goals for today: </h2>
+                            <p className="sub-prompt">Click to add new beans to your calendar</p>
                         </div>
 
                         <div className="bean-buttons flex-center">
-                            <button className="button bean-button">Stay hyrated</button>
-                            <button className="button bean-button">Exericise</button>
-                            <button className="button bean-button">Meditate</button>
-                            <button className="button bean-button">Eat on time</button>
 
-                            {/* <CreateBeanCard onSubmit= {createBean}/> */}
-                            <CreateBeanPopup />
+
+                            <PresetBeans
+                                presetBeans={presetBeans}
+                                createBean={createBean} />
+
+
+
+                            <CreateBeanButton createBean={createBean} />
+
+
                         </div>
                     </div>
 
@@ -46,9 +46,22 @@ export default function BeanBoard() {
                             <p className="sub-prompt">Click if you have completed the bean</p>
                         </div>
 
-                        <BeanCard/>
-                    </div>
+                        {
+                            addedBeans !== undefined ?
+                                <div className="bean-cards flex-start">
+                                    {/* eslint-disable-next-line react/prop-types */}
+                                    {addedBeans.filter(bean => bean.completed != true).map(bean => (
+                                        <BeanCard
+                                            key={bean.id}
+                                            bean={bean}
+                                            updateBean={updateBean} 
+                                            deleteBean={deleteBean}/>
+                                    ))}
+                                </div> : null
+                        }
 
+
+                    </div>
 
 
                     <div className="flex-end">

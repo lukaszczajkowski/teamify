@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import {useSpring, animated} from 'react-spring';
-import Header from "../layout/Header";
-
+import LandingHeader from "../layout/LandingHeader";
+import {motion} from 'framer-motion';
 
 function LoginPage() {
     
@@ -23,10 +23,14 @@ function LoginPage() {
     const loginBtnProps = useSpring({borderBottom: registrationFormStatus ? 'solid 0px transparent' : 'solid 2px #0F545C'})
     const registerBtnProps = useSpring({borderBottom: registrationFormStatus ? 'solid 2px #0F545C' : 'solid 0px transparent' })
 
+    
     return (
-        <div>
-            <Header />
-            <div className="login-register-wrapper">
+        <div className="login">
+            <LandingHeader />
+           
+            <motion.div className="login-register-wrapper"initial={{opacity: 0}}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1, duration: 1.5 }}>
             <div className="nav-buttons">
                 <animated.button onClick={loginClicked} id="loginBtn" class='active' style= {loginBtnProps}>Login</animated.button>
                 <animated.button onClick={registerClicked} id="registrationBtn" style= {registerBtnProps}>Register</animated.button>
@@ -39,9 +43,10 @@ function LoginPage() {
                     <a href='#'> Forgot password? </a>
                 </animated.div>
             
+            </motion.div>
             </div>
-                   
-        </div>             
+   
+              
                                 
     );
 }

@@ -53,6 +53,11 @@ public class EventController {
         );
     }
 
+    @GetMapping("/beanEvents/{beanId}")
+    public List<Event> eventsByBeanId(@PathVariable Long beanId){
+        return eventRepository.getEventsByBeanId(beanId);
+    }
+    
     @GetMapping("/user")
     public List<Event> getAllUserEvents() {
         User user = getUser();

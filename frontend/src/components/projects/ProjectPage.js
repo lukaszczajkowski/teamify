@@ -69,6 +69,7 @@ function ProjectPage() {
 
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
+            .then(response => setCurrentProject(response.data))
             .then(response => console.log("updated project: " + JSON.stringify(response.data)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
@@ -77,7 +78,7 @@ function ProjectPage() {
         if (window.confirm("Do you want to delete this project?")) {
             if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
-                history.push("/users/me");
+                history.push("/home");
                 window.location.reload();
             } else {
                 alert("you are not the creator of the project, deleting project is not allowed");
@@ -120,8 +121,8 @@ function ProjectPage() {
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-        .then(() => getAllMembers(projectId))
-        .catch(err => console.log(`error on delete member: ${err}`));
+            .then(() => getAllMembers(projectId))
+            .catch(err => console.log(`error on delete member: ${err}`));
     }
 
     const getAllCategories = (projectId) => {
@@ -158,21 +159,24 @@ function ProjectPage() {
 
     return (
         <div className="project-page">
-            <ProjectHeader project = {currentProject} />
+            <div className="fixed-header">
+                <ProjectHeader />
 
-            <div className="flex-start">
-                <ProjectMenu
-                    currentProject={currentProject}
-                    onDeleteProject={onDeleteProject}
-                    updateProject={updateProject}
-                />
+                <div className="project-menu flex-start ">
+                    <ProjectMenu
+                        currentProject={currentProject}
+                        onDeleteProject={onDeleteProject}
+                        updateProject={updateProject}
+                    />
 
-                <MemberMenu
-                    currentProject={currentProject}
-                    members={members}
-                    addMemberByEmail={addMemberByEmail}
-                    onDeleteMember={onDeleteMember} />
+                    <MemberMenu
+                        currentProject={currentProject}
+                        members={members}
+                        addMemberByEmail={addMemberByEmail}
+                        onDeleteMember={onDeleteMember} />
+                </div>
             </div>
+
 
 
             <ProjectBoard

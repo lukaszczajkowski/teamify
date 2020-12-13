@@ -210,8 +210,7 @@ public class TaskController {
             updatedTask.setProject(newCategory.getProject());
             Task taskFromDb = taskService.getById(updatedTask.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             updatedTask.setMembers(taskFromDb.getMembers());
-            // TODO need to update  comments, otherwise it is null
-            //updatedTask.setComments(taskFromDb.getComments());
+            updatedTask.setComments(taskFromDb.getComments());
             taskService.create(updatedTask);
             return updatedTask;
         }

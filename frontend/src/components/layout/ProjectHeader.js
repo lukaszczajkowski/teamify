@@ -10,8 +10,9 @@ export default function ProjectHeader({ project }) {
     console.log("Project from header", project)
     return (
         <div className="project-header ">
-            <div className="member-nav">
-                <Link to="" className="nav-item">
+            <div className="project-nav flex-start">
+                <Link to="/home" className="project-nav-item"><i className="fas fa-house-user font-icon"></i></Link>
+                <Link to="" className="project-nav-item">
                     <img className="icon" src={BeanIcon} />
                 </Link>
                 <Link to= {{
@@ -23,10 +24,7 @@ export default function ProjectHeader({ project }) {
                  className="nav-item">
                     <img className="icon" src={ChatIcon} />
                 </Link>
-                <Link to="/calendar" className="nav-item"><i className="far fa-calendar-alt calendar-icon"></i></Link>
-            </div>
-            <div className="personal-nav">
-
+                <Link to="/calendar" className="project-nav-item"><i className="far fa-calendar-alt font-icon"></i></Link>
             </div>
             <NavBar />
 

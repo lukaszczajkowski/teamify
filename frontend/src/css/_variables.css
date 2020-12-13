@@ -7,7 +7,11 @@
     --bg-dark-grey:#C4C4C4;
     --text-dark-grey: #8C8C8C;
 
+    
+    --opac-white: rgba(255, 255, 255, 0.95);
     --opac-dark-grey: rgba(196, 196, 196, 0.5);
-    --opac-light-grey: rgba(243,243,243, 0.9);
+    --opac-light-grey: rgba(243,243,243, 0.95);
+    --opac-green: rgba(7, 180, 181, 0.7);
+    --opac-purple: rgba(143, 52, 235, 0.5);
 
 }

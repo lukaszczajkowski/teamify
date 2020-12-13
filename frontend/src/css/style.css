@@ -2,6 +2,7 @@
 @import url("./_reset.css");
 @import url("./_shared.css");
 @import url("./_variables.css");
+@import url("./_layout.css");
 
 /* shared components */
 @import url("./popup.css");
@@ -17,13 +18,14 @@
 /* Header */
 @import url("./header.css");
 @import url("./project-header.css");
+@import url("./landingHeader.css");
 
 /* board */
 @import url("./bean-board.css");
 @import url("./projects-board.css");
 
 /* Popup */
-@import url("./create-bean-popup.css");
+@import url("./bean-popup.css");
 @import url("./task-popup.css");
 
 

@@ -7,6 +7,10 @@ body {
     text-decoration: none;
 }
 
+.link:hover {
+    text-decoration: underline;
+  }
+
 .main-content {
     padding: 4vh;
 }

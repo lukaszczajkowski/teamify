@@ -170,6 +170,7 @@ export default function ChatClient(props) {
       };
 
       return (
+        <div id="chat">
         <div id="frame">
           <div id="sidepanel">
             <div id="profile">
@@ -193,9 +194,10 @@ export default function ChatClient(props) {
                 </div>
               </div>
             </div>
-            <div id="search" />
+            {/* <div id="search" /> */}
             <div id="contacts">
-              Contacts:
+              <div id="contact-prompt">Contacts:</div>
+              
               <ul>
                 {contacts.map((contact) => (
                   // eslint-disable-next-line react/jsx-key
@@ -291,6 +293,7 @@ export default function ChatClient(props) {
               </div>
             </div>
           </div>
+        </div>
         </div>
       );
 }

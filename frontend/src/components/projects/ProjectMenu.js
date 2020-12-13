@@ -19,25 +19,21 @@ export default function ProjectMenu({ currentProject, updateProject, onDeletePro
     }
 
     return (
-        <div className="project-menu flex-start">
-            <div id="project-menu" className="flex-start">
-                {/* eslint-disable-next-line react/prop-types*/}
-                <p className="project-title">{currentProject.title}</p>
+        <div id="project-menu" className="flex-start">
+            {/* eslint-disable-next-line react/prop-types*/}
+            <p className="project-title">{currentProject.title}</p>
 
-                <ProjectActions
-                    currentProject={currentProject}
-                    onUpdateProject={onUpdateProject}
-                    onDeleteProject={onDeleteProject} />
+            <ProjectActions
+                currentProject={currentProject}
+                onUpdateProject={onUpdateProject}
+                onDeleteProject={onDeleteProject} />
 
-                <UpdateProjectPopup
-                    isOpen={popupIsOpen}
-                    currentProject={currentProject}
-                    updateProject={updateProject}
-                    onClose={onClosePopup}
-                />
-
-            </div>
-            
+            <UpdateProjectPopup
+                isOpen={popupIsOpen}
+                currentProject={currentProject}
+                updateProject={updateProject}
+                onClose={onClosePopup}
+            />
         </div>
     );
 }

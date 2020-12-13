@@ -5,27 +5,28 @@
 }
 
 .bean-board .board-title {
-    margin-bottom: 5vh;
+    margin-bottom: 60px;
 }
 
 .bean-board .board-section {
-    margin-bottom: 3vh;
+    margin-bottom: 60px;
 }
 
 .bean-board .goal-prompt,
 .bean-board .collect-prompt {
-    margin: 3vh 2vw 3vh 2vw;
+    margin: 3vh 4vw 5vh 4vw;
 }
 
 .bean-board .board-name {
     font-size: 28px;
     color: var(--theme-green);
     font-family: 'Rubik', sans-serif;
-    font-weight: 600;
+   
 }
 
 .bean-board .bean-icon {
     margin-top: 1vh;
+    margin-right: 8px;
     height: 5vh;
 }
 
@@ -40,14 +41,41 @@
     color: var(--text-dark-grey);
 }
 
-
 .bean-board .bean-button {
-    margin: 1vh;
+    font-size: 17px;
+    margin: 1vw;
     color: white;
-    background-color: #07B4B5;
+    background-color: var(--opac-green);
+}
+
+.bean-board .bean-button:hover {
+    border-color: var(--theme-green);
+    background-color: var(--theme-green);
+    color: white;
+
+}
+
+
+
+#create-bean {
+    background-color: transparent;
+    color: var(--text-dark-grey);
+    font-size: 16px;
+    border-color: var(--theme-medium-grey);
+}
+
+#create-bean:hover {
+    color: white;
+    border-color: transparent;
+    background-color: var(--theme-purple);
 }
 
 .bean-board .flip-arrow {
     font-size: 38px;
+}
+
+.bean-board .bean-cards {
+    margin-left: 4vw;
+
 }
 

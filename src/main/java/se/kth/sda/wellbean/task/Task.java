@@ -1,5 +1,6 @@
 package se.kth.sda.wellbean.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
@@ -26,6 +27,7 @@ public class Task {
 
     // Each task can have many users and each user can have many tasks
     @ManyToMany
+    @JsonIgnoreProperties("password")
     private Set<User> members;
 
     //@ManyToOne
@@ -33,6 +35,7 @@ public class Task {
 
     // one task has many comments
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("task")
     private List<Comment> comments;
 
     // many tasks in one project
@@ -103,6 +106,10 @@ public class Task {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public void setComments(List<Comment> comments) {
