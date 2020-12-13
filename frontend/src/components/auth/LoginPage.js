@@ -28,9 +28,9 @@ function LoginPage() {
         <div className="login">
             <LandingHeader />
            
-            <motion.div className="login-register-wrapper"initial={{opacity: 0}}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1, duration: 1.5 }}>
+            <motion.div className="login-register-wrapper"initial={{x: '100vw'}}
+                        animate={{ x: 0}}
+                        transition={{ type: 'spring', delay: 0.8 }}>
             <div className="nav-buttons">
                 <animated.button onClick={loginClicked} id="loginBtn" class='active' style= {loginBtnProps}>Login</animated.button>
                 <animated.button onClick={registerClicked} id="registrationBtn" style= {registerBtnProps}>Register</animated.button>

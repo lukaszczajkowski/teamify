@@ -9,29 +9,47 @@ export default function ProjectBoard( {projectId, categories, createCategory, up
         const {destination, source, draggableId} = result;
         if (!destination) {
             return;
-            }
-        const sourceCategory = categories[source.droppableId];
-        const destinationCategory = categories[destination.droppableId];
-        const draggingTask = sourceCategory.tasks.filter(
-            (task) => task.id === draggableId
-        )[0];
-        if (source.droppableId === destination.droppableId){
-            sourceCategory.tasks.splice(source.index, 1);
-            destinationCategory.tasks.splice(destination.index, 0, draggingTask);
         }
+        
+        if(
+            destination.droppableId === source.droppableId && 
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        const category = categories[source.droppableId];
+        const newTasks = category.tasks.slice();
+        newTasks.splice(source.index, 1);
+        newTasks.splice(destination.index, 0, draggableId);
+
+        const newCategory = {
+            ...category,
+            tasks: newTasks,
+        };
+
+        const newState = {
+            ...this.state,
+            categories: {
+                ...this.state.categories,
+                [newCategory.id]: newCategory, 
+            },
+        }
+        this.setState(newState);
     };
-    
     return (
+        <DragDropContext onDragEnd = {onDragEnd}>
         <div className="project-board flex-start">
-            <DragDropContext onDragEnd = {onDragEnd}>
+            
             
                 {
                 categories === null ?
                     null :
                     <div className="category-cards flex-start">
                         {/* eslint-disable-next-line react/prop-types */}
-                        {categories.map(category => (
+                        {categories.map((category, tasks) => (
                             <CategoryCard key={category.id} 
+                                        tasks={tasks}
                                         category={category} projectId={projectId}
                                         updateCategory={updateCategory} 
                                         deleteCategory={deleteCategory}/>
@@ -40,7 +58,8 @@ export default function ProjectBoard( {projectId, categories, createCategory, up
             }
                 
                 <CreateCategoryCard projectId={projectId} onSubmit={createCategory}/>
-                </DragDropContext>
+                
         </div>
+        </DragDropContext>
     );
 }
