@@ -38,7 +38,7 @@ export default function ProjectBoard({ projectId, categories, createCategory, up
                                     updateCategory={updateCategory}
                                     deleteCategory={deleteCategory} />
                             ))}
-                            <CreateCategoryCard projectId={projectId} onSubmit={createCategory} />
+                            <CreateCategoryCard projectId={projectId} createCategory={createCategory} />
                         </div>
                 }
 
