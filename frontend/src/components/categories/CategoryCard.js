@@ -30,7 +30,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     const onTitleUpdated = (newTitle) => {
         const updatedCategory = {
             id,
-            title: newTitle,
+            title: newTitle
         };
         updateCategory(updatedCategory);
     }
