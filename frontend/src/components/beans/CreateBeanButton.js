@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BeanPopup from "./BeanPopup";
+import { motion } from "framer-motion";
 
 export default function CreateBeanButton({ createBean }) {
 
@@ -20,12 +21,14 @@ export default function CreateBeanButton({ createBean }) {
     }
     return (
         <div >
-            <button
-            id="create-bean"
+            <motion.button
+                id="create-bean"
                 className="bean-button button"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onCreateBean}>
                 + Create a new bean
-            </button>
+            </motion.button>
 
             <BeanPopup
                 isOpen={popupIsOpen}
