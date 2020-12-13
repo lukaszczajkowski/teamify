@@ -7,8 +7,13 @@ import ProjectBoard from "./ProjectBoard";
 import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
+import { EventSourcePolyfill } from 'event-source-polyfill';
 
-
+// const sockJsConfig = {
+//     transports: ['xhr-streaming'],
+//     headers: { Authorization: window.sessionStorage.getItem("_token") }
+// }
+let eventSource;
 function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
@@ -21,6 +26,39 @@ function ProjectPage() {
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
+    const [incomingChanges, setIncomingChanges] = useState(false);
+    //const [listening, setListening] = useState(false);
+
+    useEffect(() => {
+            init();
+    }, [])
+
+    const init = ()  => {
+            eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category', 
+                {
+                    headers: {
+                        "Accept": "text/event-stream",
+                        "Authorization": window.sessionStorage.getItem("_token"),
+                        "Cache-Control": "no-cache",
+                        "Connection": "keep-alive",
+                        "X-Accel-Buffering": "no"
+                    }
+                }
+            );
+            eventSource.onopen = (event) => {
+                console.log("connection opened!", event);
+            }
+            eventSource.onmessage = (event) => {
+                console.log("data received", event);
+                getCurrentProject();
+                setIncomingChanges(!incomingChanges);
+            }
+
+            eventSource.onerror = (err) => {
+                console.error("Event source failed:", err);
+                eventSource.close();
+            }
+    }
 
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
@@ -117,7 +155,7 @@ function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [projectId]);
+    }, [projectId, incomingChanges]);
 
     return (
         <div className="project-page">

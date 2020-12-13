@@ -1,17 +1,15 @@
 package se.kth.sda.wellbean.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import se.kth.sda.wellbean.calendar.Event;
 import se.kth.sda.wellbean.comment.Comment;
-import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.task.Task;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;

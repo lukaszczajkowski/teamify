@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
-import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
@@ -53,7 +52,9 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
 
-        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientName(),
+        System.out.println("Recipient id = " + chatMessage.getRecipientId().toString());
+
+        messagingTemplate.convertAndSendToUser(String.valueOf(chatMessage.getRecipientId()),
                 "/queue/messages",
                 new ChatNotification(
                         saved.getId(),
@@ -79,7 +80,9 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
 
-        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientName(),
+        System.out.println("Recipient id = " + chatMessage.getRecipientId().toString());
+
+        messagingTemplate.convertAndSendToUser(chatMessage.getRecipientId().toString(),
                 "/queue/messages",
                 new ChatNotification(
                         saved.getId(),

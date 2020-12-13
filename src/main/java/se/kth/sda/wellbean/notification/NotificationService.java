@@ -1,6 +1,5 @@
 package se.kth.sda.wellbean.notification;
 
-import com.sun.xml.bind.v2.runtime.output.SAXOutput;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,7 +34,7 @@ public class NotificationService {
             eventDescription = "You have an upcoming event!";
         }
         mailMessage.setSubject("You've been invited to " + eventTitle + " event on WellBean!" );
-        String text = eventDescription +  "It starts on " + event.getStart() + ".";;
+        String text = eventDescription +  "It starts on " + event.getStart() + ".";
         mailMessage.setText(text);
 
         javaMailSender.send(mailMessage);
