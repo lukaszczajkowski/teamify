@@ -45,7 +45,7 @@ export default function UpdateBeanPopup({ isOpen, currentBean, updateBean, onClo
                         <i className="fas fa-times"></i>
                     </button>
 
-                    <div className="header">
+                    <div className="popup-header">
                         <div className="flex-start">
                             <img className="header-icon" src={BeanIcon} />
                             <h2 className="header-title">Edit Bean</h2>

@@ -44,7 +44,7 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
-                    <div className="header">
+                    <div className="popup-header">
                         <h2 className="header-title">Edit project detail</h2>
 
                     </div>

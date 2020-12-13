@@ -44,7 +44,7 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
                         <button className="close" onClick={onClose}>
                             <i className="fas fa-times"></i>
                         </button>
-                        <div className="header">
+                        <div className="popup-header">
                             <div className="flex-start">
                                  <img src={BeanIcon} className="header-icon"/>
                             <h1 className="header-title">Add a new bean</h1>
