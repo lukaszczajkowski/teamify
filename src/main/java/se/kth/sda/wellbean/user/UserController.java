@@ -1,7 +1,6 @@
 package se.kth.sda.wellbean.user;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
@@ -12,7 +11,10 @@ import se.kth.sda.wellbean.project.ProjectService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -146,10 +148,7 @@ public class UserController {
         LocalDate previous_login_date = userService.getPreviousLoginTime(userEmail).toLocalDate();
         userService.setPreviousLoginTime(userService.findUserByEmail(userEmail));
         LocalDate  current_login_date=       LocalDateTime.now().toLocalDate();
-        if (current_login_date.isAfter(previous_login_date)) {
-            return true;
-        }
-        return false;
+        return current_login_date.isAfter(previous_login_date);
     }
 
 

@@ -18,6 +18,8 @@
     "@testing-library/user-event": "^12.2.2",
     "antd": "^4.8.6",
     "axios": "^0.21.0",
+    "event-source-polyfill": "^1.0.22",
+    "eventsource": "^1.0.7",
     "framer-motion": "^2.9.5",
     "lottie-web": "^5.7.4",
     "material-ui-chip-input": "^1.1.0",
@@ -34,6 +36,7 @@
     "react-stomp": "^5.0.0",
     "reactjs-popup": "^2.0.4",
     "recoil": "^0.1.2",
+    "sse-client": "^0.0.10",
     "stompjs": "^2.3.3",
     "web-vitals": "^0.2.4"
   },

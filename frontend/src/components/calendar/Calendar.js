@@ -83,6 +83,7 @@ export default function Calendar() {
         const end = new Date(info.event.end);
         var endDateOutput = new Date(end.getFullYear(), end.getMonth(),
         end.getDate(), end.getHours(), end.getMinutes() + 60)
+        console.log(info);
         const updatedEvent = {
             id: info.event.id,
             title: info.event.title,

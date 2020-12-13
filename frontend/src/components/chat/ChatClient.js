@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import ChatApi from '../../api/ChatApi';
 import './ChatClient.css';
@@ -21,17 +22,20 @@ const sockJsConfig = {
 var stompClient = null;
 // let stompClient = Stomp.over(socket);
 //eslint-disable-line no-undef
-export default function ChatClient() {
-
+// eslint-disable-next-line react/prop-types
+export default function ChatClient(props) {
+    const project = props.location.props.project;
     const [currentUser, setCurrentUser] = useState({});
     const [text, setText] = useState("");
     const [contacts, setContacts] = useState([]);
     const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
     const [messages, setMessages] = useRecoilState(chatMessages);
-    const [project] = useState(1);
+    // eslint-disable-next-line no-unused-vars
+    const [currentProject, setCurrentProject] = useState({});
     //const [changesMade, setChangesMade] = useState(false);
 
     useEffect(() => {
+      setCurrentProject(project);
       UserApi.getCurrentUser().then(response => setCurrentUser(response.data))
       .then(() => {
         loadContacts();
@@ -42,8 +46,8 @@ export default function ChatClient() {
 
     useEffect(() => {
       if(activeContact === undefined) return;
-        if(activeContact === 1) {
-            ChatApi.findProjectMessages(project).then((msgs) =>
+        if(activeContact === currentProject) {
+            ChatApi.findProjectMessages(currentProject.id).then((msgs) =>
             setMessages(msgs.data)
             ).catch(err => console.log(err))
           } else {
@@ -58,8 +62,8 @@ export default function ChatClient() {
     useEffect(() => {
         if(activeContact === undefined) return;
         const interval = setInterval( () => {
-          if(activeContact === 1) {
-              ChatApi.findProjectMessages(project).then((msgs) =>
+          if(activeContact === currentProject) {
+              ChatApi.findProjectMessages(currentProject.id).then((msgs) =>
               setMessages(msgs.data)
               ).catch(err => console.log(err))
             } else {
@@ -115,13 +119,13 @@ export default function ChatClient() {
 
     const sendMessage = (msg) => {
           let message;
-          if(activeContact === 1) {
+          if(activeContact.email === undefined) {
             if(msg.trim() !== ""){
               message = {
                   senderId: currentUser.id,
-                  recipientId: activeContact,
+                  recipientId: currentProject.id,
                   senderName: currentUser.name,
-                  recipientName: activeContact,
+                  recipientName: currentProject.title,
                   content: msg,
                   timestamp: new Date()
             };
@@ -145,24 +149,12 @@ export default function ChatClient() {
         }
     };
 
-    // const loadContacts = async() => {
-    //     // eslint-disable-next-line no-undef
-    //     await UserApi.getUsersFromSharedProjects().then((response) =>
-    //       setContacts(response.data)
-    //     ).then(() => {
-    //       if(activeContact === undefined && contacts.length > 0) {
-    //         setActiveContact(contacts[0])
-    //       }
-    //     })
-    //   };
-
       const loadContacts = () => {
-        const promise = UserApi.getUsersFromSharedProjects()
-        .then((users) => users.data.map((contact) => 
+        const promise = UserApi.getUsersFromSharedProjects().then(response => response.data.filter(user => user.name !== currentUser.name))
+        .then((users) => users.map((contact) => 
           ChatApi.countNewMessages(contact.id)
                   .then((count) => {
                           contact.newMessages = count.data;
-                          console.log("count", count);
             return contact;
           })
         ))
@@ -171,7 +163,7 @@ export default function ChatClient() {
           Promise.all(promises).then((users) => {
             setContacts(users);
             if (activeContact === undefined && users.length > 0) {
-              setActiveContact(users[0]);
+              setActiveContact(project);
             }
           })
         );
@@ -183,12 +175,6 @@ export default function ChatClient() {
           <div id="sidepanel">
             <div id="profile">
               <div className="wrap">
-                {/* <img
-                  id="profile-img"
-                  src={currentUser.profilePicture}
-                  className="online"
-                  alt=""
-                /> */}
                 <p>{currentUser.name}</p>
                 <div id="status-options">
                   <ul>
@@ -218,14 +204,13 @@ export default function ChatClient() {
                   <li
                     onClick={() => setActiveContact(contact)}
                     className={
-                      activeContact && contact.id === activeContact.id
+                      activeContact && contact.id === activeContact.id && activeContact !== currentProject
                         ? "contact active"
                         : "contact"
                     }
                   >
                     <div className="wrap">
                       <span className="contact-status online"></span>
-                      <img id={contact.id} src={contact.profilePicture} alt="" />
                       <div className="meta">
                         <p className="name">{contact.name}</p>
                         {contact.newMessages !== undefined &&
@@ -239,9 +224,9 @@ export default function ChatClient() {
                   </li>
                 ))}
                 <li
-                  onClick = {() => setActiveContact(project)}
+                  onClick = {() => setActiveContact(currentProject)}
                   className={
-                    activeContact === project
+                    activeContact && activeContact === currentProject
                       ? "contact active"
                       : "contact"
                   }
@@ -249,11 +234,11 @@ export default function ChatClient() {
                   <div className="wrap">
                       <span className="contact-status online"></span>
                       <div className="meta">
-                        <p className="name">General {project}</p>
-                        {project.newMessages !== undefined &&
-                          project.newMessages > 0 && (
+                        <p className="name">General</p>
+                        {activeContact === currentProject && currentProject !== undefined && currentProject.newMessages !== undefined &&
+                          currentProject.newMessages > 0 && (
                             <p className="preview">
-                              {project.newMessages} new messages
+                              {currentProject.newMessages} new messages
                             </p>
                           )}
                       </div>

@@ -14,7 +14,7 @@ export default function Chips({email, handleDelete, changesMade}) {
 
     useEffect(() => {
         setCurrentEmail(email);
-    }, [changesMade]);
+    }, [email]);
 
     return (
         <Chip

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import {
@@ -53,8 +54,10 @@ function App() {
                     <CalendarPage />
                 </Route>
                 <RecoilRoot>
-                <Route exact path="/chat">
-                    <ChatPage/>
+                <Route exact path="/chat"
+                        render ={(props) =>  <ChatClient {...props}
+                /> }
+                >
                 </Route>
                 </RecoilRoot>
                 <Route exact path="/">
