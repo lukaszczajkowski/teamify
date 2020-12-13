@@ -1,9 +1,10 @@
 package se.kth.sda.wellbean.category;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,10 +53,19 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category updatedCategory) {
+        Category saved = cRepository.save(updatedCategory);
+
+        this.publisher.publishEvent(new CategoryCreated(saved));
+
         return cRepository.save(updatedCategory);
     }
 
     public void deleteCategory(Long id) {
+        Category deleted = cRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        this.publisher.publishEvent(new CategoryCreated(deleted));
+
         cRepository.deleteById(id);
     }
 }

@@ -9,10 +9,6 @@ import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
-// const sockJsConfig = {
-//     transports: ['xhr-streaming'],
-//     headers: { Authorization: window.sessionStorage.getItem("_token") }
-// }
 let eventSource;
 function ProjectPage() {
     const history = useHistory();
@@ -26,8 +22,7 @@ function ProjectPage() {
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
-    const [incomingChanges, setIncomingChanges] = useState(false);
-    //const [listening, setListening] = useState(false);
+    const [incomingChanges, setIncomingChanges] = useState(0);
 
     useEffect(() => {
             init();
@@ -51,7 +46,9 @@ function ProjectPage() {
             eventSource.onmessage = (event) => {
                 console.log("data received", event);
                 getCurrentProject();
-                setIncomingChanges(!incomingChanges);
+                getAllCategories(projectId);
+                getAllMembers(projectId);
+                setIncomingChanges(incomingChanges + 1);
             }
 
             eventSource.onerror = (err) => {
