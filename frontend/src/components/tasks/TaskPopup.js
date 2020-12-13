@@ -91,6 +91,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <h2 className="prompt">Title</h2>
                             <EditableText
                                 text={title}
+                                placeholder="title..."
                                 onUpdateText={onTitleUpdated} 
                             />
                         </div>
@@ -98,6 +99,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <h2 className="prompt">Description</h2>
                             <EditableText
                                 text={description}
+                                placeholder="description..."
                                 onUpdateText={onDescriptionUpdated} 
                             />
                         </div>
