@@ -2,13 +2,9 @@ package se.kth.sda.wellbean.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
-import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.task.TaskService;
@@ -194,12 +190,7 @@ public class CommentController {
         Task currentTask = taskService.getById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Long currentProjectId = currentTask.getProject().getId();
-        if (projectService.getById(currentProjectId).getUsers().contains(getCurrentUser())) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return projectService.getById(currentProjectId).getUsers().contains(getCurrentUser());
     }
 
 

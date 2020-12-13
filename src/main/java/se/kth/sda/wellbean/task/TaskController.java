@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.category.CategoryService;
-import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
@@ -330,23 +329,14 @@ public class TaskController {
     }
 
     private boolean checkCredentialsByProjectId(Long projectId) {
-        if (projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser())) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser());
     }
 
     private boolean checkCredentialsByCategoryId(Long categoryId) {
         if (categoryId != null) {
             Category currentCategory = categoryService.getById(categoryId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            if (checkCredentialsByProjectId(currentCategory.getProject().getId())) {
-                return true;
-            } else {
-                return false;
-            }
+            return checkCredentialsByProjectId(currentCategory.getProject().getId());
         }
         else {
             return false;
@@ -358,11 +348,7 @@ public class TaskController {
         Task currentTask = taskService.getById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Long currentProjectId = currentTask.getProject().getId();
-        if (projectService.getById(currentProjectId).getUsers().contains(getCurrentUser())) {
-            return true;
-        } else {
-            return false;
-        }
+        return projectService.getById(currentProjectId).getUsers().contains(getCurrentUser());
     }
 
     private List<Project> getAllAvailableProjectsForCurrentUser()

@@ -1,9 +1,9 @@
 package se.kth.sda.wellbean.task;
 
 import se.kth.sda.wellbean.category.Category;
+import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
-import se.kth.sda.wellbean.comment.Comment;
 
 import javax.persistence.*;
 import java.util.List;

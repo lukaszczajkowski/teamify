@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
-import se.kth.sda.wellbean.user.UserRepository;
 import se.kth.sda.wellbean.user.UserService;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})

@@ -50,7 +50,7 @@ public class ChatRoomService {
 
     public Optional<String> getChatId(String projectId,
                                       boolean createIfNotExist) {
-        String id = projectId.toString();
+        String id = projectId;
         return chatRoomRepository
                 .findById(id)
                 .map(chatRoom -> {
