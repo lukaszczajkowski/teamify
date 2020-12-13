@@ -12,6 +12,7 @@ import {
   chatActiveContact,
   chatMessages,
 } from "../../atom/globalState";
+import ProjectHeader from '../layout/ProjectHeader';
 
 const wsEndpoint = 'http://localhost:8080/ws';
 const sockJsConfig = {
@@ -171,6 +172,7 @@ export default function ChatClient(props) {
 
       return (
         <div id="chat">
+          <ProjectHeader/>
         <div id="frame">
           <div id="sidepanel">
             <div id="profile">

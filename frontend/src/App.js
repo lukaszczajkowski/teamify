@@ -19,8 +19,8 @@ import Auth from './services/Auth';
 import UserApi from './api/UserApi';
 
 import UserContext from './UserContext';
-import ChatPage from './components/chat/ChatPage';
 import CalendarPage from './components/calendar/CalendarPage';
+import ChatClient from './components/chat/ChatClient';
 
 function App() {
 
@@ -77,17 +77,6 @@ function App() {
                 </Route>
                 <Route exact path="/login">
                     <LoginPage />
-                </Route>
-
-                <Route exact path="/projects/:projectId">
-                    <ProjectPage />
-                </Route>
-
-                <Route exact path="/calendar">
-                    <CalendarPage />
-                </Route>
-                <Route exact path="/chat">
-                    <ChatPage />
                 </Route>
 
             </Switch>
