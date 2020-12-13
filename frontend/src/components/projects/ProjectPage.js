@@ -135,8 +135,8 @@ function ProjectPage() {
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-    const updateCategory = (projectId, newCategoryData) => {
-        return CategoryApi.updateCategory(projectId, newCategoryData)
+    const updateCategory = (newCategoryData) => {
+        return CategoryApi.updateCategory(newCategoryData)
             .then(getCurrentProject())
             .catch(err => console.log(`error on update category: ${err}`));
     };

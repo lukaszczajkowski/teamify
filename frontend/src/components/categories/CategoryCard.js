@@ -5,11 +5,11 @@ import CommentApi from "../../api/CommentApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
-import { Droppable } from 'react-beautiful-dnd';
+// import { Droppable } from 'react-beautiful-dnd';
 
 
 // eslint-disable-next-line react/prop-types
-export default function CategoryCard({ category, updateCategory, deleteCategory, projectId }) {
+export default function CategoryCard({ category, updateCategory, deleteCategory }) {
     // eslint-disable-next-line react/prop-types
     const categoryId = category.id;
     // eslint-disable-next-line react/prop-types
@@ -30,7 +30,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
             id: categoryId,
             title: title,
         };
-        updateCategory(projectId, newCategoryData);
+        updateCategory(newCategoryData);
         setIsEditingTitle(false);
     };
 
@@ -122,13 +122,13 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                     tasks === null ?
                         null :
                         <div>
-                            <Droppable droppableId={categoryId.toString()}>
-                                {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {tasks.map((task, index) => (
+                            {/* <Droppable droppableId={categoryId.toString()}> */}
+                                {/* {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}> */}
+                                    {tasks.map((task) => (
                                         <TaskCard key={task.id}
                                             task={task}
-                                            index={index}
+                                        
                                             deleteTask={deleteTask}
                                             updateTask={updateTask}
                                             addMemberToTask={addMemberToTask}
@@ -138,11 +138,11 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                       ))}
 
                                             
-
+{/* 
                                         {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                                    </div> */}
+                                {/* )} */}
+                            {/* </Droppable> */}
                            
                         </div>
                 }
