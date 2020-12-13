@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Auth from "../../services/Auth";
 
-    // eslint-disable-next-line react/prop-types
-    function Navbar() {
+// eslint-disable-next-line react/prop-types
+function Navbar() {
+    const history = useHistory();
 
     const [click, setClick] = useState(false);
 
@@ -11,9 +12,14 @@ import Auth from "../../services/Auth";
 
     const closeMenu = () => setClick(false);
 
+    const onLogout = () => {
+        Auth.logout();
+        history.push("/");
+    }
+
     return (
         <nav className="navbar">
-            
+
             <div className=" link menu-icon" onClick={handleClick}>
                 {/* FontAwesome Icon */}
                 <i className={click ? "fas fa-times" : "fas fa-bars"} />
@@ -32,8 +38,8 @@ import Auth from "../../services/Auth";
                     <Link className="link nav-link" to="/about" onClick={closeMenu}>About</Link>
                 </li>
 
-                <li>
-                <button className="button nav-item" onClick={() => Auth.logout()}>Logout</button>
+                <li className="nav-item">
+                    <button className="nav-link" onClick={onLogout}>Logout</button>
                 </li>
 
             </ul>

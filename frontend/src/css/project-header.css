@@ -1,17 +1,15 @@
 .project-header {
     height: 60px;
+    background-color: var(--bg-light-grey);
 }
+
 
 .project-header .icon {
     height: 30px;
     width: 30px;
 }
 .project-header .project-nav {
-   background-color: var(--bg-light-grey);
-    padding: 20px 0px 10px 33px; 
-
-    
-
+    padding: 16px 0px 10px 33px; 
 }
 .project-header .project-nav-item {
     margin-right: 12px;
