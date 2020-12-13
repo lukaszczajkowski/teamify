@@ -10,7 +10,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean, updateB
 
     return (
         <article className="bean-board">
-            <div className="board-container">
+            <div className="board-container user-board">
                 <div className="flip-front">
                     <div className="board-title flex-start">
                         <img className="bean-icon" src={BeanIcon}></img>

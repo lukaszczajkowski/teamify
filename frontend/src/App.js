@@ -16,11 +16,11 @@ import LandingPage from './components/home/LandingPage';
 import ProjectPage from "./components/projects/ProjectPage";
 import UserPage from "./components/user/UserPage";
 import Auth from './services/Auth';
-import Calendar from './components/calendar/Calendar'
 import UserApi from './api/UserApi';
 
 import UserContext from './UserContext';
-import ChatPage from './components/chat/ChatPage';
+import CalendarPage from './components/calendar/CalendarPage';
+import ChatClient from './components/chat/ChatClient';
 
 function App() {
 
@@ -51,7 +51,7 @@ function App() {
                 </Route>
 
                 <Route exact path="/calendar">
-                    <Calendar />
+                    <CalendarPage />
                 </Route>
                 <RecoilRoot>
                 <Route exact path="/chat"
@@ -77,17 +77,6 @@ function App() {
                 </Route>
                 <Route exact path="/login">
                     <LoginPage />
-                </Route>
-
-                <Route exact path="/projects/:projectId">
-                    <ProjectPage />
-                </Route>
-
-                <Route exact path="/calendar">
-                    <Calendar />
-                </Route>
-                <Route exact path="/chat">
-                    <ChatPage />
                 </Route>
 
             </Switch>

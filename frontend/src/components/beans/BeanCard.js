@@ -6,6 +6,7 @@ import MessagePopup from "../reusables/MessagePopup";
 import BeanActions from "./BeanActions";
 import UpdateBeanPopup from "./UpdateBeanPopup";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function BeanCard({ bean, updateBean, deleteBean }) {
     const [isCollectible, setIsCollectible] = useState(false);
@@ -85,10 +86,15 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
     return (
         <div>
-            <div className=" bean-card flex-column">
+            <motion.div
+                className=" bean-card flex-column"
+                whileHover={{ scale: 1.1 }}>
 
                 <button onClick={onCollect}>
-                    <img className="bean-icon" src={BeanIcon} />
+                    <motion.img className="bean-icon"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        src={BeanIcon} />
                 </button>
                 <BeanActions
                     currentBean={bean}
@@ -96,7 +102,7 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
                     onDeleteBean={onDeleteBean}
 
                 />
-            </div>
+            </motion.div>
 
             <UpdateBeanPopup
                 isOpen={openUpdate}

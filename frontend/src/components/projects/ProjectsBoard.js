@@ -9,7 +9,7 @@ export default function ProjectsBoard({ projects, createProject }) {
 
     return (
         <div className="projects-board">
-            <div className="board-container">
+            <div className="board-container user-board">
                 <p className="prompt">Keep working on projects:</p>
 
                 <div className="project-cards flex-center flex-wrap">

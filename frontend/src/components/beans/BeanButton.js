@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BeanPopup from "./BeanPopup";
+import { motion } from "framer-motion";
 
 // eslint-disable-next-line react/prop-types
 export default function BeanButton({ bean, createBean }) {
@@ -22,18 +23,19 @@ export default function BeanButton({ bean, createBean }) {
         <div>
             {
                 isAdded ?
-                
-                    <div>
-                        <button className="added-button button">this is added</button>
-                    </div> :
+
+
+                    null :
 
                     <div>
-                        <button className="bean-button button"
+                        <motion.button className="bean-button button"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={onCreateBean}>
 
                             {/* eslint-disable-next-line react/prop-types */}
                             {bean.title}
-                        </button>
+                        </motion.button>
 
                         <BeanPopup
                             isOpen={popupIsOpen}
