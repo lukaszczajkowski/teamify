@@ -79,8 +79,14 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     }
 
     const updateCommentTask = (task, comment) => {
-        console.log("updateCommentTaskz:", task, comment);
+        console.log("updateCommentTask:", task, comment);
         return CommentApi.updateComment(comment, task.id)
+        .then(() => getTasksByCategory(categoryId))
+    }
+
+    const deleteCommentTask = (commentId) => {
+        console.log("deletingComment:", commentId);
+        return CommentApi.deleteComment(commentId)
         .then(() => getTasksByCategory(categoryId))
     }
 
@@ -112,12 +118,12 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
                                     {tasks.map((task) => (
                                         <TaskCard key={task.id}
                                             task={task}
-                                        
                                             deleteTask={deleteTask}
                                             updateTask={updateTask}
                                             addMemberToTask={addMemberToTask}
-                                            addCommentToTask = {addCommentToTask}
-                                            updateCommentTask = {updateCommentTask}
+                                            addCommentToTask={addCommentToTask}
+                                            updateCommentTask={updateCommentTask}
+                                            deleteCommentTask={deleteCommentTask}
                                             deleteMemberFromTask={deleteMemberFromTask} />
                                       ))}
 

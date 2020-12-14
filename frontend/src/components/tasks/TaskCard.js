@@ -3,7 +3,7 @@ import TaskPopup from "./TaskPopup";
 import TaskActions from "./TaskActions";
 // import { Draggable } from "react-beautiful-dnd";
 
-export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask }) {
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
 
@@ -51,7 +51,7 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                                     deleteMemberFromTask={deleteMemberFromTask}
                                     addComment={addCommentToTask}
                                     updateComment={updateCommentTask}
-
+                                    deleteComment={deleteCommentTask}
                                     onClose={onClosePopup} />
                             </div>
 
