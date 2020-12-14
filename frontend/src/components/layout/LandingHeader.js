@@ -29,7 +29,7 @@ export default function LandingHeader() {
 </div>
 <motion.div className="header-title" initial={{ y: -250}}
         animate={{ y: -10 }}
-        transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}>
+        transition={{ delay: 0.2, type: 'spring', stiffness: 50 }}>
             <h1 className="name"><svg id="logos-svg" width="251" height="39" viewBox="0 0 251 39" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <path d="M46.744 3.54399L37.048 37H32.152L24.376 10.072L16.312 37L11.464 37.048L2.104 3.54399H6.76L14.056 31.912L22.12 3.54399H27.016L34.696 31.816L42.04 3.54399H46.744Z" stroke="#0F545C" strokeWidth="2" mask="url(#path-1-outside-1)"/>

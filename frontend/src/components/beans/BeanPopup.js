@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import BeanIcon from "../../assets/bean-black.png";
+import { motion } from "framer-motion";
 
 // eslint-disable-next-line react/prop-types
 export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, onClose }) {
@@ -40,21 +41,26 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
                     onClose={onClose}
                 >
 
-                    <div className="modal" id="bean-popup">
+                    <motion.div  initial={{
+                     scale: 0
+                         }}
+                     animate= {{
+                     scale: 1
+                     }} className="modal" id="bean-popup">
                         <button className="close" onClick={onClose}>
                             <i className="fas fa-times"></i>
                         </button>
-                        <div className="header">
+                        <div className="header1">
                             <div className="flex-start">
-                                 <img src={BeanIcon} className="header-icon"/>
-                            <h1 className="header-title">Add a new bean</h1>
+                                 <img src={BeanIcon} className="header1-icon"/>
+                            <h1 className="header1-title">Add a new bean</h1>
                             </div>
                            
                         </div>
                         
                         <div className="content">
                             <div className="popup-item flex-start">
-                                <h2 className="prompt">title</h2>
+                                <h2 className="prompt">Title</h2>
                                 <input
                                     type="text"
                                     className="input-box"
@@ -127,7 +133,7 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
                             </button>
                         </div>
 
-                    </div>
+                    </motion.div>
                 </Popup>
 
             </div>
