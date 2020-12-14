@@ -23,6 +23,7 @@ class Auth {
     logout() {
         this.setLoggedIn(false);
         this._clearToken();
+        this._clearUser();
     }
 
     bindLoggedInStateSetter(loggedInStateSetter) {
@@ -38,6 +39,7 @@ class Auth {
         try {
             const response = await action(data);
             this._setToken(response.data.token);
+            this._setUser(response.data.user);
             this.setLoggedIn(true);
             return true;
         } catch (e) {

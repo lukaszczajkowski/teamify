@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import EditableText from "../projects/EditableText";
-//import Auth from '../../services/Auth'; 
+import Auth from '../../services/Auth'; 
 
 export default function Comments({task, onCreate, onUpdate, onDelete}){
 
     const [isCreatingNewComment, setIsCreatingNewComment] = useState(false);
     const [createdComment, setCreatedComment] = useState("");
 
-    //const user = Auth.getUser();
-    //const isMyComment = user && post.user.id === user.id
+    const user = Auth.getUser();
 
     const onAddComment = () => {
 
@@ -32,11 +31,12 @@ export default function Comments({task, onCreate, onUpdate, onDelete}){
         setIsCreatingNewComment(false)
     }
 
-    if (onCreate == "qweqweqw") {
-        onCreate(task, onUpdate, onDelete);
+    const onDeleteComment = (commentId) => {
+    
+        console.log("delete comment")
+        onDelete(commentId)
+        setIsCreatingNewComment(false)
     }
-
-    console.log("task", task)
 
     return (
         <div>
@@ -70,16 +70,27 @@ export default function Comments({task, onCreate, onUpdate, onDelete}){
             }
             <div>
                 {task.comments ? task.comments.map( comment => {
-                    return <div key={comment.id}>
-                        {comment.user.name}: <EditableText text={comment.body} onUpdateText={(text) => onEditComment(comment, text)}
-                        />
-                         <button
-                            className="action-button confirm-update"
-                            type="submit"
-                            onClick={() => onDelete(comment)}
-                            >
-                            <i className="fas fa-minus"></i>
-                        </button>
+                    return <div key={comment.id} className="flex-between">
+                         {user && comment.user.id === user.id ?
+                         <div>
+                         <div>{comment.user.name}:</div>
+                         <EditableText text={comment.body} onUpdateText={(text) => onEditComment(comment, text)}/>
+                         </div>
+                         :
+                         <div>
+                         <div>{comment.user.name}:</div>
+                         <h2 className="input-box">{comment.body}</h2>
+                         </div>
+                        }
+
+                        {user && comment.user.id === user.id && 
+                            <button
+                                className="action-button confirm-update"
+                                onClick={() => onDeleteComment(comment.id)}
+                                >
+                                <i className="fas fa-minus"></i>
+                            </button>
+                        }
                     </div>
                 } 
                 )
