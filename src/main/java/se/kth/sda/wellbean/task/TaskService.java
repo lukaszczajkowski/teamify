@@ -1,7 +1,12 @@
 package se.kth.sda.wellbean.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import se.kth.sda.wellbean.category.CategoryMapper;
+import se.kth.sda.wellbean.category.EventCreated;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,9 +16,17 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
 
-    @Autowired
     private TaskRepository repo;
 
+    private final ApplicationEventPublisher publisher;
+
+    private final CategoryMapper mapper;
+
+    public TaskService(TaskRepository repo, ApplicationEventPublisher publisher, CategoryMapper mapper) {
+        this.repo = repo;
+        this.publisher = publisher;
+        this.mapper = mapper;
+    }
 
     public List<Task> getAllListTask(String sort) {
         return repo.findAll().stream()
@@ -31,15 +44,30 @@ public class TaskService {
     }
 
     public Task create(Task newTask){
-        return repo.save(newTask);
+
+        Task saved = this.repo.save(newTask);
+
+        this.publisher.publishEvent(new EventCreated(saved));
+
+        return saved;
     }
 
     public void delete (Long id) {
+        Task deleted = this.repo.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+
+        this.publisher.publishEvent(new EventCreated(deleted));
+
         repo.deleteById(id);
     }
 
-    public void update(Task updatedTask)  {
-        repo.save(updatedTask);
+    public Task update(Task updatedTask)  {
+        Task updated = repo.save(updatedTask);
+
+        this.publisher.publishEvent(new EventCreated(updated));
+
+        return updated;
     }
 
     public List<Task> gelAllTaskByMemberId(Long memberId) {

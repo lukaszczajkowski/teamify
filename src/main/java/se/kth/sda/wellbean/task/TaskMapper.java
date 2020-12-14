@@ -1,4 +1,4 @@
-package se.kth.sda.wellbean.category;
+package se.kth.sda.wellbean.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -6,19 +6,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class CategoryMapper {
-
+public class TaskMapper {
     private final ModelMapper modelMapper;
 
-    public CategoryMapper(ModelMapper modelMapper) {
+    public TaskMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-    public CategoryDto entityToDto(Category category) {
+    public TaskDto entityToDto(Task task) {
         System.out.println(String.format("Convert 'Category' entity to DTO. ['id': %d, 'title', %s]",
-                category.getId(), category.getTitle()));
+                task.getId(), task.getTitle()));
 
-        CategoryDto dto = modelMapper.map(category, CategoryDto.class);
+        TaskDto dto = modelMapper.map(task, TaskDto.class);
 
         System.out.println(String.format("DTO '%d' initialized with id &s",
                 dto.getId(), dto.getTitle()));

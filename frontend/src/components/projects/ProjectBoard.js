@@ -6,21 +6,23 @@ import { DragDropContext } from 'react-beautiful-dnd';
 // eslint-disable-next-line react/prop-types
 export default function ProjectBoard({ projectId, categories, createCategory, updateCategory, deleteCategory, category }) {
     const onDragEnd = (result) => {
-        const { destination, source, draggableId } = result;
-        console.log("destination", destination, "source", source, draggableId);
-        if (!result.destination) {
-            return;
+        if(category !== undefined){
+            const { destination, source, draggableId } = result;
+            console.log("destination", destination, "source", source, draggableId);
+            if (!result.destination) {
+                return;
+            }
+            let sourceIdx = parseInt(result.source.index)
+            let destIdx = parseInt(result.destination.index)
+            {/* eslint-disable-next-line react/prop-types */ }
+            let draggingCard = category.task[sourceIdx]
+            {/* eslint-disable-next-line react/prop-types */ }
+            let newList = category.task.slice();
+            newList.splice(sourceIdx, 1);
+            newList.splice(destIdx, 0, draggingCard)
+            {/* eslint-disable-next-line react/prop-types */ }
+            category.task = newList;
         }
-        let sourceIdx = parseInt(result.source.index)
-        let destIdx = parseInt(result.destination.index)
-        {/* eslint-disable-next-line react/prop-types */ }
-        let draggingCard = category.task[sourceIdx]
-        {/* eslint-disable-next-line react/prop-types */ }
-        let newList = category.task.slice();
-        newList.splice(sourceIdx, 1);
-        newList.splice(destIdx, 0, draggingCard)
-        {/* eslint-disable-next-line react/prop-types */ }
-        category.task = newList;
     }
 
     return (

@@ -60,7 +60,7 @@ export default function Calendar() {
 
         EventApi.create(eventToAdd)
                 .then(response => setCalendarEvents([...calendarEvents, response.data]));
-        setChangesMade(!changesMade);
+        //setChangesMade(!changesMade);
     }
 
     const handleDateClick = (e) => {
@@ -192,6 +192,8 @@ export default function Calendar() {
                             setEmailRemoved(true);
                         }
                         console.log("email removed set to: " + emailRemoved)
+                        //added this
+                        loadData();
                     })
                     .catch(err => console.log(err))
                 }).catch(err => console.log(err));

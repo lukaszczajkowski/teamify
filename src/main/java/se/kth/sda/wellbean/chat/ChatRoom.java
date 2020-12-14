@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
+@Document(collection = "chat_room")
 public class ChatRoom {
     @Id
     private String id;

@@ -1,16 +1,14 @@
 package se.kth.sda.wellbean.category;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.baseEntity.BaseEntity;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.task.TaskService;
 import se.kth.sda.wellbean.user.UserService;
@@ -26,36 +24,36 @@ public class CategoryController {
     private final TaskService taskService;
     private final AuthService authService;
     private final UserService userService;
-    private final CategoryCreatedEventProcessor categoryCreatedEventProcessor;
-    private final Flux<CategoryCreated> events;
+    private final EventCreatedEventProcessor eventCreatedEventProcessor;
+    private final Flux<EventCreated> events;
     private final CategoryMapper mapper;
 
     public CategoryController(CategoryService categoryService,
                               ProjectService projectService,
                               TaskService taskService,
-                             AuthService authService,
-                             UserService userService,
-                              CategoryCreatedEventProcessor categoryCreatedEventProcessor,
+                              AuthService authService,
+                              UserService userService,
+                              EventCreatedEventProcessor eventCreatedEventProcessor,
                               CategoryMapper mapper) {
         this.categoryService = categoryService;
         this.projectService = projectService;
         this.taskService = taskService;
         this.authService = authService;
         this.userService = userService;
-        this.categoryCreatedEventProcessor = categoryCreatedEventProcessor;
+        this.eventCreatedEventProcessor = eventCreatedEventProcessor;
         this.mapper = mapper;
-        this.events = Flux.create(categoryCreatedEventProcessor).share();
+        this.events = Flux.create(eventCreatedEventProcessor).share();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "/sse/category", produces = "text/event-stream;charset=utf-8")
-    public ResponseEntity<Flux<CategoryDto>> stream() {
+    public ResponseEntity<Flux<BaseEntity>> stream() {
         System.out.println("Start listening to the category collection.");
 
         return ResponseEntity.ok().body(events.map(event -> {
-            CategoryDto dto = this.mapper.entityToDto((Category) event.getSource());
-            System.out.println("Mapping category " + dto.getTitle());
-            return dto;
+            BaseEntity toReturn =  (BaseEntity) event.getSource();
+            System.out.println("Mapping category");
+            return toReturn;
         }));
     }
 

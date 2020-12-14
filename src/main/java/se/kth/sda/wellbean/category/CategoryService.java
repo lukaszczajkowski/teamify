@@ -47,24 +47,25 @@ public class CategoryService {
     public Category createNewCategory(Category newCategory) {
         Category saved = cRepository.save(newCategory);
 
-        this.publisher.publishEvent(new CategoryCreated(saved));
+        this.publisher.publishEvent(new EventCreated(saved));
 
         return saved;
     }
 
     public Category updateCategory(Category updatedCategory) {
-        Category saved = cRepository.save(updatedCategory);
+        Category updated = cRepository.save(updatedCategory);
 
-        this.publisher.publishEvent(new CategoryCreated(saved));
+        this.publisher.publishEvent(new EventCreated(updated));
 
-        return cRepository.save(updatedCategory);
+
+        return updated;
     }
 
     public void deleteCategory(Long id) {
         Category deleted = cRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        this.publisher.publishEvent(new CategoryCreated(deleted));
+        this.publisher.publishEvent(new EventCreated(deleted));
 
         cRepository.deleteById(id);
     }

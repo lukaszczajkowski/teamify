@@ -1,18 +1,20 @@
 package se.kth.sda.wellbean.task;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import se.kth.sda.wellbean.baseEntity.BaseEntity;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "task")
-public class Task {
+public class Task extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -45,6 +47,12 @@ public class Task {
     // many tasks belongs to one category
     @ManyToOne
     private Category category;
+
+    @Column(nullable = false, updatable = false)
+    private OffsetDateTime dateCreated;
+
+    @Column(nullable = false)
+    private OffsetDateTime lastUpdated;
 
     public Task() {
     }
@@ -114,5 +122,16 @@ public class Task {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.dateCreated = OffsetDateTime.now();
+        this.lastUpdated = this.dateCreated;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.lastUpdated = OffsetDateTime.now();
     }
 }

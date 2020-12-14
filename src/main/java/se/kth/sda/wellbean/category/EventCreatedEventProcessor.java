@@ -14,22 +14,22 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Component
-public class CategoryCreatedEventProcessor implements ApplicationListener<CategoryCreated>,
-        Consumer<FluxSink<CategoryCreated>> {
+public class EventCreatedEventProcessor implements ApplicationListener<EventCreated>,
+        Consumer<FluxSink<EventCreated>> {
 
     private final Executor executor;
-    private final BlockingQueue<CategoryCreated> queue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<EventCreated> queue = new LinkedBlockingQueue<>(10);
 
-    public CategoryCreatedEventProcessor(@Qualifier("brokerChannelExecutor") Executor executor) {
+    public EventCreatedEventProcessor(@Qualifier("brokerChannelExecutor") Executor executor) {
         this.executor = executor;
     }
 
     @Override
-    public void accept(FluxSink<CategoryCreated> categoryCreatedFluxSink) {
+    public void accept(FluxSink<EventCreated> categoryCreatedFluxSink) {
         this.executor.execute(() -> {
             while (true) {
                 try {
-                    CategoryCreated event = queue.take();
+                    EventCreated event = queue.take();
                     categoryCreatedFluxSink.next(event);
                 } catch (InterruptedException e) {
                     ReflectionUtils.rethrowRuntimeException(e);
@@ -39,7 +39,7 @@ public class CategoryCreatedEventProcessor implements ApplicationListener<Catego
     }
 
     @Override
-    public void onApplicationEvent(CategoryCreated event) {
+    public void onApplicationEvent(EventCreated event) {
         this.queue.offer(event);
     }
 }

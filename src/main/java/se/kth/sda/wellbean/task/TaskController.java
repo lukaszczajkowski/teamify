@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Flux;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.category.CategoryService;

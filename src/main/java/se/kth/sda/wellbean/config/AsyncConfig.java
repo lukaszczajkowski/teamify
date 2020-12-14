@@ -27,6 +27,6 @@ public class AsyncConfig  implements AsyncConfigurer {
 
     @Bean
     protected ConcurrentTaskExecutor getTaskExecutor() {
-        return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(5));
+        return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(15));
     }
 }

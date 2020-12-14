@@ -25,9 +25,9 @@ public class Category extends BaseEntity {
     @ManyToOne
     private Project project;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Task> task;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Task> tasks;
 
     @Column(nullable = false, updatable = false)

@@ -25,10 +25,11 @@ function ProjectPage() {
     const [incomingChanges, setIncomingChanges] = useState(0);
 
     useEffect(() => {
-            init();
+        initTasks();
+        initCategories();
     }, [])
 
-    const init = ()  => {
+    const initCategories = ()  => {
             eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category', 
                 {
                     headers: {
@@ -55,6 +56,35 @@ function ProjectPage() {
                 console.error("Event source failed:", err);
                 eventSource.close();
             }
+    }
+
+    const initTasks = ()  => {
+        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/task', 
+            {
+                headers: {
+                    "Accept": "text/event-stream",
+                    "Authorization": window.sessionStorage.getItem("_token"),
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
+                }
+            }
+        );
+        eventSource.onopen = (event) => {
+            console.log("connection opened!", event);
+        }
+        eventSource.onmessage = (event) => {
+            console.log("data received", event);
+            getCurrentProject();
+            getAllCategories(projectId);
+            getAllMembers(projectId);
+            setIncomingChanges(incomingChanges + 1);
+        }
+
+        eventSource.onerror = (err) => {
+            console.error("Event source failed:", err);
+            eventSource.close();
+        }
     }
 
     function getCurrentProject() {
