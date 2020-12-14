@@ -1,6 +1,7 @@
 import AuthApi from "../api/AuthApi";
 
 const tokenKey = "_token";
+const userKey = "_user";
 
 // Disclaimer: This simple auth implementation is for development purposes only.
 
@@ -59,6 +60,18 @@ class Auth {
         window.sessionStorage.removeItem(tokenKey);
     }
 
+    getUser() {
+        return JSON.parse(window.sessionStorage.getItem(userKey));
+    }
+
+    _setUser(user) {
+        const userJson = JSON.stringify(user);
+        window.sessionStorage.setItem(userKey, userJson);
+    }
+
+    _clearUser() {
+        window.sessionStorage.removeItem(userKey);
+    }
     
 }
 

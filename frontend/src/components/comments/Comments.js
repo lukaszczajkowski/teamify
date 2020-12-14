@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import EditableText from "../projects/EditableText";
+//import Auth from '../../services/Auth'; 
 
 export default function Comments({task, onCreate, onUpdate, onDelete}){
 
     const [isCreatingNewComment, setIsCreatingNewComment] = useState(false);
     const [createdComment, setCreatedComment] = useState("");
+
+    //const user = Auth.getUser();
+    //const isMyComment = user && post.user.id === user.id
 
     const onAddComment = () => {
 
@@ -67,7 +71,15 @@ export default function Comments({task, onCreate, onUpdate, onDelete}){
             <div>
                 {task.comments ? task.comments.map( comment => {
                     return <div key={comment.id}>
-                        {comment.user.name}: <EditableText text={comment.body} onUpdateText={(text) => onEditComment(comment, text)}/>
+                        {comment.user.name}: <EditableText text={comment.body} onUpdateText={(text) => onEditComment(comment, text)}
+                        />
+                         <button
+                            className="action-button confirm-update"
+                            type="submit"
+                            onClick={() => onDelete(comment)}
+                            >
+                            <i className="fas fa-minus"></i>
+                        </button>
                     </div>
                 } 
                 )
