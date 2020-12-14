@@ -89,7 +89,11 @@ public class CategoryController {
      */
     @PutMapping("/categories")
     public Category updateCategory(@RequestBody Category updatedCategory) {
+        Category categoryFromDB = categoryService.getById(updatedCategory.getId())
+                .orElseThrow();
+        updatedCategory.setProject(categoryFromDB.getProject());
             return categoryService.updateCategory(updatedCategory);
+
     }
 
     /**

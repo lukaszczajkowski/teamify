@@ -45,7 +45,7 @@ public class BeanService {
     private void populatePreSettable() {
         List<BeansPreSet> beansPreSetList = beansPreSetRepository.findAll();
         if(beansPreSetList.size() == 0) {
-            beansPreSetRepository.save(new BeansPreSet("Drink a glass of water every 1 hour",8,"Keep hydrated",15));
+            beansPreSetRepository.save(new BeansPreSet("Drink a glass of water every 1 hour",8,"Keep hydrated",0));
             beansPreSetRepository.save(new BeansPreSet("Eat your meal on time",4,"Eat on time",30));
             beansPreSetRepository.save(new BeansPreSet("Exercise 30 minutes",1,"Exercise",30));
             beansPreSetRepository.save(new BeansPreSet("Be with yourself for 30 minutes",1,"Meditation",30));
