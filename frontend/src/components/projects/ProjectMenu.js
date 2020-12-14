@@ -18,6 +18,8 @@ export default function ProjectMenu({ currentProject, updateProject, onDeletePro
         setPopupIsOpen(false);
     }
 
+    
+
     return (
         <div id="project-menu" className="flex-start">
             {/* eslint-disable-next-line react/prop-types*/}
@@ -34,6 +36,8 @@ export default function ProjectMenu({ currentProject, updateProject, onDeletePro
                 updateProject={updateProject}
                 onClose={onClosePopup}
             />
+
+       
         </div>
     );
 }

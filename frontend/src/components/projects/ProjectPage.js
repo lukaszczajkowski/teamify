@@ -8,6 +8,8 @@ import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
+import ConfirmDialog from "../projects/ConfirmDialog";
+
 
 let eventSource;
 function ProjectPage() {
@@ -23,6 +25,7 @@ function ProjectPage() {
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
     const [incomingChanges, setIncomingChanges] = useState(0);
+    
 
     useEffect(() => {
             init();
@@ -72,7 +75,10 @@ function ProjectPage() {
     }
 
     const onDeleteProject = () => {
-        if (window.confirm("Do you want to delete this project?")) {
+   ({
+            ...ConfirmDialog,
+            isOpen: false
+        })
             if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
                 history.push("/home");
@@ -80,7 +86,7 @@ function ProjectPage() {
             } else {
                 alert("you are not the creator of the project, deleting project is not allowed");
             }
-        }
+        
     };
 
     const getAllMembers = (projectId) => {
@@ -182,6 +188,8 @@ function ProjectPage() {
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory} />
+
+                
         </div>
     );
 }
