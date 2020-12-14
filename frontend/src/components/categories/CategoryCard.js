@@ -10,7 +10,7 @@ import EditableText from "../projects/EditableText";
 
 
 // eslint-disable-next-line react/prop-types
-export default function CategoryCard({ category, updateCategory, deleteCategory }) {
+export default function CategoryCard({ category, updateCategory, deleteCategory, event }) {
     const categoryId = category.id;
     const [tasks, setTasks] = useState([]);
 
@@ -43,14 +43,14 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
 
 
     const createTask = (categoryId, taskData) => {
-        console.log(`create task on category: ${categoryId}`);
+        //console.log(`create task on category: ${categoryId}`);
         return TaskApi.createTask(categoryId, taskData)
             .then(response => setTasks([...tasks, response.data]));
     };
 
     const updateTask = (categoryId, task) => {
-        console.log(`update task on category: ${categoryId}`);
-        console.log(` task `, task);
+        //console.log(`update task on category: ${categoryId}`);
+        //console.log(` task `, task);
         return TaskApi.updateTask(categoryId, task)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
@@ -61,25 +61,25 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     };
 
     const addMemberToTask = (task, member) => {
-        console.log("updateTaskAddMember:", task, member);
+        //console.log("updateTaskAddMember:", task, member);
         return TaskApi.addMemberToTask(task.id, member.id)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const deleteMemberFromTask = (task, member) => {
-        console.log("deleteMemberFromTask:", task, member);
+        //console.log("deleteMemberFromTask:", task, member);
         return TaskApi.deleteMemberFromTask(task.id, member.id)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const addCommentToTask = (task, comment) => {
-        console.log("addCommentToTask:", task, comment);
+        //console.log("addCommentToTask:", task, comment);
         return CommentApi.createComment(comment, task.id)
         .then(() => getTasksByCategory(categoryId))
     }
 
     const updateCommentTask = (task, comment) => {
-        console.log("updateCommentTaskz:", task, comment);
+        //console.log("updateCommentTaskz:", task, comment);
         return CommentApi.updateComment(comment, task.id)
         .then(() => getTasksByCategory(categoryId))
     }
@@ -87,6 +87,11 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     useEffect(() => {
         getTasksByCategory(categoryId);
     }, [categoryId]);
+
+    useEffect(() => {
+        console.log("incoming event from category card", event)
+        getTasksByCategory(categoryId);
+    }, [event]);
 
     return (
         <div className="category-card">

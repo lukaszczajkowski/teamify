@@ -1,4 +1,4 @@
-package se.kth.sda.wellbean.category;
+package se.kth.sda.wellbean.project;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,23 +14,23 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Component
-public class CategoryCreatedEventProcessor implements ApplicationListener<CategoryCreated>,
-        Consumer<FluxSink<CategoryCreated>> {
+public class ProjectChangedEventProcessor implements ApplicationListener<ProjectChanged>,
+        Consumer<FluxSink<ProjectChanged>> {
 
     private final Executor executor;
-    private final BlockingQueue<CategoryCreated> queue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<ProjectChanged> queue = new LinkedBlockingQueue<>();
 
-    public CategoryCreatedEventProcessor(@Qualifier("brokerChannelExecutor") Executor executor) {
+    public ProjectChangedEventProcessor(@Qualifier("brokerChannelExecutor") Executor executor) {
         this.executor = executor;
     }
 
     @Override
-    public void accept(FluxSink<CategoryCreated> categoryCreatedFluxSink) {
+    public void accept(FluxSink<ProjectChanged> projectChangedFluxSink) {
         this.executor.execute(() -> {
             while (true) {
                 try {
-                    CategoryCreated event = queue.take();
-                    categoryCreatedFluxSink.next(event);
+                    ProjectChanged event = queue.take();
+                    projectChangedFluxSink.next(event);
                 } catch (InterruptedException e) {
                     ReflectionUtils.rethrowRuntimeException(e);
                 }
@@ -39,7 +39,7 @@ public class CategoryCreatedEventProcessor implements ApplicationListener<Catego
     }
 
     @Override
-    public void onApplicationEvent(CategoryCreated event) {
+    public void onApplicationEvent(ProjectChanged event) {
         this.queue.offer(event);
     }
 }
