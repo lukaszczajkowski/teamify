@@ -8,7 +8,7 @@ import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import ConfirmDialog from "../projects/ConfirmDialog";
+//import ConfirmDialog from "../projects/ConfirmDialog";
 
 
 let eventSource;
@@ -75,10 +75,8 @@ function ProjectPage() {
     }
 
     const onDeleteProject = () => {
-   ({
-            ...ConfirmDialog,
-            isOpen: false
-        })
+        if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
+            
             if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
                 history.push("/home");
@@ -86,6 +84,7 @@ function ProjectPage() {
             } else {
                 alert("you are not the creator of the project, deleting project is not allowed");
             }
+        }
         
     };
 
