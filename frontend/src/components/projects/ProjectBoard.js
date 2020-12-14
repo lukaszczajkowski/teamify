@@ -31,10 +31,10 @@ export default function ProjectBoard({ projectId, categories, createCategory, up
                     categories === null ?
                         null :
                         <div className="category-cards">
-                            {/* eslint-disable-next-line react/prop-types */}
                             {categories.map(category => (
                                 <CategoryCard key={category.id}
-                                    category={category} projectId={projectId}
+                                    category={category} 
+                                    projectId={projectId}
                                     updateCategory={updateCategory}
                                     deleteCategory={deleteCategory} />
                             ))}

@@ -5,8 +5,6 @@ import EditableText from "./EditableText";
 
 // eslint-disable-next-line react/prop-types
 export default function UpdateProjectPopup({ isOpen, currentProject, updateProject, onClose }) {
-    // eslint-disable-next-line react/prop-types
-    console.log("on updateProjectPopup. current project: " + currentProject.id);
 
     const {
         id, title, description,
@@ -21,7 +19,7 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
         const updatedProject = {
             id,
             title: newTitle,
-            description,
+            description
         };
         updateProject(updatedProject);
     }
@@ -30,7 +28,7 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
         const updatedProject = {
             id,
             title,
-            description: newDescription,
+            description: newDescription
         };
 
         updateProject(updatedProject);

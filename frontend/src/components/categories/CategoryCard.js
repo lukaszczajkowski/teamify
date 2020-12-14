@@ -15,9 +15,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory 
     const [tasks, setTasks] = useState([]);
 
     const {
-        // eslint-disable-next-line react/prop-types
         id, title
-        // users
     } = category;
    
 

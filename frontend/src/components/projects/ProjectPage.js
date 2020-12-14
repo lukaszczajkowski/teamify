@@ -25,36 +25,36 @@ function ProjectPage() {
     const [incomingChanges, setIncomingChanges] = useState(0);
 
     useEffect(() => {
-            init();
+        init();
     }, [])
 
-    const init = ()  => {
-            eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category', 
-                {
-                    headers: {
-                        "Accept": "text/event-stream",
-                        "Authorization": window.sessionStorage.getItem("_token"),
-                        "Cache-Control": "no-cache",
-                        "Connection": "keep-alive",
-                        "X-Accel-Buffering": "no"
-                    }
+    const init = () => {
+        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category',
+            {
+                headers: {
+                    "Accept": "text/event-stream",
+                    "Authorization": window.sessionStorage.getItem("_token"),
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
                 }
-            );
-            eventSource.onopen = (event) => {
-                console.log("connection opened!", event);
             }
-            eventSource.onmessage = (event) => {
-                console.log("data received", event);
-                getCurrentProject();
-                getAllCategories(projectId);
-                getAllMembers(projectId);
-                setIncomingChanges(incomingChanges + 1);
-            }
+        );
+        eventSource.onopen = (event) => {
+            console.log("connection opened!", event);
+        }
+        eventSource.onmessage = (event) => {
+            console.log("data received", event);
+            getCurrentProject();
+            getAllCategories(projectId);
+            getAllMembers(projectId);
+            setIncomingChanges(incomingChanges + 1);
+        }
 
-            eventSource.onerror = (err) => {
-                console.error("Event source failed:", err);
-                eventSource.close();
-            }
+        eventSource.onerror = (err) => {
+            console.error("Event source failed:", err);
+            eventSource.close();
+        }
     }
 
     function getCurrentProject() {
@@ -67,6 +67,7 @@ function ProjectPage() {
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
             .then(response => setCurrentProject(response.data))
+            .then(console.log(JSON.stringify(currentProject)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
 
@@ -135,7 +136,8 @@ function ProjectPage() {
 
     const updateCategory = (newCategoryData) => {
         return CategoryApi.updateCategory(newCategoryData)
-            .then(getCurrentProject())
+            .then(response => console.log(JSON.stringify(response.data)))
+            .then(response => categories.map((item) => item.id == newCategoryData.id ? response.data : item))
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
