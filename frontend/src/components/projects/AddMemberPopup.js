@@ -19,7 +19,7 @@ export default function AddMemberPopup({ onSubmit }) {
                                 <i className="fas fa-times"></i>
                             </button>
 
-                            <div className="header">
+                            <div className="popup-header">
                              <h1 className="header-title">Add new member</h1>
                                 
                                 </div>
