@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
+import { motion } from "framer-motion";
 
 
 // eslint-disable-next-line react/prop-types
@@ -14,13 +15,18 @@ export default function AddMemberPopup({ onSubmit }) {
                     modal
                     nested>
                     {close => (
-                        <div className="modal">
+                        <motion.div  initial={{
+                            scale: 0
+                                }}
+                            animate= {{
+                            scale: 1
+                            }}className="modal">
                             <button className="close" onClick={close}>
                                 <i className="fas fa-times"></i>
                             </button>
 
-                            <div className="popup-header">
-                             <h1 className="header-title">Add new member</h1>
+                            <div className="header1">
+                             <h1 className="header1-title">Add new member</h1>
                                 
                                 </div>
             
@@ -50,7 +56,7 @@ export default function AddMemberPopup({ onSubmit }) {
                             </button>
                             </div>
 
-                        </div>
+                        </motion.div>
 
                     )}
                 </Popup>
