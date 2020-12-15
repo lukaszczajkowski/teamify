@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,9 @@ import java.util.List;
 @Service
 public class ChatMessageService {
 
-    private ChatMessageRepository chatMessageRepository;
-    private ChatRoomService chatRoomService;
-    private MongoOperations mongoOperations;
+    private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomService chatRoomService;
+    private final MongoOperations mongoOperations;
 
     public ChatMessageService(ChatMessageRepository chatMessageRepository,
                               ChatRoomService chatRoomService,

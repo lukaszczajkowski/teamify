@@ -1,10 +1,15 @@
 .user-page .main-content {
     display: flex;
     flex-direction: column;
+    margin-top: 60px;
 }
 
 .user-page .user-menu {
     margin-bottom: 18px;
+}
+
+.user-page .user-board {
+    box-shadow: 5px 5px 14px 0px rgba(209,209,209,1);
 }
 
 .user-page .user-prompt{
@@ -22,7 +27,7 @@
 .user-page .user-menu .time-prompt {
     font-size: 24px;
     margin-left: 6vw;
-    color: var(--theme-dark-green);
+    color: var(--theme-green);
 }
 
 .user-page .user-menu #current-time {

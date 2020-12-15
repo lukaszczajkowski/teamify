@@ -7,20 +7,58 @@ import ProjectBoard from "./ProjectBoard";
 import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
+import { EventSourcePolyfill } from 'event-source-polyfill';
 
-
+let eventSource;
 function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
     const userId = user.id;
-    console.log("on project page. User id:" + userId);
+    //console.log("on project page. User id:" + userId);
 
     const { projectId } = useParams();
-    console.log("project id:" + projectId);
+    //console.log("project id:" + projectId);
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        init();
+    }, [])
+
+    const init = () => {
+        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/project',
+            {
+                headers: {
+                    "Accept": "text/event-stream",
+                    "Authorization": window.sessionStorage.getItem("_token"),
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
+                }
+            }
+        );
+        eventSource.onopen = (event) => {
+            console.log("connection opened!", event);
+        }
+        eventSource.onmessage = (event) => {
+            console.log("data received", event);
+            const newEvents = [...events];
+            newEvents.push(event);
+            setEvents(newEvents);
+            //window.location.reload();
+            // getCurrentProject();
+            // getAllCategories(projectId);
+            // getAllMembers(projectId);
+        }
+
+        eventSource.onerror = (err) => {
+            console.error("Event source failed:", err);
+            eventSource.close();
+        }
+    }
 
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
@@ -32,7 +70,7 @@ function ProjectPage() {
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
             .then(response => setCurrentProject(response.data))
-            .then(response => console.log("updated project: " + JSON.stringify(response.data)))
+            .then(console.log(JSON.stringify(currentProject)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
 
@@ -50,14 +88,13 @@ function ProjectPage() {
 
     const getAllMembers = (projectId) => {
         return ProjectApi.getProjectById(projectId)
-            .then(response => setMembers(response.data.users))
-            .then(console.log("members: " + JSON.stringify(members)));
+            .then(response => setMembers(response.data.users));
     }
 
     const onDeleteMember = (memberId) => {
         if (window.confirm("Do you want to remove this member?")) {
             if (userId === currentProject.creator.id && userId !== memberId) {
-                console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
+                //console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
                 deleteMember(projectId, memberId);
                 getAllMembers(projectId);
             } else if (userId !== currentProject.creator.id) {
@@ -83,8 +120,8 @@ function ProjectPage() {
 
     function deleteMember(projectId, memberId) {
         ProjectApi.removeMemberById(projectId, memberId)
-        .then(() => getAllMembers(projectId))
-        .catch(err => console.log(`error on delete member: ${err}`));
+            .then(() => getAllMembers(projectId))
+            .catch(err => console.log(`error on delete member: ${err}`));
     }
 
     const getAllCategories = (projectId) => {
@@ -100,9 +137,10 @@ function ProjectPage() {
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-    const updateCategory = (projectId, newCategoryData) => {
-        return CategoryApi.updateCategory(projectId, newCategoryData)
-            .then(getCurrentProject())
+    const updateCategory = (newCategoryData) => {
+        return CategoryApi.updateCategory(newCategoryData)
+            .then(response => console.log(JSON.stringify(response.data)))
+            .then(response => categories.map((item) => item.id == newCategoryData.id ? response.data : item))
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -119,23 +157,33 @@ function ProjectPage() {
         getAllMembers(projectId);
     }, [projectId]);
 
+    useEffect(() => {
+        console.log("incoming changes from project page:", events);
+        getCurrentProject();
+        getAllCategories(projectId);
+        getAllMembers(projectId);
+    }, [events]);
+
     return (
         <div className="project-page">
-            <ProjectHeader />
+            <div className="fixed-header">
+                <ProjectHeader project={currentProject}/>
 
-            <div className="flex-start">
-                <ProjectMenu
-                    currentProject={currentProject}
-                    onDeleteProject={onDeleteProject}
-                    updateProject={updateProject}
-                />
+                <div className="project-menu flex-start ">
+                    <ProjectMenu
+                        currentProject={currentProject}
+                        onDeleteProject={onDeleteProject}
+                        updateProject={updateProject}
+                    />
 
-                <MemberMenu
-                    currentProject={currentProject}
-                    members={members}
-                    addMemberByEmail={addMemberByEmail}
-                    onDeleteMember={onDeleteMember} />
+                    <MemberMenu
+                        currentProject={currentProject}
+                        members={members}
+                        addMemberByEmail={addMemberByEmail}
+                        onDeleteMember={onDeleteMember} />
+                </div>
             </div>
+
 
 
             <ProjectBoard
@@ -143,7 +191,8 @@ function ProjectPage() {
                 categories={categories}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
-                deleteCategory={deleteCategory} />
+                deleteCategory={deleteCategory}
+                event={events} />
         </div>
     );
 }

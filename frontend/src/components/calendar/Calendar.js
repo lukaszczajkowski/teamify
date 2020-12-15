@@ -6,7 +6,6 @@ import interactionPlugin from '@fullcalendar/interaction'
 import EventApi from '../../api/EventApi';
 import EventPopup from './EventPopup';
 import UserApi from "../../api/UserApi";
-import ProjectHeader from "../layout/ProjectHeader";
 
 /**
  * This is a Calendar class that needs data props from the parent component - be it User 
@@ -85,6 +84,7 @@ export default function Calendar() {
         const end = new Date(info.event.end);
         var endDateOutput = new Date(end.getFullYear(), end.getMonth(),
         end.getDate(), end.getHours(), end.getMinutes() + 60)
+        console.log(info);
         const updatedEvent = {
             id: info.event.id,
             title: info.event.title,
@@ -213,8 +213,7 @@ export default function Calendar() {
     }
     
     return(
-        <div>
-            <ProjectHeader/>
+        <div  id="calendar">
         <FullCalendar
             initialView = "timeGridWeek"
             headerToolbar={{

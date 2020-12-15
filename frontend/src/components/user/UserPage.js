@@ -45,13 +45,13 @@ function UserPage() {
 
     const updateBean = (updatedBean) => {
         return BeanApi.updateBean(updatedBean)
-        .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
-        
+            .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
+
     }
 
     const deleteBean = (beanId) => {
         return BeanApi.deleteBean(beanId)
-        .then(() => setAddedBeans(addedBeans.filter(b => b.id !== beanId)));
+            .then(() => setAddedBeans(addedBeans.filter(b => b.id !== beanId)));
 
     }
 
@@ -78,24 +78,24 @@ function UserPage() {
             <Header />
 
             <main className="main-content">
-                
+
                 <UserMenu
                     user={user}
                     currentTime={currentTime}
                 />
-
-                <BeanBoard
-                    presetBeans={presetBeans}
-                    addedBeans={addedBeans}
-                    createBean={createBean} 
-                    updateBean={updateBean} 
-                    deleteBean={deleteBean} 
+                    <BeanBoard
+                        presetBeans={presetBeans}
+                        addedBeans={addedBeans}
+                        createBean={createBean}
+                        updateBean={updateBean}
+                        deleteBean={deleteBean}
                     />
-                    
-                <ProjectsBoard
-                    creator={user}
-                    projects={projects}
-                    createProject={createProject} />
+
+                    <ProjectsBoard
+                        creator={user}
+                        projects={projects}
+                        createProject={createProject} />
+
             </main>
         </div>
     );

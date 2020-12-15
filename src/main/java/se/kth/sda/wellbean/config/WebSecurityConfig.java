@@ -13,16 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import se.kth.sda.wellbean.auth.CustomUserDetailsService;
 import se.kth.sda.wellbean.auth.JWTAuthFilter;
 import se.kth.sda.wellbean.auth.JWTEncoderDecoder;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -56,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .cors().and().authorizeRequests()
-                .antMatchers("/ws/**").permitAll()
+                .antMatchers("/ws/**", "/sse/**").permitAll()
                 .and().csrf().disable();
         http
             .authorizeRequests().antMatchers("/authenticate",

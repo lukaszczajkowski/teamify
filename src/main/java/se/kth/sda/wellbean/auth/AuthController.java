@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
 
@@ -21,7 +23,8 @@ public class AuthController {
         userService.register(user);
 
         String token = authService.createAuthToken(user.getEmail());
-        AuthResponse authResponse = new AuthResponse(token);
+        AuthResponse authResponse = new AuthResponse(token, user);
+
 
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
@@ -30,7 +33,9 @@ public class AuthController {
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
         try {
             String token = authService.authenticate(authRequest.getEmail(), authRequest.getPassword());
-            AuthResponse authResponse = new AuthResponse(token);
+            User user = userService.findUserByEmail(authRequest.getEmail());
+            AuthResponse authResponse = new AuthResponse(token, user);
+
 
             return new ResponseEntity<>(authResponse, HttpStatus.OK);
         } catch (AuthenticationException authenticationException) {

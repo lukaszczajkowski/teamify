@@ -21,7 +21,7 @@
     font-size: 28px;
     color: var(--theme-green);
     font-family: 'Rubik', sans-serif;
-    font-weight: 600;
+   
 }
 
 .bean-board .bean-icon {
@@ -31,7 +31,6 @@
 }
 
 .bean-board .prompt {
-    font-weight: bold;
     font-size: 20px;
     color: var(--theme-dark-green);
 }
@@ -44,9 +43,9 @@
 
 .bean-board .bean-button {
     font-size: 17px;
-    margin: 1vh;
+    margin: 1vw;
     color: white;
-    background-color: var(--opac-dark-grey);
+    background-color: var(--opac-green);
 }
 
 .bean-board .bean-button:hover {
@@ -56,15 +55,13 @@
 
 }
 
-.bean-board .added-button {
-    background: linear-gradient(135deg, #8f34eb 0%, #07b4b5 100%);
-}
 
 
 #create-bean {
     background-color: transparent;
     color: var(--text-dark-grey);
-    font-size: 15px;
+    font-size: 16px;
+    border-color: var(--theme-medium-grey);
 }
 
 #create-bean:hover {

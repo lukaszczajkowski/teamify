@@ -9,19 +9,19 @@ import { Link } from "react-router-dom";
 
 
 // eslint-disable-next-line react/prop-types
-export default function EventPopup({    isOpen,
-                                        currentEvent,
-                                        updateEvent,
-                                        onClose,
-                                        deleteEvent,
-                                        onMembersChange,
-                                        onDelete,
-                                        changesMade,
-                                        emailRemoved,
-                                        sourceOfEvent,
-                                        createEvent,
-                                        purpose
-                                    } ) {
+export default function EventPopup({ isOpen,
+    currentEvent,
+    updateEvent,
+    onClose,
+    deleteEvent,
+    onMembersChange,
+    onDelete,
+    changesMade,
+    emailRemoved,
+    sourceOfEvent,
+    createEvent,
+    purpose
+}) {
 
     const [chips, setChips] = useState([]);
     const [event, setEvent] = useState({});
@@ -40,8 +40,8 @@ export default function EventPopup({    isOpen,
             setEmails("");
             setEventMembersEmails([]);
             setChips([]);
-        } else if(purpose == 'update'){
-            if(currentEvent != {}){
+        } else if (purpose == 'update') {
+            if (currentEvent != {}) {
                 const {
                     id,
                     title,
@@ -64,8 +64,8 @@ export default function EventPopup({    isOpen,
                     setChips(renderedChips);
                 }
             }
-        } 
-        
+        }
+
     }, [currentEvent, changesMade, emailRemoved, purpose])
 
     useEffect(() => {
@@ -77,26 +77,26 @@ export default function EventPopup({    isOpen,
     }
 
     const renderChips = (eventMembersEmails) => {
-    const chips = eventMembersEmails.map(email => <Chips email = {email} 
-                                    handleDelete = {onDelete}
-                                    changesMade = {changesMade}
-                                    />)
+        const chips = eventMembersEmails.map(email => <Chips email={email}
+            handleDelete={onDelete}
+            changesMade={changesMade}
+        />)
         return chips;
     }
     //generates the chips with emails of invited users
     // eslint-disable-next-line react/jsx-key
 
 
-    const buttons = purpose == 'create' ? 
-                                <button
-                                    className="button"
-                                    onClick={() => {
-                                        {createEvent({ eventTitle, eventDescription, emails})}
-                                        {onMembersChange({emails, currentEvent})}
-                                        close();
-                                        {onClose(false)}
-                                }}>
-                                Create
+    const buttons = purpose == 'create' ?
+        <button
+            className="button"
+            onClick={() => {
+                { createEvent({ eventTitle, eventDescription, emails }) }
+                { onMembersChange({ emails, currentEvent }) }
+                close();
+                { onClose(false) }
+            }}>
+            Create
                                 </button>
                                 : 
                                 <div>
@@ -121,8 +121,8 @@ export default function EventPopup({    isOpen,
                                 }}>
                                 Delete
                                 </button>
-                                </div>
-    
+        </div>
+
     console.log(sourceOfEvent);
 
     // eslint-disable-next-line react/prop-types
@@ -130,21 +130,28 @@ export default function EventPopup({    isOpen,
         <div className="create-bean-card">
             <div className="popup-container">
                 <Popup
-                    open = {isOpen}
-                    closeOnDocumentClick = {false}
-                    closeOnEscape = {false}
+                    open={isOpen}
+                    closeOnDocumentClick={false}
+                    closeOnEscape={false}
                     modal
                     nested>
-                        {close => (
+                    {close => (
                         <div className="modal">
-                            <button className="close" onClick={()=> {
+                            <button className="close" onClick={() => {
                                 close();
                                 setIsEditable(true);
                                 onClose(false);
-                                }    
-                        }>
+                            }
+                            }>
                                 <i className="fas fa-times"></i>
                             </button>
+
+                            <div className="popup-header">
+                                <h2 className="header-title">Event detail</h2>
+                            </div>
+
+
+
                             <div className="content">
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Title</h2>
@@ -154,7 +161,7 @@ export default function EventPopup({    isOpen,
                                         disabled={!isEditable}
                                         defaultValue={eventTitle}
                                         placeholder="Your title here..."
-                                        onChange = {e => {
+                                        onChange={e => {
                                             setEventTitle(e.target.value);
                                         }}
                                     >
@@ -165,9 +172,11 @@ export default function EventPopup({    isOpen,
                                     <textarea
                                         className="input-box"
                                         disabled={!isEditable}
+                                        className="input-box text-area"
+                                        cols="35"
                                         placeholder="Your description here..."
-                                        defaultValue = {eventDescription}
-                                        onChange = {e => {
+                                        defaultValue={eventDescription}
+                                        onChange={e => {
                                             setEventDescription(e.target.value);
                                         }}
                                     >
@@ -175,14 +184,14 @@ export default function EventPopup({    isOpen,
                                 </div>
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Members of the event:</h2>
-                                        <div className="popup-item flex-start">
-                                            {chips}
-                                        </div>
+                                    <div className="popup-item flex-start">
+                                        {chips}
+                                    </div>
                                 </div>
                                 {isEditable ? 
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>
-                                    <Tags event = {currentEvent} onEmailsChange = {onEmailsChange}/>
+                                    <Tags event={currentEvent} onEmailsChange={onEmailsChange} />
                                 </div>
                                 : 
                                 <div className="popup-item flex-start">

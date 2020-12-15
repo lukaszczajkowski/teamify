@@ -14,7 +14,7 @@ class BeanApi {
     }
 
     getLastEventTimeById(beanId) {
-        return Api.get(`/beanLastEventTime/${beanId}`);
+        return Api.get(`/beans/beanLastEventTime/${beanId}`);
     }
 
     createNewBean(bean) {

@@ -1,11 +1,16 @@
 body {
     font-family: 'Rubik', sans-serif;
     font-size: 13px;
+    background-color: var(--bg-light-grey);
 }
 
 .link {
     text-decoration: none;
 }
+
+.link:hover {
+    text-decoration: underline;
+  }
 
 .main-content {
     padding: 4vh;
@@ -26,7 +31,7 @@ body {
 }
 
 .board-container {
-    background-color: var(--bg-light-grey);
+    background-color: white;
     border-radius: 10px;
     margin: 5vh 8vw;
     padding: 5vh 5vw;

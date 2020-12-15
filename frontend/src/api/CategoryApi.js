@@ -6,11 +6,11 @@ class CategoryApi {
     }
 
     createCategory(projectId, category) {
-        return Api.post('/categories/' + projectId, category);
+        return Api.post(`/categories/${projectId}`, category);
     }
 
-    updateCategory(projectId, updatedCategory) {
-        return Api.put('/categories/' + projectId, updatedCategory);
+    updateCategory(updatedCategory) {
+        return Api.put('/categories', updatedCategory);
     }
 
     deleteCategory(categoryId) {

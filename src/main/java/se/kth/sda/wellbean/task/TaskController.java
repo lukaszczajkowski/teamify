@@ -1,14 +1,15 @@
 package se.kth.sda.wellbean.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.category.CategoryService;
-import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.project.ProjectChanged;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.user.User;
 import se.kth.sda.wellbean.user.UserService;
@@ -21,20 +22,26 @@ import java.util.Set;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+    private final AuthService authService;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final ProjectService projectService;
+    private final ApplicationEventPublisher publisher;
 
-    @Autowired
-    private AuthService authService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private ProjectService projectService;
+    public TaskController(TaskService taskService,
+                          AuthService authService,
+                          UserService userService,
+                          CategoryService categoryService,
+                          ProjectService projectService,
+                          ApplicationEventPublisher publisher) {
+        this.taskService = taskService;
+        this.authService = authService;
+        this.userService = userService;
+        this.categoryService = categoryService;
+        this.projectService = projectService;
+        this.publisher = publisher;
+    }
 
     /**
      *
@@ -182,9 +189,11 @@ public class TaskController {
         if (checkCredentialsByCategoryId(categoryId)) {
             Category newCategory = categoryService.getById(categoryId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            newTask.setProject(newCategory.getProject());
+            Project project = newCategory.getProject();
+            newTask.setProject(project);
             newTask.setCategory(newCategory);
             taskService.create(newTask);
+            this.publisher.publishEvent(new ProjectChanged(project));
             return newTask;
         }
         else {
@@ -208,11 +217,13 @@ public class TaskController {
         if (checkCredentialsByCategoryId(categoryId)) {
             Category newCategory = categoryService.getById(categoryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             updatedTask.setCategory(newCategory);
-            updatedTask.setProject(newCategory.getProject());
+            Project project = newCategory.getProject();
+            updatedTask.setProject(project);
             Task taskFromDb = taskService.getById(updatedTask.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             updatedTask.setMembers(taskFromDb.getMembers());
             updatedTask.setComments(taskFromDb.getComments());
             taskService.create(updatedTask);
+            this.publisher.publishEvent(new ProjectChanged(project));
             return updatedTask;
         }
         else {
@@ -241,6 +252,8 @@ public class TaskController {
                 //TODO member should belong to project!
                 updatedTask.addMember(newMember);
                 taskService.update(updatedTask);
+                Project project = updatedTask.getProject();
+                this.publisher.publishEvent(new ProjectChanged(project));
                 return updatedTask;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -272,6 +285,8 @@ public class TaskController {
 
             updatedTask.setCategory(newCat);
             taskService.update(updatedTask);
+            Project project = updatedTask.getProject();
+            this.publisher.publishEvent(new ProjectChanged(project));
             return updatedTask;
             }
         else {
@@ -295,6 +310,8 @@ public class TaskController {
             if (memberToBeDeleted != null) {
                 updatedTask.removeMember(memberToBeDeleted);
                 taskService.update(updatedTask);
+                Project project = updatedTask.getProject();
+                this.publisher.publishEvent(new ProjectChanged(project));
                 return updatedTask;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -317,6 +334,10 @@ public class TaskController {
         if (checkCredentialsByTaskId(taskId)) {
             Task task = taskService.getById(taskId).
                     orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            Project project = task.getProject();
+            System.out.println("Project to update:" + project.toString());
+            this.publisher.publishEvent(new ProjectChanged(project));
+            System.out.println("Event published");
             taskService.delete(taskId);
         }
         else {
@@ -329,23 +350,14 @@ public class TaskController {
     }
 
     private boolean checkCredentialsByProjectId(Long projectId) {
-        if (projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser())) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return projectId != null && projectService.getById(projectId).getUsers().contains(getCurrentUser());
     }
 
     private boolean checkCredentialsByCategoryId(Long categoryId) {
         if (categoryId != null) {
             Category currentCategory = categoryService.getById(categoryId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-            if (checkCredentialsByProjectId(currentCategory.getProject().getId())) {
-                return true;
-            } else {
-                return false;
-            }
+            return checkCredentialsByProjectId(currentCategory.getProject().getId());
         }
         else {
             return false;
@@ -357,11 +369,7 @@ public class TaskController {
         Task currentTask = taskService.getById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Long currentProjectId = currentTask.getProject().getId();
-        if (projectService.getById(currentProjectId).getUsers().contains(getCurrentUser())) {
-            return true;
-        } else {
-            return false;
-        }
+        return projectService.getById(currentProjectId).getUsers().contains(getCurrentUser());
     }
 
     private List<Project> getAllAvailableProjectsForCurrentUser()

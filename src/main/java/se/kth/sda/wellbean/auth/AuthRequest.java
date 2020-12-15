@@ -1,7 +1,5 @@
 package se.kth.sda.wellbean.auth;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class AuthRequest {
     private String email;
     private String password;

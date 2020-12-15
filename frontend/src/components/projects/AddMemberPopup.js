@@ -18,18 +18,23 @@ export default function AddMemberPopup({ onSubmit }) {
                             <button className="close" onClick={close}>
                                 <i className="fas fa-times"></i>
                             </button>
+
+                            <div className="popup-header">
+                             <h1 className="header-title">Add new member</h1>
+                                
+                                </div>
             
                             <div className="content">
-                            <div className="prompt popup-item">Add new member</div>
+                            <div className="prompt popup-item"></div>
                                 <div className="popup-item">
                                     <input
-                                        type="text"
-                                        className="input-box"
+                                    size="30"
+                                       
+                                        className="input-box text-area"
                                         placeholder="Enter the Email of new member" 
                                         value={userEmail}
                                         onChange={e => setUserEmail(e.target.value)}
-                                    >
-                                    </input>
+                                    />
                                 </div>
                             </div>
 
