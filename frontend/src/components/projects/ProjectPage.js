@@ -167,7 +167,7 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <div className="fixed-header">
-                <ProjectHeader />
+                <ProjectHeader project={currentProject}/>
 
                 <div className="project-menu flex-start ">
                     <ProjectMenu
