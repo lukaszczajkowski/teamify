@@ -7,6 +7,7 @@ import se.kth.sda.wellbean.user.User;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,6 +39,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Event> events;
+
+    @ElementCollection
+    private List<Long> categoriesPositioning;
 
     public Project() {
         this.tasks = new HashSet<>();
@@ -120,6 +124,14 @@ public class Project {
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
         return id.equals(project.id);
+    }
+
+    public List<Long> getCategoriesPositioning() {
+        return categoriesPositioning;
+    }
+
+    public void setCategoriesPositioning(List<Long> categoriesPositioning) {
+        this.categoriesPositioning = categoriesPositioning;
     }
 
     @Override

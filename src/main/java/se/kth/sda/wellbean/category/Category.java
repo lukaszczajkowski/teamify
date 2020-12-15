@@ -9,6 +9,7 @@ import se.kth.sda.wellbean.task.Task;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -36,6 +37,9 @@ public class Category {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    @ElementCollection
+    private List<Long> tasksPositioning;
+
     public Category() {
     }
     public Category(long id, String title)
@@ -43,7 +47,6 @@ public class Category {
         this.id=id;
         this.title=title;
     }
-
 
 
     public long getId() {
@@ -66,6 +69,15 @@ public class Category {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public List<Long> getTasksPositioning() {
+        return tasksPositioning;
+    }
+
+    public void setTasksPositioning(List<Long> tasksPositioning) {
+        this.tasksPositioning = tasksPositioning;
+    }
+
 
     @PrePersist
     public void prePersist() {
