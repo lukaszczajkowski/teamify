@@ -1,0 +1,31 @@
+ .meeting-button {
+    font-size: 17px;
+    margin: 1vh;
+    color: white;
+    background-color: var(--opac-dark-grey);
+}
+
+ .meeting-button:hover {
+    border-color: var(--theme-green);
+    background-color: var(--theme-green);
+    color: white;
+
+}
+
+
+
+#create-meeting {
+    background-color: transparent;
+    color: var(--text-dark-grey);
+    font-size: 15px;
+}
+
+#create-meeting:hover {
+    color: white;
+    border-color: transparent;
+    background-color: var(--theme-purple);
+}
+
+#meeting_table {
+   font-size: xx-large;
+}

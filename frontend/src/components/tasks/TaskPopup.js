@@ -4,6 +4,7 @@ import UserApi from '../../api/UserApi';
 import MemberCard from "../projects/MemberCard";
 import EditableText from "../projects/EditableText";
 import Comments from "../comments/Comments";
+import { motion } from "framer-motion";
 
 
 
@@ -78,12 +79,17 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     return (
         <div className="task-popup popup-container">
             <Popup open={isOpen} modal nested onClose={onClose}>
-                <div className="modal">
+                <motion.div  initial={{
+                     scale: 0
+                         }}
+                     animate= {{
+                     scale: 1
+                     }} className="modal">
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
-                    <div className="popup-header">
-                        <h2 className="header-title">Update task</h2>
+                    <div className="header1">
+                        <h2 className="header1-title">Update task</h2>
 
                     </div>
                     <div className="content">
@@ -158,7 +164,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             />
                         </div> 
                     </div>
-                </div>
+                </motion.div>
             </Popup>
         </div>
     );

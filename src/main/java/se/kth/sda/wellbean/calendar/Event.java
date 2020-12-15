@@ -1,6 +1,7 @@
 package se.kth.sda.wellbean.calendar;
 
 import se.kth.sda.wellbean.bean.Bean;
+import se.kth.sda.wellbean.meeting.Meeting;
 import se.kth.sda.wellbean.project.Project;
 import se.kth.sda.wellbean.user.User;
 
@@ -36,6 +37,10 @@ public class Event {
 
     @ManyToOne
     private Bean bean;
+
+    @ManyToOne
+    private Meeting meeting;
+
 
     private boolean allDay;
 
@@ -152,6 +157,14 @@ public class Event {
 
     public Bean getBean() {
         return bean;
+    }
+
+    public Meeting getMeeting() {
+        return meeting;
+    }
+
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
     }
 
     @Override

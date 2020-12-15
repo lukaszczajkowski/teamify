@@ -7,7 +7,7 @@ import BeansGraph from "./BeansGraph";
 
 
 // eslint-disable-next-line react/prop-types
-export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean }) {
+export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean, allBeans }) {
 
     return (
         <article className="bean-board">
@@ -40,7 +40,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean, updateB
                     </div>
 
                     <hr />
-                    <BeansGraph />
+                    <BeansGraph  beans={allBeans} />
 
                     <div className="board-section">
                         <div className="collect-prompt board-item flex-between">

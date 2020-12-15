@@ -1,75 +1,44 @@
 import React, { useState } from "react";
-// import { Link, useHistory } from "react-router-dom";
-import { motion } from "framer-motion";
-import NavItem from "./NavItem";
+import { Link } from "react-router-dom";
+import Auth from "../../services/Auth";
 
-// eslint-disable-next-line react/prop-types
-export default function Navbar() {
+    // eslint-disable-next-line react/prop-types
+    function Navbar() {
 
     const [click, setClick] = useState(false);
 
     const handleClick = () => setClick(!click);
 
-    // const closeMenu = () => setClick(false);
-
-    const navItems = [
-        {
-            id: 1,
-            link: "/home",
-            title: "Home"
-        },
-        {
-            id: 2,
-            link: "/home",
-            title: "Projects"
-        },
-        {
-            id: 3,
-            link: "/calendar",
-            title: "Calendar"
-        },
-        {
-            id: 4,
-            link: "/",
-            title: "Logout"
-        }
-    ];
+    const closeMenu = () => setClick(false);
 
     return (
         <nav className="navbar">
-
-            <motion.div
-                whileHover={{ scale: 1.1 }}
-                className=" link menu-icon"
-                onClick={handleClick}>
+            
+            <div className=" link menu-icon" onClick={handleClick}>
+                {/* FontAwesome Icon */}
                 <i className={click ? "fas fa-times" : "fas fa-bars"} />
-            </motion.div>
+            </div>
 
             <ul className={click ? "nav-menu active" : "nav-menu"}>
-
-                {navItems.map(item => (<NavItem key={item.id} item={item} />))}
-
-                {/* 
-                <motion.li className="nav-item"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}>
+                <li className="nav-item">
                     <Link className="link nav-link" to="/home" onClick={closeMenu}>Home</Link>
-                </motion.li>
+                </li>
 
-                <motion.li className="nav-item">
+                <li className="nav-item">
                     <Link className="link nav-link" to="/home" onClick={closeMenu}>ProjectBoard</Link>
-                </motion.li>
+                </li>
 
-                <motion.li className="nav-item">
+                <li className="nav-item">
                     <Link className="link nav-link" to="/about" onClick={closeMenu}>About</Link>
-                </motion.li>
+                </li>
 
-                <motion.li className="nav-item">
-                    <button className="nav-link" onClick={onLogout}>Logout</button>
-                </motion.li> */}
+                <li>
+                <button className="button nav-item" onClick={() => Auth.logout()}>Logout</button>
+                </li>
 
             </ul>
         </nav>
     );
 }
 
+export default Navbar;
