@@ -170,7 +170,6 @@ export default function EventPopup({ isOpen,
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Description</h2>
                                     <textarea
-                                        className="input-box"
                                         disabled={!isEditable}
                                         className="input-box text-area"
                                         cols="35"
