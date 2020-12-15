@@ -30,4 +30,13 @@ public class EventService {
     public List<Event> getEventsByBeanId(Long beanId) {
         return this.eventRepository.getEventsByBeanId(beanId);
     }
+    public Event getEventByMeetingId(Long meetingId) {
+        return this.eventRepository.getEventByMeetingId(meetingId);
+    }
+    public void deleteEventsByBeanId(Long beanId) {
+        this.eventRepository.deleteAllByBeanId(beanId);
+    }
+    public void deleteEventsByMeetingId(Long meetingId) {
+        this.eventRepository.deleteAllByMeetingId(meetingId);
+    }
 }
