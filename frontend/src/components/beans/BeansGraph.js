@@ -1,4 +1,5 @@
 import React from "react";
+import moment from 'moment';
 
 const BeansGraph = ({beans}) => {
     const graphItems = [];
@@ -31,14 +32,15 @@ const BeansGraph = ({beans}) => {
     // const graphItems = data.map((item) => <li data-level={item.bean}></li>)
 
     {beans.sort((a, b) => b.id - a.id).map(bean => (
-       console.log({bean})
+       console.log(moment(bean.createdDate).format("DDD")) //350th day for todays date 
+       //graphItems.push(<li data-level={10} key={moment(bean.createdDate).format("DDD")} />)
     ))} 
 
     
-    for (var i = 1; i < 365; i++) {
+   for (var i = 1; i < 365; i++) {
         const level = Math.floor(Math.random() * 3);
         graphItems.push(<li data-level={level} key={i} />);
-    }
+    } 
 
     return (
         <div className="graph">
