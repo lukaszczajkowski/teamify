@@ -5,6 +5,7 @@ import ChatIcon from "../../assets/icon/chat.png";
 import { Link } from "react-router-dom";
 import NavBar from "../layout/Navbar";
 import { motion } from "framer-motion";
+import MeetingButton from "../meeting/MeetingButton";
 
 // eslint-disable-next-line react/prop-types
 export default function ProjectHeader({ project }) {
@@ -36,6 +37,9 @@ export default function ProjectHeader({ project }) {
 
                 <motion.div whileHover={{ scale: 1.1 }}>
                     <Link to="/calendar" className="project-nav-item"><i className="far fa-calendar-alt font-icon"></i></Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.1 }}>
+                    <MeetingButton/>
                 </motion.div>
 
                 <NavBar />
