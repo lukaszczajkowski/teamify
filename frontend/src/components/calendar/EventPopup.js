@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import Tags from './Tags';
 import Chips from './Chips';
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import UserApi from "../../api/UserApi";
 
 
@@ -220,7 +220,10 @@ export default function EventPopup({ isOpen,
                                 </div>
                                 <h2 className="prompt">Zoom Link</h2>
                                 <div className="popup-item flex-start">
-                                <Link className="link nav-link" target="_blank" to={meeting.start_url}>Click to Join</Link> 
+                                    <button className="button">
+                                        <a href={meeting.start_url} target="_blank" rel="noopener noreferrer">Click to Join</a>
+                                    </button> 
+                                {/* <Link className="link nav-link" target="_blank" to={meeting.start_url}>Click to Join</Link>  */}
                                 </div>
                                 </div>
                                     }
