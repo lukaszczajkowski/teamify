@@ -8,7 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -17,24 +16,16 @@ public class CategoryService {
 
     private final ApplicationEventPublisher publisher;
 
-    private final CategoryMapper mapper;
 
-    public CategoryService(CategoryRepository cRepository, ApplicationEventPublisher publisher,
-                           CategoryMapper mapper) {
+    public CategoryService(CategoryRepository cRepository, ApplicationEventPublisher publisher) {
         this.cRepository = cRepository;
         this.publisher = publisher;
-        this.mapper = mapper;
     }
 
     public List<Category> getAllCategories() {
         return cRepository.findAll();
     }
 
-    public List<CategoryDto> getCategories() {
-        return this.cRepository.findAll()
-                .stream().map(c -> this.mapper.entityToDto(c))
-                .collect(Collectors.toList());
-    }
 
     public Optional<Category> getById(Long id) {
         return cRepository.findById(id);
@@ -47,15 +38,11 @@ public class CategoryService {
     public Category createNewCategory(Category newCategory) {
         Category saved = cRepository.save(newCategory);
 
-        this.publisher.publishEvent(new CategoryCreated(saved));
-
         return saved;
     }
 
     public Category updateCategory(Category updatedCategory) {
         Category saved = cRepository.save(updatedCategory);
-
-        this.publisher.publishEvent(new CategoryCreated(saved));
 
         return cRepository.save(updatedCategory);
     }
@@ -64,7 +51,6 @@ public class CategoryService {
         Category deleted = cRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        this.publisher.publishEvent(new CategoryCreated(deleted));
 
         cRepository.deleteById(id);
     }

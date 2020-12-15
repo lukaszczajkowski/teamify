@@ -4,7 +4,7 @@ import CategoryCard from "../categories/CategoryCard";
 // import { DragDropContext } from 'react-beautiful-dnd';
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectBoard({ projectId, categories, createCategory, updateCategory, deleteCategory }) {
+export default function ProjectBoard({ projectId, categories, createCategory, updateCategory, deleteCategory, event }) {
     // const onDragEnd = (result) => {
     //     const { destination, source, draggableId } = result;
     //     console.log("destination", destination, "source", source, draggableId);
@@ -23,6 +23,8 @@ export default function ProjectBoard({ projectId, categories, createCategory, up
     //     category.task = newList;
     // }
 
+    console.log("event from project board", event);
+
     return (
         <div className="project-board flex-start">
             {/* <DragDropContext onDragEnd={onDragEnd}> */}
@@ -36,7 +38,8 @@ export default function ProjectBoard({ projectId, categories, createCategory, up
                                     category={category} 
                                     projectId={projectId}
                                     updateCategory={updateCategory}
-                                    deleteCategory={deleteCategory} />
+                                    deleteCategory={deleteCategory}
+                                    event={event} />
                             ))}
                             <CreateCategoryCard projectId={projectId} createCategory={createCategory} />
                         </div>

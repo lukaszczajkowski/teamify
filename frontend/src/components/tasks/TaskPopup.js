@@ -8,6 +8,7 @@ import Comments from "../comments/Comments";
 
 
 export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
+
     console.log(currentTask, deleteComment);
 
     const {

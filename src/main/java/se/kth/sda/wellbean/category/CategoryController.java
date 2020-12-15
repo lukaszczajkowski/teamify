@@ -1,16 +1,14 @@
 package se.kth.sda.wellbean.category;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import reactor.core.publisher.Flux;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.project.ProjectChanged;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.task.TaskService;
 import se.kth.sda.wellbean.user.UserService;
@@ -26,27 +24,24 @@ public class CategoryController {
     private final TaskService taskService;
     private final AuthService authService;
     private final UserService userService;
-    private final CategoryCreatedEventProcessor categoryCreatedEventProcessor;
-    private final Flux<CategoryCreated> events;
-    private final CategoryMapper mapper;
+    private final ApplicationEventPublisher publisher;
+
 
     public CategoryController(CategoryService categoryService,
                               ProjectService projectService,
                               TaskService taskService,
-                             AuthService authService,
-                             UserService userService,
-                              CategoryCreatedEventProcessor categoryCreatedEventProcessor,
-                              CategoryMapper mapper) {
+                              AuthService authService,
+                              UserService userService,
+                              ApplicationEventPublisher publisher) {
         this.categoryService = categoryService;
         this.projectService = projectService;
         this.taskService = taskService;
         this.authService = authService;
         this.userService = userService;
-        this.categoryCreatedEventProcessor = categoryCreatedEventProcessor;
-        this.mapper = mapper;
-        this.events = Flux.create(categoryCreatedEventProcessor).share();
+        this.publisher = publisher;
     }
 
+    /*
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "/sse/category", produces = "text/event-stream;charset=utf-8")
     public ResponseEntity<Flux<CategoryDto>> stream() {
@@ -58,6 +53,7 @@ public class CategoryController {
             return dto;
         }));
     }
+    */
 
     /**
      * This method return all categories
@@ -94,8 +90,11 @@ public class CategoryController {
      */
     @PostMapping("/categories/{projectId}")
     public Category createNewCategory(@RequestBody Category newCategory, @PathVariable Long projectId) {
-         newCategory.setProject(projectService.getById(projectId));
-         return categoryService.createNewCategory(newCategory);
+        Project project = projectService.getById(projectId);
+        newCategory.setProject(project);
+        Category saved =  categoryService.createNewCategory(newCategory);
+        this.publisher.publishEvent(new ProjectChanged(project));
+        return saved;
     }
 
     /**
@@ -114,9 +113,11 @@ public class CategoryController {
     public Category updateCategory(@RequestBody Category updatedCategory) {
         Category categoryFromDB = categoryService.getById(updatedCategory.getId())
                 .orElseThrow();
-        updatedCategory.setProject(categoryFromDB.getProject());
-            return categoryService.updateCategory(updatedCategory);
-
+        Project project = categoryFromDB.getProject();
+        updatedCategory.setProject(project);
+        Category saved = categoryService.updateCategory(updatedCategory);
+        this.publisher.publishEvent(new ProjectChanged(project));
+        return saved;
     }
 
     /**
@@ -129,11 +130,16 @@ public class CategoryController {
      */
     @DeleteMapping("/categories/{id}")
     public void deleteCategory(@PathVariable Long id) {
-             if (taskService.getAllTaskByCategoriesId(id).size() == 0) {
-                categoryService.deleteCategory(id);
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
+        if (taskService.getAllTaskByCategoriesId(id).size() == 0) {
+            Category categoryToRemove = categoryService.getById(id).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+            );
+            Project project = categoryToRemove.getProject();
+            this.publisher.publishEvent(new ProjectChanged(project));
+            categoryService.deleteCategory(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 

@@ -7,11 +7,11 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import UserApi from '../../api/UserApi';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import { useRecoilState } from "recoil";
-import {
-  chatActiveContact,
-  chatMessages,
-} from "../../atom/globalState";
+// import { useRecoilState } from "recoil";
+// import {
+//   chatActiveContact,
+//   chatMessages,
+// } from "../../atom/globalState";
 import ProjectHeader from '../layout/ProjectHeader';
 
 const wsEndpoint = 'http://localhost:8080/ws';
@@ -26,11 +26,12 @@ var stompClient = null;
 // eslint-disable-next-line react/prop-types
 export default function ChatClient(props) {
     const project = props.location.props.project;
+    console.log(project);
     const [currentUser, setCurrentUser] = useState({});
     const [text, setText] = useState("");
     const [contacts, setContacts] = useState([]);
-    const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);
-    const [messages, setMessages] = useRecoilState(chatMessages);
+    const [activeContact, setActiveContact] = useState({});
+    const [messages, setMessages] = useState([]);
     // eslint-disable-next-line no-unused-vars
     const [currentProject, setCurrentProject] = useState({});
     //const [changesMade, setChangesMade] = useState(false);
@@ -46,15 +47,16 @@ export default function ChatClient(props) {
     }, [])
 
     useEffect(() => {
+      console.log("active contact", activeContact);
       if(activeContact === undefined) return;
         if(activeContact === currentProject) {
             ChatApi.findProjectMessages(currentProject.id).then((msgs) =>
             setMessages(msgs.data)
             ).catch(err => console.log(err))
           } else {
-          ChatApi.findChatMessages(activeContact.id).then((msgs) =>
-          setMessages(msgs.data)
-          ).catch(err => console.log(err))
+            ChatApi.findChatMessages(activeContact.id).then((msgs) =>
+            setMessages(msgs.data)
+            ).catch(err => console.log(err))
           }
       loadContacts();
   }, [activeContact]);
@@ -120,7 +122,7 @@ export default function ChatClient(props) {
 
     const sendMessage = (msg) => {
           let message;
-          if(activeContact.email === undefined) {
+          if(activeContact === currentProject) {
             if(msg.trim() !== ""){
               message = {
                   senderId: currentUser.id,

@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.concurrent.Executors;
 
@@ -27,6 +26,6 @@ public class AsyncConfig  implements AsyncConfigurer {
 
     @Bean
     protected ConcurrentTaskExecutor getTaskExecutor() {
-        return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(5));
+        return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(500));
     }
 }

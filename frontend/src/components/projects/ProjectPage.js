@@ -14,22 +14,22 @@ function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
     const userId = user.id;
-    console.log("on project page. User id:" + userId);
+    //console.log("on project page. User id:" + userId);
 
     const { projectId } = useParams();
-    console.log("project id:" + projectId);
+    //console.log("project id:" + projectId);
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
-    const [incomingChanges, setIncomingChanges] = useState(0);
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         init();
     }, [])
 
     const init = () => {
-        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category',
+        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/project',
             {
                 headers: {
                     "Accept": "text/event-stream",
@@ -45,10 +45,13 @@ function ProjectPage() {
         }
         eventSource.onmessage = (event) => {
             console.log("data received", event);
-            getCurrentProject();
-            getAllCategories(projectId);
-            getAllMembers(projectId);
-            setIncomingChanges(incomingChanges + 1);
+            const newEvents = [...events];
+            newEvents.push(event);
+            setEvents(newEvents);
+            //window.location.reload();
+            // getCurrentProject();
+            // getAllCategories(projectId);
+            // getAllMembers(projectId);
         }
 
         eventSource.onerror = (err) => {
@@ -91,7 +94,7 @@ function ProjectPage() {
     const onDeleteMember = (memberId) => {
         if (window.confirm("Do you want to remove this member?")) {
             if (userId === currentProject.creator.id && userId !== memberId) {
-                console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
+                //console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
                 deleteMember(projectId, memberId);
                 getAllMembers(projectId);
             } else if (userId !== currentProject.creator.id) {
@@ -152,12 +155,19 @@ function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [projectId, incomingChanges]);
+    }, [projectId]);
+
+    useEffect(() => {
+        console.log("incoming changes from project page:", events);
+        getCurrentProject();
+        getAllCategories(projectId);
+        getAllMembers(projectId);
+    }, [events]);
 
     return (
         <div className="project-page">
             <div className="fixed-header">
-                <ProjectHeader />
+                <ProjectHeader project={currentProject}/>
 
                 <div className="project-menu flex-start ">
                     <ProjectMenu
@@ -181,7 +191,8 @@ function ProjectPage() {
                 categories={categories}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
-                deleteCategory={deleteCategory} />
+                deleteCategory={deleteCategory}
+                event={events} />
         </div>
     );
 }
