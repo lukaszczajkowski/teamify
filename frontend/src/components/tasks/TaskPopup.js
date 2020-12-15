@@ -6,8 +6,10 @@ import EditableText from "../projects/EditableText";
 import Comments from "../comments/Comments";
 
 
+
 export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
-    //console.log(currentTask);
+
+    console.log(currentTask, deleteComment);
 
     const {
         id,
@@ -154,7 +156,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                 task={currentTask}
                                 onCreate={addComment}
                                 onUpdate={updateComment}
-                                OnDelete={deleteComment}
+                                onDelete={deleteComment}
                             />
                         </div> 
                     </div>

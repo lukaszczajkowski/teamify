@@ -24,15 +24,6 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
         updateProject(updatedProject);
     }
 
-    const onDescriptionUpdated = (newDescription) => {
-        const updatedProject = {
-            id,
-            title,
-            description: newDescription
-        };
-
-        updateProject(updatedProject);
-    }
 
     return (
         <div className="task-popup popup-container">
@@ -55,16 +46,6 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
                                 placeholder="title"
                                 onUpdateText={onTitleUpdated} />
                         </div>
-
-                        <div className="popup-item flex-start">
-                            <h2 className="prompt">Description</h2>
-                            <EditableText
-                                text={description}
-                                placeholder="description"
-                                onUpdateText={onDescriptionUpdated}
-                            />
-                        </div>
-
                     </div>
                 </div>
             </Popup>
