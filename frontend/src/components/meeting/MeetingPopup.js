@@ -121,6 +121,7 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                             <table id = "meeting_table">
                                 <th> Topic</th><th> Agenda</th><th> Start Time</th> 
                                 <th> Duration</th><th>Meeting URL</th><th> Host</th>
+                                <th> </th> 
                             </table>
                             {meetingCards}            
                           

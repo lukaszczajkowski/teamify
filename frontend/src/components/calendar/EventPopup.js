@@ -6,6 +6,7 @@ import Popup from "reactjs-popup";
 import Tags from './Tags';
 import Chips from './Chips';
 import { Link } from "react-router-dom";
+import UserApi from "../../api/UserApi";
 
 
 // eslint-disable-next-line react/prop-types
@@ -31,6 +32,7 @@ export default function EventPopup({ isOpen,
     const [emails, setEmails] = useState([]);
     const [isEditable, setIsEditable] = useState(true);
     const [meeting, setMeeting] = useState("");
+    const [user, setUser] = useState();
 
     useEffect(() => {
         setEvent(currentEvent);
@@ -50,12 +52,14 @@ export default function EventPopup({ isOpen,
                 setEventTitle(title);
 
                 if(extendedProps !== undefined){
-                    console.log("not edit" + extendedProps.meeting);
+                    
                     if(extendedProps.meeting !== null)
                     {
-                        setIsEditable(false);
+                        if(user !== extendedProps.meeting.host.name)
+                        {
+                            setIsEditable(false);
+                        }
                         setMeeting(extendedProps.meeting)
-                        console.log("not edit" + extendedProps.meeting.host.name);
                     }
                     setEventDescription(extendedProps.description);
                     const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
@@ -70,8 +74,18 @@ export default function EventPopup({ isOpen,
 
     useEffect(() => {
         setEmails(emails);
+        currentUser();
     }, []);
 
+    const currentUser = async() => {
+        await  UserApi.getCurrentUser()
+            .then(response => {const data = response.data;
+                if(data.name.toLocaleString() !== null)
+                {
+                setUser(data.name);
+            }
+        })
+    };
     const onEmailsChange = (updatedEmails, eventToUpdate) => {
         setEmails(updatedEmails);
     }
@@ -170,7 +184,6 @@ export default function EventPopup({ isOpen,
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Description</h2>
                                     <textarea
-                                        className="input-box"
                                         disabled={!isEditable}
                                         className="input-box text-area"
                                         cols="35"
