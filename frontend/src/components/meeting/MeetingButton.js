@@ -16,10 +16,10 @@ export default function MeetingButton () {
     return (
         <div >
             <button
-            id="create-meeting"
+                id="create-meeting"
                 className="meeting-button button"
                 onClick={onCreateMeeting}>
-                Meeting
+                ZOOM
             </button>
 
             <MeetingPopup

@@ -45,12 +45,18 @@ export default function DisplayCard({data, fetchdata}) {
                <tr><td>{topic}</td> <td>{agenda} </td><td> {startTime}</td>
                 <td> {duration}</td> 
                 {isHost ? 
-                <td> 
-                <Link className="link nav-link"  target="_blank" to={start_url}>Click to Start</Link>   
+                <td>
+                    <button className="button">
+                        <a href={start_url} target="_blank" rel="noopener noreferrer">Click to start</a>
+                    </button> 
+                {/* <Link className="link nav-link"  target="_blank" to={start_url}>Click to Start</Link>    */}
                 </td>   
                 :  
                 <td>
-                    <Link className="link nav-link" target="_blank" to={start_url}>Click to Join</Link> 
+                    <button className="button">
+                        <a href={start_url} target="_blank" rel="noopener noreferrer">Click to Join</a>
+                    </button> 
+                    {/* <Link className="link nav-link" target="_blank" to={start_url}>Click to Join</Link>  */}
                 </td>  
                 }  
                 <td> {host.name}</td>
