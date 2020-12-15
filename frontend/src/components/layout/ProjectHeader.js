@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 // eslint-disable-next-line react/prop-types
 export default function ProjectHeader({ project }) {
-    console.log("Project from header", project)
+
     return (
         <div className="project-header ">
             <div className="project-nav flex-start">

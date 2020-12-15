@@ -3,9 +3,8 @@ import useComponentVisible from "../hooks/useComponentVisible";
 
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectActions({ currentProject, onUpdateProject, onDeleteProject }) {
+export default function ProjectActions({ onUpdateProject, onDeleteProject }) {
 
-    console.log("on project action. current project:" + currentProject);
     const {
         ref,
         isComponentVisible,
