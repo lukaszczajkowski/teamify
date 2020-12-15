@@ -5,18 +5,19 @@ import CommentApi from "../../api/CommentApi";
 import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
-import { Droppable } from 'react-beautiful-dnd';
+import EditableText from "../projects/EditableText";
+// import { Droppable } from 'react-beautiful-dnd';
 
 
 // eslint-disable-next-line react/prop-types
-export default function CategoryCard({ category, updateCategory, deleteCategory, projectId }) {
-    // eslint-disable-next-line react/prop-types
+export default function CategoryCard({ category, updateCategory, deleteCategory, event }) {
     const categoryId = category.id;
-    // eslint-disable-next-line react/prop-types
     const [tasks, setTasks] = useState([]);
-    // eslint-disable-next-line react/prop-types
-    const [title, setTitle] = useState(category.title);
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+    const {
+        id, title
+    } = category;
+   
 
     const onDeleteCategory = () => {
         if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
@@ -24,15 +25,13 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
         }
     };
 
-    const onUpdateCategory = () => {
-        const newCategoryData =
-        {
-            id: categoryId,
-            title: title,
+    const onTitleUpdated = (newTitle) => {
+        const updatedCategory = {
+            id,
+            title: newTitle
         };
-        updateCategory(projectId, newCategoryData);
-        setIsEditingTitle(false);
-    };
+        updateCategory(updatedCategory);
+    }
 
 
 
@@ -44,14 +43,14 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
 
     const createTask = (categoryId, taskData) => {
-        console.log(`create task on category: ${categoryId}`);
+        //console.log(`create task on category: ${categoryId}`);
         return TaskApi.createTask(categoryId, taskData)
             .then(response => setTasks([...tasks, response.data]));
     };
 
     const updateTask = (categoryId, task) => {
-        console.log(`update task on category: ${categoryId}`);
-        console.log(` task `, task);
+        //console.log(`update task on category: ${categoryId}`);
+        //console.log(` task `, task);
         return TaskApi.updateTask(categoryId, task)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
@@ -62,26 +61,32 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     };
 
     const addMemberToTask = (task, member) => {
-        console.log("updateTaskAddMember:", task, member);
+        //console.log("updateTaskAddMember:", task, member);
         return TaskApi.addMemberToTask(task.id, member.id)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const deleteMemberFromTask = (task, member) => {
-        console.log("deleteMemberFromTask:", task, member);
+        //console.log("deleteMemberFromTask:", task, member);
         return TaskApi.deleteMemberFromTask(task.id, member.id)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
     };
 
     const addCommentToTask = (task, comment) => {
-        console.log("addCommentToTask:", task, comment);
+        //console.log("addCommentToTask:", task, comment);
         return CommentApi.createComment(comment, task.id)
         .then(() => getTasksByCategory(categoryId))
     }
 
     const updateCommentTask = (task, comment) => {
-        console.log("updateCommentTaskz:", task, comment);
+        console.log("updateCommentTask:", task, comment);
         return CommentApi.updateComment(comment, task.id)
+        .then(() => getTasksByCategory(categoryId))
+    }
+
+    const deleteCommentTask = (commentId) => {
+        console.log("deletingComment:", commentId);
+        return CommentApi.deleteComment(commentId)
         .then(() => getTasksByCategory(categoryId))
     }
 
@@ -89,29 +94,19 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
         getTasksByCategory(categoryId);
     }, [categoryId]);
 
+    useEffect(() => {
+        console.log("incoming event from category card", event)
+        getTasksByCategory(categoryId);
+    }, [event]);
+
     return (
         <div className="category-card">
             <div className="flex-between category-title">
-                {
-                    isEditingTitle ?
-                        <div className="title-input flex-between">
-                            <input
-                                type="text"
-                                className="input-box"
-                                placeholder="Title"
-                                value={title}
-                                onChange={e => setTitle(e.target.value)}
-                            />
-                            <button
-                                className="button" id="confirm-update"
-                                onClick={onUpdateCategory}>
-                                <i className="fas fa-check"></i>
-                            </button>
-                        </div>
-                        :
-                        <button className="category-title" onClick={() => setIsEditingTitle(true)}>{title}</button>
-
-                }
+                <EditableText
+                text={title}
+                placeholder="title"
+                onUpdateText={onTitleUpdated}
+                />
 
                 <CategoryActions onDeleteCategory={onDeleteCategory}/>
                 
@@ -122,34 +117,34 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                     tasks === null ?
                         null :
                         <div>
-                            <Droppable droppableId={categoryId.toString()}>
-                                {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {tasks.map((task, index) => (
+                            {/* <Droppable droppableId={categoryId.toString()}> */}
+                                {/* {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}> */}
+                                    {tasks.map((task) => (
                                         <TaskCard key={task.id}
                                             task={task}
-                                            index={index}
                                             deleteTask={deleteTask}
                                             updateTask={updateTask}
                                             addMemberToTask={addMemberToTask}
-                                            addCommentToTask = {addCommentToTask}
-                                            updateCommentTask = {updateCommentTask}
+                                            addCommentToTask={addCommentToTask}
+                                            updateCommentTask={updateCommentTask}
+                                            deleteCommentTask={deleteCommentTask}
                                             deleteMemberFromTask={deleteMemberFromTask} />
                                       ))}
 
                                             
-
+{/* 
                                         {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                                    </div> */}
+                                {/* )} */}
+                            {/* </Droppable> */}
                            
                         </div>
                 }
             </div>
 
             <CreateTaskCard
-                onSubmit={createTask}
+                createTask={createTask}
                 categoryId={categoryId}
             />
         </div >

@@ -9,11 +9,12 @@ import se.kth.sda.wellbean.task.Task;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 //@EntityListeners(CategoryListener.class)
-public class Category extends BaseEntity {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class Category extends BaseEntity {
     @ManyToOne
     private Project project;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Task> task;
     @OneToMany
     private Set<Task> tasks;
@@ -36,6 +37,9 @@ public class Category extends BaseEntity {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    @ElementCollection
+    private List<Long> tasksPositioning;
+
     public Category() {
     }
     public Category(long id, String title)
@@ -43,7 +47,6 @@ public class Category extends BaseEntity {
         this.id=id;
         this.title=title;
     }
-
 
 
     public long getId() {
@@ -66,6 +69,15 @@ public class Category extends BaseEntity {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public List<Long> getTasksPositioning() {
+        return tasksPositioning;
+    }
+
+    public void setTasksPositioning(List<Long> tasksPositioning) {
+        this.tasksPositioning = tasksPositioning;
+    }
+
 
     @PrePersist
     public void prePersist() {

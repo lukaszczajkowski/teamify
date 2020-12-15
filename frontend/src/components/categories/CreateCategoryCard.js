@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function CreateCategoryCard({ onSubmit, projectId }) {
+export default function CreateCategoryCard({ createCategory, projectId }) {
     const [title, setTitle] = useState("");
     const [isCreatingCategory, setIsCreatingCategory] = useState(false);
 
@@ -10,12 +10,8 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
         setIsCreatingCategory(true);
     }
 
-    const onCreateCategory = () => {
-        if (!title) {
-            setTitle("untitled list");
-            console.log("after set:" + title);
-        }
-        onSubmit(projectId, 
+    const onSubmit = () => {
+        createCategory(projectId, 
                 { title: title });
         setIsCreatingCategory(false);
         setTitle("");
@@ -26,16 +22,21 @@ export default function CreateCategoryCard({ onSubmit, projectId }) {
             {
                 isCreatingCategory ?
                     <div className="category-input">
-                        <input
+                        <form onSubmit={onSubmit}>
+                            <input
                             type="text"
                             className="input-box"
                             placeholder="Title"
                             value={title}
-                            onChange={e => setTitle(e.target.value)} />
-                        <button onClick={onCreateCategory}
+                            onChange={e => setTitle(e.target.value)} 
+                            required/>
+                        <button 
+                        type="submit"
                             className="button">
                             Add list
                         </button>
+                        </form>
+                        
                     </div> :
                         <button id="create-category" onClick={handleClick}>+ Add a list</button>
             }

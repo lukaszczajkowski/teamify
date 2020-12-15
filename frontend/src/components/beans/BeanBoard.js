@@ -3,10 +3,11 @@ import BeanIcon from "../../assets/beanicon.png";
 import BeanCard from "./BeanCard";
 import PresetBeans from "./PresetBeans";
 import CreateBeanButton from "./CreateBeanButton";
+import BeansGraph from "./BeansGraph";
 
 
 // eslint-disable-next-line react/prop-types
-export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean }) {
+export default function BeanBoard({ presetBeans, addedBeans, createBean, updateBean, deleteBean, allBeans }) {
 
     return (
         <article className="bean-board">
@@ -39,6 +40,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean, updateB
                     </div>
 
                     <hr />
+                    <BeansGraph  beans={allBeans} />
 
                     <div className="board-section">
                         <div className="collect-prompt board-item flex-between">

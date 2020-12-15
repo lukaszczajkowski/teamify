@@ -6,6 +6,8 @@ import Popup from "reactjs-popup";
 import Tags from './Tags';
 import Chips from './Chips';
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 
 // eslint-disable-next-line react/prop-types
 export default function EventPopup({ isOpen,
@@ -28,6 +30,8 @@ export default function EventPopup({ isOpen,
     const [eventDescription, setEventDescription] = useState("");
     const [eventMembersEmails, setEventMembersEmails] = useState([]);
     const [emails, setEmails] = useState([]);
+    const [isEditable, setIsEditable] = useState(true);
+    const [meeting, setMeeting] = useState("");
 
     useEffect(() => {
         setEvent(currentEvent);
@@ -46,7 +50,14 @@ export default function EventPopup({ isOpen,
                 } = currentEvent;
                 setEventTitle(title);
 
-                if (extendedProps !== undefined) {
+                if(extendedProps !== undefined){
+                    console.log("not edit" + extendedProps.meeting);
+                    if(extendedProps.meeting !== null)
+                    {
+                        setIsEditable(false);
+                        setMeeting(extendedProps.meeting)
+                        console.log("not edit" + extendedProps.meeting.host.name);
+                    }
                     setEventDescription(extendedProps.description);
                     const eventMembersEmailsFromProps = extendedProps.users.map(user => user.email);
                     setEventMembersEmails(eventMembersEmailsFromProps);
@@ -88,26 +99,28 @@ export default function EventPopup({ isOpen,
             }}>
             Create
                                 </button>
-        :
-        <div>
-            <button
-                className="button"
-                onClick={() => {
-                    { updateEvent({ eventTitle, eventDescription }) }
-                    { onMembersChange({ emails, currentEvent }) }
-                    close();
-                    { onClose(false) }
-                }}>
-                Update
+                                : 
+                                <div>
+                                 <button
+                                className="button"
+                                disabled={!isEditable}
+                                onClick={() => {
+                                    {updateEvent({ eventTitle, eventDescription })}
+                                    {onMembersChange({emails, currentEvent})}
+                                    close();
+                                    {onClose(false)}
+                                }}>
+                                Update
                                 </button>
-            <button
-                className="button"
-                onClick={() => {
-                    { deleteEvent(currentEvent) }
-                    close();
-                    { onClose(false) }
-                }}>
-                Delete
+                                <button
+                                className="button"
+                                disabled={!isEditable}
+                                onClick={() => {
+                                    {deleteEvent(currentEvent)}
+                                    close();
+                                    {onClose(false)}
+                                }}>
+                                Delete
                                 </button>
         </div>
 
@@ -132,13 +145,14 @@ export default function EventPopup({ isOpen,
                             }} className="modal">
                             <button className="close" onClick={() => {
                                 close();
+                                setIsEditable(true);
                                 onClose(false);
                             }
                             }>
                                 <i className="fas fa-times"></i>
                             </button>
 
-                            <div className="header">
+                            <div className="popup-header">
                                 <h2 className="header-title">Event detail</h2>
                             </div>
 
@@ -150,6 +164,7 @@ export default function EventPopup({ isOpen,
                                     <input
                                         type="text"
                                         className="input-box"
+                                        disabled={!isEditable}
                                         defaultValue={eventTitle}
                                         placeholder="Your title here..."
                                         onChange={e => {
@@ -161,6 +176,7 @@ export default function EventPopup({ isOpen,
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Description</h2>
                                     <textarea
+                                        disabled={!isEditable}
                                         className="input-box text-area"
                                         cols="35"
                                         placeholder="Your description here..."
@@ -177,10 +193,23 @@ export default function EventPopup({ isOpen,
                                         {chips}
                                     </div>
                                 </div>
+                                {isEditable ? 
                                 <div className="popup-item flex-start">
                                     <h2 className="prompt">Invite user by email</h2>
                                     <Tags event={currentEvent} onEmailsChange={onEmailsChange} />
                                 </div>
+                                : 
+                                <div className="popup-item flex-start">
+                                <h2 className="prompt">Host</h2>
+                                <div className="popup-item flex-start">
+                                            {meeting.host.name}
+                                </div>
+                                <h2 className="prompt">Zoom Link</h2>
+                                <div className="popup-item flex-start">
+                                <Link className="link nav-link" target="_blank" to={meeting.start_url}>Click to Join</Link> 
+                                </div>
+                                </div>
+                                    }
                             </div>
                             <div className="flex-end">
                                 {buttons}

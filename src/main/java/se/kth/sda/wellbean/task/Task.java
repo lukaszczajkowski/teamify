@@ -1,6 +1,7 @@
 package se.kth.sda.wellbean.task;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import se.kth.sda.wellbean.baseEntity.BaseEntity;
 import se.kth.sda.wellbean.category.Category;
 import se.kth.sda.wellbean.comment.Comment;
 import se.kth.sda.wellbean.project.Project;
@@ -115,4 +116,5 @@ public class Task {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
 }

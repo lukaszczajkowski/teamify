@@ -23,7 +23,8 @@ public class AuthController {
         userService.register(user);
 
         String token = authService.createAuthToken(user.getEmail());
-        AuthResponse authResponse = new AuthResponse(token);
+        AuthResponse authResponse = new AuthResponse(token, user);
+
 
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
@@ -32,7 +33,9 @@ public class AuthController {
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) {
         try {
             String token = authService.authenticate(authRequest.getEmail(), authRequest.getPassword());
-            AuthResponse authResponse = new AuthResponse(token);
+            User user = userService.findUserByEmail(authRequest.getEmail());
+            AuthResponse authResponse = new AuthResponse(token, user);
+
 
             return new ResponseEntity<>(authResponse, HttpStatus.OK);
         } catch (AuthenticationException authenticationException) {

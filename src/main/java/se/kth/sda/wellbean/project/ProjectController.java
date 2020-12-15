@@ -1,8 +1,10 @@
 package se.kth.sda.wellbean.project;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Flux;
 import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.user.User;
@@ -20,16 +22,25 @@ public class ProjectController {
     private final AuthService authService;
     private final UserService userService;
     private final NotificationService notificationService;
+    private final Flux<ProjectChanged> events;
+    private final ProjectChangedEventProcessor projectChangedEventProcessor;
+    private final ProjectMapper mapper;
 
     public ProjectController(ProjectService projectService,
                              AuthService authService,
                              UserService userService,
-                             NotificationService notificationService) {
+                             NotificationService notificationService,
+                             ProjectChangedEventProcessor projectChangedEventProcessor,
+                             ProjectMapper mapper) {
         this.projectService = projectService;
         this.authService = authService;
         this.userService = userService;
         this.notificationService = notificationService;
+        this.projectChangedEventProcessor = projectChangedEventProcessor;
+        this.mapper = mapper;
+        this.events = Flux.create(projectChangedEventProcessor).share();
     }
+
 
     /**
      * Returns all projects

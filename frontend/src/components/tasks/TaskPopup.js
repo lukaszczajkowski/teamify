@@ -6,8 +6,10 @@ import EditableText from "../projects/EditableText";
 import Comments from "../comments/Comments";
 
 
+
 export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
-    console.log(currentTask);
+
+    console.log(currentTask, deleteComment);
 
     const {
         id,
@@ -82,7 +84,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
-                    <div className="header">
+                    <div className="popup-header">
                         <h2 className="header-title">Update task</h2>
 
                     </div>
@@ -91,6 +93,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <h2 className="prompt">Title</h2>
                             <EditableText
                                 text={title}
+                                placeholder="title..."
                                 onUpdateText={onTitleUpdated} 
                             />
                         </div>
@@ -98,6 +101,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <h2 className="prompt">Description</h2>
                             <EditableText
                                 text={description}
+                                placeholder="description..."
                                 onUpdateText={onDescriptionUpdated} 
                             />
                         </div>
@@ -152,7 +156,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                 task={currentTask}
                                 onCreate={addComment}
                                 onUpdate={updateComment}
-                                OnDelete={deleteComment}
+                                onDelete={deleteComment}
                             />
                         </div> 
                     </div>

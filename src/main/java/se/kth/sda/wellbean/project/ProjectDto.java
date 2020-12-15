@@ -1,4 +1,4 @@
-package se.kth.sda.wellbean.category;
+package se.kth.sda.wellbean.project;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -6,13 +6,13 @@ import lombok.NonNull;
 import java.util.UUID;
 
 @Data
-public class CategoryDto {
+public class ProjectDto {
     @NonNull
     private UUID id;
     @NonNull
     private String title;
 
-    public CategoryDto() {
+    public ProjectDto() {
     }
 
     public UUID getId() {

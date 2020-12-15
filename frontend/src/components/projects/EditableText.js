@@ -1,7 +1,7 @@
 import React,  { useState } from "react";
 
 
-export default function EditableText({text, onUpdateText}) {
+export default function EditableText({text, placeholder, onUpdateText}) {
     
     const [isEditing, setIsEditing] = useState(false);
     const [currentText, setCurrentText] = useState(text);
@@ -21,7 +21,7 @@ export default function EditableText({text, onUpdateText}) {
                         <input
                             type="text"
                             className="input-box"
-                            placeholder="Title"
+                            placeholder={placeholder}
                             value={currentText}
                             onChange={e => setCurrentText(e.target.value)}
                             required
