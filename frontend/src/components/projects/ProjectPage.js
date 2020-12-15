@@ -143,7 +143,6 @@ function ProjectPage() {
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-<<<<<<< HEAD
     // const updateCategoriesPositioning = (newCategoriesPositioning) => {
     //     const {
     //         id, 
@@ -161,15 +160,10 @@ function ProjectPage() {
     //     updateProject(newProject);
     // }
 
-    const updateCategory = (newCategoryData) => {
-        return CategoryApi.updateCategory(newCategoryData)
-            .then(response => console.log(JSON.stringify(response.data)))
-            .then(response => setCategories(categories.map((item) => item.id == newCategoryData.id ? response.data : item)))
-=======
+   
     const updateCategory = (projectId, newCategoryData) => {
         return CategoryApi.updateCategory(projectId, newCategoryData)
             .then(getCurrentProject())
->>>>>>> master
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -190,11 +184,7 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <div className="fixed-header">
-<<<<<<< HEAD
                 <ProjectHeader project={currentProject} />
-=======
-                <ProjectHeader />
->>>>>>> master
 
                 <div className="project-menu flex-start ">
                     <ProjectMenu
