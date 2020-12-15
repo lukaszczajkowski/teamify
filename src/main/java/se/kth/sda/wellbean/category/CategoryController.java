@@ -135,8 +135,8 @@ public class CategoryController {
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
             );
             Project project = categoryToRemove.getProject();
-            categoryService.deleteCategory(id);
             this.publisher.publishEvent(new ProjectChanged(project));
+            categoryService.deleteCategory(id);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

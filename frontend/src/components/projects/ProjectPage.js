@@ -22,7 +22,7 @@ function ProjectPage() {
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [members, setMembers] = useState([]);
-    const [event, setEvent] = useState({});
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         init();
@@ -44,8 +44,11 @@ function ProjectPage() {
             console.log("connection opened!", event);
         }
         eventSource.onmessage = (event) => {
-            setEvent(event.data)
             console.log("data received", event);
+            const newEvents = [...events];
+            newEvents.push(event);
+            setEvents(newEvents);
+            //window.location.reload();
             // getCurrentProject();
             // getAllCategories(projectId);
             // getAllMembers(projectId);
@@ -155,11 +158,11 @@ function ProjectPage() {
     }, [projectId]);
 
     useEffect(() => {
-        console.log("incoming changes from project page:", event);
+        console.log("incoming changes from project page:", events);
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [event]);
+    }, [events]);
 
     return (
         <div className="project-page">
@@ -189,7 +192,7 @@ function ProjectPage() {
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
-                event={event} />
+                event={events} />
         </div>
     );
 }
