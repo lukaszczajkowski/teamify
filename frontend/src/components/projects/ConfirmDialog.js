@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles } from '@material-ui/core'
 import Controls from '../controls/Controls';
 
+
 export default function ConfirmDialog(props) {
 
     const useStyles = makeStyles(theme => ({

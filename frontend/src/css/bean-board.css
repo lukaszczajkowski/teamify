@@ -19,7 +19,8 @@
 
 .bean-board .board-name {
     font-size: 28px;
-    color: var(--theme-green);
+    font-weight: bold;
+    color:  #0F545C;
     font-family: 'Rubik', sans-serif;
    
 }
@@ -38,11 +39,11 @@
 .bean-board .sub-prompt {
     margin-left: 1vw;
     font-size: 15px;
-    color: var(--text-dark-grey);
+    color: white;
 }
 
 .bean-board .bean-button {
-    font-size: 17px;
+    font-size: 20px;
     margin: 1vw;
     color: white;
     background-color: var(--opac-green);
@@ -59,7 +60,7 @@
 
 #create-bean {
     background-color: transparent;
-    color: var(--text-dark-grey);
+    color:  #0F545C;
     font-size: 16px;
     border-color: var(--theme-medium-grey);
 }

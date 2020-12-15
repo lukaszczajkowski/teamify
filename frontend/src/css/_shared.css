@@ -1,7 +1,7 @@
 body {
     font-family: 'Rubik', sans-serif;
     font-size: 13px;
-    background-color: var(--bg-light-grey);
+    background-color: transparent;
 }
 
 .link {

@@ -38,8 +38,7 @@ export default function ProjectActions({ currentProject, onUpdateProject, onDele
                                     title: 'Are you sure to delete this Project?',
                                     subTitle: "You can't undo this action",
                                     onConfirm: () => { onDeleteProject }
-                                                })
-                                   
+                                                })        
                                             }}>
                             Delete project
                         </button>
