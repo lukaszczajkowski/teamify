@@ -6,8 +6,9 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: var(--bg-light-grey);  
-
+    z-index: 100;
+    background-color: #07b4b5;
+    background: radial-gradient(circle, rgb(203, 228, 228) 0%, rgb(203, 228, 228) 100%);;
 
 }
 
@@ -20,8 +21,15 @@
 }
 
 .navbar {
-    display: flex;
-    justify-content: flex-end;
+    position: absolute;
+  width: 30%;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header .logo {
@@ -37,9 +45,9 @@
 
 .header .logo img{
    width: auto;
-   height: 38px;
-   margin-top:10px;
-   margin-left: 10px;
+   height: 60px;
+   margin-top:3px;
+   margin-left: 3px;
 
 }
 
@@ -93,3 +101,4 @@
   .nav-item:hover {
    background-color: var(--theme-green);
 }
+

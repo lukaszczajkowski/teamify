@@ -25,7 +25,7 @@ export default function CreateProjectCard({ onSubmit }) {
     }
 
     return (
-        <motion.div
+        <motion.div 
             className="create-project-card"
             whileHover={{ scale: 1.1 }}>
             <div className="popup-container">
@@ -35,12 +35,17 @@ export default function CreateProjectCard({ onSubmit }) {
                     nested>
                     {
                         close => (
-                            <div className="modal">
+                            <motion.div initial={{
+                                scale: 0
+                                    }}
+                                animate= {{
+                                scale: 1
+                                }} className="modal">
                                 <button className="close" onClick={close}>
                                     <i className="fas fa-times"></i>
                                 </button>
-                                <div className="popup-header">
-                                    <h1 className="header-title"> New Project</h1>
+                                <div className="header1">
+                                    <h1 className="header1-title"> New Project</h1>
                                 </div>
                                 <div className="content">
                                     <div className="popup-item flex-start">
@@ -48,7 +53,7 @@ export default function CreateProjectCard({ onSubmit }) {
                                         <input
                                             type="text"
                                             className="input-box"
-                                            placeholder="projectname"
+                                            placeholder="Project Name"
                                             value={projectName}
                                             onChange={e => setProjectName(e.target.value)}
                                         >
@@ -66,7 +71,7 @@ export default function CreateProjectCard({ onSubmit }) {
                             </button>
                                 </div>
 
-                            </div>
+                            </motion.div>
 
                         )}
                 </Popup>

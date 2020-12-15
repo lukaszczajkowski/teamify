@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 // Components
 import NavBar from '../layout/Navbar';
-import Logo from "../../assets/logo2.png";
+import Logo from "../../assets/frame.png";
 
 export default function Header() {
 

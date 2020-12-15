@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import Tags from './Tags';
 import Chips from './Chips';
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 
@@ -136,7 +137,12 @@ export default function EventPopup({ isOpen,
                     modal
                     nested>
                     {close => (
-                        <div className="modal">
+                        <motion.div  initial={{
+                            scale: 0
+                                }}
+                            animate= {{
+                            scale: 1
+                            }} className="modal">
                             <button className="close" onClick={() => {
                                 close();
                                 setIsEditable(true);
@@ -208,7 +214,7 @@ export default function EventPopup({ isOpen,
                             <div className="flex-end">
                                 {buttons}
                             </div>
-                        </div>
+                        </motion.div>
                     )}
                 </Popup>
             </div>
