@@ -60,6 +60,7 @@ export default function Calendar() {
 
         EventApi.create(eventToAdd)
                 .then(response => setCalendarEvents([...calendarEvents, response.data]));
+                loadData();
         setChangesMade(!changesMade);
     }
 
@@ -93,6 +94,7 @@ export default function Calendar() {
             users: info.event.extendedProps.users,
             creator: info.event.extendedProps.creator,
             bean: info.event.extendedProps.bean,
+            meeting : info.event.extendedProps.meeting,
             allDay: info.event.allDay,
             editable: true
         }
@@ -136,6 +138,7 @@ export default function Calendar() {
             users: currentEvent.extendedProps.users,
             creator: currentEvent.extendedProps.creator,
             bean : currentEvent.extendedProps.bean,
+            meeting : currentEvent.extendedProps.meeting,
             allDay: currentEvent.allDay,
             editable: true,
         }

@@ -100,6 +100,7 @@ public class BeanController {
     @DeleteMapping("{id}")
     public void deleteBean(@PathVariable long id) {
          beanService.deleteBean(id);
+         eventService.deleteEventsByBeanId(id);
     }
 
 
