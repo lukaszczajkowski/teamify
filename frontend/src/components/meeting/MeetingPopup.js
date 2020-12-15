@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import MeetingApi from "../../api/MeetingApi";
 import ScheduleMeeting from "./ScheduleMeeting";
 import MeetingCard from "./DisplayCard";
+import { motion } from "framer-motion";
 
 export default function MeetingPopup ({ isOpen,  onClose }) {
 
@@ -75,7 +76,12 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                 onClose={onClose}
                 >
                 
-                    <div className="modal" id="meeting-popup">
+                    <motion.div  initial={{
+                            scale: 0
+                                }}
+                            animate= {{
+                            scale: 1
+                            }} className="modal" id="meeting-popup">
                         <button className="close" onClick={() => {
                                         onClose();
                                         setIsScheduleMeeting(false);
@@ -133,7 +139,7 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                         }
                         
                         
-                    </div>
+                    </motion.div>
 
                 
             </Popup>
