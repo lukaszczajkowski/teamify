@@ -72,5 +72,11 @@
   }
   
   .squares li[data-level="3"] {
-    background-color: #196127;
+    background-color: #32CD32;
+  }
+  .squares li[data-level="4"] {
+    background-color: #008000;
+  }
+  .squares li[data-level="5"] {
+    background-color: #006400;
   }
