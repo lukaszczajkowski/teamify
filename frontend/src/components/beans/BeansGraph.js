@@ -4,6 +4,18 @@ const BeansGraph = ({beans}) => {
     const graphItems = [];
 
     console.log("inside BeansGraph")
+    // {beans} - array of beans related to current user 
+
+    // we need to go through all the elements and check if completed = true;  
+    //then we check the date of complted bean  and it is 
+    //createdDate (LocalDate) (maybe user has completed this task next day but for simplification, I propose 
+    //to use creation date as completion date)
+    //if it is a new date, need to assing 1 to score and got next with the element in the loop
+    //If the date is the same, for the current day we need to add +1 to beanscore 
+
+    //Date is in LocalDate, we need to convert the date to range (1-365)
+    // moment library should help 
+
     // change value here to map with data
         
     // const data = [{
