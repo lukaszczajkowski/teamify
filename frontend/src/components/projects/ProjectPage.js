@@ -14,10 +14,10 @@ function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
     const userId = user.id;
-    //console.log("on project page. User id:" + userId);
 
     const { projectId } = useParams();
-    //console.log("project id:" + projectId);
+    //const [categoriesPositioning, setCategoriesPositioning] = useState([]);
+    //const [teamBeanScore, setTeamBeanScore] = useState();
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
@@ -63,7 +63,9 @@ function ProjectPage() {
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
             .then(response => setCurrentProject(response.data))
-            .then(console.log(currentProject.id))
+            .then(console.log("current project:" + JSON.stringify(currentProject)))
+            //.then(setCategoriesPositioning(currentProject.categoriesPositioning))
+            //.then(console.log("categories positioning: " + categoriesPositioning))
             .catch(err => console.log(`error on get project ${err}`));
     }
 
@@ -137,10 +139,27 @@ function ProjectPage() {
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
+    // const updateCategoriesPositioning = (newCategoriesPositioning) => {
+    //     const {
+    //         id, 
+    //         title,
+    //         categoriesPositioning,
+    //         teamBeanScore
+    //     } = currentProject;
+
+    //     const newProject = {
+    //         id,
+    //         title,
+    //         categoriesPositioning: newCategoriesPositioning,
+    //         teamBeanScore
+    //     }
+    //     updateProject(newProject);
+    // }
+
     const updateCategory = (newCategoryData) => {
         return CategoryApi.updateCategory(newCategoryData)
             .then(response => console.log(JSON.stringify(response.data)))
-            .then(response => categories.map((item) => item.id == newCategoryData.id ? response.data : item))
+            .then(response => setCategories(categories.map((item) => item.id == newCategoryData.id ? response.data : item)))
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -148,6 +167,7 @@ function ProjectPage() {
         return CategoryApi.deleteCategory(categoryId)
             .then(console.log(`Deleting category: ${categoryId}`))
             .then(setCategories(categories.filter(c => c.id !== categoryId)))
+            //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
     };
 
@@ -167,7 +187,7 @@ function ProjectPage() {
     return (
         <div className="project-page">
             <div className="fixed-header">
-                <ProjectHeader project={currentProject}/>
+                <ProjectHeader project={currentProject} />
 
                 <div className="project-menu flex-start ">
                     <ProjectMenu
@@ -187,7 +207,7 @@ function ProjectPage() {
 
 
             <ProjectBoard
-                projectId={projectId}
+                currentProject={currentProject}
                 categories={categories}
                 createCategory={createCategory}
                 updateCategory={updateCategory}

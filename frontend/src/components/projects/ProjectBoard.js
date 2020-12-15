@@ -10,6 +10,7 @@ export default function ProjectBoard({ currentProject, categories, createCategor
         //title,
         //categoriesPositioning
     } = currentProject;
+
     // const onDragEnd = (result) => {
     //     const { destination, source, draggableId } = result;
     //     console.log("destination", destination, "source", source, draggableId);
@@ -18,13 +19,13 @@ export default function ProjectBoard({ currentProject, categories, createCategor
     //     }
     //     let sourceIdx = parseInt(result.source.index)
     //     let destIdx = parseInt(result.destination.index)
-    //     {/* eslint-disable-next-line react/prop-types */ }
+    //    
     //     let draggingCard = category.task[sourceIdx]
-    //     {/* eslint-disable-next-line react/prop-types */ }
+    //    
     //     let newList = category.task.slice();
     //     newList.splice(sourceIdx, 1);
     //     newList.splice(destIdx, 0, draggingCard)
-    //     {/* eslint-disable-next-line react/prop-types */ }
+    //   
     //     category.task = newList;
     // }
 

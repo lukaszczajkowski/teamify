@@ -9,6 +9,7 @@ import se.kth.sda.wellbean.task.Task;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -46,6 +47,7 @@ public class Category {
     {
         this.id=id;
         this.title=title;
+        this.tasksPositioning = new ArrayList<>();
     }
 
 
