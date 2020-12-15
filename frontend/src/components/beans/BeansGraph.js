@@ -31,15 +31,32 @@ const BeansGraph = ({beans}) => {
     // }];
     // const graphItems = data.map((item) => <li data-level={item.bean}></li>)
 
+    console.log("current nuber of bean  " + beans.length)
     {beans.sort((a, b) => b.id - a.id).map(bean => (
-       console.log(moment(bean.createdDate).format("DDD")) //350th day for todays date 
-       //graphItems.push(<li data-level={10} key={moment(bean.createdDate).format("DDD")} />)
+        console.log({bean})
+        // console.log(moment(bean.createdDate).format("DDD")) //350th day for todays date 
     ))} 
-
+        
     
-   for (var i = 1; i < 365; i++) {
-        const level = Math.floor(Math.random() * 3);
-        graphItems.push(<li data-level={level} key={i} />);
+    const levelArr = []
+
+    for (var j = 0; j< 366; j++) {
+        levelArr.push(0)
+    }
+
+
+    for (var i = 0; i < beans.length; i++) {
+       
+        if (beans[i].completed === true)
+        {
+            levelArr[moment(beans[i].createdDate).format("DDD")] +=1
+        }
+    } 
+
+    //NB max of data-level is 5! if data-level >5, cube will be empty
+    console.log(levelArr)
+    for ( i = 0; i < 366; i++) {
+        graphItems.push(<li data-level={levelArr[i]} key={i} />);
     } 
 
     return (
