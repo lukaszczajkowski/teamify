@@ -18,6 +18,7 @@ function UserPage() {
     const [projects, setProjects] = useState([]);
     const [presetBeans, setPresetBeans] = useState([]);
     const [addedBeans, setAddedBeans] = useState([]);
+    const [allBeans, setAllBeans] = useState([]);
 
 
     function getCurrentTime() {
@@ -65,11 +66,17 @@ function UserPage() {
             .then(response => setProjects([response.data, ...projects]));
     };
 
+    const getAllBeansForCurrentUser = () => {
+        return BeanApi.getAllBeans()
+            .then(response => setAllBeans(response.data));
+    };
+
     useEffect(() => {
         getPresetBeans(),
             getAllBeans(),
             getAllProjects(userId),
-            getCurrentTime()
+            getCurrentTime(), 
+            getAllBeansForCurrentUser()
     }, [user]);
 
 
@@ -89,6 +96,7 @@ function UserPage() {
                         createBean={createBean}
                         updateBean={updateBean}
                         deleteBean={deleteBean}
+                        allBeans={allBeans}
                     />
 
                     <ProjectsBoard
