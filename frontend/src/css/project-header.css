@@ -1,6 +1,7 @@
 .project-header {
     height: 60px;
-    background-color: transparent;
+    background-color: #07b4b5;
+    background: radial-gradient(circle, rgb(203, 228, 228) 0%, rgb(203, 228, 228) 100%);
 }
 
 

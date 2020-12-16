@@ -1,12 +1,14 @@
 .project-page {
-    background-color: var(--bg-light-grey);
+    background-color: #07b4b5;
+    background: radial-gradient(circle, rgb(85, 193, 205) 0%, rgb(203, 228, 228) 100%);
     height: calc(100vh - 120px);
     width: 100%;
 }
 
 .project-page .project-menu {
     height: 60px;
-    background-color: var(--bg-light-grey);
+    background-color: #07b4b5;
+    background: radial-gradient(circle, rgb(203, 228, 228) 0%, rgb(203, 228, 228) 100%);;
 }
 
 .project-page .project-board {
