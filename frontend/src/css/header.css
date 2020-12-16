@@ -36,11 +36,13 @@
     width: 200px;
 }
 .navbar .nav-link {
-    font-size: 23px;
+    font-size: 25px;
     /* font-family: 'Rubik', sans-serif;
     font-weight: 600; */
-    color: var(--theme-dark-green);
+    color: white;
     text-decoration: none;
+    padding-left: 30px;
+   
 }
 
 .header .logo img{
@@ -69,36 +71,64 @@
 .nav-menu {
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 23vw;
     height: calc(100vh -  60px);
     position: absolute;
     right: 0;
-    top: -100vh;
+    top: 60px;
+    right: -100%;
     opacity: 1;
     transition: all 0.4s ease-in-out;
     z-index: -99;
-    text-align: center;
     justify-content: space-around;
-    align-items: center;
-    font-size: 15px;
-    box-shadow: -6px 11px 21px -11px rgba(125, 125, 125, 0.75);
-
+    align-items: left;
+    
+    
   }
 
   .nav-menu.active {
-    background: var(--bg-light-grey);
-    top: 60px;
-    z-index: 999;
+    background: #0F545C;
+    right: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 1;
+    
   }
 
   .nav-item {
-      padding: 43px 0;
-      width: calc(30vw / 1.1);
-      height: 120px;
-      text-align: center;
-  }
+    padding-top: 80px;
+    padding-bottom: 50px;
+      width: 100%;
+      height: 100%;
+    border-bottom: 1px solid rgba(7, 180, 181, 0.7);;
+      padding-right: 30px;
+      transition: .4s;
+      }
+
+      .nav-item i{
+          margin-right: 16px;
+      }
 
   .nav-item:hover {
-   background-color: var(--theme-green);
+  padding-left: 70px;
 }
 
+.nav-menu .button{
+
+text-align: left;
+font-size: 25px;
+border: 1px solid #0F545C;
+padding: 1.5rem;
+width: 100%;
+border-radius: 4px;
+background-color: #0F545C;
+text-decoration: none;
+color: white;
+font-size: 20px;
+margin: 2rem auto;
+
+}
+
+.nav-menu .button:hover {
+    padding-left: 70px;
+  }

@@ -21,19 +21,19 @@ import Auth from "../../services/Auth";
 
             <ul className={click ? "nav-menu active" : "nav-menu"}>
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/home" onClick={closeMenu}>Home</Link>
+                    <Link className="link nav-link" to="/home" onClick={closeMenu}><i className="fas fa-home"></i> Home</Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/home" onClick={closeMenu}>ProjectBoard</Link>
+                    <Link className="link nav-link" to="/home" onClick={closeMenu}><i className="fas fa-qrcode"></i>ProjectBoard</Link>
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/about" onClick={closeMenu}>About</Link>
+                    <Link className="link nav-link" to="/about" onClick={closeMenu}><i className="far fa-question-circle"></i>About</Link>
                 </li>
 
-                <li>
-                <button className="button nav-item" onClick={() => Auth.logout()}>Logout</button>
+                <li className="nav-item">
+                <Link className="link nav-link" to="/" onClick={() => Auth.logout()}><i className="fas fa-sign-out-alt"></i>Logout</Link>
                 </li>
 
             </ul>

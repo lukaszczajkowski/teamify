@@ -40,7 +40,7 @@ export default function DisplayCard({data, fetchdata}) {
     
 
     return (
-        <div>
+        <div className="meeting">
             <table id = "meeting_table">
                <tr><td>{topic}</td> <td>{agenda} </td><td> {startTime}</td>
                 <td> {duration}</td> 

@@ -22,7 +22,7 @@
 .modal .header1-title {
   font-size:22px;
   font-weight: 600;
-  color:  white;
+  color: rgba(7, 180, 181, 0.7);;
 }
 
 .modal>.content {

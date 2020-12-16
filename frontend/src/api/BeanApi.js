@@ -5,8 +5,13 @@ class BeanApi {
         return Api.get("/beans/preset");
     }
 
-    getAllBeans() {
+    //for the user for today 
+    getAllBeansForToday() {
         return Api.get("/beans");
+    }
+
+    getAllBeansForWholeTime() {
+        return Api.get("/beans/AllBeans");
     }
 
     getBeanById(beanId) {

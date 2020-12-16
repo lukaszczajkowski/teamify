@@ -15,8 +15,11 @@ public class BeanService {
     private BeansPreSetRepository beansPreSetRepository;
 
 
-    public List<Bean> findAllByUserId(Long userId) {
+    public List<Bean> findAllByUserIdCurrentDate(Long userId) {
            return beanRepository.getAllByCreatedDateAndUserId(LocalDate.now(),userId);
+    }
+    public List<Bean> findAllByUserId(Long userId) {
+        return beanRepository.getAllByUserId(userId);
     }
     public Bean createNewBean(Bean newBean) {
         return beanRepository.save(newBean);

@@ -18,7 +18,7 @@ export default function ProjectHeader({ project }) {
                 </motion.div>
 
                 <motion.div whileHover={{ scale: 1.1 }}>
-                    <Link to="" className="project-nav-item">
+                    <Link to="/home" className="project-nav-item">
                         <img className="icon" src={BeanIcon} />
                     </Link>
                 </motion.div>
