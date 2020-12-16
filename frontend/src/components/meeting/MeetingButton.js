@@ -14,7 +14,7 @@ export default function MeetingButton () {
         setPopupIsOpen(false);
     }
     return (
-        <div >
+        <div className="zoom">
             <button
                 id="create-meeting"
                 className="meeting-button button"
