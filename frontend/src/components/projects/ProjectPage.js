@@ -9,13 +9,14 @@ import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
+// eslint-disable-next-line no-unused-vars
 import ConfirmDialog from "../projects/ConfirmDialog";
 import TaskApi from "../../api/TaskApi";
 
 
 let eventSource;
 
-function ProjectPage() {
+export default function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
     const userId = user.id;
@@ -56,19 +57,9 @@ function ProjectPage() {
                     "Connection": "keep-alive",
                     "X-Accel-Buffering": "no"
                 }
-            );
-            eventSource.onopen = (event) => {
-                console.log("connection opened!", event);
-            }
-            eventSource.onmessage = (event) => {
-                console.log("data received", event);
-                getCurrentProject();
-                getAllCategories(projectId);
-                getAllTasks(projectId);
-                getAllMembers(projectId);
-                setIncomingChanges(incomingChanges + 1);
             }
         );
+           
         eventSource.onopen = (event) => {
             console.log("connection opened!", event);
             reconnectFrequencySeconds = 1;

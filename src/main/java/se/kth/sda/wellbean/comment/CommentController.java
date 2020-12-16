@@ -1,10 +1,14 @@
 package se.kth.sda.wellbean.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.kth.sda.wellbean.auth.AuthService;
+import se.kth.sda.wellbean.category.Category;
+import se.kth.sda.wellbean.project.Project;
+import se.kth.sda.wellbean.project.ProjectChanged;
 import se.kth.sda.wellbean.project.ProjectService;
 import se.kth.sda.wellbean.task.Task;
 import se.kth.sda.wellbean.task.TaskService;
@@ -31,6 +35,9 @@ public class CommentController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
 
     /**
      * Returns all comments which is availible for current user
@@ -104,7 +111,11 @@ public class CommentController {
             User commentCreator = getCurrentUser();
             newComment.setUser(commentCreator);
             newComment.setTask(currentTask);
-            return commentService.create(newComment);
+            Category category = currentTask.getCategory();
+            Project project = category.getProject();
+            Comment saved = commentService.create(newComment);
+            this.publisher.publishEvent(new ProjectChanged(project));
+            return saved;
         }
         else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
@@ -132,7 +143,11 @@ public class CommentController {
             if (isCreator(updatedComment)) {
                 updatedComment.setUser(getCurrentUser());
                 updatedComment.setTask(currentTask);
-                return commentService.update(updatedComment);
+                Category category = currentTask.getCategory();
+                Project project = category.getProject();
+                Comment saved = commentService.update(updatedComment);
+                this.publisher.publishEvent(new ProjectChanged(project));
+                return saved;
             }
             else {
                 throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
@@ -163,7 +178,11 @@ public class CommentController {
         if(checkCredentials(taskId)) {
             //if user is a creator of the comment
             if (isCreator(comment)) {
+                Task task = comment.getTask();
+                Category category = task.getCategory();
+                Project project = category.getProject();
                 commentService.delete(id);
+                this.publisher.publishEvent(new ProjectChanged(project));
             } else {
                 throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
             }
