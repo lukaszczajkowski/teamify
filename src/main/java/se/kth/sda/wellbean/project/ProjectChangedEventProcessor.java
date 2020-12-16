@@ -20,7 +20,7 @@ public class ProjectChangedEventProcessor implements ApplicationListener<Project
     private final Executor executor;
     private final BlockingQueue<ProjectChanged> queue = new LinkedBlockingQueue<>();
 
-    public ProjectChangedEventProcessor(@Qualifier("brokerChannelExecutor") Executor executor) {
+    public ProjectChangedEventProcessor(@Qualifier("getTaskExecutor") Executor executor) {
         this.executor = executor;
     }
 

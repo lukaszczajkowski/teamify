@@ -9,6 +9,8 @@ import se.kth.sda.wellbean.auth.AuthService;
 import se.kth.sda.wellbean.notification.NotificationService;
 import se.kth.sda.wellbean.user.UserService;
 
+import java.time.Duration;
+
 @RestController
 public class ProjectChangeController {
     private final ProjectService projectService;
@@ -36,13 +38,20 @@ public class ProjectChangeController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(value = "/sse/project", produces = "text/event-stream;charset=utf-8")
-    public ResponseEntity<Flux<ProjectDto>> stream() {
+    public Flux<ProjectDto> stream() {
         System.out.println("Start listening to the project collection.");
 
-        return ResponseEntity.ok().body(events.map(event -> {
+        return events.map(event -> {
             ProjectDto dto = this.mapper.entityToDto((Project) event.getSource());
             System.out.println("Mapping category " + dto.getTitle());
             return dto;
-        }));
+        }).mergeWith(Flux.interval(Duration.ofSeconds(30), Duration.ofSeconds(30))
+                .map(ignored ->
+                        {
+                            ProjectDto heartbeat = new ProjectDto();
+                            heartbeat.setTitle("heartbeat");
+                            return heartbeat;
+                        }
+                ));
     }
 }
