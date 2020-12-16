@@ -46,11 +46,11 @@ export default function DisplayCard({data, fetchdata}) {
                 <td> {duration}</td> 
                 {isHost ? 
                 <td>
-                    <button className="button">
+                   <div className="link">
                         <a href={start_url} target="_blank" rel="noopener noreferrer">Click to start</a>
-                    </button> 
+                    
                 {/* <Link className="link nav-link"  target="_blank" to={start_url}>Click to Start</Link>    */}
-                </td>   
+                </div> </td>   
                 :  
                 <td>
                     <button className="button">
