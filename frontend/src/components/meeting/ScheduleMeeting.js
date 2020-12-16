@@ -22,7 +22,7 @@ export default function ScheduleMeeting ( {toggleIsScheduleMeeting, onSubmit}) {
                             </button>
                         </div>
                         <div className="content">
-                        <h1 className="prompt">Schedule meeting</h1>
+                        <h1 className="header1-title">Schedule meeting</h1>
                             <div className="popup-item flex-start">
                                     <h2 className="prompt">Topic</h2>
                                     <input
