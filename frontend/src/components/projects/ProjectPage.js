@@ -8,6 +8,7 @@ import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
+
 import ConfirmDialog from "../projects/ConfirmDialog";
 import TaskApi from "../../api/TaskApi";
 
@@ -25,23 +26,35 @@ function ProjectPage() {
     // const [categoriesOrder, setCategoriesOrder] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [members, setMembers] = useState([]);
-    const [incomingChanges, setIncomingChanges] = useState(0);
-    
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
-            init();
+        init();
     }, [])
 
-    const init = ()  => {
-            eventSource = new EventSourcePolyfill('http://localhost:8080/sse/category', 
-                {
-                    headers: {
-                        "Accept": "text/event-stream",
-                        "Authorization": window.sessionStorage.getItem("_token"),
-                        "Cache-Control": "no-cache",
-                        "Connection": "keep-alive",
-                        "X-Accel-Buffering": "no"
-                    }
+    var reconnectFrequencySeconds = 1;
+
+    var waitFunc = function() { return reconnectFrequencySeconds * 1000 };
+
+    var tryToSetupFunc = () => {
+        init();
+        reconnectFrequencySeconds *= 2;
+        if (reconnectFrequencySeconds >= 64) {
+            reconnectFrequencySeconds = 64;
+        }
+    };
+
+    var reconnectFunc = function() { setTimeout(tryToSetupFunc, waitFunc()) };
+
+    const init = () => {
+        eventSource = new EventSourcePolyfill('http://localhost:8080/sse/project',
+            {
+                headers: {
+                    "Accept": "text/event-stream",
+                    "Authorization": window.sessionStorage.getItem("_token"),
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
                 }
             );
             eventSource.onopen = (event) => {
@@ -55,11 +68,23 @@ function ProjectPage() {
                 getAllMembers(projectId);
                 setIncomingChanges(incomingChanges + 1);
             }
+        );
+        eventSource.onopen = (event) => {
+            console.log("connection opened!", event);
+            reconnectFrequencySeconds = 1;
+        }
+        eventSource.onmessage = (event) => {
+            console.log("data received", event);
+            const newEvents = [...events];
+            newEvents.push(event);
+            setEvents(newEvents);
+        }
 
-            eventSource.onerror = (err) => {
-                console.error("Event source failed:", err);
-                eventSource.close();
-            }
+        eventSource.onerror = (err) => {
+            console.error("Event source failed:", err);
+            eventSource.close();
+            reconnectFunc();
+        }
     }
 
     /******************************** Project *******************************************/
@@ -77,15 +102,12 @@ function ProjectPage() {
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
             .then(response => setCurrentProject(response.data))
-            .then(response => console.log("updated project: " + JSON.stringify(response.data)))
+            .then(console.log(JSON.stringify(currentProject)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
 
     const onDeleteProject = () => {
-   ({
-            ...ConfirmDialog,
-            isOpen: false
-        })
+        if (window.confirm("Do you want to delete this project?")) {
             if (userId === currentProject.creator.id) {
                 deleteCurrentProject();
                 history.push("/home");
@@ -93,19 +115,18 @@ function ProjectPage() {
             } else {
                 alert("you are not the creator of the project, deleting project is not allowed");
             }
-        
+        }
     };
 
     const getAllMembers = (projectId) => {
         return ProjectApi.getProjectById(projectId)
-            .then(response => setMembers(response.data.users))
-            .then(console.log("members: " + JSON.stringify(members)));
+            .then(response => setMembers(response.data.users));
     }
 
     const onDeleteMember = (memberId) => {
         if (window.confirm("Do you want to remove this member?")) {
             if (userId === currentProject.creator.id && userId !== memberId) {
-                console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
+                //console.log("on deleteMember. creator: " + currentProject.creator.id + ", delete member: " + memberId);
                 deleteMember(projectId, memberId);
                 getAllMembers(projectId);
             } else if (userId !== currentProject.creator.id) {
@@ -208,11 +229,19 @@ function ProjectPage() {
         getAllCategories(projectId);
         getAllTasks(projectId);
         getAllMembers(projectId);
-    }, [projectId, incomingChanges]);
+    }, [projectId]);
+
+    useEffect(() => {
+        console.log("incoming changes from project page:", events);
+        getCurrentProject();
+        getAllCategories(projectId);
+        getAllMembers(projectId);
+    }, [events]);
 
     return (
         <div className="project-page">
             <div className="fixed-header">
+
                 <ProjectHeader project={currentProject} />
 
                 <div className="project-menu flex-start ">
@@ -238,11 +267,8 @@ function ProjectPage() {
                 tasks={tasks}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
-                deleteCategory={deleteCategory} />
-
-                
+                deleteCategory={deleteCategory}
+                event={events} />
         </div>
     );
 }
-
-export default ProjectPage;
