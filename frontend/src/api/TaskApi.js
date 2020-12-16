@@ -22,7 +22,7 @@ class TaskApi {
     }
 
     getTasksByProjectId(projectId) {
-        return Api.get('/tasks/projectId', { params: projectId });
+        return Api.get(`/tasks/projectId?projectId=${projectId}`);
     }
 
     getTasksByCategoryIdAndMemberId(categoryId, memberId) {

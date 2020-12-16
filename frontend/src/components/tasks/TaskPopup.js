@@ -10,8 +10,6 @@ import { motion } from "framer-motion";
 
 export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
 
-    console.log(currentTask, deleteComment);
-
     const {
         id,
         title,
