@@ -3,9 +3,8 @@ import useComponentVisible from "../hooks/useComponentVisible";
 import ConfirmDialog from "../projects/ConfirmDialog";
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectActions({ currentProject, onUpdateProject, onDeleteProject }) {
+export default function ProjectActions({ onUpdateProject, onDeleteProject }) {
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
-    console.log("on project action. current project:" + currentProject);
     const {
         ref,
         isComponentVisible,
@@ -37,7 +36,7 @@ export default function ProjectActions({ currentProject, onUpdateProject, onDele
                                     isOpen: true,
                                     title: 'Are you sure to delete this Project?',
                                     subTitle: "You can't undo this action",
-                                    onConfirm: () => { onDeleteProject }
+                                    onConfirm: () => {onDeleteProject}
                                                 })        
                                             }}>
                             Delete project
