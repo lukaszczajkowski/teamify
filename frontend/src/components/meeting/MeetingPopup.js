@@ -96,7 +96,7 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                                                     
                                              /> : 
                         <div className="content">
-                            <h1 className="prompt">Open Zoom meeting </h1>
+                            <h1 className="header1-title">Open Zoom meeting </h1>
                             <div className="flex-center">
                                 <button
                                 className="button"
@@ -125,9 +125,17 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                             <h1 className="prompt">Upcoming meetings in your calender</h1>
                             <hr/>
                             <table id = "meeting_table">
-                                <th> Topic</th><th> Agenda</th><th> Start Time</th> 
-                                <th> Duration</th><th>Meeting URL</th><th> Host</th>
-                                <th> </th> 
+                                <thead>
+                                    <tr>
+                                <th> Topic <span className="resize-handle"> </span></th>
+                                <th> Agenda <span className="resize-handle"> </span></th>
+                                <th> Start Time<span className="resize-handle"> </span></th> 
+                                <th> Duration<span className="resize-handle"> </span></th>
+                                <th>Meeting URL<span className="resize-handle"> </span></th>
+                                <th> Host<span className="resize-handle"> </span></th>
+                                <th></th>
+                                </tr>
+                                </thead>
                             </table>
                             {meetingCards}            
                           

@@ -1,5 +1,5 @@
- .meeting-button {
-    font-size: 17px;
+ /*.meeting-button {
+    font-size: 10px;
     margin: 1vh;
     color: white;
     background-color: var(--opac-dark-grey);
@@ -10,15 +10,27 @@
     background-color: var(--theme-green);
     color: white;
 
+
+}*/
+
+.content .header1-title{
+    margin-left: 10px;
+}
+ 
+.content .prompt{
+    margin-left: 10px;
 }
 
-
+#meeting-popup {
+    width: 80vw;
+}
 
 #create-meeting {
     background-color: transparent;
-    color: var(--text-dark-grey);
-    font-size: 15px;
+    font-size: 20px;
 }
+
+
 
 #create-meeting:hover {
     color: white;
@@ -27,5 +39,87 @@
 }
 
 #meeting_table {
-   font-size: xx-large;
+    min-width: 80vw;
+    width: auto;
+    flex: 1;
+    display: grid;
+    border-collapse: collapse;
+    grid-template-columns: 
+    minmax(150px, 1.4fr)
+    minmax(150px, 1.67fr)
+    minmax(150px, 1.67fr)
+    minmax(150px, 1.67fr)
+    minmax(150px, 1.67fr)
+    minmax(150px, 1.67fr)
+    minmax(150px, 1.67fr)
 }
+.meeting .button{
+    font-size: 13px;
+    margin-right: 30px;
+}
+
+thead,
+tr {
+  display: contents;
+}
+
+th,
+td {
+  
+  padding: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+th {
+    position: sticky;
+    top: 0;
+    background: #145f69;
+    text-align: left;
+    font-weight: normal;
+    font-size: 1.1rem;
+    color: white;
+    position: relative;
+  }
+  
+  th:last-child {
+    border: 0;
+  }
+  
+  .resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    width: 3px;
+    cursor: col-resize;
+  }
+  
+  .resize-handle:hover,
+  /* The following selector is needed so the handle is visible during resize even if the mouse isn't over the handle anymore */
+  .header--being-resized .resize-handle {
+    opacity: 0.5;
+  }
+  
+  th:hover .resize-handle {
+    opacity: 0.3;
+  }
+  
+  td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color:white;
+  }
+  
+  tr:nth-child(even) td {
+    background: #f8f6ff;
+  }
+
+  .zoom .button{
+      color: rgb(77, 73, 73);
+      font-weight: bold;
+  }
+
+  
