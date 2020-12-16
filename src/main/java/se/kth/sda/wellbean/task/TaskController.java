@@ -330,7 +330,7 @@ public class TaskController {
      * @throws ResponseStatusException
      */
     @DeleteMapping("/{taskId}")
-    public void delete(@PathVariable Long taskId){
+    public Long delete(@PathVariable Long taskId){
         if (checkCredentialsByTaskId(taskId)) {
             Task task = taskService.getById(taskId).
                     orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -339,6 +339,7 @@ public class TaskController {
             this.publisher.publishEvent(new ProjectChanged(project));
             System.out.println("Event published");
             taskService.delete(taskId);
+            return taskId;
         }
         else {
             throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);

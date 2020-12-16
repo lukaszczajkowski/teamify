@@ -1,7 +1,7 @@
 import React from "react";
 import CreateCategoryCard from "../categories/CreateCategoryCard";
 import CategoryCard from "../categories/CategoryCard";
-// import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 // eslint-disable-next-line react/prop-types
 export default function ProjectBoard({ currentProject, categories, createCategory, updateCategory, deleteCategory, event }) {
@@ -33,7 +33,7 @@ export default function ProjectBoard({ currentProject, categories, createCategor
 
     return (
         <div className="project-board flex-start">
-            {/* <DragDropContext onDragEnd={onDragEnd}> */}
+            <DragDropContext>
 
                 {
                     categories === null ?
@@ -52,7 +52,7 @@ export default function ProjectBoard({ currentProject, categories, createCategor
                 }
 
 
-            {/* </DragDropContext> */}
+            </DragDropContext>
         </div>
     );
 }

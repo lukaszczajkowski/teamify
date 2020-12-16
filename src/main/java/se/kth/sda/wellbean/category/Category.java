@@ -42,6 +42,7 @@ public class Category {
     private List<Long> tasksPositioning;
 
     public Category() {
+        this.tasksPositioning = new ArrayList<>();
     }
     public Category(long id, String title)
     {
@@ -73,10 +74,16 @@ public class Category {
     }
 
     public List<Long> getTasksPositioning() {
+        if(this.tasksPositioning == null) {
+            this.tasksPositioning = new ArrayList<>();
+        }
         return tasksPositioning;
     }
 
     public void setTasksPositioning(List<Long> tasksPositioning) {
+        if(this.tasksPositioning == null) {
+            this.tasksPositioning = new ArrayList<>();
+        }
         this.tasksPositioning = tasksPositioning;
     }
 

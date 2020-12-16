@@ -6,7 +6,7 @@ import CreateTaskCard from "../tasks/CreateTaskCard";
 import TaskCard from "../tasks/TaskCard";
 import CategoryActions from "./CategoryActions";
 import EditableText from "../projects/EditableText";
-// import { Droppable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 
 // eslint-disable-next-line react/prop-types
@@ -24,7 +24,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     const [tasks, setTasks] = useState([]);
     const [orderedTasks, setOrderedTasks] = useState([]);
-    const [tasksOrder, setTasksOrder] = useState(category.tasksPositioning);
+    const [tasksOrder, setTasksOrder] = useState(tasksPositioning);
 
 
     const onDeleteCategory = () => {
@@ -59,23 +59,49 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     };
 
     const sortTasksByOrder = (tasks, tasksOrder) => {
+        console.log("!!!!!!!!!!");
+        console.log("ordered tasks before sorting", orderedTasks);
         const orderedTasksList = [];
         for (let i = 0; i < tasksOrder.length; i++) {
             for (let j = 0; j < tasks.length; j++) {
                 if (tasksPositioning[i] == tasks[j].id) {
-                    orderedTasks.push(tasks[j].id);
+                    orderedTasksList.push(tasks[j].id);
                 }
             }
         }
-        setOrderedTasks(orderedTasksList);
+        console.log("list of tasks after sorting:", orderedTasksList);
+        const dog = orderedTasksList;
+        setOrderedTasks(dog);
+        console.log("ordered tasks: ", orderedTasks);
     }
 
 
     const createTask = (categoryId, taskData) => {
         return TaskApi.createTask(categoryId, taskData)
-            .then(response => setTasks([...tasks, response.data]))
-            .then(setTasksOrder([...tasksOrder, taskData.id]))
-            .then(updateTasksOrder(tasksOrder))
+            .then((response) => {
+                const newTasks = tasks;
+                newTasks.push(response.data);
+                setTasks(newTasks);
+                console.log("tasks after updating:", tasks);
+                const newTasksOrder = tasksOrder;
+                newTasksOrder.push(response.data.id);
+                setTasksOrder(newTasksOrder);
+                console.log("tasks order after updating:", tasksOrder);
+
+                // setTasks([...tasks, response.data]);
+                // setTasksOrder([...tasksOrder, response.data.id]);
+                const newOrderedTasks = orderedTasks;
+                newOrderedTasks.push(response.data);
+                setOrderedTasks(newOrderedTasks);
+                console.log("task ordered tasks from response", orderedTasks);
+                updateTasksOrder(tasksOrder);
+                console.log("task order from response", tasksOrder);
+
+                sortTasksByOrder(tasks, tasksOrder);
+                console.log(orderedTasks);
+            })
+            // .then(setTasksOrder([...tasksOrder, taskData.id]))
+            // .then(updateTasksOrder(tasksOrder))
             .then(console.log("after creating task. current task order" + tasksOrder));
     };
 
@@ -85,9 +111,25 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     };
 
     const deleteTask = (taskId) => {
+        // const deletedTaskId = taskId;
         return TaskApi.deleteTask(taskId)
-            .then(() => setTasks(tasks.filter(task => task.id !== taskId)))
-            //.then(() => setTasksOrder(tasksOrder.filter(item => item !== taskId)))
+            .then(response => {
+                const newTasks = tasks.filter(item => item.id !== response.data);
+                setTasks(newTasks);
+
+                const removeIndexFromTasksOrder = tasksOrder.findIndex(item => item == response.data);
+                console.log("index to remove from tasks order:", removeIndexFromTasksOrder);
+                const newTasksOrder = tasksOrder;
+                newTasksOrder.splice(removeIndexFromTasksOrder, 1);
+                setTasksOrder(newTasksOrder);
+
+
+                const newOrderedTasks = orderedTasks;
+                const removeIndexFromOrderedTasks = orderedTasks.findIndex(item => item == response.data);
+                newOrderedTasks.splice(removeIndexFromOrderedTasks, 1);
+                setOrderedTasks(newOrderedTasks);
+                console.log("ordered tasks after deletion:", orderedTasks);
+            })
             .then(console.log("after deletion, task order:" + tasksOrder));
     };
 
@@ -146,29 +188,47 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
             </div>
 
+            
             <div className="tasks-list">
                 {
                     orderedTasks === null ?
                         null :
                         <div>
-                            {/* <Droppable droppableId={categoryId.toString()}>
-                                {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}> */}
-                            {tasks.map((task) => (
-                                <TaskCard key={task.id}
-                                    task={task}
-                                    deleteTask={deleteTask}
-                                    updateTask={updateTask}
-                                    addMemberToTask={addMemberToTask}
-                                    addCommentToTask={addCommentToTask}
-                                    updateCommentTask={updateCommentTask}
-                                    deleteCommentTask={deleteCommentTask}
-                                    deleteMemberFromTask={deleteMemberFromTask} />
-                            ))}
-                            {/*   {provided.placeholder}
-                                     </div>
-                                )}
-                            </Droppable> */}
+                            <Droppable droppableId={categoryId.toString()}>
+                                {(dropProvided) => (
+                                    <div ref={dropProvided.innerRef} {...dropProvided.droppableProps}>
+                                        {tasks.map((task, index) => (
+
+                                            <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+                                                {
+                                                    (dragProvided) => (
+                                                        <div
+                                                            {...dragProvided.dragHandleProps}
+                                                            {...dragProvided.draggableProps}
+                                                            ref={dragProvided.innerRef}>
+                                                            <TaskCard key={task.id}
+                                                                task={task}
+                                                                deleteTask={deleteTask}
+                                                                updateTask={updateTask}
+                                                                addMemberToTask={addMemberToTask}
+                                                                addCommentToTask={addCommentToTask}
+                                                                updateCommentTask={updateCommentTask}
+                                                                deleteCommentTask={deleteCommentTask}
+                                                                deleteMemberFromTask={deleteMemberFromTask} />
+                                                        </div>
+
+                                                    )
+                                                }
+
+                                            </Draggable>
+
+                                        ))}
+                                        {dropProvided.placeholder}
+                                    </div>)
+                                }
+
+
+                            </Droppable>
                         </div>
                 }
             </div>
