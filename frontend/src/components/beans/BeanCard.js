@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function BeanCard({ bean, updateBean, deleteBean }) {
-    const [isCollectible, setIsCollectible] = useState(false);
     const [lastEventTime, setLastEventTime] = useState();
     const [openWellBean, setOpenWellBean] = useState(false);
     const [openWarning, setOpenWarning] = useState(false);
@@ -37,14 +36,15 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
     }
 
     const checkIfCollectible = () => {
-        getLastEventTime();
-        const current = new Date().toISOString().split(".")[0];
+        return getLastEventTime().then(() => {
+            const current = new Date().toISOString().split(".")[0];
 
-        console.log("current: " + current);
-        console.log(lastEventTime);
-        console.log(current > lastEventTime);
+            console.log("current: " + current);
+            console.log(lastEventTime);
+            console.log(current > lastEventTime);
 
-        if (current > lastEventTime) { setIsCollectible(true) }
+            return current > lastEventTime;
+        });
     };
 
     useEffect(() => {
@@ -53,15 +53,15 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
 
     const onCollect = () => {
-        checkIfCollectible();
-        if (isCollectible) {
-            setOpenWellBean(true);
-            console.log(JSON.stringify(bean));
-
-
-        } else {
-            setOpenWarning(true);
-        }
+        return checkIfCollectible().then((isCollectible) => {
+            console.log("onCollect: ", isCollectible);
+            if (isCollectible) {
+                setOpenWellBean(true);
+                console.log(JSON.stringify(bean));
+            } else {
+                setOpenWarning(true);
+            }
+        });
     };
 
     const onUpdateBean = () => {
@@ -114,22 +114,17 @@ export default function BeanCard({ bean, updateBean, deleteBean }) {
 
             {
                 openWellBean ?
-                    <WellBeanPopup
-                        onClose={onCloseWellBean} />
-                    : null
-
-            }
-
-            {
-                openWarning ? <MessagePopup
-                    message={
-                        <div id="bean-warning" className="flex-column">
-                            <p>Collect when you finish the task!</p>
-                            <Link className="link" to="/calendar">Check your calendar here</Link>
-                        </div>
-                    }
-                    onClose={onCloseWarning} />
-                    : null
+                    <WellBeanPopup onClose={onCloseWellBean} />
+                    : (
+                        openWarning && <MessagePopup
+                            message={
+                                <div id="bean-warning" className="flex-column">
+                                    <p>Collect when you finish the task!</p>
+                                    <Link className="link" to="/calendar">Check your calendar here</Link>
+                                </div>
+                            }
+                            onClose={onCloseWarning} />
+                    )
             }
         </div>
     );

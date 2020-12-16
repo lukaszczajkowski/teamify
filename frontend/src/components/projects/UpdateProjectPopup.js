@@ -8,8 +8,7 @@ import { motion } from "framer-motion";
 export default function UpdateProjectPopup({ isOpen, currentProject, updateProject, onClose }) {
 
     const {
-        id, title, description,
-        // users
+        id, title, categoryPositioning, teamBeanScore
     } = currentProject;
    
 
@@ -20,7 +19,8 @@ export default function UpdateProjectPopup({ isOpen, currentProject, updateProje
         const updatedProject = {
             id,
             title: newTitle,
-            description
+            categoryPositioning,
+            teamBeanScore
         };
         updateProject(updatedProject);
     }

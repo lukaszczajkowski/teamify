@@ -9,18 +9,22 @@ import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
+import ConfirmDialog from "../projects/ConfirmDialog";
+import TaskApi from "../../api/TaskApi";
+
+
 let eventSource;
-export default function ProjectPage() {
+
+function ProjectPage() {
     const history = useHistory();
     const user = useContext(UserContext);
     const userId = user.id;
-    //console.log("on project page. User id:" + userId);
-
     const { projectId } = useParams();
-    //console.log("project id:" + projectId);
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
+    // const [categoriesOrder, setCategoriesOrder] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [members, setMembers] = useState([]);
     const [events, setEvents] = useState([]);
 
@@ -52,6 +56,17 @@ export default function ProjectPage() {
                     "Connection": "keep-alive",
                     "X-Accel-Buffering": "no"
                 }
+            );
+            eventSource.onopen = (event) => {
+                console.log("connection opened!", event);
+            }
+            eventSource.onmessage = (event) => {
+                console.log("data received", event);
+                getCurrentProject();
+                getAllCategories(projectId);
+                getAllTasks(projectId);
+                getAllMembers(projectId);
+                setIncomingChanges(incomingChanges + 1);
             }
         );
         eventSource.onopen = (event) => {
@@ -63,10 +78,6 @@ export default function ProjectPage() {
             const newEvents = [...events];
             newEvents.push(event);
             setEvents(newEvents);
-            //window.location.reload();
-            // getCurrentProject();
-            // getAllCategories(projectId);
-            // getAllMembers(projectId);
         }
 
         eventSource.onerror = (err) => {
@@ -76,10 +87,15 @@ export default function ProjectPage() {
         }
     }
 
+    /******************************** Project *******************************************/
+
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
             .then(response => setCurrentProject(response.data))
-            .then(console.log(currentProject.id))
+            //.then(setCategoriesOrder(currentProject.categoriesPositioning))
+            // .then(console.log("current project:" + JSON.stringify(categoriesOrder)))
+            //.then(setCategoriesPositioning(currentProject.categoriesPositioning))
+            //.then(console.log("categories positioning: " + categoriesPositioning))
             .catch(err => console.log(`error on get project ${err}`));
     }
 
@@ -140,23 +156,49 @@ export default function ProjectPage() {
             .catch(err => console.log(`error on delete member: ${err}`));
     }
 
+
+    /************************* Categories ****************************************/
     const getAllCategories = (projectId) => {
         return CategoryApi.getAllCategories(projectId)
             .then(response => setCategories(response.data))
             .catch(err => console.log(`error on get all categories: ${err}`));
     };
 
+    const getAllTasks = (projectId) => {
+        return TaskApi.getTasksByProjectId(projectId)
+        .then(response => setTasks(response.data))
+        .catch(err => console.log(`error on get all tasks: ${err}`));
+    }
+
     const createCategory = (projectId, categoryData) => {
         return CategoryApi.createCategory(projectId, categoryData)
             .then(response => setCategories([...categories, response.data]))
-            .then(console.log(`new category: ${categoryData.title} is added`))
+            //.then(setCategoriesOrder(...categoriesOrder, categoryData.id))
+            //.then(console.log(`new category: ${categoryData.title} is added. current order: ${categoriesOrder}`))
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-    const updateCategory = (newCategoryData) => {
-        return CategoryApi.updateCategory(newCategoryData)
-            .then(response => console.log(JSON.stringify(response.data)))
-            .then(response => categories.map((item) => item.id == newCategoryData.id ? response.data : item))
+    // const updateCategoriesOrder = (newCategoriesOrder) => {
+    //     const {
+    //         id, 
+    //         title,
+    //         categoriesPositioning,
+    //         teamBeanScore
+    //     } = currentProject;
+
+    //     const newProject = {
+    //         id,
+    //         title,
+    //         categoriesPositioning: newCategoriesOrder,
+    //         teamBeanScore
+    //     }
+    //     updateProject(newProject);
+    // }
+
+   
+    const updateCategory = (projectId, newCategoryData) => {
+        return CategoryApi.updateCategory(projectId, newCategoryData)
+            .then(getCurrentProject())
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -164,12 +206,28 @@ export default function ProjectPage() {
         return CategoryApi.deleteCategory(categoryId)
             .then(console.log(`Deleting category: ${categoryId}`))
             .then(setCategories(categories.filter(c => c.id !== categoryId)))
+            //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
     };
 
-    useEffect(() => {
+
+    /***************************** Tasks ***************************************/
+    // const createTask = (taskData) => {
+    //     return TaskApi.createTask(categoryId, taskData)
+    //         .then(response => setTasks([...tasks, response.data]))
+    //         .then(setTasksOrder([...tasksOrder, taskData.id]))
+    //         .then(updateTasksOrder(tasksOrder))
+    //         .then(console.log("after creating task. current task order" + tasksOrder));
+    // };
+
+
+    useEffect(()=> {
         getCurrentProject();
+    },[projectId]);
+
+    useEffect(() => {
         getAllCategories(projectId);
+        getAllTasks(projectId);
         getAllMembers(projectId);
     }, [projectId]);
 
@@ -183,7 +241,8 @@ export default function ProjectPage() {
     return (
         <div className="project-page">
             <div className="fixed-header">
-                <ProjectHeader project={currentProject}/>
+
+                <ProjectHeader project={currentProject} />
 
                 <div className="project-menu flex-start ">
                     <ProjectMenu
@@ -203,8 +262,9 @@ export default function ProjectPage() {
 
 
             <ProjectBoard
-                projectId={projectId}
+                currentProject={currentProject}
                 categories={categories}
+                tasks={tasks}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
