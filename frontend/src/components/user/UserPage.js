@@ -46,9 +46,13 @@ function UserPage() {
 
     const updateBean = (updatedBean) => {
         return BeanApi.updateBean(updatedBean)
-            .then(response => setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item)));
-
+            .then(response => {
+                setAddedBeans(addedBeans.map(item => item.id == updatedBean.id ? response.data : item))
+                setAllBeans(allBeans.map(item => item.id == updatedBean.id ? response.data : item))
+            });
     }
+
+
 
     const deleteBean = (beanId) => {
         return BeanApi.deleteBean(beanId)
