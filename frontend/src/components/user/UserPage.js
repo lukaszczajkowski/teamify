@@ -34,8 +34,8 @@ function UserPage() {
             .then(response => setPresetBeans(response.data));
     }
 
-    function getAllBeans() {
-        return BeanApi.getAllBeans()
+    function getAllBeansForToday() {
+        return BeanApi.getAllBeansForToday()
             .then(response => setAddedBeans(response.data));
     }
 
@@ -67,13 +67,13 @@ function UserPage() {
     };
 
     const getAllBeansForCurrentUser = () => {
-        return BeanApi.getAllBeans()
+        return BeanApi.getAllBeansForWholeTime()
             .then(response => setAllBeans(response.data));
     };
 
     useEffect(() => {
-        getPresetBeans(),
-            getAllBeans(),
+            getPresetBeans(),
+            getAllBeansForToday(),
             getAllProjects(userId),
             getCurrentTime(), 
             getAllBeansForCurrentUser()
