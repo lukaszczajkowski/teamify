@@ -45,6 +45,11 @@ public class BeanController {
     @GetMapping("")
     public List<Bean> getAllBeansByUserId() {
         User user = getUser();
+        return beanService.findAllByUserIdCurrentDate(user.getId());
+    }
+    @GetMapping("/AllBeans")
+    public List<Bean> getAllBeans() {
+        User user = getUser();
         return beanService.findAllByUserId(user.getId());
     }
     @GetMapping("/{beanId}")

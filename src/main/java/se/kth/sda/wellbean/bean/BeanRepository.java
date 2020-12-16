@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface BeanRepository extends JpaRepository<Bean, Long> {
     List<Bean> getAllByCreatedDateAndUserId(LocalDate startOfDay, long userId);
+    List<Bean> getAllByUserId( long userId);
 }
