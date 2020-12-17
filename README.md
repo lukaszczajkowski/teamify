@@ -1,4 +1,4 @@
-# Beans
+# Teamify (Well-Bean)
 
 “The well-being of the future is not solely granted by new and disruptive technologies; it is granted by what lies behind them: the human well-factor. And because the ability to picture the future is one of the most outstanding human qualities, it all starts from wanting and picturing a better, desirable one.” — Matteo Penzo, CEO Frontiers Conferences
 In the contemporary business world, our definition of productivity has been limited in economic factors. Organizations use KPI (key performance indicator) to measure their success, however, employee’s well-being hasn’t been recognized as a crucial part of this evaluation at the management level. It is prevalent that employees will experience general stress from work which are not given space to be expressed and dealt with. Employees are expected to be highly functional and productive towards organizational goals, sometimes even sacrifice their personal time and needs. This approach of productivity has limited the mutual growth of organization and employee. While the organization grows, employees are burned out. 
