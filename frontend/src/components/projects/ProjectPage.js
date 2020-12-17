@@ -8,9 +8,6 @@ import ProjectMenu from "./ProjectMenu";
 import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
-
-// eslint-disable-next-line no-unused-vars
-
 import TaskApi from "../../api/TaskApi";
 
 
@@ -24,12 +21,16 @@ export default function ProjectPage() {
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
-    // const [categoriesOrder, setCategoriesOrder] = useState([]);
-    const [tasks, setTasks] = useState([]);
+    //const [categoriesOrder, setCategoriesOrder] = useState([]);
+    //const [orderedCategories, setOrderedCategories] = useState([]);
     const [members, setMembers] = useState([]);
     const [events, setEvents] = useState([]);
     const [changes, setChanges] = useState([]);
+    const [dndChanges, setDndChanges] = useState([]);
 
+
+
+    
     useEffect(() => {
         init();
     }, [])
@@ -83,20 +84,26 @@ export default function ProjectPage() {
 
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
-            .then(response => setCurrentProject(response.data))
-            //.then(setCategoriesOrder(currentProject.categoriesPositioning))
-            // .then(console.log("current project:" + JSON.stringify(categoriesOrder)))
-            //.then(setCategoriesPositioning(currentProject.categoriesPositioning))
-            //.then(console.log("categories positioning: " + categoriesPositioning))
+            .then(response => {
+                setCurrentProject(response.data);
+                //setCategoriesOrder(response.data.categoriesPositioning);
+                //console.log("getting current projectCAT: " , categoriesOrder);
+            })
             .catch(err => console.log(`error on get project ${err}`));
     }
 
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
-            .then(response => setCurrentProject(response.data))
-            .then(console.log(JSON.stringify(currentProject)))
+            .then(response => {
+                setCurrentProject(response.data);
+                console.log("updating project with data", response.data);
+            })
             .catch(err => console.log(`error on update project: ${err}`));
     }
+
+    useEffect(() => {
+        console.log("currentproject = ", currentProject);
+    }, [currentProject]);
 
     const onDeleteProject = () => {
         if (window.confirm("Do you want to delete this project?")) {
@@ -150,55 +157,63 @@ export default function ProjectPage() {
 
 
     /************************* Categories ****************************************/
-    const getAllCategories = (projectId) => {
+    const getAllCategories = () => {
         return CategoryApi.getAllCategories(projectId)
             .then(response => setCategories(response.data))
             .catch(err => console.log(`error on get all categories: ${err}`));
     };
 
-    const getAllTasks = (projectId) => {
-        return TaskApi.getTasksByProjectId(projectId)
-        .then(response => setTasks(response.data))
-        .catch(err => console.log(`error on get all tasks: ${err}`));
-    }
 
     const createCategory = (projectId, categoryData) => {
         return CategoryApi.createCategory(projectId, categoryData)
-            .then(response => setCategories([...categories, response.data]))
-            //.then(setCategoriesOrder(...categoriesOrder, categoryData.id))
-            //.then(console.log(`new category: ${categoryData.title} is added. current order: ${categoriesOrder}`))
+            .then((response) => {
+                const newCategories = categories;
+                newCategories.push(response.data);
+                setCategories(newCategories);
+                console.log("CATs after creation:", categories);
+
+                // const newCategoriesOrder = categoriesOrder;
+                // newCategoriesOrder.push(response.data.id);
+                // setCategoriesOrder(newCategoriesOrder);
+                // console.log("CATSORDER after creation", categoriesOrder);
+
+                
+            })
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-    // const updateCategoriesOrder = (newCategoriesOrder) => {
-    //     const {
-    //         id, 
-    //         title,
-    //         categoriesPositioning,
-    //         teamBeanScore
-    //     } = currentProject;
-
-    //     const newProject = {
-    //         id,
-    //         title,
-    //         categoriesPositioning: newCategoriesOrder,
-    //         teamBeanScore
-    //     }
-    //     updateProject(newProject);
-    // }
+    // useEffect(() => {
+    //     //updateCategoriesOrder(categoriesOrder);
+    //     console.log("categoriesOrder1 = ", categoriesOrder);
+    // }, [categoriesOrder]);
 
    
     const updateCategory = (projectId, newCategoryData) => {
         return CategoryApi.updateCategory(projectId, newCategoryData)
-            .then(getCurrentProject())
+            .then((response)=> {
+                const newCategories = categories;
+                console.log("categories before update", newCategories);
+                const replaceIndex = newCategories.findIndex(item => item.id == response.data.id);
+                console.log("replaceIndex", replaceIndex);
+                newCategories[replaceIndex] = response.data; 
+                setCategories(newCategories);
+                console.log("categories after update", categories);
+                //getCurrentProject();
+            })
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
     const deleteCategory = (categoryId) => {
         return CategoryApi.deleteCategory(categoryId)
-            .then(console.log(`Deleting category: ${categoryId}`))
-            .then(setCategories(categories.filter(c => c.id !== categoryId)))
-            //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
+            .then(response => {
+                const newCategories = categories.filter(c => c.id != response.data);
+               setCategories(newCategories);
+
+            //    const removeIndex = categoriesOrder.findIndex(item => item == response.data);
+            //    const newCategoriesOrder = categoriesOrder;
+            //    newCategoriesOrder.splice(removeIndex, 1);
+            //    setCategoriesOrder(newCategoriesOrder);
+            })
             .catch(err => console.log(`error on delete category: ${err}`));
     };
 
@@ -209,15 +224,94 @@ export default function ProjectPage() {
         setChanges(newChanges);
     }
 
+    // const changesFromDnd = (data) => {
+    //     console.log("changes from dnd");
+    //     const newDndChanges = [...dndChanges];
+    //     newDndChanges.push(data);
+    //     setDndChanges(newDndChanges);
+    // }
 
-    /***************************** Tasks ***************************************/
-    // const createTask = (taskData) => {
-    //     return TaskApi.createTask(categoryId, taskData)
-    //         .then(response => setTasks([...tasks, response.data]))
-    //         .then(setTasksOrder([...tasksOrder, taskData.id]))
-    //         .then(updateTasksOrder(tasksOrder))
-    //         .then(console.log("after creating task. current task order" + tasksOrder));
-    // };
+   
+
+    const onDragEnd = (result) => {
+        const { destination, source, draggableId } = result;
+        console.log("destination", destination, "source", source, draggableId);
+
+        // drop outside the category area
+        if (!result.destination) {
+            return;
+        }
+
+        // drop at the same position
+        if (destination.droppableId === source.droppableId &&
+            destination.index === source.index) {
+            return;
+        }
+
+
+        const start = categories.find(item => item.id == source.droppableId);
+        console.log("startlist=", JSON.stringify(start));
+        const finish = categories.find(item => item.id == destination.droppableId);
+        console.log("finishlist=", JSON.stringify(finish));
+
+        // drop in the same category
+        if (start.id === finish.id) {
+            const newTasksOrder = start.tasksPositioning;
+            console.log("startorder=", newTasksOrder);
+            console.log("draggableid=", draggableId);
+            newTasksOrder.splice(source.index, 1);
+            newTasksOrder.splice(destination.index, 0, parseInt(draggableId));
+
+            console.log("splicedlist=", newTasksOrder);
+
+            const newCategory = {
+                ...start,
+                tasksPositioning: newTasksOrder,
+            };
+
+            console.log("newlist=", newCategory);
+
+            updateCategory(newCategory);
+        
+            //setLists(newTasksOrder);
+
+            window.location.reload();
+            return;
+        }
+
+        // Drag and Drop in different columns
+        const startTasksOrder = start.tasksPositioning;
+        startTasksOrder.splice(source.index, 1);
+        const newStart = {
+            ...start,
+            tasksPositioning: startTasksOrder,
+        };
+        updateCategory(newStart);
+        
+
+        const finishTasksOrder = finish.tasksPositioning;
+        finishTasksOrder.splice(destination.index, 0, parseInt(draggableId));
+        const newFinish = {
+            ...finish,
+            tasksPositioning: finishTasksOrder,
+        };
+        updateCategory(newFinish);
+
+        // updateTask
+        const updateTask = () => {
+            TaskApi.updateTaskCategory(parseInt(draggableId), finish.id);
+        }
+        updateTask();
+
+        const change = 1;
+        const newDndChanges = [...dndChanges];
+        newDndChanges.push(change);
+        setDndChanges(newDndChanges);
+
+        window.location.reload();
+
+    }
+
 
 
     useEffect(()=> {
@@ -226,17 +320,22 @@ export default function ProjectPage() {
 
     useEffect(() => {
         getAllCategories(projectId);
-        getAllTasks(projectId);
         getAllMembers(projectId);
     }, [projectId]);
 
     useEffect(() => {
         console.log("incoming changes from project page:", events);
         getCurrentProject();
-        getAllCategories(projectId);
+        getAllCategories();
         getAllMembers(projectId);
     }, [events, changes]);
 
+    useEffect(() => {
+        console.log("dnd changes noticed", dndChanges)
+        getCurrentProject();
+        getAllCategories();
+        getAllMembers(projectId);
+    }, [dndChanges]);
 
     return (
         <div className="project-page">
@@ -263,13 +362,17 @@ export default function ProjectPage() {
 
             <ProjectBoard
                 currentProject={currentProject}
+                updateProject={updateProject}
+
                 categories={categories}
-                tasks={tasks}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
+
                 event={events}
-                incommingChanges={incommingChanges}    
+                incommingChanges={incommingChanges} 
+                onDragEnd={onDragEnd}
+                 
             />
         </div>
     );
