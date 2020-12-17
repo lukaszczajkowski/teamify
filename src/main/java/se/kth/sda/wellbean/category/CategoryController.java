@@ -129,7 +129,7 @@ public class CategoryController {
      * -deletes category with id 2
      */
     @DeleteMapping("/categories/{id}")
-    public Long deleteCategory(@PathVariable Long id) {
+    public void deleteCategory(@PathVariable Long id) {
         if (taskService.getAllTaskByCategoriesId(id).size() == 0) {
             Category categoryToRemove = categoryService.getById(id).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
@@ -137,7 +137,6 @@ public class CategoryController {
             Project project = categoryToRemove.getProject();
             this.publisher.publishEvent(new ProjectChanged(project));
             categoryService.deleteCategory(id);
-            return id;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

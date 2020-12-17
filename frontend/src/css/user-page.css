@@ -15,9 +15,9 @@
     margin-bottom: 18px;
 }
 
-/* .user-page .user-board {
-    box-shadow: 5px 5px 14px 0px rgb(255, 255, 255);
-} */
+.user-page .user-board {
+    box-shadow: 5px 5px 14px 0px rgba(209,209,209,1);
+}
 
 .user-page .user-prompt{
     font-size: 32px;

@@ -287,7 +287,6 @@ public class TaskController {
             taskService.update(updatedTask);
             Project project = updatedTask.getProject();
             this.publisher.publishEvent(new ProjectChanged(project));
-            System.out.println("Update category event published!");
             return updatedTask;
             }
         else {

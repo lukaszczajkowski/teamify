@@ -27,14 +27,14 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     } = currentTask;
 
 
-    const dropdownOptions = categories !== undefined ? categories.map(c => {
+    const dropdownOptions = categories.map(c => {
         const category = {
             key: c.id,
             text: c.title,
             value: c
         }
         return category;
-    }) : [];
+    })
 
     console.log(dropdownOptions);
 
