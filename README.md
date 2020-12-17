@@ -70,7 +70,7 @@ git clone git@github.com:lukaszczajkowski/teamify.git
 
 # Usage
 
-Please refer the vedio recording in git folder .... name 
+Please refer the vedio recording in git "WellBean.MP4" 
 
 
 # Roadmap
