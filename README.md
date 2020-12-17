@@ -11,11 +11,17 @@ It’s time to think differently and incorporate the well-being of employees to 
 Concept Of The Application :
 
 User Well-bean Board
+
 Project Board 
+
 Chat Implementation With Direct Messages.
+
 Zoom Integration.
+
 Calendar 
+
 Data Visualisation Of The User Bean Score.
+
 Unique  Visual Display and the Css of the Application.
 
 
