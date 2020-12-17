@@ -64,7 +64,8 @@ export default function ScheduleMeeting ( {toggleIsScheduleMeeting, onSubmit}) {
                                     <h2 className="prompt">Agenda</h2>
                                     <input
                                         type="text"
-                                        className="input-box"
+                                        className="input-box text-area"
+                                        cols="65"
                                         placeholder=""
                                         value={agenda}
                                         onChange={e => setAgenda(e.target.value)}
@@ -74,7 +75,8 @@ export default function ScheduleMeeting ( {toggleIsScheduleMeeting, onSubmit}) {
                                     <h2 className="prompt">Participants</h2>
                                     <input
                                         type="text"
-                                        className="input-box"
+                                        className="input-box text-area"
+                                        cols="80"
                                         placeholder=""
                                         value={emails}
                                         onChange={e => setEmails(e.target.value)}
