@@ -34,12 +34,11 @@ npm install npm@latest -g
 
 # Installation
 Get a free API Key at https://example.com
+
 Clone the repo
 git clone https://github.com/your_username_/Project-Name.git
-Install NPM packages
-npm install
-Enter your API in config.js
-const API_KEY = 'ENTER YOUR API';
+
+
 # Usage
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
