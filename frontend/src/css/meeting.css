@@ -9,7 +9,7 @@
 }
 
 #meeting-popup {
-    width: 80vw;
+    width: 85vw;
 }
 
 #create-meeting {
@@ -46,12 +46,12 @@
     
 }
 
-thead,
-tr {
+
+ #meeting_table tr {
   display: contents;
 }
 
-th,
+#meeting_table th,
 td {
   
   padding: 15px;
@@ -67,7 +67,7 @@ td {
 }
 
 
-th {
+#meeting_table .th {
     position: sticky;
     top: 0;
     background: #145f69;
@@ -78,11 +78,11 @@ th {
     position: relative;
   }
   
-  th:last-child {
+  #meeting_table .th:last-child {
     border: 0;
   }
   
-  .resize-handle {
+   .resize-handle {
     position: absolute;
     top: 0;
     right: 0;
@@ -93,23 +93,23 @@ th {
     cursor: col-resize;
   }
   
-  .resize-handle:hover,
+   .resize-handle:hover,
   /* The following selector is needed so the handle is visible during resize even if the mouse isn't over the handle anymore */
   .header--being-resized .resize-handle {
     opacity: 0.5;
   }
   
-  th:hover .resize-handle {
+  #meeting_table .th:hover .resize-handle {
     opacity: 0.3;
   }
   
-  td {
+  #meeting_table .td {
     padding-top: 10px;
     padding-bottom: 10px;
     color:white;
   }
   
-  tr:nth-child(even) td {
+  #meeting_table .tr:nth-child(even) td {
     background: #f8f6ff;
   }
 
