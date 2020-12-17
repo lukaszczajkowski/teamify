@@ -36,27 +36,54 @@ public class BeanController {
         this.projectService = projectService;
     }
 
+    /**
+     * This method return List of preset beans
+     * @return List of BeansPreset
+     */
 
     @GetMapping("/preset")
     public List<BeansPreSet>  getBeansPreSet() {
         return beanService.getBeansPreSet();
     }
 
+    /**
+     * This Method returns Beans of current User in current day
+     * @return List of Beans
+     */
+
     @GetMapping("")
     public List<Bean> getAllBeansByUserId() {
         User user = getUser();
         return beanService.findAllByUserIdCurrentDate(user.getId());
     }
+
+    /**
+     * This method returns all beans of current user in system
+     * @return
+     */
     @GetMapping("/AllBeans")
     public List<Bean> getAllBeans() {
         User user = getUser();
         return beanService.findAllByUserId(user.getId());
     }
+
+    /**
+     * This method takes Bean Id from the request path variable and return related
+     * details of Bean
+     * @param beanId
+     * @return Bean if given Id is valid
+     */
     @GetMapping("/{beanId}")
     public Optional<Bean> getBeanByBeanId(@PathVariable Long beanId) {
         return beanService.findByBeanId(beanId);
     }
-    
+
+    /**
+     * This method takes Bean Id from request path variable and returns
+     * the last event time of the Bean
+     * @param beanId
+     * @return LocalDateTime
+     */
     @GetMapping("/beanLastEventTime/{beanId}")
     public LocalDateTime getBeanLastEventTime(@PathVariable Long beanId) {
         List<Event> beanEvents = eventService.getEventsByBeanId(beanId);
@@ -69,6 +96,11 @@ public class BeanController {
         return beanLastEventTime;
     }
 
+    /**
+     * This Method creates Bean based on given details
+     * @param customBeanDetails
+     * @return Bean object
+     */
     @PostMapping("")
     public Bean createBean(@RequestBody BeansPreSet customBeanDetails) {
         Bean newBean = new Bean();
@@ -82,6 +114,11 @@ public class BeanController {
         return newBean;
     }
 
+    /**
+     * This Method updates Bean based on given Details
+     * @param updatedBean
+     * @return Bean Object
+     */
     @PutMapping("")
     public Bean updateBean(@RequestBody Bean updatedBean) {
         User user = getUser();
@@ -102,6 +139,11 @@ public class BeanController {
         updatedBean.setUser(user);
         return beanService.updateBean(updatedBean);
     }
+
+    /**
+     * This method Deletes bean with given id
+     * @param id
+     */
     @DeleteMapping("{id}")
     public void deleteBean(@PathVariable long id) {
          beanService.deleteBean(id);
@@ -113,6 +155,11 @@ public class BeanController {
         return userService.findUserByEmail(authService.getLoggedInUserEmail());
     }
 
+    /**
+     * This method is used to define details of calendar events for new beans
+     * @param bean
+     * @param beanEventDetails
+     */
     private void createBeanEvents(Bean bean,BeansPreSet beanEventDetails) {
         LocalDateTime eventStartTime;
         String creatorEmail = authService.getLoggedInUserEmail();
@@ -159,6 +206,13 @@ public class BeanController {
         }
     }
 
+    /**
+     * This method is used to create new calender events of given Bean
+     * @param eventStartTime
+     * @param duration
+     * @param bean
+     * @param creator
+     */
     private void createEvent(LocalDateTime eventStartTime, Long duration, Bean bean, User creator) {
         Event beanEvent = new Event();
         beanEvent.setTitle(bean.getTitle());
