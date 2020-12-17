@@ -97,7 +97,7 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
                                         value={beanDuration}
                                         onChange={e => setBeanDuration(e.target.value)}
                                     />
-                                    <h2 className="prompt">minutes</h2>
+                                    <h2 className="prompt1">minutes</h2>
 
                                 </div>
                                 
@@ -115,7 +115,7 @@ export default function BeanPopup({ isOpen, onAddBean, initialData, createBean, 
                                         value={beanEventCount}
                                         onChange={e => setBeanEventCount(e.target.value)}
                                     />
-                                    <h2 className="prompt">times</h2>
+                                    <h2 className="prompt1">times</h2>
                                 </div>
 
 
