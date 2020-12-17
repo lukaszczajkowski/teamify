@@ -24,18 +24,33 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
                 return;
             }
 
-            console.log("ordered categories:" + JSON.stringify(orderedCategories));
+        console.log("ordered categories:" + JSON.stringify(orderedCategories));
         let CategoriesObj = orderedCategories.reduce((obj, item) => Object.assign(obj, {[item.key]: item.value}), {});
         console.log(JSON.stringify(CategoriesObj));
         const category = orderedCategories[source.droppableId];
         console.log(category);
+
+        // const newTaskOrder = Array.from(category.tasksPositioning);
+        // newTasksOrder.splice(source.index, 1);
+        // newTasksOrder.splice(destination.index, 0, draggableId);
+
+        // const newCategory = {
+        //     ...category,
+        //     tasksPositioning: newTasksOrder,
+        // };
+
+        // updateCategory(newCategory);
+        
+
+
+
     }
 
     console.log("event from project board", event);
 
     return (
         <div className="project-board flex-start">
-            <DragDropContext>
+            <DragDropContext onDragEnd={onDragEnd}>
 
                 {
                     categories === null ?

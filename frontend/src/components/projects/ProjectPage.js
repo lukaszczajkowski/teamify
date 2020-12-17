@@ -202,6 +202,11 @@ export default function ProjectPage() {
         updateCategoriesOrder(categoriesOrder);
     }, [categoriesOrder]);
 
+    useEffect(()=> {
+        sortCategoriesByOrder(categories, categoriesOrder);
+        
+    },[categories, categoriesOrder]);
+
     const updateCategoriesOrder = (newCategoriesOrder) => {
         const {
             id, 
@@ -229,23 +234,23 @@ export default function ProjectPage() {
 
     const deleteCategory = (categoryId) => {
         return CategoryApi.deleteCategory(categoryId)
-            .then(() => {
-                setCategories(categories.filter(c => c.id != categoryId));
-                setCategoriesOrder(categoriesOrder.filter(item => item == categoryId));
+            .then(response => {
+                const newCategories = categories.filter(c => c.id != response.data);
+               setCategories(newCategories);
+
+               const removeIndex = categoriesOrder.findIndex(item => item == response.data);
+               const newCategoriesOrder = categoriesOrder;
+               newCategoriesOrder.splice(removeIndex, 1);
+               setCategoriesOrder(newCategoriesOrder);
+
+               const newOrderedCatergories = orderedCategories;
+               const removeIndexFromOrderedCategories = orderedCategories.findIndex(item => item == response.data);
+               newOrderedCatergories.splice(removeIndexFromOrderedCategories, 1);
+               setOrderedCategories(newOrderedCatergories);
             })
             //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
     };
-
-
-    /***************************** Tasks ***************************************/
-    // const createTask = (taskData) => {
-    //     return TaskApi.createTask(categoryId, taskData)
-    //         .then(response => setTasks([...tasks, response.data]))
-    //         .then(setTasksOrder([...tasksOrder, taskData.id]))
-    //         .then(updateTasksOrder(tasksOrder))
-    //         .then(console.log("after creating task. current task order" + tasksOrder));
-    // };
 
 
     useEffect(()=> {
