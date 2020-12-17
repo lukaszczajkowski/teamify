@@ -4,30 +4,32 @@ import CategoryCard from "../categories/CategoryCard";
 import { DragDropContext } from 'react-beautiful-dnd';
 
 // eslint-disable-next-line react/prop-types
-export default function ProjectBoard({ currentProject, categories, createCategory, updateCategory, deleteCategory, event }) {
+export default function ProjectBoard({ currentProject, categories, orderedCategories, createCategory, updateCategory, deleteCategory, event }) {
     const {
         id, 
         //title,
         //categoriesPositioning
     } = currentProject;
 
-    // const onDragEnd = (result) => {
-    //     const { destination, source, draggableId } = result;
-    //     console.log("destination", destination, "source", source, draggableId);
-    //     if (!result.destination) {
-    //         return;
-    //     }
-    //     let sourceIdx = parseInt(result.source.index)
-    //     let destIdx = parseInt(result.destination.index)
-    //    
-    //     let draggingCard = category.task[sourceIdx]
-    //    
-    //     let newList = category.task.slice();
-    //     newList.splice(sourceIdx, 1);
-    //     newList.splice(destIdx, 0, draggingCard)
-    //   
-    //     category.task = newList;
-    // }
+    const onDragEnd = (result) => {
+        const { destination, source, draggableId } = result;
+        console.log("destination", destination, "source", source, draggableId);
+
+        if (!result.destination) {
+            return;
+        }
+
+        if (destination.droppableId === source.droppableId && 
+            destination.index === source.index) {
+                return;
+            }
+
+            console.log("ordered categories:" + JSON.stringify(orderedCategories));
+        let CategoriesObj = orderedCategories.reduce((obj, item) => Object.assign(obj, {[item.key]: item.value}), {});
+        console.log(JSON.stringify(CategoriesObj));
+        const category = orderedCategories[source.droppableId];
+        console.log(category);
+    }
 
     console.log("event from project board", event);
 

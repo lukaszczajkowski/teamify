@@ -99,10 +99,10 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
                 sortTasksByOrder(tasks, tasksOrder);
                 console.log(orderedTasks);
-            })
+            });
             // .then(setTasksOrder([...tasksOrder, taskData.id]))
             // .then(updateTasksOrder(tasksOrder))
-            .then(console.log("after creating task. current task order" + tasksOrder));
+            
     };
 
     const updateTask = (categoryId, task) => {
@@ -129,8 +129,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                 newOrderedTasks.splice(removeIndexFromOrderedTasks, 1);
                 setOrderedTasks(newOrderedTasks);
                 console.log("ordered tasks after deletion:", orderedTasks);
-            })
-            .then(console.log("after deletion, task order:" + tasksOrder));
+            });
     };
 
     const addMemberToTask = (task, member) => {
@@ -197,7 +196,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                             <Droppable droppableId={categoryId.toString()}>
                                 {(dropProvided) => (
                                     <div ref={dropProvided.innerRef} {...dropProvided.droppableProps}>
-                                        {tasks.map((task, index) => (
+                                        {orderedTasks.map((task, index) => (
 
                                             <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                                                 {

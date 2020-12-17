@@ -293,6 +293,7 @@ export default function ProjectPage() {
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
+                orderedCategories={orderedCategories}
                 event={events} />
         </div>
     );
