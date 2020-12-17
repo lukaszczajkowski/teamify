@@ -71,7 +71,7 @@
 .nav-menu {
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 23vw;
     height: calc(100vh -  60px);
     position: absolute;
     right: 0;
@@ -90,7 +90,7 @@
     background: #0F545C;
     top: 60px;
     opacity: 1;
-    transition: all 0.5s ease;
+    transition: all 0.4s ease-in-out;
     z-index: 1;
     
   }
@@ -102,7 +102,7 @@
       height: 100%;
     border-bottom: 1px solid rgba(7, 180, 181, 0.7);;
       padding-right: 30px;
-      transition: .4s;
+      transition: .4s ease-in-out;
       }
 
       .nav-item i{

@@ -5,6 +5,7 @@
     background-color: var(--theme-green);
     border-radius: 50%;
     text-align: center;
+    font-weight: bold;
 }
 
 .member-card:hover {
@@ -18,4 +19,8 @@
 
 .member-card .user-info {
     color: var(--theme-green);
+}
+
+.member-button{
+    font-weight: bold;
 }

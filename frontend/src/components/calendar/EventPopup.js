@@ -167,7 +167,7 @@ export default function EventPopup({ isOpen,
                             </button>
 
                             <div className="popup-header">
-                                <h2 className="header-title">Event detail</h2>
+                                <h2 className="header1-title">Event detail</h2>
                             </div>
 
 
