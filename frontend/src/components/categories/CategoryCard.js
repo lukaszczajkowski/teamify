@@ -38,7 +38,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     const onTitleUpdated = (newTitle) => {
         const updatedCategory = {
-            ...category,
+            id,
             title: newTitle
         };
         updateCategory(updatedCategory);
@@ -46,7 +46,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     const updateTasksOrder = (newTasksOrder) => {
         const newCategory = {
-            ...category,
+            id,
+            title,
             tasksPositioning: newTasksOrder
         }
         updateCategory(newCategory);
@@ -66,8 +67,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
         const orderedTasksList = [];
         for (let i = 0; i < tasksOrder.length; i++) {
             for (let j = 0; j < tasks.length; j++) {
-                if (tasksOrder[i] == tasks[j].id) {
-                    orderedTasksList.push(tasks[j]);
+                if (tasksPositioning[i] == tasks[j].id) {
+                    orderedTasksList.push(tasks[j].id);
                 }
             }
         }
@@ -101,10 +102,10 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
                 sortTasksByOrder(tasks, tasksOrder);
                 console.log(orderedTasks);
-            });
-        // .then(setTasksOrder([...tasksOrder, taskData.id]))
-        // .then(updateTasksOrder(tasksOrder))
-
+            })
+            // .then(setTasksOrder([...tasksOrder, taskData.id]))
+            // .then(updateTasksOrder(tasksOrder))
+            .then(console.log("after creating task. current task order" + tasksOrder));
     };
 
     const updateTask = (categoryId, task) => {
@@ -131,7 +132,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                 newOrderedTasks.splice(removeIndexFromOrderedTasks, 1);
                 setOrderedTasks(newOrderedTasks);
                 console.log("ordered tasks after deletion:", orderedTasks);
-            });
+            })
+            .then(console.log("after deletion, task order:" + tasksOrder));
     };
 
     const addMemberToTask = (task, member) => {
@@ -189,7 +191,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
             </div>
 
-
+            
             <div className="tasks-list">
                 {
                     orderedTasks === null ?
@@ -198,7 +200,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                             <Droppable droppableId={categoryId.toString()}>
                                 {(dropProvided) => (
                                     <div ref={dropProvided.innerRef} {...dropProvided.droppableProps}>
-                                        {orderedTasks.map((task, index) => (
+                                        {tasks.map((task, index) => (
 
                                             <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                                                 {
@@ -216,7 +218,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                                                 updateCommentTask={updateCommentTask}
                                                                 deleteCommentTask={deleteCommentTask}
                                                                 deleteMemberFromTask={deleteMemberFromTask}
-                                                                 />
+                                                                categories={categories} />
                                                         </div>
 
                                                     )
