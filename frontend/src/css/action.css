@@ -32,6 +32,7 @@
     padding: 8px;
     min-width: 120px;
     transition: all 0.3s;
+    font-weight: bold;
 }
 
 .action-item:hover {

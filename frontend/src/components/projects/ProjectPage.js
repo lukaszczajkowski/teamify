@@ -10,7 +10,7 @@ import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
 // eslint-disable-next-line no-unused-vars
-import ConfirmDialog from "../projects/ConfirmDialog";
+
 import TaskApi from "../../api/TaskApi";
 
 

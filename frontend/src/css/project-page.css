@@ -1,6 +1,5 @@
 .project-page {
-    background-color: #07b4b5;
-    background: radial-gradient(circle, rgb(85, 193, 205) 0%, rgb(203, 228, 228) 100%);
+    background-color: white;
     height: calc(100vh - 120px);
     width: 100%;
 }
@@ -27,6 +26,7 @@
 #project-menu .project-title {
     font-size: 25px;
     margin-right: 10px;
+    margin-top: 20px;
 }
 
 #member-menu .member-title {
@@ -48,10 +48,10 @@
 }
 
 .project-page .category-card {
-    height: calc(100vh - 120px);
+    /*height: calc(100vh - 120px);*/
     background: linear-gradient(0deg, rgba(243, 243, 243, 1) 20%, rgba(235, 235, 235, 1) 100%);
     
-}
+}*/
 
 .project-page .member-list {
     margin-left: 10px;
