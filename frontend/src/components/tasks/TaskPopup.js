@@ -42,6 +42,8 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     const [projectMembers, setProjectMembers] = useState([]);
     // eslint-disable-next-line no-unused-vars
     const [chosenCategory, setChosenCategory] = useState({});
+    const [updatedTask, setUpdatedTask] = useState({});
+
 
     const loadContacts = () => {
         UserApi.getUsersSummaries(projectId).then(response => {
@@ -53,7 +55,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
     useEffect(() => {
         loadContacts();
-    }, [currentTask]);
+    }, [currentTask, updatedTask]);
 
     const onTitleUpdated = (newTitle) => {
         const updatedTask = {
@@ -95,8 +97,8 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
     const changeCategory = () => {
         console.log("chosen category id:", chosenCategory.id);
-        
-        TaskApi.updateCategory(currentTask.id, chosenCategory.id);
+        TaskApi.updateCategory(currentTask.id, chosenCategory.id)
+            .then(response => setUpdatedTask(response.data));
     }
 
     const handleChange = (e, value) => {

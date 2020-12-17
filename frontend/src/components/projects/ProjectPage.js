@@ -28,6 +28,7 @@ export default function ProjectPage() {
     const [tasks, setTasks] = useState([]);
     const [members, setMembers] = useState([]);
     const [events, setEvents] = useState([]);
+    const [changes, setChanges] = useState([]);
 
     useEffect(() => {
         init();
@@ -201,6 +202,13 @@ export default function ProjectPage() {
             .catch(err => console.log(`error on delete category: ${err}`));
     };
 
+    const incommingChanges = (data) => {
+        console.log("incoming changes to project page", data)
+        const newChanges = [...changes];
+        newChanges.push(data);
+        setChanges(newChanges);
+    }
+
 
     /***************************** Tasks ***************************************/
     // const createTask = (taskData) => {
@@ -227,7 +235,8 @@ export default function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [events]);
+    }, [events, changes]);
+
 
     return (
         <div className="project-page">
@@ -259,7 +268,9 @@ export default function ProjectPage() {
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
-                event={events} />
+                event={events}
+                incommingChanges={incommingChanges}    
+            />
         </div>
     );
 }
