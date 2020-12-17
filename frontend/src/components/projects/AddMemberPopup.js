@@ -11,7 +11,7 @@ export default function AddMemberPopup({ onSubmit }) {
         <div className="add-member-popup">
             <div className="popup-container">
                 <Popup
-                    trigger={<button className="button" id="add-member"> + invite members </button>}
+                    trigger={<button className="button" id="add-member"> + Invite Members </button>}
                     modal
                     nested>
                     {close => (

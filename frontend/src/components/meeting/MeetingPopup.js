@@ -4,6 +4,7 @@ import MeetingApi from "../../api/MeetingApi";
 import ScheduleMeeting from "./ScheduleMeeting";
 import MeetingCard from "./DisplayCard";
 import { motion } from "framer-motion";
+import "../../css/meeting.css"; 
 
 export default function MeetingPopup ({ isOpen,  onClose }) {
 
@@ -125,8 +126,8 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                             <h1 className="prompt">Upcoming meetings in your calender</h1>
                             <hr/>
                             <table id = "meeting_table">
-                                <thead>
-                                    <tr>
+                                
+                                    <tr className="tablerow">
                                 <th> Topic <span className="resize-handle"> </span></th>
                                 <th> Agenda <span className="resize-handle"> </span></th>
                                 <th> Start Time<span className="resize-handle"> </span></th> 
@@ -135,7 +136,7 @@ export default function MeetingPopup ({ isOpen,  onClose }) {
                                 <th> Host<span className="resize-handle"> </span></th>
                                 <th></th>
                                 </tr>
-                                </thead>
+                               
                             </table>
                             {meetingCards}            
                           

@@ -1,6 +1,7 @@
 .category-card {
-    background-color: var(--opac-light-grey);
+    background: linear-gradient(0deg, rgba(243, 243, 243, 1) 20%, rgba(235, 235, 235, 1) 100%);
     border-radius: 10px;
+    margin-top: 5px;
 }
 
 .category-card #create-category,
@@ -32,6 +33,11 @@
 
 
 #create-task:hover {
-    background-color: var( --bg-medium-grey);
+    background-color: white;
     color: var(--text-dark-grey);
+}
+
+.category-card .input-box{
+    margin: 3px 10px;
+   
 }
