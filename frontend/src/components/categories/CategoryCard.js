@@ -10,12 +10,15 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 
 // eslint-disable-next-line react/prop-types
-export default function CategoryCard({ category, updateCategory, deleteCategory, event }) {
+export default function CategoryCard({ category, updateCategory, deleteCategory, event, categories }) {
     const {
         id,
         title,
         tasksPositioning
     } = category;
+
+    console.log("categories from category card", categories);
+
 
     console.log("inital category: " + JSON.stringify(category));
     console.log("initial task order:" + JSON.stringify(tasksPositioning));

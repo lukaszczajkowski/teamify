@@ -5,11 +5,14 @@ import MemberCard from "../projects/MemberCard";
 import EditableText from "../projects/EditableText";
 import Comments from "../comments/Comments";
 import { motion } from "framer-motion";
+import { Dropdown } from 'semantic-ui-react';
+import TaskApi from '../../api/TaskApi'
+import 'semantic-ui-css/semantic.min.css'
+//import _ from 'lodash';
 
 
-
-export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment }) {
-
+export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberToTask, deleteMemberFromTask, onClose, addComment, updateComment, deleteComment, categories }) {
+    console.log("categories from task popup", categories)
     const {
         id,
         title,
@@ -23,8 +26,24 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
         },
     } = currentTask;
 
+
+    const dropdownOptions = categories.map(c => {
+        const category = {
+            key: c.id,
+            text: c.title,
+            value: c
+        }
+        return category;
+    })
+
+    console.log(dropdownOptions);
+
     const [isMemberAdding, setIsMemberAdding] = useState(false);
     const [projectMembers, setProjectMembers] = useState([]);
+    // eslint-disable-next-line no-unused-vars
+    const [chosenCategory, setChosenCategory] = useState({});
+    const [updatedTask, setUpdatedTask] = useState({});
+
 
     const loadContacts = () => {
         UserApi.getUsersSummaries(projectId).then(response => {
@@ -36,7 +55,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
     useEffect(() => {
         loadContacts();
-    }, [currentTask]);
+    }, [currentTask, updatedTask]);
 
     const onTitleUpdated = (newTitle) => {
         const updatedTask = {
@@ -76,6 +95,16 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
         setIsMemberAdding(false);
     }
 
+    const changeCategory = () => {
+        console.log("chosen category id:", chosenCategory.id);
+        TaskApi.updateCategory(currentTask.id, chosenCategory.id)
+            .then(response => setUpdatedTask(response.data));
+    }
+
+    const handleChange = (e, value) => {
+        setChosenCategory(value.value);
+    }
+
     return (
         <div className="task-popup popup-container">
             <Popup open={isOpen} modal nested onClose={onClose}>
@@ -110,6 +139,24 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             />
                         </div>
                         <div className="popup-item">
+
+                        <div className="popup-item flex-start">
+                            <h2 className="prompt">Move to</h2>
+                            <Dropdown
+                                placeholder='Select a category'
+                                fluid
+                                selection
+                                onChange={(e, value) => handleChange(e, value)}
+                                value={chosenCategory}
+                                options={dropdownOptions}
+                            />
+                            <button 
+                            className="action-button"
+                            onClick = {changeCategory}>
+                                Ok
+                            </button>
+                        </div>
+                        <div className="popup-item"></div>
 
                             <div className="flex-start">
                                 <h2 className="prompt">Members:</h2>
