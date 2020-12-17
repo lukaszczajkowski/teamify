@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import CreateCategoryCard from "../categories/CreateCategoryCard";
 import CategoryCard from "../categories/CategoryCard";
 import { DragDropContext } from 'react-beautiful-dnd';
-import TaskApi from "../../api/TaskApi";
+//import TaskApi from "../../api/TaskApi";
 
 //dndChanges prop deleted temporarily
 // eslint-disable-next-line no-unused-vars
-export default function ProjectBoard({ currentProject, updateProject, categories, categoriesOrder, orderedCategories, createCategory, updateCategory, deleteCategory, event, changesFromDnd }) {
+export default function ProjectBoard({ currentProject, categories, createCategory, updateCategory, deleteCategory, event, onDragEnd}) {
     const {
         id,
         //title,
@@ -15,6 +15,11 @@ export default function ProjectBoard({ currentProject, updateProject, categories
     } = currentProject;
 
 
+
+     const sortCategories = () => {
+        const sortedCategories = categories.sort((a, b) => ((a.id > b.id) ? 1 : -1));
+        return sortedCategories;
+    }
     // eslint-disable-next-line no-unused-vars
     // const [lists, setLists] = useState([]);
 
@@ -33,10 +38,10 @@ export default function ProjectBoard({ currentProject, updateProject, categories
     // console.log("liststate=", lists);
     // console.log("listsorder=", listsOrder);
 
-    const sortCategories = () => {
-        const sortedCategories = categories.sort((a, b) => ((a.id > b.id) ? 1 : -1));
-        return sortedCategories;
-    }
+    // const sortCategories = () => {
+    //     const sortedCategories = categories.sort((a, b) => ((a.id > b.id) ? 1 : -1));
+    //     return sortedCategories;
+    // }
     
     // console.log("on project Board. orderedCategories:", orderedCategories);
 
@@ -69,79 +74,79 @@ export default function ProjectBoard({ currentProject, updateProject, categories
     //     console.log("after sorting, orderedlists=:", orderedLists);
     // }
 
-    const onDragEnd = (result) => {
-        const { destination, source, draggableId } = result;
-        console.log("destination", destination, "source", source, draggableId);
+    // const onDragEnd = (result) => {
+    //     const { destination, source, draggableId } = result;
+    //     console.log("destination", destination, "source", source, draggableId);
 
-        // drop outside the category area
-        if (!result.destination) {
-            return;
-        }
+    //     // drop outside the category area
+    //     if (!result.destination) {
+    //         return;
+    //     }
 
-        // drop at the same position
-        if (destination.droppableId === source.droppableId &&
-            destination.index === source.index) {
-            return;
-        }
+    //     // drop at the same position
+    //     if (destination.droppableId === source.droppableId &&
+    //         destination.index === source.index) {
+    //         return;
+    //     }
 
 
-        const start = categories.find(item => item.id == source.droppableId);
-        console.log("startlist=", JSON.stringify(start));
-        const finish = categories.find(item => item.id == destination.droppableId);
-        console.log("finishlist=", JSON.stringify(finish));
+    //     const start = categories.find(item => item.id == source.droppableId);
+    //     console.log("startlist=", JSON.stringify(start));
+    //     const finish = categories.find(item => item.id == destination.droppableId);
+    //     console.log("finishlist=", JSON.stringify(finish));
 
-        // drop in the same category
-        if (start.id === finish.id) {
-            const newTasksOrder = start.tasksPositioning;
-            console.log("startorder=", newTasksOrder);
-            console.log("draggableid=", draggableId);
-            newTasksOrder.splice(source.index, 1);
-            newTasksOrder.splice(destination.index, 0, parseInt(draggableId));
+    //     // drop in the same category
+    //     if (start.id === finish.id) {
+    //         const newTasksOrder = start.tasksPositioning;
+    //         console.log("startorder=", newTasksOrder);
+    //         console.log("draggableid=", draggableId);
+    //         newTasksOrder.splice(source.index, 1);
+    //         newTasksOrder.splice(destination.index, 0, parseInt(draggableId));
 
-            console.log("splicedlist=", newTasksOrder);
+    //         console.log("splicedlist=", newTasksOrder);
 
-            const newCategory = {
-                ...start,
-                tasksPositioning: newTasksOrder,
-            };
+    //         const newCategory = {
+    //             ...start,
+    //             tasksPositioning: newTasksOrder,
+    //         };
 
-            console.log("newlist=", newCategory);
+    //         console.log("newlist=", newCategory);
 
-            updateCategory(newCategory);
-            changesFromDnd(newCategory);
-            //setLists(newTasksOrder);
-            return;
-        }
+    //         updateCategory(newCategory);
+    //         changesFromDnd(newCategory);
+    //         //setLists(newTasksOrder);
+    //         return;
+    //     }
 
-        // Drag and Drop in different columns
-        const startTasksOrder = start.tasksPositioning;
-        startTasksOrder.splice(source.index, 1);
-        const newStart = {
-            ...start,
-            tasksPositioning: startTasksOrder,
-        };
-        updateCategory(newStart);
-        changesFromDnd(newStart);
+    //     // Drag and Drop in different columns
+    //     const startTasksOrder = start.tasksPositioning;
+    //     startTasksOrder.splice(source.index, 1);
+    //     const newStart = {
+    //         ...start,
+    //         tasksPositioning: startTasksOrder,
+    //     };
+    //     updateCategory(newStart);
+    //     changesFromDnd(newStart);
 
-        const finishTasksOrder = finish.tasksPositioning;
-        finishTasksOrder.splice(destination.index, 0, parseInt(draggableId));
-        const newFinish = {
-            ...finish,
-            tasksPositioning: finishTasksOrder,
-        };
-        updateCategory(newFinish);
-        changesFromDnd(newFinish);
+    //     const finishTasksOrder = finish.tasksPositioning;
+    //     finishTasksOrder.splice(destination.index, 0, parseInt(draggableId));
+    //     const newFinish = {
+    //         ...finish,
+    //         tasksPositioning: finishTasksOrder,
+    //     };
+    //     updateCategory(newFinish);
+    //     changesFromDnd(newFinish);
 
-        // updateTask
-        const updateTask = () => {
-            TaskApi.updateTaskCategory(parseInt(draggableId), finish.id)
-                .then(response => {
-                    changesFromDnd(response.data);
-                })
-        }
-        updateTask();
+    //     // updateTask
+    //     const updateTask = () => {
+    //         TaskApi.updateTaskCategory(parseInt(draggableId), finish.id)
+    //             .then(response => {
+    //                 changesFromDnd(response.data);
+    //             })
+    //     }
+    //     updateTask();
 
-    }
+    // }
 
     // useEffect(() => {
 
