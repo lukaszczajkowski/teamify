@@ -11,6 +11,8 @@ export default function ProjectBoard({ currentProject, categories, createCategor
         //categoriesPositioning
     } = currentProject;
 
+    console.log("categories from project board", categories)
+
     // const onDragEnd = (result) => {
     //     const { destination, source, draggableId } = result;
     //     console.log("destination", destination, "source", source, draggableId);
@@ -42,6 +44,7 @@ export default function ProjectBoard({ currentProject, categories, createCategor
                             {categories.map(category => (
                                 <CategoryCard key={category.id}
                                     category={category} 
+                                    categories={categories}
                                     projectId={id}
                                     updateCategory={updateCategory}
                                     deleteCategory={deleteCategory}
