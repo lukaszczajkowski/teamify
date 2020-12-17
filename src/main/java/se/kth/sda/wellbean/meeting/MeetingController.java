@@ -49,6 +49,10 @@ public class MeetingController {
         this.authService = authService;
     }
 
+    /**
+     * This method returns all meetings of current user
+     * @return Meetings List object
+     */
     @GetMapping("/meeting")
     public List<Meeting> getMeetings() {
         List<Meeting> meetings = new ArrayList<>();
@@ -61,16 +65,32 @@ public class MeetingController {
         return meetings;
     }
 
+    /**
+     * This method returns the members of  meeting based on given meeting Id
+     * @param id
+     * @return User List Object
+     */
     @GetMapping("/meeting/members/{id}")
     public List<User> getMeetingMembers(@PathVariable Long id) {
         Event meetingEvent = eventService.getEventByMeetingId(id);
         return (List<User>) meetingEvent.getUsers();
     }
+
+    /**
+     * This method deletes meeting based on given meetingId
+     * @param id
+     */
     @DeleteMapping ("/meeting/{id}")
     public void deleteMeeting(@PathVariable Long id) {
          meetingService.deleteMeeting(id);
          eventService.deleteEventsByMeetingId(id);
     }
+
+    /**
+     * this method add members to meeting event based on given userEmails
+     * @param userEmails
+     * @param id
+     */
     @PutMapping("/meeting/addMembers/{id}")
     public void addMembers(@RequestBody String[] userEmails, @PathVariable Long id) {
         Event currentEvent= eventService.getEventByMeetingId(id);
@@ -83,6 +103,12 @@ public class MeetingController {
         currentEvent.addMember(getUser());
         eventService.update(currentEvent);
     }
+
+    /**
+     * This method creates Zoom meeting based on given details
+     * @param meetingDetails
+     * @return Meeting Object
+     */
     @PostMapping("/meeting")
     public Meeting createMeeting(@RequestBody Meeting meetingDetails) {
         String userid = getUserId();
@@ -138,15 +164,14 @@ public class MeetingController {
         return meetingDetails;
     }
 
-    @PostMapping("/meeting/add")
-    public void addMembers() {
-
-    }
-
     private void setJWTToken() {
         jwtToken = jwtTokenZoomAPI.getJWTToken();
     }
 
+    /**
+     * This Method will get the userid from the Zoom API based on JWTToken
+     * @return
+     */
     private String getUserId() {
         setJWTToken();
         HttpResponse<JsonNode> response = null;
@@ -167,21 +192,11 @@ public class MeetingController {
         return userService.findUserByEmail(authService.getLoggedInUserEmail());
     }
 
-    private LocalDateTime parseDate(String dateString) {
-        Date date = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-ddHH:MM");
 
-        try {
-            date = inputDateFormat.parse(dateString);
-        } catch (ParseException e) {
-
-        }
-
-        LocalDateTime localDate = LocalDateTime.ofInstant(date.toInstant(),
-                ZoneId.systemDefault());
-
-        return localDate;
-    }
+    /**
+     * This method creates calendar Events for given meeting
+     * @param meeting
+     */
     private void createMeetingEvent(Meeting meeting) {
         Event createEvent = new Event();
         createEvent.setTitle(meeting.getTopic());
