@@ -89,4 +89,8 @@ Project Link: https://github.com/lukaszczajkowski/teamify
 
 # Acknowledgements
 
+https://fullcalendar.io/docs/react
+
+https://fonts.googleapis.com
+
 https://marketplace.zoom.us/
