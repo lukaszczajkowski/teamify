@@ -13,7 +13,7 @@ export default function EditableText({text, placeholder, onUpdateText}) {
     }
 
     return (
-        <div>
+        <div className="editable-text">
         {
             isEditing ?
                 <div className="title-input flex-between">
@@ -26,15 +26,15 @@ export default function EditableText({text, placeholder, onUpdateText}) {
                             onChange={e => setCurrentText(e.target.value)}
                             required
                         />
-                        <button
+                        {/* <button
                             className="action-button confirm-update"
                             type="submit">
                             <i className="fas fa-check"></i>
-                        </button>
+                        </button> */}
                     </form>
                 </div>
                 :
-                <h2 className="input-box" onClick={() => setIsEditing(true)}>{currentText}</h2>
+                <p className="input-box" onClick={() => setIsEditing(true)}>{currentText}</p>
         }
         </div>
     );

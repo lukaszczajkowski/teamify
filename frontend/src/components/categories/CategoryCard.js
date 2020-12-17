@@ -181,11 +181,14 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     return (
         <div className="category-card">
             <div className="flex-between category-title">
-                <EditableText
+                <div id="editable-list-title">
+                     <EditableText
                     text={title}
                     placeholder="title"
                     onUpdateText={onTitleUpdated}
                 />
+                </div>
+               
 
                 <CategoryActions onDeleteCategory={onDeleteCategory} />
 

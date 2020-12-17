@@ -39,5 +39,7 @@
 
 .category-card .input-box{
     margin: 3px 10px;
+    background-color: transparent;
+  border: 1px solid transparent;
    
 }

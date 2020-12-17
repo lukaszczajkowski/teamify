@@ -3,13 +3,13 @@ import TaskPopup from "./TaskPopup";
 import TaskActions from "./TaskActions";
 import MemberCard from "../projects/MemberCard";
 
-export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask, categories}) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask, categories }) {
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
     console.log("categories from task card", categories);
 
     const {
-        members
+        members, comments
     } = task;
 
     const onDeleteTask = () => {
@@ -27,24 +27,29 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
 
     return (
         <div className="task-card">
-            <div className="flex-between">
-                <div className="flex-end">
-                    <p className="task-title" onClick={onUpdateTask}>{task.title}</p>
-                    <div className="member-list flex-end">
-                        {members && members.map(member => (
-                            <MemberCard
-                                key={member.id}
-                                member={member}
-                            />
-                        ))}
-                    </div>
-                </div>
-
+            <div className="flex-between flex-align-start">
+                <p className="task-title" onClick={onUpdateTask}>{task.title}</p>
                 <TaskActions
                     onDeleteTask={onDeleteTask}
                     onUpdateTask={onUpdateTask} />
             </div>
-            <div className="task-member"></div>
+
+            <div className="flex-between">
+                <div className="member-list flex-start">
+                    {members && members.map(member => (
+                        <MemberCard
+                            key={member.id}
+                            member={member}
+                        />
+                    ))}
+                </div>
+
+
+            </div>
+
+
+
+
 
             <TaskPopup isOpen={popupIsOpen}
                 currentTask={task}
