@@ -17,12 +17,14 @@
   height: 23px;
   width: 23px;
   margin-right: 5px;
+  margin-top: 10px;
 }
 
 .modal .header1-title {
   font-size:22px;
   font-weight: 600;
-  color: rgba(7, 180, 181, 0.7);;
+  color: rgba(7, 180, 181, 0.7);
+  margin-top: 10px;
 }
 
 .modal>.content {
@@ -67,6 +69,7 @@
   font-size: 17px;
   height: 35px;
   color: white;
+  margin-bottom: 12px;
 }
 
 .modal .text-area {
@@ -90,6 +93,17 @@
 .modal .prompt {
   margin-right: 20px;
   color: white;
+  margin-bottom: 10px;
+ 
+}
+
+.modal .prompt1 {
+  margin-right: 20px;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  padding-bottom: 35px;
+ 
 }
 
 .modal .sub-prompt {
