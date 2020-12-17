@@ -25,7 +25,7 @@ import Auth from "../../services/Auth";
                 </li>
 
                 <li className="nav-item">
-                    <Link className="link nav-link" to="/home" onClick={closeMenu}><i className="fas fa-qrcode"></i>ProjectBoard</Link>
+                    <Link className="link nav-link" to="/projects/:projectId" onClick={closeMenu}><i className="fas fa-qrcode"></i>ProjectBoard</Link>
                 </li>
 
                 <li className="nav-item">
