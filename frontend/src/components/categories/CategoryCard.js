@@ -109,8 +109,15 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     };
 
     const updateTask = (categoryId, task) => {
-        return TaskApi.updateTask(categoryId, task)
+        if ("categoryId" in task) {
+            console.log("Update category", task)
+            return TaskApi.updateCategory(task.id, task.categoryId)
             .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
+        } else {
+            console.log("Update task", task)
+            return TaskApi.updateTask(categoryId, task)
+            .then((response) => setTasks(tasks.map((item) => item.id == task.id ? response.data : item)));
+        }
     };
 
     const deleteTask = (taskId) => {

@@ -5,9 +5,9 @@ import MemberCard from "../projects/MemberCard";
 import EditableText from "../projects/EditableText";
 import Comments from "../comments/Comments";
 import { motion } from "framer-motion";
-import { Dropdown } from 'semantic-ui-react';
-import TaskApi from '../../api/TaskApi'
-import 'semantic-ui-css/semantic.min.css'
+//import { Dropdown } from 'semantic-ui-react';
+// import TaskApi from '../../api/TaskApi'
+//import 'semantic-ui-css/semantic.min.css'
 //import _ from 'lodash';
 
 
@@ -31,7 +31,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
         const category = {
             key: c.id,
             text: c.title,
-            value: c
+            value: c.id,
         }
         return category;
     })
@@ -41,8 +41,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     const [isMemberAdding, setIsMemberAdding] = useState(false);
     const [projectMembers, setProjectMembers] = useState([]);
     // eslint-disable-next-line no-unused-vars
-    const [chosenCategory, setChosenCategory] = useState({});
-    const [updatedTask, setUpdatedTask] = useState({});
+    const [chosenCategoryId, setChosenCategory] = useState(categoryId);
 
 
     const loadContacts = () => {
@@ -55,7 +54,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
     useEffect(() => {
         loadContacts();
-    }, [currentTask, updatedTask]);
+    }, [currentTask]);
 
     const onTitleUpdated = (newTitle) => {
         const updatedTask = {
@@ -96,13 +95,22 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     }
 
     const changeCategory = () => {
-        console.log("chosen category id:", chosenCategory.id);
-        TaskApi.updateCategory(currentTask.id, chosenCategory.id)
-            .then(response => setUpdatedTask(response.data));
+        console.log("chosen category id:", chosenCategoryId);
+        // TaskApi.updateCategory(currentTask.id, chosenCategoryId)
+        //     .then();
+        const updatedTask = {
+            id,
+            title,
+            description,
+            categoryId: chosenCategoryId,
+        };
+
+        updateTask(categoryId, updatedTask);
     }
 
-    const handleChange = (e, value) => {
-        setChosenCategory(value.value);
+    const handleChange = (e) => {
+        console.log("key:", e.target.value, e)
+        setChosenCategory(e.target.value);
     }
 
     return (
@@ -142,14 +150,13 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Move to</h2>
-                            <Dropdown
-                                placeholder='Select a category'
-                                fluid
-                                selection
-                                onChange={(e, value) => handleChange(e, value)}
-                                value={chosenCategory}
-                                options={dropdownOptions}
-                            />
+                            <select name="categories" onChange={handleChange}>
+                                 {dropdownOptions.map( item => (
+                                    <option key={item.key} value={item.value} selected={categoryId == item.value}>{item.text}</option>)
+                                 )}
+                            </select>
+
+                          
                             <button 
                             className="action-button"
                             onClick = {changeCategory}>
