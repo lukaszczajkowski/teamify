@@ -1,8 +1,8 @@
 # Beans
 
+about project
 
-
-#About the Project
+# About the Project
 
 
 
@@ -17,22 +17,22 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
-#Built With
+# Built With
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 Bootstrap
 JQuery
 Laravel
-#Getting Started
+# Getting Started
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
 
-#Prerequisites
+# Prerequisites
 This is an example of how to list things you need to use the software and how to install them.
 
 npm
 npm install npm@latest -g
 
-#Installation
+# Installation
 Get a free API Key at https://example.com
 Clone the repo
 git clone https://github.com/your_username_/Project-Name.git
@@ -40,20 +40,20 @@ Install NPM packages
 npm install
 Enter your API in config.js
 const API_KEY = 'ENTER YOUR API';
-#Usage
+# Usage
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 
 
-#Roadmap
+# Roadmap
 See the open issues for a list of proposed features (and known issues).
 
-#Contributing
+# Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-#Contact
+# Contact
 Your Name - .....
 
 Project Link: https://github.com/...
 
-#Acknowledgements
+# Acknowledgements
