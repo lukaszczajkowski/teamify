@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import TaskPopup from "./TaskPopup";
 import TaskActions from "./TaskActions";
 
-export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask }) {
+export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask, categories}) {
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
+    console.log("categories from task card", categories);
 
     const onDeleteTask = () => {
         deleteTask(task.id);
@@ -40,6 +41,7 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                 addComment={addCommentToTask}
                 updateComment={updateCommentTask}
                 deleteComment={deleteCommentTask}
+                categories={categories}
                 onClose={onClosePopup} />
         </div>
 
