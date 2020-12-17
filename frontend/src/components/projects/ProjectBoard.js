@@ -31,6 +31,11 @@ export default function ProjectBoard({ currentProject, categories, createCategor
     //     category.task = newList;
     // }
 
+    const sortCategories = () => {
+        const sortedCategories = [...categories].sort((a, b) => ((a.id > b.id) ? 1 : -1));
+        return sortedCategories;
+    }
+
     console.log("event from project board", event);
 
     return (
@@ -41,7 +46,7 @@ export default function ProjectBoard({ currentProject, categories, createCategor
                     categories === null ?
                         null :
                         <div className="category-cards">
-                            {categories.map(category => (
+                            {sortCategories().map(category => (
                                 <CategoryCard key={category.id}
                                     category={category} 
                                     categories={categories}
