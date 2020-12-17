@@ -64,8 +64,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
         const orderedTasksList = [];
         for (let i = 0; i < tasksOrder.length; i++) {
             for (let j = 0; j < tasks.length; j++) {
-                if (tasksPositioning[i] == tasks[j].id) {
-                    orderedTasksList.push(tasks[j].id);
+                if (tasksOrder[i] == tasks[j].id) {
+                    orderedTasksList.push(tasks[j]);
                 }
             }
         }

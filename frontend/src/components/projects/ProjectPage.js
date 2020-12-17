@@ -11,7 +11,6 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 
 // eslint-disable-next-line no-unused-vars
 import ConfirmDialog from "../projects/ConfirmDialog";
-import TaskApi from "../../api/TaskApi";
 
 
 let eventSource;
@@ -24,8 +23,8 @@ export default function ProjectPage() {
 
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
-    // const [categoriesOrder, setCategoriesOrder] = useState([]);
-    const [tasks, setTasks] = useState([]);
+    const [categoriesOrder, setCategoriesOrder] = useState([]);
+    const [orderedCategories, setOrderedCategories] = useState([]);
     const [members, setMembers] = useState([]);
     const [events, setEvents] = useState([]);
 
@@ -82,20 +81,22 @@ export default function ProjectPage() {
 
     function getCurrentProject() {
         return ProjectApi.getProjectById(projectId)
-            .then(response => setCurrentProject(response.data))
-            //.then(setCategoriesOrder(currentProject.categoriesPositioning))
-            // .then(console.log("current project:" + JSON.stringify(categoriesOrder)))
-            //.then(setCategoriesPositioning(currentProject.categoriesPositioning))
-            //.then(console.log("categories positioning: " + categoriesPositioning))
+            .then(response => {
+                setCurrentProject(response.data);
+                setCategoriesOrder(response.data.categoriesPositioning);
+            })
             .catch(err => console.log(`error on get project ${err}`));
     }
 
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
             .then(response => setCurrentProject(response.data))
-            .then(console.log(JSON.stringify(currentProject)))
             .catch(err => console.log(`error on update project: ${err}`));
     }
+
+    useEffect(() => {
+        console.log("currentproject = ", currentProject);
+    }, [currentProject]);
 
     const onDeleteProject = () => {
         if (window.confirm("Do you want to delete this project?")) {
@@ -155,36 +156,69 @@ export default function ProjectPage() {
             .catch(err => console.log(`error on get all categories: ${err}`));
     };
 
-    const getAllTasks = (projectId) => {
-        return TaskApi.getTasksByProjectId(projectId)
-        .then(response => setTasks(response.data))
-        .catch(err => console.log(`error on get all tasks: ${err}`));
+    const sortCategoriesByOrder = (categories, categoriesOrder) => {
+        console.log("BANANA");
+        console.log("ordered categories before sorting", orderedCategories);
+        const orderedCategoriesList = [];
+        for (let i = 0; i < categoriesOrder.length; i++) {
+            for (let j = 0; j < categories.length; j++) {
+                if (categoriesOrder[i] == categories[j].id) {
+                    orderedCategoriesList.push(categories[j]);
+                }
+            }
+        }
+        console.log("Categories after sorting:", orderedCategoriesList);
+        const temp = orderedCategoriesList;
+        setOrderedCategories(temp);
+        console.log("ordered categories:  ", orderedCategories);
     }
 
     const createCategory = (projectId, categoryData) => {
         return CategoryApi.createCategory(projectId, categoryData)
-            .then(response => setCategories([...categories, response.data]))
-            //.then(setCategoriesOrder(...categoriesOrder, categoryData.id))
-            //.then(console.log(`new category: ${categoryData.title} is added. current order: ${categoriesOrder}`))
+            .then((response) => {
+                const newCategories = categories;
+                newCategories.push(response.data);
+                setCategories(newCategories);
+                console.log("CATs after creation:", categories);
+
+                const newCategoriesOrder = categoriesOrder;
+                newCategoriesOrder.push(response.data.id);
+                setCategoriesOrder(newCategoriesOrder);
+                console.log("CATSORDER after creation", categoriesOrder);
+
+                const newOrderedCatergories = orderedCategories;
+                newOrderedCatergories.push(response.data);
+                setOrderedCategories(newOrderedCatergories);
+                updateCategoriesOrder(categoriesOrder);
+
+                sortCategoriesByOrder(categories, categoriesOrder);
+                
+            })
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
-    // const updateCategoriesOrder = (newCategoriesOrder) => {
-    //     const {
-    //         id, 
-    //         title,
-    //         categoriesPositioning,
-    //         teamBeanScore
-    //     } = currentProject;
+    useEffect(() => {
+        console.log("categoriesOrder = ", categoriesOrder);
+        updateCategoriesOrder(categoriesOrder);
+    }, [categoriesOrder]);
 
-    //     const newProject = {
-    //         id,
-    //         title,
-    //         categoriesPositioning: newCategoriesOrder,
-    //         teamBeanScore
-    //     }
-    //     updateProject(newProject);
-    // }
+    const updateCategoriesOrder = (newCategoriesOrder) => {
+        const {
+            id, 
+            title,
+            // eslint-disable-next-line no-unused-vars
+            categoriesPositioning,
+            teamBeanScore
+        } = currentProject;
+
+        const newProject = {
+            id,
+            title,
+            categoriesPositioning: newCategoriesOrder,
+            teamBeanScore
+        }
+        updateProject(newProject);
+    }
 
    
     const updateCategory = (projectId, newCategoryData) => {
@@ -195,8 +229,10 @@ export default function ProjectPage() {
 
     const deleteCategory = (categoryId) => {
         return CategoryApi.deleteCategory(categoryId)
-            .then(console.log(`Deleting category: ${categoryId}`))
-            .then(setCategories(categories.filter(c => c.id !== categoryId)))
+            .then(() => {
+                setCategories(categories.filter(c => c.id != categoryId));
+                setCategoriesOrder(categoriesOrder.filter(item => item == categoryId));
+            })
             //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
     };
@@ -218,7 +254,6 @@ export default function ProjectPage() {
 
     useEffect(() => {
         getAllCategories(projectId);
-        getAllTasks(projectId);
         getAllMembers(projectId);
     }, [projectId]);
 
@@ -255,7 +290,6 @@ export default function ProjectPage() {
             <ProjectBoard
                 currentProject={currentProject}
                 categories={categories}
-                tasks={tasks}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
