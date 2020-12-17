@@ -51,3 +51,9 @@
 .task-card .member-button {
     padding: 0;
 }
+
+.task-card .comment-icon {
+    margin-right: 8px;
+    font-size: 20px;
+    color: grey;
+}

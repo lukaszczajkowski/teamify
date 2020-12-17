@@ -31,7 +31,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
 
     const onDeleteCategory = () => {
-        if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
+        if (window.confirm("Do you want to delete this category?")) {
             deleteCategory(categoryId);
         }
     };

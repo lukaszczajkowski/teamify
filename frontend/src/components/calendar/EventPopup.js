@@ -170,7 +170,7 @@ export default function EventPopup({ isOpen,
                                 <i className="fas fa-times"></i>
                             </button>
 
-                            <div className="popup-header">
+                            <div className="header1">
                                 <h2 className="header1-title">Event detail</h2>
                             </div>
 

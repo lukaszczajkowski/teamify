@@ -6,11 +6,14 @@ import MemberCard from "../projects/MemberCard";
 export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask, deleteMemberFromTask, addCommentToTask, updateCommentTask, deleteCommentTask, categories }) {
     const [popupIsOpen, setPopupIsOpen] = useState(false);
     //const [taskMembers, setTaskMembers] = useState([]);
-    console.log("categories from task card", categories);
 
     const {
-        members, comments
+        members,
+        comments
     } = task;
+
+    console.log("commnet", JSON.stringify(comments));
+    console.log(comments.length);
 
     const onDeleteTask = () => {
         deleteTask(task.id);
@@ -43,6 +46,11 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                         />
                     ))}
                 </div>
+                <div className="comment-icon">
+                    {comments.length == 0 ? null : (<i className="far fa-comment"></i>)}
+                </div>
+
+
 
 
             </div>
