@@ -64,19 +64,32 @@
   }
   
   .squares li[data-level="1"] {
-    background-color: #c6e48b;
+    background-color: #bee471;
   }
   
   .squares li[data-level="2"] {
-    background-color: #7bc96f;
+    background-color: #a5c662;
   }
   
   .squares li[data-level="3"] {
-    background-color: #32CD32;
+    background-color: #7f974f;
   }
   .squares li[data-level="4"] {
-    background-color: #008000;
+    background-color: #7bc96f;
   }
   .squares li[data-level="5"] {
-    background-color: #006400;
+    background-color: #129a12;
   }
+  .squares li[data-level="6"] {
+    background-color: #0f870f;
+  }
+  .squares li[data-level="7"] {
+    background-color: #0b640b;
+  }
+  .squares li[data-level="8"] {
+    background-color: #0a550a;
+  }
+  .squares li[data-level="9"] {
+    background-color: #094d09;
+  }
+  
