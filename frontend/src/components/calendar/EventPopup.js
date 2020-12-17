@@ -115,28 +115,32 @@ export default function EventPopup({ isOpen,
                                 </button>
                                 : 
                                 <div>
-                                 <button
-                                className="button"
-                                disabled={!isEditable}
-                                onClick={() => {
-                                    {updateEvent({ eventTitle, eventDescription })}
-                                    {onMembersChange({emails, currentEvent})}
-                                    close();
-                                    {onClose(false)}
-                                }}>
-                                Update
-                                </button>
-                                <button
-                                className="button"
-                                disabled={!isEditable}
-                                onClick={() => {
-                                    {deleteEvent(currentEvent)}
-                                    close();
-                                    {onClose(false)}
-                                }}>
-                                Delete
-                                </button>
-        </div>
+                                    {isEditable ? 
+                                    <div>
+                                        <button
+                                        className="button"
+                                        disabled={!isEditable}
+                                        onClick={() => {
+                                            {updateEvent({ eventTitle, eventDescription })}
+                                            {onMembersChange({emails, currentEvent})}
+                                            close();
+                                            {onClose(false)}
+                                        }}>
+                                        Update
+                                        </button>
+                                        <button
+                                        className="button"
+                                        disabled={!isEditable}
+                                        onClick={() => {
+                                              {deleteEvent(currentEvent)}
+                                              close();
+                                              {onClose(false)}
+                                        }}>
+                                         Delete
+                                        </button>
+                                    </div>
+                                    : null}
+                                </div>      
 
     console.log(sourceOfEvent);
 
@@ -214,17 +218,16 @@ export default function EventPopup({ isOpen,
                                 </div>
                                 : 
                                 <div className="popup-item flex-start">
-                                <h2 className="prompt">Host</h2>
                                 <div className="popup-item flex-start">
+                                <h2 className="prompt">Host</h2>
                                             {meeting.host.name}
                                 </div>
-                                <h2 className="prompt">Zoom Link</h2>
                                 <div className="popup-item flex-start">
+                                <h2 className="prompt">Zoom Link</h2>
                                     <button className="button">
                                         <a href={meeting.start_url} target="_blank" rel="noopener noreferrer">Click to Join</a>
                                     </button> 
-                                {/* <Link className="link nav-link" target="_blank" to={meeting.start_url}>Click to Join</Link>  */}
-                                </div>
+                                 </div>
                                 </div>
                                     }
                             </div>
