@@ -33,11 +33,8 @@ class TaskApi {
         return Api.post('/tasks/' + categoryId, task);
     }
 
-    updateCategory(taskId, newCategoryId) {
-        return Api.put('/tasks/' + newCategoryId + 'newCategoryId', {
-            params:
-                { newCategoryId : newCategoryId}
-        })
+    updateTaskCategory(taskId, newCategoryId) {
+        return Api.put(`/tasks/${taskId}/newCategoryId?newCategoryId=${newCategoryId}`);
     }
 
     updateTask(categoryId, task) {
