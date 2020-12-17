@@ -1,5 +1,5 @@
 .project-page {
-    background-color: white;
+    background-color: #F3F3F3;
     height: calc(100vh - 120px);
     width: 100%;
 }
@@ -48,7 +48,7 @@
 }
 
 .project-page .category-card {
-    /*height: calc(100vh - 120px);*/
+    height: calc(100vh - 120px);
     background: linear-gradient(0deg, rgba(243, 243, 243, 1) 20%, rgba(235, 235, 235, 1) 100%);
     
 }*/
