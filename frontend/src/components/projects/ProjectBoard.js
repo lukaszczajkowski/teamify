@@ -6,7 +6,7 @@ import TaskApi from "../../api/TaskApi";
 
 
 // eslint-disable-next-line no-unused-vars
-export default function ProjectBoard({ currentProject, categories, orderedCategories, createCategory, updateCategory, deleteCategory, event }) {
+export default function ProjectBoard({ currentProject, updateProject, categories, categoriesOrder, orderedCategories, createCategory, updateCategory, deleteCategory, event, changesFromDnd }) {
     const {
         id,
         //title,
@@ -14,10 +14,59 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
         categoriesPositioning
     } = currentProject;
 
-    console.log("on project Board. orderedCategories:", orderedCategories);
+    // eslint-disable-next-line no-unused-vars
+    // const [lists, setLists] = useState([]);
 
-    //const [lists, setLists] = useState(orderedCategories);
-    //console.log("liststate=", lists);
+    // const [project] = useState(currentProject);
+
+    // // eslint-disable-next-line no-unused-vars
+    // const [listsOrder, setListsOrder] = useState([]);
+    // // eslint-disable-next-line no-unused-vars
+    // const [orderedLists, setOrderedLists] = useState([]);
+
+    // useEffect(() => {
+    //     setLists(categories);
+    //     setListsOrder(categoriesPositioning);
+    // }, [project]);
+
+    // console.log("liststate=", lists);
+    // console.log("listsorder=", listsOrder);
+
+    const sortCategories = () => {
+        const sortedCategories = categories.sort((a, b) => ((a.id > b.id) ? 1 : -1));
+        return sortedCategories;
+    }
+    
+    // console.log("on project Board. orderedCategories:", orderedCategories);
+
+
+    // eslint-disable-next-line no-unused-vars
+    // const updateListsOrder = (newListsOrder) => {
+
+    //     const newProject = {
+    //         ...currentProject,
+    //         categoriesPositioning: newListsOrder,
+    //     }
+    //     updateProject(newProject);
+    //     setListsOrder(newListsOrder);
+    // }
+
+    // eslint-disable-next-line no-unused-vars
+    // const sortListsByOrder = () => {
+    //     console.log("before sorting, lists=", lists);
+    //     console.log("before sorting, orderedlists=", orderedLists);
+    //     const orderedLists = [];
+    //     for (let i = 0; i < listsOrder.length; i++) {
+    //         for (let j = 0; j < lists.length; j++) {
+    //             if (listsOrder[i] == lists[j].id) {
+    //                 orderedLists.push(lists[j]);
+    //             }
+    //         }
+    //     }
+    //     const temp = orderedLists;
+    //     setOrderedLists(temp);
+    //     console.log("after sorting, orderedlists=:", orderedLists);
+    // }
 
     const onDragEnd = (result) => {
         const { destination, source, draggableId } = result;
@@ -35,9 +84,9 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
         }
 
 
-        const start = orderedCategories.find(item => item.id == source.droppableId);
+        const start = categories.find(item => item.id == source.droppableId);
         console.log("startlist=", JSON.stringify(start));
-        const finish = orderedCategories.find(item => item.id == destination.droppableId);
+        const finish = categories.find(item => item.id == destination.droppableId);
         console.log("finishlist=", JSON.stringify(finish));
 
         // drop in the same category
@@ -58,6 +107,7 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
             console.log("newlist=", newCategory);
 
             updateCategory(newCategory);
+            changesFromDnd(newCategory);
             //setLists(newTasksOrder);
             return;
         }
@@ -70,6 +120,7 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
             tasksPositioning: startTasksOrder,
         };
         updateCategory(newStart);
+        changesFromDnd(newStart);
 
         const finishTasksOrder = finish.tasksPositioning;
         finishTasksOrder.splice(destination.index, 0, parseInt(draggableId));
@@ -78,14 +129,24 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
             tasksPositioning: finishTasksOrder,
         };
         updateCategory(newFinish);
+        changesFromDnd(newFinish);
 
         // updateTask
         const updateTask = () => {
-            return TaskApi.updateTaskCategory(parseInt(draggableId), finish.id);
+            TaskApi.updateTaskCategory(parseInt(draggableId), finish.id)
+                .then(response => {
+                    changesFromDnd(response.data);
+                })
         }
         updateTask();
 
+
+
     }
+
+    // useEffect(() => {
+
+    // }, []);
 
     console.log("event from project board", event);
 
@@ -93,20 +154,22 @@ export default function ProjectBoard({ currentProject, categories, orderedCatego
         <div className="project-board flex-start">
             <DragDropContext onDragEnd={onDragEnd}>
                 <div>
-                    {orderedCategories == null ?
+                    {categories == undefined ?
                         null :
                         <div className="category-cards">
                             {
-                                orderedCategories.map((category) => (
-                                        <CategoryCard key={category.id}
-                                            category={category}
-                                            categories={categories}
-                                            projectId={id}
-                                            updateCategory={updateCategory}
-                                            deleteCategory={deleteCategory}
-                                            event={event} />
+                                sortCategories().map((category) => (
+                                    <CategoryCard
+                                        
+                                        key={category.id}
+                                        category={category}
+                                        categories={categories}
+                                        projectId={id}
+                                        updateCategory={updateCategory}
+                                        deleteCategory={deleteCategory}
+                                        event={event} />
                                 ))
-                                       
+
                             }
                             <CreateCategoryCard projectId={id} createCategory={createCategory} />
                         </div>

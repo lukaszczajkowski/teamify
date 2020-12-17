@@ -24,10 +24,11 @@ export default function ProjectPage() {
     const [currentProject, setCurrentProject] = useState({});
     const [categories, setCategories] = useState([]);
     const [categoriesOrder, setCategoriesOrder] = useState([]);
-    const [orderedCategories, setOrderedCategories] = useState([]);
+    //const [orderedCategories, setOrderedCategories] = useState([]);
     const [members, setMembers] = useState([]);
     const [events, setEvents] = useState([]);
     const [changes, setChanges] = useState([]);
+    const [dndChanges, setDndChanges] = useState([]);
 
     useEffect(() => {
         init();
@@ -85,13 +86,17 @@ export default function ProjectPage() {
             .then(response => {
                 setCurrentProject(response.data);
                 setCategoriesOrder(response.data.categoriesPositioning);
+                console.log("getting current projectCAT: " , categoriesOrder);
             })
             .catch(err => console.log(`error on get project ${err}`));
     }
 
     const updateProject = (updatedProject) => {
         return ProjectApi.updateProject(updatedProject)
-            .then(response => setCurrentProject(response.data))
+            .then(response => {
+                setCurrentProject(response.data);
+                console.log("updating project with data", response.data);
+            })
             .catch(err => console.log(`error on update project: ${err}`));
     }
 
@@ -157,22 +162,22 @@ export default function ProjectPage() {
             .catch(err => console.log(`error on get all categories: ${err}`));
     };
 
-    const sortCategoriesByOrder = (categories, categoriesOrder) => {
-        console.log("categories before sorting", categories);
-        console.log("ordered categories before sorting", orderedCategories);
-        const orderedCategoriesList = [];
-        for (let i = 0; i < categoriesOrder.length; i++) {
-            for (let j = 0; j < categories.length; j++) {
-                if (categoriesOrder[i] == categories[j].id) {
-                    orderedCategoriesList.push(categories[j]);
-                }
-            }
-        }
-        console.log("Categories after sorting:", orderedCategoriesList);
-        const temp = orderedCategoriesList;
-        setOrderedCategories(temp);
-        console.log("ordered categories:  ", orderedCategories);
-    }
+    // const sortCategoriesByOrder = (categories, categoriesOrder) => {
+    //     console.log("categories before sorting", categories);
+    //     console.log("ordered categories before sorting", orderedCategories);
+    //     const orderedCategoriesList = [];
+    //     for (let i = 0; i < categoriesOrder.length; i++) {
+    //         for (let j = 0; j < categories.length; j++) {
+    //             if (categoriesOrder[i] == categories[j].id) {
+    //                 orderedCategoriesList.push(categories[j]);
+    //             }
+    //         }
+    //     }
+    //     console.log("Categories after sorting:", orderedCategoriesList);
+    //     const temp = orderedCategoriesList;
+    //     setOrderedCategories(temp);
+    //     console.log("ordered categories:  ", orderedCategories);
+    // }
 
     const createCategory = (projectId, categoryData) => {
         return CategoryApi.createCategory(projectId, categoryData)
@@ -187,50 +192,59 @@ export default function ProjectPage() {
                 setCategoriesOrder(newCategoriesOrder);
                 console.log("CATSORDER after creation", categoriesOrder);
 
-                const newOrderedCatergories = orderedCategories;
-                newOrderedCatergories.push(response.data);
-                console.log("ordered categories after creation: ", newOrderedCatergories);
-                setOrderedCategories(newOrderedCatergories);
-                updateCategoriesOrder(categoriesOrder);
+                // const newOrderedCatergories = orderedCategories;
+                // newOrderedCatergories.push(response.data);
+                // console.log("ordered categories after creation: ", newOrderedCatergories);
+                // setOrderedCategories(newOrderedCatergories);
+                // updateCategoriesOrder(categoriesOrder);
 
-                sortCategoriesByOrder(categories, categoriesOrder);
+                // sortCategoriesByOrder(categories, categoriesOrder);
                 
             })
             .catch(err => console.log(`error on create new category: ${err}`));
     };
 
     useEffect(() => {
-        console.log("categoriesOrder = ", categoriesOrder);
-        updateCategoriesOrder(categoriesOrder);
+        //updateCategoriesOrder(categoriesOrder);
+        console.log("categoriesOrder1 = ", categoriesOrder);
     }, [categoriesOrder]);
 
-    useEffect(()=> {
-        sortCategoriesByOrder(categories, categoriesOrder);
+    // useEffect(()=> {
+    //     sortCategoriesByOrder(categories, categoriesOrder);
         
-    },[categories, categoriesOrder]);
+    // },[categories, categoriesOrder]);
 
-    const updateCategoriesOrder = (newCategoriesOrder) => {
-        const {
-            id, 
-            title,
-            // eslint-disable-next-line no-unused-vars
-            categoriesPositioning,
-            teamBeanScore
-        } = currentProject;
+    // const updateCategoriesOrder = (newCategoriesOrder) => {
+    //     const {
+    //         id, 
+    //         title,
+    //         // eslint-disable-next-line no-unused-vars
+    //         categoriesPositioning,
+    //         teamBeanScore
+    //     } = currentProject;
 
-        const newProject = {
-            id,
-            title,
-            categoriesPositioning: newCategoriesOrder,
-            teamBeanScore
-        }
-        updateProject(newProject);
-    }
+    //     const newProject = {
+    //         id,
+    //         title,
+    //         categoriesPositioning: newCategoriesOrder,
+    //         teamBeanScore
+    //     }
+    //     updateProject(newProject);
+    // }
 
    
     const updateCategory = (projectId, newCategoryData) => {
         return CategoryApi.updateCategory(projectId, newCategoryData)
-            .then(getCurrentProject())
+            .then((response)=> {
+                const newCategories = categories;
+                console.log("categories before update", newCategories);
+                const replaceIndex = newCategories.findIndex(item => item.id == response.data.id);
+                console.log("replaceIndex", replaceIndex);
+                newCategories[replaceIndex] = response.data; 
+                setCategories(newCategories);
+                console.log("categories after update", categories);
+                getCurrentProject();
+            })
             .catch(err => console.log(`error on update category: ${err}`));
     };
 
@@ -245,10 +259,10 @@ export default function ProjectPage() {
                newCategoriesOrder.splice(removeIndex, 1);
                setCategoriesOrder(newCategoriesOrder);
 
-               const newOrderedCatergories = orderedCategories;
-               const removeIndexFromOrderedCategories = orderedCategories.findIndex(item => item == response.data);
-               newOrderedCatergories.splice(removeIndexFromOrderedCategories, 1);
-               setOrderedCategories(newOrderedCatergories);
+            //    const newOrderedCatergories = orderedCategories;
+            //    const removeIndexFromOrderedCategories = orderedCategories.findIndex(item => item == response.data);
+            //    newOrderedCatergories.splice(removeIndexFromOrderedCategories, 1);
+            //    setOrderedCategories(newOrderedCatergories);
             })
             //.then(setCategoriesPositioning(categoriesPositioning.filter(item => item != categoryId)))
             .catch(err => console.log(`error on delete category: ${err}`));
@@ -259,6 +273,13 @@ export default function ProjectPage() {
         const newChanges = [...changes];
         newChanges.push(data);
         setChanges(newChanges);
+    }
+
+    const changesFromDnd = (data) => {
+        console.log("changes from dnd");
+        const newDndChanges = [...dndChanges];
+        newDndChanges.push(data);
+        setDndChanges(newDndChanges);
     }
 
 
@@ -276,7 +297,7 @@ export default function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [events, changes]);
+    }, [events, changes, dndChanges]);
 
 
     return (
@@ -304,13 +325,16 @@ export default function ProjectPage() {
 
             <ProjectBoard
                 currentProject={currentProject}
+                updateProject={updateProject}
+
                 categories={categories}
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
-                orderedCategories={orderedCategories}
+                
                 event={events}
-                incommingChanges={incommingChanges}    
+                incommingChanges={incommingChanges} 
+                changesFromDnd={changesFromDnd}   
             />
         </div>
     );

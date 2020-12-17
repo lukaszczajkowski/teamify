@@ -38,7 +38,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     const onTitleUpdated = (newTitle) => {
         const updatedCategory = {
-            id,
+            ...category,
             title: newTitle
         };
         updateCategory(updatedCategory);
@@ -46,8 +46,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
     const updateTasksOrder = (newTasksOrder) => {
         const newCategory = {
-            id,
-            title,
+            ...category,
             tasksPositioning: newTasksOrder
         }
         updateCategory(newCategory);
