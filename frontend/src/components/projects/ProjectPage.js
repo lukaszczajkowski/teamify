@@ -157,7 +157,7 @@ export default function ProjectPage() {
     };
 
     const sortCategoriesByOrder = (categories, categoriesOrder) => {
-        console.log("BANANA");
+        console.log("categories before sorting", categories);
         console.log("ordered categories before sorting", orderedCategories);
         const orderedCategoriesList = [];
         for (let i = 0; i < categoriesOrder.length; i++) {
@@ -188,6 +188,7 @@ export default function ProjectPage() {
 
                 const newOrderedCatergories = orderedCategories;
                 newOrderedCatergories.push(response.data);
+                console.log("ordered categories after creation: ", newOrderedCatergories);
                 setOrderedCategories(newOrderedCatergories);
                 updateCategoriesOrder(categoriesOrder);
 

@@ -100,9 +100,9 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                 sortTasksByOrder(tasks, tasksOrder);
                 console.log(orderedTasks);
             });
-            // .then(setTasksOrder([...tasksOrder, taskData.id]))
-            // .then(updateTasksOrder(tasksOrder))
-            
+        // .then(setTasksOrder([...tasksOrder, taskData.id]))
+        // .then(updateTasksOrder(tasksOrder))
+
     };
 
     const updateTask = (categoryId, task) => {
@@ -187,7 +187,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
             </div>
 
-            
+
             <div className="tasks-list">
                 {
                     orderedTasks === null ?
@@ -213,7 +213,8 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
                                                                 addCommentToTask={addCommentToTask}
                                                                 updateCommentTask={updateCommentTask}
                                                                 deleteCommentTask={deleteCommentTask}
-                                                                deleteMemberFromTask={deleteMemberFromTask} />
+                                                                deleteMemberFromTask={deleteMemberFromTask}
+                                                                 />
                                                         </div>
 
                                                     )
