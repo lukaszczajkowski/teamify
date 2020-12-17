@@ -9,9 +9,6 @@ import UserContext from "../../UserContext";
 import MemberMenu from "./MemberMenu";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
-// eslint-disable-next-line no-unused-vars
-import ConfirmDialog from "../projects/ConfirmDialog";
-
 
 let eventSource;
 
@@ -297,8 +294,14 @@ export default function ProjectPage() {
         getCurrentProject();
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, [events, changes, dndChanges]);
+    }, [events, changes]);
 
+    useEffect(() => {
+        console.log("dnd changes noticed", dndChanges)
+        getCurrentProject();
+        getAllCategories(projectId);
+        getAllMembers(projectId);
+    }, [dndChanges]);
 
     return (
         <div className="project-page">
@@ -331,10 +334,10 @@ export default function ProjectPage() {
                 createCategory={createCategory}
                 updateCategory={updateCategory}
                 deleteCategory={deleteCategory}
-                
+                changesFromDnd={changesFromDnd}  
                 event={events}
                 incommingChanges={incommingChanges} 
-                changesFromDnd={changesFromDnd}   
+                 
             />
         </div>
     );

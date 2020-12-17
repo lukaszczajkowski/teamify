@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import CreateCategoryCard from "../categories/CreateCategoryCard";
 import CategoryCard from "../categories/CategoryCard";
 import { DragDropContext } from 'react-beautiful-dnd';
 import TaskApi from "../../api/TaskApi";
 
-
+//dndChanges prop deleted temporarily
 // eslint-disable-next-line no-unused-vars
 export default function ProjectBoard({ currentProject, updateProject, categories, categoriesOrder, orderedCategories, createCategory, updateCategory, deleteCategory, event, changesFromDnd }) {
     const {
@@ -13,6 +13,7 @@ export default function ProjectBoard({ currentProject, updateProject, categories
         // eslint-disable-next-line no-unused-vars
         categoriesPositioning
     } = currentProject;
+
 
     // eslint-disable-next-line no-unused-vars
     // const [lists, setLists] = useState([]);
@@ -139,8 +140,6 @@ export default function ProjectBoard({ currentProject, updateProject, categories
                 })
         }
         updateTask();
-
-
 
     }
 
