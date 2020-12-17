@@ -274,6 +274,8 @@ export default function ProjectPage() {
             updateCategory(newCategory);
         
             //setLists(newTasksOrder);
+
+            window.location.reload();
             return;
         }
 
@@ -305,6 +307,8 @@ export default function ProjectPage() {
         const newDndChanges = [...dndChanges];
         newDndChanges.push(change);
         setDndChanges(newDndChanges);
+
+        window.location.reload();
 
     }
 
