@@ -47,22 +47,22 @@ export default function DisplayCard({data, fetchdata}) {
                 {isHost ? 
                 <td>
                    <div className="link">
-                        <a href={start_url} target="_blank" rel="noopener noreferrer">Click to start</a>
-                    
-                {/* <Link className="link nav-link"  target="_blank" to={start_url}>Click to Start</Link>    */}
+                        <a href={start_url} target="_blank" rel="noopener noreferrer">Click to start</a>    
                 </div> </td>   
                 :  
                 <td>
-                    <button className="button">
+                    <div className="link">
                         <a href={start_url} target="_blank" rel="noopener noreferrer">Click to Join</a>
-                    </button> 
-                    {/* <Link className="link nav-link" target="_blank" to={start_url}>Click to Join</Link>  */}
-                </td>  
+                        </div> 
+                     </td>  
                 }  
                 <td> {host.name}</td>
+                {isHost ? 
                 <td> <button className="button" disabled={!isHost} id="Add-member" onClick={cancelMeeting}>
                 Cancel 
                 </button></td>
+                : null}
+                
                 </tr>
                 
                 

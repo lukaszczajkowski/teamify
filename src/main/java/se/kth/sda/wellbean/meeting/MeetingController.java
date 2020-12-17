@@ -191,6 +191,7 @@ public class MeetingController {
         createEvent.addMember(getUser());
         createEvent.setCreator(meeting.getHost());
         createEvent.setMeeting(meeting);
+        createEvent.setEditable(true);
         eventService.create(createEvent);
 
     }
