@@ -317,7 +317,7 @@ export default function ProjectPage() {
     useEffect(() => {
         getAllCategories(projectId);
         getAllMembers(projectId);
-    }, []);
+    }, [projectId]);
 
     useEffect(() => {
         console.log("incoming changes from project page:", events);
