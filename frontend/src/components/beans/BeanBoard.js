@@ -66,9 +66,7 @@ export default function BeanBoard({ presetBeans, addedBeans, createBean, updateB
                     </div>
 
 
-                    <div className="flex-end">
-                        <button className="flip-arrow"><i className="fas fa-arrow-right"></i></button>
-                    </div>
+                    
 
                 </div>
 
