@@ -41,7 +41,10 @@ function UserPage() {
 
     const createBean = (newBeanData) => {
         return BeanApi.createNewBean(newBeanData)
-            .then(response => setAddedBeans([...addedBeans, response.data]))
+            .then(response => {
+                setAddedBeans([...addedBeans, response.data])
+                setAllBeans([...allBeans, response.data])
+            })
     };
 
     const updateBean = (updatedBean) => {
@@ -51,7 +54,6 @@ function UserPage() {
                 setAllBeans(allBeans.map(item => item.id == updatedBean.id ? response.data : item))
             });
     }
-
 
 
     const deleteBean = (beanId) => {

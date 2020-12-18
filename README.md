@@ -6,7 +6,7 @@ It’s time to think differently and incorporate the well-being of employees to 
 
 
 
-# About the Project
+## About the Project
 
 Concept Of The Application :
 
@@ -26,7 +26,7 @@ Unique  Visual Display and the Css of the Application.
 
 
 
-# Built With
+## Built With
 
 Java
 
@@ -51,43 +51,43 @@ PostgresQl
 MongoDb 
 
 
-# Getting Started
+## Getting Started
 
 
 
-# Prerequisites
+### Prerequisites
 
 npm
 
 npm install npm@latest -g
 
-# Installation
+### Installation
 
 Clone the repo
 
 git clone git@github.com:lukaszczajkowski/teamify.git
 
 
-# Usage
+## Usage
 
 Please refer the vedio recording in git "WellBean.MP4" 
 
 
-# Roadmap
+## Roadmap
 
 See the open issues for a list of proposed features (and known issues).
 
-# Contributing
+## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-# Contact
+## Contact
 
 Yanwei Zhu, Bhagyashri0312, lukaszczajkowski, IndupriyaB, ElenaKolpakova, aparnamishraoss
 
 Project Link: https://github.com/lukaszczajkowski/teamify
 
-# Acknowledgements
+## Acknowledgements
 
 https://fullcalendar.io/docs/react
 
