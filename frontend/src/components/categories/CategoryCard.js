@@ -31,7 +31,7 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
 
 
     const onDeleteCategory = () => {
-        if (window.confirm("Do you want to delete this category?\n**Redesign this to a popup later**")) {
+        if (window.confirm("Do you want to delete this category?")) {
             deleteCategory(categoryId);
         }
     };
@@ -181,11 +181,14 @@ export default function CategoryCard({ category, updateCategory, deleteCategory,
     return (
         <div className="category-card">
             <div className="flex-between category-title">
-                <EditableText
+                <div id="editable-list-title">
+                     <EditableText
                     text={title}
                     placeholder="title"
                     onUpdateText={onTitleUpdated}
                 />
+                </div>
+               
 
                 <CategoryActions onDeleteCategory={onDeleteCategory} />
 

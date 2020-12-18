@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import BeanIcon from "../../assets/icon/beans.png";
+// import BeanIcon from "../../assets/icon/beans.png";
 import ChatIcon from "../../assets/icon/chat.png";
 import { Link } from "react-router-dom";
 import NavBar from "../layout/Navbar";
@@ -17,11 +17,11 @@ export default function ProjectHeader({ project }) {
                     <Link to="/home" className="project-nav-item"><i className="fas fa-house-user font-icon"></i></Link>
                 </motion.div>
 
-                <motion.div whileHover={{ scale: 1.1 }}>
+                {/* <motion.div whileHover={{ scale: 1.1 }}>
                     <Link to="/home" className="project-nav-item">
                         <img className="icon" src={BeanIcon} />
                     </Link>
-                </motion.div>
+                </motion.div> */}
 
                 <motion.div whileHover={{ scale: 1.1 }}>
                     <Link to={{

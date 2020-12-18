@@ -38,9 +38,9 @@ export default function MemberCard({ member, onClick, onClickTitle }) {
                 {isComponentVisible && (
                     <div className="action-menu">
                         <div className="user-info">
-                            {/* eslint-disable-next-line react/prop-types */}
-                            <p>{member.name}</p>
-                            {/* eslint-disable-next-line react/prop-types */}
+                           
+                            <p id="user-name">{member.name}</p>
+                         
                             <p>{member.email}</p>
                         </div>
                         {onClick &&

@@ -32,9 +32,13 @@
     padding: 8px;
     min-width: 120px;
     transition: all 0.3s;
-    font-weight: bold;
+    font-size: 15px;
 }
 
 .action-item:hover {
     background-color: var(--bg-medium-grey);
+}
+
+.action-menu #user-name {
+    margin-bottom: 0;
 }

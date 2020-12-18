@@ -108,12 +108,12 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
     return (
         <div className="task-popup popup-container">
             <Popup open={isOpen} modal nested onClose={onClose}>
-                <motion.div  initial={{
-                     scale: 0
-                         }}
-                     animate= {{
-                     scale: 1
-                     }} className="modal">
+                <motion.div initial={{
+                    scale: 0
+                }}
+                    animate={{
+                        scale: 1
+                    }} className="modal">
                     <button className="close" onClick={onClose}>
                         <i className="fas fa-times"></i>
                     </button>
@@ -127,22 +127,25 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                             <EditableText
                                 text={title}
                                 placeholder="title..."
-                                onUpdateText={onTitleUpdated} 
+                                onUpdateText={onTitleUpdated}
                             />
                         </div>
+
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Description</h2>
                             <EditableText
                                 text={description}
                                 placeholder="description..."
-                                onUpdateText={onDescriptionUpdated} 
+                                onUpdateText={onDescriptionUpdated}
                             />
                         </div>
-                        <div className="popup-item">
+
+
 
                         <div className="popup-item flex-start">
                             <h2 className="prompt">Move to</h2>
-                            <Dropdown
+                            <div id="dropdown">
+                                 <Dropdown
                                 placeholder='Select a category'
                                 fluid
                                 selection
@@ -150,13 +153,16 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                 value={chosenCategory}
                                 options={dropdownOptions}
                             />
-                            <button 
-                            className="action-button"
-                            onClick = {changeCategory}>
+                            </div>
+                           
+                            <button
+                                className="action-button"
+                                onClick={changeCategory}>
                                 Ok
                             </button>
                         </div>
-                        <div className="popup-item"></div>
+                        
+                        <div className="popup-item">
 
                             <div className="flex-start">
                                 <h2 className="prompt">Members:</h2>
@@ -170,7 +176,7 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
                                         />
                                     ))}
                                 </div>
-                                {projectMembers.length > 0 && 
+                                {projectMembers.length > 0 &&
                                     <button
                                         className="action-button add-member"
                                         onClick={onOpenAddMemberPopup}>
@@ -201,15 +207,15 @@ export default function TaskPopup({ isOpen, currentTask, updateTask, addMemberTo
 
                         </div>
 
-                         <div className="popup-item flex-start"> 
+                        <div className="popup-item flex-start flex-align-start">
                             <h2 className="prompt">Comments</h2>
-                            <Comments 
+                            <Comments
                                 task={currentTask}
                                 onCreate={addComment}
                                 onUpdate={updateComment}
                                 onDelete={deleteComment}
                             />
-                        </div> 
+                        </div>
                     </div>
                 </motion.div>
             </Popup>

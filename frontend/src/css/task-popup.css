@@ -11,3 +11,26 @@
 .modal .member-card {
     margin-right: 10px;
   }
+
+
+  .comment .comment-user {
+      color: var(--theme-green);
+      margin-right: 5px;
+      font-size: 16px;
+      padding: 4px;
+  }
+
+  .comment .comment-body {
+      margin: 0;
+      font-size: 16px;
+      padding: 4px;
+
+  }
+
+  #comment-editable .editable-text .input-box{
+      margin: 0;
+  }
+
+  #dropdown {
+      margin-right: 10px;
+  }

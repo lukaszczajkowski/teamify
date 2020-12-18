@@ -26,7 +26,7 @@
 }
 
 .bean-board .bean-icon {
-    margin-top: 4vh;
+    margin-top: 25px;
     margin-right: 8px;
     height: 5vh;
 }
@@ -39,7 +39,7 @@
 .bean-board .sub-prompt {
     margin-left: 1vw;
     font-size: 15px;
-    color: white;
+    color:grey;
 }
 
 .bean-board .bean-button {

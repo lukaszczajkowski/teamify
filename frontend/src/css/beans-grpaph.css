@@ -52,7 +52,7 @@
   .graph {
     padding: 20px;
     border: 1px #e1e4e8 solid;
-    margin: 20px;
+    margin: 20px 20px 20px 45px;
   }
   
   .days li:nth-child(odd) {
@@ -78,6 +78,7 @@
     background-color: #7bc96f;
   }
   .squares li[data-level="5"] {
+
     background-color: #129a12;
   }
   .squares li[data-level="6"] {
