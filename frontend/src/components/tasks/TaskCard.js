@@ -12,6 +12,10 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
         comments
     } = task;
 
+    const isEmpty = (comments == undefined || comments == null || Object.keys(comments).length == 0);
+    console.log("comments", comments);
+    console.log("comment is undefined or null", isEmpty);
+
     const onDeleteTask = () => {
         deleteTask(task.id);
 
@@ -43,8 +47,12 @@ export default function TaskCard({ task, deleteTask, updateTask, addMemberToTask
                         />
                     ))}
                 </div>
-                
-                    {comments.length == 0 ? null : (<i className="far fa-comment"></i>)}
+
+                <div className="comment-button">
+                    {!isEmpty &&
+                    <i className="far fa-comment"></i>}
+                </div>
+                    
                
 
 

@@ -80,3 +80,15 @@
   .squares li[data-level="5"] {
     background-color: #006400;
   }
+
+  .squares li[data-level="6"] {
+    background-color: #004f00;
+  }
+
+  .squares li[data-level="7"] {
+    background-color: #2c1080;
+  }
+
+  .squares li[data-level="8"] {
+    background-color: #1f1153;
+  }
